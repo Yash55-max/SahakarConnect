@@ -1,0 +1,230 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  CONSUMER
+  PROVIDER
+  COOP_ADMIN
+  REGULATOR
+}
+
+enum VerificationStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+enum BookingStatus {
+  REQUESTED
+  ACCEPTED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  SETTLED
+}
+
+enum PollStatus {
+  OPEN
+  CLOSED
+}
+
+enum GrievanceStatus {
+  OPEN
+  IN_REVIEW
+  RESOLVED
+}
+
+model User {
+  id           String    @id @default(uuid())
+  name         String
+  email        String    @unique
+  phone        String    @unique
+  passwordHash String
+  role         Role      @default(CONSUMER)
+  avatarUrl    String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  providerProfile ProviderProfile?
+  consumerBookings Booking[]       @relation("ConsumerBookings")
+  ratingsGiven    Rating[]         @relation("ConsumerRatings")
+  grievances      GrievanceTicket[]
+}
+
+model Cooperative {
+  id                    String    @id @default(uuid())
+  name                  String
+  registrationNumber    String    @unique
+  district              String
+  state                 String
+  commissionRatePercent Float     @default(10.0)
+  welfareFundBalance    Float     @default(0.0)
+  totalMembers          Int       @default(0)
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  providers             ProviderProfile[]
+  polls                 GovernancePoll[]
+  welfareDisbursements  WelfareDisbursement[]
+}
+
+model ProviderProfile {
+  id                 String             @id @default(uuid())
+  userId             String             @unique
+  user               User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cooperativeId      String
+  cooperative        Cooperative        @relation(fields: [cooperativeId], references: [id])
+  skills             String[]
+  verified           Boolean            @default(false)
+  verificationStatus VerificationStatus @default(PENDING)
+  rating             Float              @default(5.0)
+  ratingCount        Int                @default(0)
+  available          Boolean            @default(true)
+  lat                Float
+  lng                Float
+  address            String?
+  aadharMockNumber   String?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  listings           ServiceListing[]
+  jobs               Booking[]          @relation("ProviderJobs")
+  ratingsReceived    Rating[]           @relation("ProviderRatings")
+  pollVotes          PollVote[]
+}
+
+model ServiceCategory {
+  id          String           @id @default(uuid())
+  name        String           @unique
+  slug        String           @unique
+  icon        String
+  description String
+  createdAt   DateTime         @default(now())
+
+  listings    ServiceListing[]
+}
+
+model ServiceListing {
+  id          String          @id @default(uuid())
+  categoryId  String
+  category    ServiceCategory @relation(fields: [categoryId], references: [id])
+  providerId  String
+  provider    ProviderProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  title       String
+  description String
+  basePrice   Float
+  unit        String          @default("per service")
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  bookings    Booking[]
+}
+
+model Booking {
+  id             String        @id @default(uuid())
+  consumerId     String
+  consumer       User          @relation("ConsumerBookings", fields: [consumerId], references: [id])
+  providerId     String
+  provider       ProviderProfile @relation("ProviderJobs", fields: [providerId], references: [id])
+  listingId      String
+  listing        ServiceListing @relation(fields: [listingId], references: [id])
+  status         BookingStatus @default(REQUESTED)
+  scheduledAt    DateTime
+  totalAmount    Float
+  serviceAddress String?
+  notes          String?
+  createdAt      DateTime      @default(now())
+  completedAt    DateTime?
+
+  ledgerEntry    PaymentLedgerEntry?
+  rating         Rating?
+  grievance      GrievanceTicket?
+}
+
+model PaymentLedgerEntry {
+  id                   String        @id @default(uuid())
+  bookingId            String        @unique
+  booking              Booking       @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  totalAmount          Float
+  providerShare        Float
+  cooperativeFundShare Float
+  platformShare        Float
+  status               PaymentStatus @default(SETTLED)
+  paymentMethod        String        @default("UPI_MOCK")
+  transactionRef       String
+  createdAt            DateTime      @default(now())
+}
+
+model Rating {
+  id          String          @id @default(uuid())
+  bookingId   String          @unique
+  booking     Booking         @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  consumerId  String
+  consumer    User            @relation("ConsumerRatings", fields: [consumerId], references: [id])
+  providerId  String
+  provider    ProviderProfile @relation("ProviderRatings", fields: [providerId], references: [id])
+  stars       Int
+  comment     String?
+  createdAt   DateTime        @default(now())
+}
+
+model GovernancePoll {
+  id            String      @id @default(uuid())
+  cooperativeId String
+  cooperative   Cooperative @relation(fields: [cooperativeId], references: [id], onDelete: Cascade)
+  question      String
+  description   String?
+  options       Json
+  status        PollStatus  @default(OPEN)
+  category      String      @default("COMMISSION_RATE")
+  expiresAt     DateTime?
+  createdAt     DateTime    @default(now())
+
+  votes         PollVote[]
+}
+
+model PollVote {
+  id         String          @id @default(uuid())
+  pollId     String
+  poll       GovernancePoll  @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  providerId String
+  provider   ProviderProfile @relation(fields: [providerId], references: [id])
+  choice     String
+  createdAt  DateTime        @default(now())
+
+  @@unique([pollId, providerId])
+}
+
+model GrievanceTicket {
+  id              String          @id @default(uuid())
+  raisedById      String
+  raisedBy        User            @relation(fields: [raisedById], references: [id])
+  bookingId       String?         @unique
+  booking         Booking?        @relation(fields: [bookingId], references: [id])
+  description     String
+  status          GrievanceStatus @default(OPEN)
+  resolutionNotes String?
+  createdAt       DateTime        @default(now())
+  resolvedAt      DateTime?
+}
+
+model WelfareDisbursement {
+  id            String      @id @default(uuid())
+  cooperativeId String
+  cooperative   Cooperative @relation(fields: [cooperativeId], references: [id], onDelete: Cascade)
+  title         String
+  beneficiary   String
+  amount        Float
+  category      String
+  disbursedAt   DateTime    @default(now())
+}

@@ -1,0 +1,23 @@
+{
+  "name": "sahakarconnect-root",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SahakarConnect — Cooperative Gig Services Platform for Household & Community Services",
+  "scripts": {
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build:backend": "cd backend && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "db:migrate": "cd backend && npx prisma migrate dev",
+    "db:seed": "cd backend && npm run seed",
+    "db:studio": "cd backend && npx prisma studio"
+  },
+  "keywords": [
+    "cooperative",
+    "gig-platform",
+    "sih",
+    "ministry-of-cooperation"
+  ],
+  "author": "",
+  "license": "ISC"
+}
