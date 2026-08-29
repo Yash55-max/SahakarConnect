@@ -1,23 +1,25 @@
 # SahakarConnect — Cooperative Gig Services Platform
-### Smart India Hackathon (SIH26089) — Ministry of Cooperation, Government of India
+**Smart India Hackathon (SIH26089) — Ministry of Cooperation, Government of India**
 
-> **A decentralized, multi-stakeholder gig economy platform operated through Primary Service Cooperative Societies (PSCS) instead of extractive corporate aggregators.**
-
----
-
-## 🌟 Key Innovations & Differentiators
-
-1. **Democratic Gig Economy Governance (One-Worker-One-Vote)**: Providers are verified cooperative member-owners who vote on commission splits, welfare fund allocations, and platform rules.
-2. **Transparent Revenue-Split Ledger**: Every booking is split in real-time on an immutable ledger:
-   - **Provider Direct Take-Home**: 88%–92% (compared to ~70% on commercial apps)
-   - **Cooperative Welfare & Health Fund**: 6%–10% (cashless monsoon insurance, accident aid, tool subsidies)
-   - **Platform Technology Overhead**: 2.0% flat (servers, SMS, maintenance)
-3. **Multi-Stakeholder Architecture**: Native, unified web portals for **Consumers**, **Cooperative Service Providers**, **Society Administrators**, and **Ministry Regulators**.
-4. **Real-Time Job Orchestration**: Socket.io bi-directional synchronization for instant booking alerts, status tracking (`REQUESTED` → `ACCEPTED` → `IN_PROGRESS` → `COMPLETED`), and live governance poll results.
+A decentralized, multi-stakeholder gig economy platform operated through Primary Service Cooperative Societies (PSCS). The platform replaces extractive intermediary aggregators with a democratic, transparent, and worker-owned service distribution model.
 
 ---
 
-## 🏗️ Architecture & Technology Stack
+## Executive Summary
+
+SahakarConnect addresses the economic vulnerabilities inherent in conventional gig platforms by institutionalizing gig workers as cooperative member-owners. By integrating local Primary Service Cooperative Societies into household service delivery, the platform guarantees:
+
+1. **Democratic Platform Governance (One-Worker-One-Vote)**: Cooperative members participate directly in policy decisions, including commission rate determination and welfare fund deployment.
+2. **Transparent Revenue Splitting**: Every transaction is deterministically split and recorded on an immutable ledger:
+   - **Provider Direct Remittance**: 88%–92% of gross booking value.
+   - **Cooperative Welfare & Emergency Fund**: 6%–10% allocated for health insurance, accident compensation, and tool subsidies.
+   - **Platform Infrastructure Overhead**: 2.0% fixed for cloud infrastructure and maintenance.
+3. **Unified Multi-Stakeholder Portals**: Dedicated, role-gated interfaces for Consumers, Service Providers, Cooperative Society Administrators, and Ministry Regulators.
+4. **Real-Time Job Dispatch and Synchronization**: Bi-directional event processing via WebSockets for instantaneous booking requests, live status transitions, and referendum tallying.
+
+---
+
+## System Architecture
 
 ```
                                   ┌────────────────────────────────┐
@@ -42,31 +44,34 @@
                                   └────────────────────────────────┘
 ```
 
-| Layer | Technology | Purpose |
-|---|---|---|
-| **Frontend** | React 18, Vite, TypeScript, Tailwind CSS | Single responsive web app with role-based routing and live socket sync |
-| **Backend** | Node.js, Express, TypeScript | Modular REST API with strict input validation via Zod |
-| **Database & ORM** | PostgreSQL 15, Prisma ORM | Relational data model for users, cooperatives, bookings, ledger, polls |
-| **Real-time Sync** | Socket.io | Live booking dispatch, state transitions, and real-time referendum voting |
-| **Authentication** | JWT (Access + Refresh), bcrypt password hashing | Role-based authorization (`CONSUMER`, `PROVIDER`, `COOP_ADMIN`, `REGULATOR`) |
-| **Payments** | Deterministic Revenue Ledger Stub | Simulates UPI / card checkout and calculates split into `PaymentLedgerEntry` |
+### Technology Stack
+
+| Layer | Component | Specification | Description |
+|---|---|---|---|
+| **Frontend** | Application Framework | React 18, Vite, TypeScript | Single responsive client with role-based view isolation |
+| **Frontend** | Styling & UI | Tailwind CSS, Lucide Icons | Production-grade design system following government portal standards |
+| **Backend** | Application Server | Node.js, Express, TypeScript | Modular RESTful architecture with Zod schema validation |
+| **Database** | Persistence Layer | PostgreSQL 15, Prisma ORM | Relational schema modeling users, cooperatives, bookings, and ledger entries |
+| **Real-Time** | Event Engine | Socket.io | Bi-directional event broadcasting for status changes and live polls |
+| **Security** | Authentication | JWT (Access & Refresh), bcrypt | Role-gated middleware for Consumers, Providers, Admins, and Regulators |
+| **Payments** | Settlement Engine | Deterministic Ledger Service | Mock payment adapter calculating precise multi-party revenue allocations |
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```
 ├── backend/
 │   ├── prisma/
-│   │   ├── schema.prisma        # Complete schema (10 entities + enums)
-│   │   └── seed.ts              # Seed script with realistic Indian cooperative dataset
+│   │   ├── schema.prisma        # Database schema definitions and relations
+│   │   └── seed.ts              # Database seeding script with realistic cooperative dataset
 │   ├── src/
-│   │   ├── controllers/         # Auth, Consumer, Provider, Coop Admin, Regulator
-│   │   ├── lib/                 # Prisma singleton, JWT helpers, Socket.io manager
-│   │   ├── middlewares/         # Auth & Role-gated middleware
-│   │   ├── routes/              # Express API routers
-│   │   ├── services/            # PaymentService and transparent split calculator
-│   │   └── server.ts            # Main server entrypoint
+│   │   ├── controllers/         # Controllers: Auth, Consumer, Provider, Coop, Regulator
+│   │   ├── lib/                 # Prisma singleton, JWT utilities, Socket.io manager
+│   │   ├── middlewares/         # JWT authentication and role authorization middleware
+│   │   ├── routes/              # Express API route declarations
+│   │   ├── services/            # Payment settlement and split computation service
+│   │   └── server.ts            # Application bootstrap and server configuration
 │   ├── package.json
 │   └── tsconfig.json
 │
@@ -75,7 +80,7 @@
 │   │   ├── components/
 │   │   │   ├── layout/          # DemoBar, Navbar, Footer
 │   │   │   └── ui/              # SplitVisualizer, Modal, Badge, StarRating
-│   │   ├── context/             # AuthContext (with 1-click persona switcher), SocketContext
+│   │   ├── context/             # AuthContext, SocketContext
 │   │   ├── pages/
 │   │   │   ├── consumer/        # ConsumerHome, ConsumerBookings
 │   │   │   ├── provider/        # ProviderDashboard
@@ -83,34 +88,36 @@
 │   │   │   ├── regulator/       # RegulatorDashboard (National Benchmark)
 │   │   │   ├── governance/      # GovernancePage
 │   │   │   └── auth/            # Login, Register
-│   │   ├── types/               # Shared TypeScript models
-│   │   ├── App.tsx
-│   │   └── main.tsx
+│   │   ├── types/               # TypeScript interfaces and shared type declarations
+│   │   ├── App.tsx              # Client application router
+│   │   └── main.tsx             # Client entrypoint
 │   ├── package.json
 │   └── vite.config.ts
 │
-├── docker-compose.yml           # Local PostgreSQL container on port 5433
+├── docker-compose.yml           # Local PostgreSQL container service definition
 ├── SahakarConnect_Agent_Build_Plan.md
-├── DEMO_SCRIPT.md               # 3-minute hackathon judge demonstration script
+├── DEMO_SCRIPT.md               # Presentation and evaluation walkthrough
 └── README.md
 ```
 
 ---
 
-## 🚀 Quick Start Guide
+## Installation and Setup
 
 ### Prerequisites
-- Node.js (v18+)
-- npm (v9+)
-- Docker (for PostgreSQL)
+- Node.js (v18 or higher)
+- npm (v9 or higher)
+- Docker and Docker Compose
 
-### 1. Start the Database
+### 1. Database Provisioning
+Launch the PostgreSQL database container:
 ```bash
 docker-compose up -d
 ```
-*Starts PostgreSQL on port `5433` with database `sahakarconnect`.*
+The database will be accessible on `localhost:5433` under the database name `sahakarconnect`.
 
-### 2. Setup and Seed Backend
+### 2. Backend Initialization
+Install dependencies, apply database migrations, seed initial data, and start the API server:
 ```bash
 cd backend
 npm install
@@ -118,31 +125,74 @@ npx prisma db push
 npm run seed
 npm run dev
 ```
-*Backend API boots on `http://localhost:5000`.*
+The API server starts on `http://localhost:5000`.
 
-### 3. Start Frontend
-In a separate terminal:
+### 3. Frontend Initialization
+In a separate terminal, install dependencies and launch the client development server:
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-*Frontend web application boots on `http://localhost:5173`.*
+The client application will be accessible at `http://localhost:5173`.
 
 ---
 
-## 👥 Seeded Demo Accounts (Password: `password123`)
+## API Surface Reference
 
-Use the **Top Demo Bar** on the website for instant 1-click switching, or login with:
+### Authentication Endpoints
+- `POST /api/auth/register` — Register a new Consumer or Provider account.
+- `POST /api/auth/login` — Authenticate user and receive access/refresh tokens.
+- `POST /api/auth/refresh` — Refresh expired access token.
+- `GET /api/auth/me` — Retrieve currently authenticated user profile.
 
-| Role | Name | Email | Society |
+### Consumer Endpoints
+- `GET /api/services` — List categories and verified service listings (with filter/search support).
+- `POST /api/bookings` — Create a new service booking request.
+- `GET /api/bookings/:id` — Retrieve booking details, status, and ledger receipt.
+- `GET /api/bookings/my` — List consumer booking history.
+- `POST /api/bookings/:id/rate` — Submit provider rating and feedback.
+- `POST /api/bookings/:id/pay` — Settle booking payment through simulated gateway.
+- `POST /api/grievances` — Submit a grievance ticket to the cooperative committee.
+
+### Provider Endpoints
+- `GET /api/providers/me` — Retrieve provider profile, statistics, and cooperative affiliation.
+- `PATCH /api/providers/me/availability` — Toggle duty status (Online / Offline).
+- `GET /api/providers/me/jobs` — Retrieve incoming, active, and completed jobs.
+- `PATCH /api/providers/jobs/:id/accept` — Accept an incoming booking request.
+- `PATCH /api/providers/jobs/:id/reject` — Reject a booking request.
+- `PATCH /api/providers/jobs/:id/start` — Mark job as in progress / on site.
+- `PATCH /api/providers/jobs/:id/complete` — Mark job as complete and trigger ledger settlement.
+- `GET /api/providers/me/earnings` — Retrieve comprehensive earnings and welfare contributions.
+
+### Cooperative Admin Endpoints
+- `GET /api/coop/:id/providers` — List society providers with verification statuses.
+- `PATCH /api/coop/providers/:id/verify` — Approve or reject provider KYC application.
+- `GET /api/coop/:id/ledger` — Retrieve full cooperative revenue-split ledger.
+- `GET /api/coop/:id/welfare-fund` — Retrieve welfare balance and disbursement audit logs.
+- `POST /api/coop/:id/polls` — Create a new governance referendum.
+- `GET /api/coop/:id/polls` — List active and historical governance referendums.
+- `POST /api/coop/polls/:pollId/vote` — Cast member vote on referendum.
+
+### Regulator Endpoints
+- `GET /api/regulator/overview` — National aggregation across all registered cooperatives.
+- `GET /api/regulator/cooperatives/:id` — Audit drill-down for an individual cooperative society.
+
+---
+
+## Seeded Evaluation Accounts
+
+For evaluation purposes, pre-seeded accounts are provided with the default password `password123`. The top navigation bar includes an integrated role switcher for instant authentication without manual credential entry:
+
+| Role | User Name | Email Address | Organization / Society |
 |---|---|---|---|
-| **Consumer** | Rahul Sharma | `rahul.sharma@example.com` | — |
-| **Provider** | Ramesh Yadav (Plumber) | `ramesh.yadav@sahakar.coop` | Delhi Shramik Sahakari Samiti |
-| **Coop Admin** | Suresh Kumar | `admin.delhi@sahakar.coop` | Delhi Shramik Sahakari Samiti |
-| **Regulator** | Dr. Rajeshwari Nair | `regulator@cooperation.gov.in` | Joint Registrar (Ministry) |
+| **Consumer** | Rahul Sharma | `rahul.sharma@example.com` | Individual Household |
+| **Provider** | Ramesh Yadav | `ramesh.yadav@sahakar.coop` | Delhi Shramik Sahakari Samiti |
+| **Cooperative Admin** | Suresh Kumar | `admin.delhi@sahakar.coop` | Delhi Shramik Sahakari Samiti |
+| **Regulator** | Dr. Rajeshwari Nair | `regulator@cooperation.gov.in` | Joint Registrar, Ministry of Cooperation |
 
 ---
 
-## 📜 License
-Developed for Smart India Hackathon (SIH26089) in alignment with Ministry of Cooperation guidelines.
+## License
+
+Developed in accordance with the problem statement guidelines for Smart India Hackathon (SIH26089), Ministry of Cooperation, Government of India.
