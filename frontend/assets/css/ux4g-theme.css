@@ -1,0 +1,1077 @@
+/* ==========================================================================
+   UX4G DESIGN SYSTEM — SAHAKARCONNECT (GOVERNMENT OF INDIA)
+   Ministry of Cooperation & MeitY (SIH26089)
+   Pure HTML5 / CSS3 / TypeScript — Accessible, Responsive, Standardized
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons+Outlined');
+
+/* ─── UX4G Design System Variables & Tokens ─── */
+:root {
+  /* Government Palette */
+  --ux4g-gov-blue: #003366;
+  --ux4g-gov-blue-dark: #002244;
+  --ux4g-gov-blue-light: #EBF3FA;
+  --ux4g-gov-saffron: #E65100;
+  --ux4g-gov-saffron-light: #FFF3E0;
+  --ux4g-gov-green: #1B5E20;
+  --ux4g-gov-green-light: #E8F5E9;
+  
+  /* Primary & Theme Semantics */
+  --ux4g-color-primary-500: #003366;
+  --ux4g-color-primary-600: #002244;
+  --ux4g-color-primary-50: #EBF3FA;
+  --ux4g-color-secondary-500: #E65100;
+  --ux4g-color-secondary-50: #FFF3E0;
+  --ux4g-color-success-500: #1B5E20;
+  --ux4g-color-success-50: #E8F5E9;
+  --ux4g-color-warning-500: #D97706;
+  --ux4g-color-danger-500: #DC2626;
+  --ux4g-color-danger-50: #FEF2F2;
+
+  /* Surfaces & Backgrounds */
+  --ux4g-bg-page: #F8FAFC;
+  --ux4g-bg-surface: #FFFFFF;
+  --ux4g-bg-elevated: #FFFFFF;
+  --ux4g-bg-subtle: #F1F5F9;
+  --ux4g-border-default: #E2E8F0;
+  --ux4g-border-strong: #CBD5E1;
+  
+  /* Typography */
+  --ux4g-text-primary: #0F172A;
+  --ux4g-text-secondary: #475569;
+  --ux4g-text-tertiary: #64748B;
+  --ux4g-text-inverse: #FFFFFF;
+
+  /* Layout Spacing */
+  --ux4g-radius-sm: 4px;
+  --ux4g-radius-md: 8px;
+  --ux4g-radius-lg: 12px;
+  --ux4g-radius-xl: 16px;
+  --ux4g-radius-full: 9999px;
+  --ux4g-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --ux4g-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --ux4g-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+  --font-base-size: 16px;
+}
+
+/* ─── Accessibility: High Contrast & Dark Modes ─── */
+[data-theme="dark"] {
+  --ux4g-bg-page: #0B132B;
+  --ux4g-bg-surface: #1C2541;
+  --ux4g-bg-elevated: #243156;
+  --ux4g-bg-subtle: #162039;
+  --ux4g-border-default: #2E3E67;
+  --ux4g-border-strong: #3F5287;
+  --ux4g-text-primary: #F8FAFC;
+  --ux4g-text-secondary: #CBD5E1;
+  --ux4g-text-tertiary: #94A3B8;
+  --ux4g-gov-blue: #2A6F97;
+  --ux4g-gov-blue-light: #162C4E;
+}
+
+[data-contrast="high"] {
+  --ux4g-bg-page: #000000;
+  --ux4g-bg-surface: #000000;
+  --ux4g-bg-elevated: #111111;
+  --ux4g-bg-subtle: #222222;
+  --ux4g-border-default: #FFFF00;
+  --ux4g-border-strong: #FFFF00;
+  --ux4g-text-primary: #FFFF00;
+  --ux4g-text-secondary: #FFFFFF;
+  --ux4g-text-tertiary: #00FF00;
+  --ux4g-gov-blue: #0055FF;
+  --ux4g-gov-saffron: #FF8800;
+  --ux4g-gov-green: #00FF00;
+}
+
+[data-font-size="small"] { --font-base-size: 14px; }
+[data-font-size="normal"] { --font-base-size: 16px; }
+[data-font-size="large"] { --font-base-size: 18px; }
+
+/* ─── Global Reset & Typography ─── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: var(--font-base-size);
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--ux4g-bg-page);
+  color: var(--ux4g-text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ─── Material Symbols / Icons ─── */
+.ux4g-icon-outlined, .material-symbols-outlined, .ux4g-icon {
+  font-family: 'Material Symbols Outlined', 'Material Icons Outlined' !important;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  vertical-align: middle;
+  user-select: none;
+}
+
+/* ─── Container System ─── */
+.ux4g-container {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.ux4g-container-fluid {
+  width: 100%;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+/* ─── 1. Accessibility Topbar (UX4G Standard) ─── */
+.ux4g-topbar {
+  background-color: #0A192F;
+  color: #E2E8F0;
+  font-size: 0.8125rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.35rem 0;
+  z-index: 100;
+}
+
+.ux4g-topbar__wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ux4g-topbar a {
+  color: #E2E8F0;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.ux4g-topbar a:hover {
+  color: #FFFFFF;
+  text-decoration: underline;
+}
+
+.india-flag {
+  display: inline-block;
+  width: 20px;
+  height: 14px;
+  background-image: url('../images/india_flag.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+}
+
+.acc-top-divider {
+  display: inline-block;
+  width: 1px;
+  height: 14px;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin: 0 0.5rem;
+}
+
+.ux4g-topbar__iconbtn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #CBD5E1;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  margin: 0 2px;
+}
+
+.ux4g-topbar__iconbtn:hover, .ux4g-topbar__iconbtn.active {
+  background: rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.ux4g-topbar__selectbtn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ─── 2. Hackathon Demo Navigation Strip ─── */
+.ux4g-demobar {
+  background: linear-gradient(90deg, #002244 0%, #003366 50%, #004080 100%);
+  color: #FFFFFF;
+  padding: 0.5rem 0;
+  border-bottom: 2px solid var(--ux4g-gov-saffron);
+}
+
+.ux4g-demobar-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.ux4g-demo-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(230, 81, 0, 0.2);
+  color: #FFB74D;
+  border: 1px solid rgba(255, 183, 77, 0.3);
+  padding: 0.15rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.ux4g-role-switcher {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 3px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.ux4g-role-btn {
+  background: transparent;
+  color: #CBD5E1;
+  border: none;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.ux4g-role-btn:hover {
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.ux4g-role-btn.active {
+  background: var(--ux4g-gov-saffron);
+  color: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* ─── 3. Main Government Navbar (UX4G Standard) ─── */
+.ux4g-navbar {
+  background-color: var(--ux4g-bg-surface);
+  border-bottom: 1px solid var(--ux4g-border-default);
+  box-shadow: var(--ux4g-shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 90;
+}
+
+.ux4g-navbar-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 0;
+}
+
+.ux4g-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.ux4g-emblem {
+  height: 48px;
+  width: auto;
+}
+
+.ux4g-divider-vertical {
+  width: 1px;
+  height: 38px;
+  background-color: var(--ux4g-border-default);
+}
+
+.ux4g-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.ux4g-brand-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--ux4g-gov-blue);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.ux4g-brand-tagline {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ux4g-gov-saffron);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.ux4g-brand-sub {
+  font-size: 0.75rem;
+  color: var(--ux4g-text-tertiary);
+  font-weight: 500;
+}
+
+.ux4g-navbar-links {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 1.5rem;
+}
+
+.ux4g-nav-link {
+  color: var(--ux4g-text-secondary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  padding: 0.5rem 0;
+  position: relative;
+  transition: color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.ux4g-nav-link:hover, .ux4g-nav-link.active {
+  color: var(--ux4g-gov-blue);
+}
+
+.ux4g-nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -0.85rem;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: var(--ux4g-gov-blue);
+  border-radius: 3px 3px 0 0;
+}
+
+.ux4g-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* ─── 4. Banner / Hero Section ─── */
+.ux4g-hero-banner {
+  background: linear-gradient(135deg, #003366 0%, #0B2545 60%, #134E5E 100%);
+  color: #FFFFFF;
+  padding: 2.75rem 0;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 4px solid var(--ux4g-gov-saffron);
+}
+
+.ux4g-hero-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 35%;
+  background: radial-gradient(circle at center, rgba(230, 81, 0, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.ux4g-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #FFE082;
+  margin-bottom: 1rem;
+}
+
+.ux4g-hero-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+.ux4g-hero-sub {
+  font-size: 1.125rem;
+  color: #E2E8F0;
+  max-width: 720px;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+/* ─── 5. UI Cards & Containers ─── */
+.ux4g-card {
+  background-color: var(--ux4g-bg-surface);
+  border: 1px solid var(--ux4g-border-default);
+  border-radius: var(--ux4g-radius-lg);
+  box-shadow: var(--ux4g-shadow-sm);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.ux4g-card:hover {
+  box-shadow: var(--ux4g-shadow-md);
+  border-color: var(--ux4g-border-strong);
+}
+
+.ux4g-card-interactive:hover {
+  transform: translateY(-2px);
+  border-color: var(--ux4g-gov-blue);
+}
+
+.ux4g-card-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--ux4g-border-default);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background-color: var(--ux4g-bg-surface);
+}
+
+.ux4g-card-body {
+  padding: 1.5rem;
+  flex: 1;
+}
+
+.ux4g-card-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--ux4g-border-default);
+  background-color: var(--ux4g-bg-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ─── 6. Buttons (UX4G Standard) ─── */
+.ux4g-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--ux4g-radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease-in-out;
+  line-height: 1.25;
+}
+
+.ux4g-btn-primary {
+  background-color: var(--ux4g-gov-blue);
+  color: #FFFFFF;
+  border-color: var(--ux4g-gov-blue);
+}
+
+.ux4g-btn-primary:hover {
+  background-color: var(--ux4g-gov-blue-dark);
+  border-color: var(--ux4g-gov-blue-dark);
+  box-shadow: 0 2px 4px rgba(0, 51, 102, 0.25);
+}
+
+.ux4g-btn-outline-primary {
+  background-color: transparent;
+  color: var(--ux4g-gov-blue);
+  border-color: var(--ux4g-gov-blue);
+}
+
+.ux4g-btn-outline-primary:hover {
+  background-color: var(--ux4g-gov-blue-light);
+}
+
+.ux4g-btn-secondary {
+  background-color: var(--ux4g-gov-saffron);
+  color: #FFFFFF;
+  border-color: var(--ux4g-gov-saffron);
+}
+
+.ux4g-btn-secondary:hover {
+  background-color: #BF360C;
+  border-color: #BF360C;
+}
+
+.ux4g-btn-success {
+  background-color: var(--ux4g-gov-green);
+  color: #FFFFFF;
+  border-color: var(--ux4g-gov-green);
+}
+
+.ux4g-btn-success:hover {
+  background-color: #0E3A13;
+}
+
+.ux4g-btn-outline-neutral {
+  background-color: transparent;
+  color: var(--ux4g-text-secondary);
+  border-color: var(--ux4g-border-strong);
+}
+
+.ux4g-btn-outline-neutral:hover {
+  background-color: var(--ux4g-bg-subtle);
+  color: var(--ux4g-text-primary);
+}
+
+.ux4g-btn-danger {
+  background-color: var(--ux4g-color-danger-500);
+  color: #FFFFFF;
+  border-color: var(--ux4g-color-danger-500);
+}
+
+.ux4g-btn-danger:hover {
+  background-color: #B91C1C;
+}
+
+.ux4g-btn-sm {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  border-radius: var(--ux4g-radius-sm);
+}
+
+.ux4g-btn-lg {
+  padding: 0.875rem 1.75rem;
+  font-size: 1.0625rem;
+  border-radius: var(--ux4g-radius-lg);
+}
+
+.ux4g-btn:disabled, .ux4g-btn[disabled] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ─── 7. Badges & Tags ─── */
+.ux4g-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.ux4g-badge-primary {
+  background-color: var(--ux4g-gov-blue-light);
+  color: var(--ux4g-gov-blue);
+  border: 1px solid rgba(0, 51, 102, 0.2);
+}
+
+.ux4g-badge-success {
+  background-color: var(--ux4g-gov-green-light);
+  color: var(--ux4g-gov-green);
+  border: 1px solid rgba(27, 94, 32, 0.25);
+}
+
+.ux4g-badge-warning {
+  background-color: #FEF3C7;
+  color: #92400E;
+  border: 1px solid #FDE68A;
+}
+
+.ux4g-badge-saffron {
+  background-color: var(--ux4g-gov-saffron-light);
+  color: var(--ux4g-gov-saffron);
+  border: 1px solid rgba(230, 81, 0, 0.25);
+}
+
+.ux4g-badge-neutral {
+  background-color: var(--ux4g-bg-subtle);
+  color: var(--ux4g-text-secondary);
+  border: 1px solid var(--ux4g-border-default);
+}
+
+/* ─── 8. Form Fields & Controls ─── */
+.ux4g-form-group {
+  margin-bottom: 1.25rem;
+}
+
+.ux4g-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ux4g-text-primary);
+  margin-bottom: 0.375rem;
+}
+
+.ux4g-label-required::after {
+  content: " *";
+  color: var(--ux4g-color-danger-500);
+}
+
+.ux4g-input, .ux4g-select, .ux4g-textarea {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  color: var(--ux4g-text-primary);
+  background-color: var(--ux4g-bg-surface);
+  border: 1px solid var(--ux4g-border-strong);
+  border-radius: var(--ux4g-radius-md);
+  transition: all 0.15s ease;
+  outline: none;
+}
+
+.ux4g-input:focus, .ux4g-select:focus, .ux4g-textarea:focus {
+  border-color: var(--ux4g-gov-blue);
+  box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.15);
+}
+
+.ux4g-input-helper {
+  font-size: 0.75rem;
+  color: var(--ux4g-text-tertiary);
+  margin-top: 0.25rem;
+}
+
+/* ─── Toggle Switch ─── */
+.ux4g-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  gap: 0.6rem;
+}
+
+.ux4g-toggle input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.ux4g-toggle-slider {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  background-color: #CBD5E1;
+  border-radius: 9999px;
+  transition: 0.2s;
+}
+
+.ux4g-toggle-slider::before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.ux4g-toggle input:checked + .ux4g-toggle-slider {
+  background-color: var(--ux4g-gov-green);
+}
+
+.ux4g-toggle input:checked + .ux4g-toggle-slider::before {
+  transform: translateX(20px);
+}
+
+/* ─── 9. Tables (UX4G Standard) ─── */
+.ux4g-table-container {
+  overflow-x: auto;
+  border: 1px solid var(--ux4g-border-default);
+  border-radius: var(--ux4g-radius-md);
+  background-color: var(--ux4g-bg-surface);
+}
+
+.ux4g-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.875rem;
+}
+
+.ux4g-table th {
+  background-color: var(--ux4g-bg-subtle);
+  color: var(--ux4g-text-secondary);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--ux4g-border-default);
+}
+
+.ux4g-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--ux4g-border-default);
+  color: var(--ux4g-text-primary);
+  vertical-align: middle;
+}
+
+.ux4g-table tbody tr:hover {
+  background-color: rgba(0, 51, 102, 0.02);
+}
+
+.ux4g-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ─── 10. Journey Timeline / Stepper ─── */
+.ux4g-stepper {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  margin: 1.5rem 0;
+}
+
+.ux4g-stepper::before {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: 30px;
+  right: 30px;
+  height: 3px;
+  background-color: var(--ux4g-border-default);
+  z-index: 1;
+}
+
+.ux4g-step {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+}
+
+.ux4g-step-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: var(--ux4g-bg-surface);
+  border: 3px solid var(--ux4g-border-strong);
+  color: var(--ux4g-text-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.ux4g-step-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ux4g-text-tertiary);
+}
+
+.ux4g-step.completed .ux4g-step-circle {
+  background-color: var(--ux4g-gov-green);
+  border-color: var(--ux4g-gov-green);
+  color: #FFFFFF;
+}
+
+.ux4g-step.completed .ux4g-step-label {
+  color: var(--ux4g-gov-green);
+}
+
+.ux4g-step.active .ux4g-step-circle {
+  background-color: var(--ux4g-gov-blue);
+  border-color: var(--ux4g-gov-blue);
+  color: #FFFFFF;
+  box-shadow: 0 0 0 4px rgba(0, 51, 102, 0.2);
+}
+
+.ux4g-step.active .ux4g-step-label {
+  color: var(--ux4g-gov-blue);
+  font-weight: 700;
+}
+
+/* ─── 11. Cooperative Revenue Split Bar Widget ─── */
+.sahakar-split-bar {
+  display: flex;
+  height: 28px;
+  border-radius: var(--ux4g-radius-md);
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  margin: 0.75rem 0;
+}
+
+.split-segment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 700;
+  transition: width 0.3s ease;
+}
+
+.split-provider { background: linear-gradient(90deg, #1B5E20 0%, #2E7D32 100%); }
+.split-welfare { background: linear-gradient(90deg, #E65100 0%, #F57C00 100%); }
+.split-platform { background: linear-gradient(90deg, #003366 0%, #1565C0 100%); }
+
+/* ─── 12. Modal Dialogs ─── */
+.ux4g-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+}
+
+.ux4g-modal-backdrop.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.ux4g-modal {
+  background-color: var(--ux4g-bg-surface);
+  border-radius: var(--ux4g-radius-xl);
+  width: 100%;
+  max-width: 580px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  transform: scale(0.95);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid var(--ux4g-border-default);
+}
+
+.ux4g-modal-backdrop.open .ux4g-modal {
+  transform: scale(1);
+}
+
+.ux4g-modal-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--ux4g-border-default);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ux4g-modal-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--ux4g-gov-blue);
+}
+
+.ux4g-modal-close {
+  background: transparent;
+  border: none;
+  color: var(--ux4g-text-tertiary);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.ux4g-modal-close:hover {
+  background: var(--ux4g-bg-subtle);
+  color: var(--ux4g-text-primary);
+}
+
+.ux4g-modal-body {
+  padding: 1.5rem;
+}
+
+.ux4g-modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--ux4g-border-default);
+  background-color: var(--ux4g-bg-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+/* ─── 13. Toast Notifications ─── */
+.ux4g-toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.ux4g-toast {
+  background: #FFFFFF;
+  color: var(--ux4g-text-primary);
+  border-left: 5px solid var(--ux4g-gov-blue);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  padding: 0.85rem 1.25rem;
+  min-width: 320px;
+  max-width: 420px;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  pointer-events: auto;
+  animation: toastSlideIn 0.3s ease forwards;
+}
+
+.ux4g-toast.success { border-left-color: var(--ux4g-gov-green); }
+.ux4g-toast.warning { border-left-color: var(--ux4g-gov-saffron); }
+.ux4g-toast.danger { border-left-color: var(--ux4g-color-danger-500); }
+
+@keyframes toastSlideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* ─── 14. Responsive Layout Utilities ─── */
+.ux4g-grid { display: grid; }
+.ux4g-grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+.ux4g-grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.ux4g-grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ux4g-grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.ux4g-gap-sm { gap: 0.75rem; }
+.ux4g-gap-md { gap: 1.25rem; }
+.ux4g-gap-lg { gap: 2rem; }
+
+@media (max-width: 1024px) {
+  .ux4g-grid-cols-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ux4g-grid-cols-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 768px) {
+  .ux4g-grid-cols-4, .ux4g-grid-cols-3, .ux4g-grid-cols-2 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+  .ux4g-navbar-links { display: none; }
+  .ux4g-hero-title { font-size: 1.75rem; }
+  .ux4g-stepper { flex-direction: column; gap: 1rem; }
+  .ux4g-stepper::before { display: none; }
+}
+
+/* ─── 15. Official Footer (UX4G Standard) ─── */
+.ux4g-footer {
+  background-color: #0A192F;
+  color: #CBD5E1;
+  border-top: 4px solid var(--ux4g-gov-saffron);
+  margin-top: auto;
+}
+
+.ux4g-footer-top {
+  padding: 3.5rem 0 2.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ux4g-footer-title {
+  color: #FFFFFF;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.25rem;
+}
+
+.ux4g-footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.ux4g-footer-links a {
+  color: #94A3B8;
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.15s ease;
+}
+
+.ux4g-footer-links a:hover {
+  color: #FFFFFF;
+}
+
+.ux4g-footer-strip {
+  background-color: #050D1A;
+  padding: 1.25rem 0;
+  font-size: 0.8125rem;
+  color: #64748B;
+}
+
+.ux4g-footer-strip-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.ux4g-gov-compliance-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #94A3B8;
+}

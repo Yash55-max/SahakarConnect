@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UX4G Design System Specification & Component Guide — Agents Reference</title>
+  
+  <link rel="stylesheet" href="https://cdn.ux4g.gov.in/UX4G@3.1.0/index.css" />
+  <link rel="stylesheet" href="./assets/css/ux4g-theme.css" />
+  <link rel="icon" type="image/svg+xml" href="./assets/images/sahakar_logo.svg" />
+  <style>
+    .spec-section {
+      margin-bottom: 3.5rem;
+      padding-top: 1rem;
+    }
+    .spec-preview-box {
+      background: var(--ux4g-bg-surface);
+      border: 1px solid var(--ux4g-border-default);
+      border-radius: var(--ux4g-radius-lg);
+      padding: 1.5rem;
+      margin: 1rem 0;
+      box-shadow: var(--ux4g-shadow-sm);
+    }
+    .spec-code-box {
+      background: #0A192F;
+      color: #E2E8F0;
+      padding: 1.25rem;
+      border-radius: var(--ux4g-radius-md);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.8125rem;
+      overflow-x: auto;
+      margin-top: 0.75rem;
+      line-height: 1.5;
+    }
+    .spec-tag {
+      background: var(--ux4g-gov-blue-light);
+      color: var(--ux4g-gov-blue);
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Accessibility Bar -->
+  <header class="ux4g-topbar" role="banner">
+    <div class="ux4g-container">
+      <div class="ux4g-topbar__wrap">
+        <div>
+          <a aria-label="Government of India" href="https://www.india.gov.in/" target="_blank" rel="noopener">
+            <span class="india-flag"></span>
+            <span>भारत सरकार | Government of India</span>
+            <sup class="ux4g-icon-outlined" style="font-size:12px;">open_in_new</sup>
+          </a>
+        </div>
+        <nav aria-label="Accessibility Utilities" style="display: flex; align-items: center;">
+          <a href="#main-content" style="font-size: 0.75rem; margin-right: 0.5rem;">Skip to Main Content</a>
+          <span class="acc-top-divider"></span>
+          <div role="group" style="display: flex; align-items: center;">
+            <button class="ux4g-topbar__iconbtn" type="button" data-acc="font-decrease">A-</button>
+            <button class="ux4g-topbar__iconbtn" type="button" data-acc="font-reset">A</button>
+            <button class="ux4g-topbar__iconbtn" type="button" data-acc="font-increase">A+</button>
+          </div>
+          <span class="acc-top-divider"></span>
+          <button class="ux4g-topbar__iconbtn" type="button" data-acc="contrast-toggle" title="Contrast"><span class="ux4g-icon-outlined" style="font-size:14px;">contrast</span></button>
+          <button class="ux4g-topbar__iconbtn" type="button" data-acc="theme-toggle" title="Theme"><span class="ux4g-icon-outlined" style="font-size:14px;">dark_mode</span></button>
+          <span class="acc-top-divider"></span>
+          <button class="ux4g-topbar__selectbtn" type="button" data-acc="lang-toggle">
+            <span class="ux4g-icon-outlined" style="font-size:14px;">language</span>
+            <span id="current-lang-text">English</span>
+          </button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Demo Bar -->
+  <aside class="ux4g-demobar">
+    <div class="ux4g-container">
+      <div class="ux4g-demobar-content">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span class="ux4g-demo-tag">SIH26089 • UX4G v3.1.0 Reference Spec</span>
+          <span style="font-size: 0.8125rem; font-weight: 500;">Role View:</span>
+        </div>
+        <div class="ux4g-role-switcher" role="tablist">
+          <a href="index.html" class="ux4g-role-btn">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">person</span> Citizen / Consumer
+          </a>
+          <a href="provider.html" class="ux4g-role-btn">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">handyman</span> Cooperative Provider
+          </a>
+          <a href="admin.html" class="ux4g-role-btn">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">admin_panel_settings</span> Society Admin
+          </a>
+          <a href="governance.html" class="ux4g-role-btn">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">how_to_vote</span> Governance & Voting
+          </a>
+          <a href="regulator.html" class="ux4g-role-btn">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">account_balance</span> Registrar / Ministry
+          </a>
+          <a href="components-reference.html" class="ux4g-role-btn active" style="background: var(--ux4g-gov-saffron);">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">code</span> UX4G Spec Reference
+          </a>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Navbar -->
+  <nav class="ux4g-navbar">
+    <div class="ux4g-container">
+      <div class="ux4g-navbar-wrap">
+        <a href="index.html" class="ux4g-brand">
+          <img src="./assets/images/national_emblem.svg" alt="Emblem" class="ux4g-emblem" />
+          <span class="ux4g-divider-vertical"></span>
+          <img src="./assets/images/sahakar_logo.svg" alt="Logo" style="width: 44px; height: 44px;" />
+          <div class="ux4g-brand-text">
+            <span class="ux4g-brand-tagline">GOVERNMENT DESIGN SYSTEM 3.1.0</span>
+            <span class="ux4g-brand-title">UX4G Agents Reference Guide</span>
+            <span class="ux4g-brand-sub">Pure HTML5, CSS3, and TypeScript Component Catalog (No React Required)</span>
+          </div>
+        </a>
+
+        <ul class="ux4g-navbar-links">
+          <li><a href="#section-topbar" class="ux4g-nav-link">TopBar</a></li>
+          <li><a href="#section-buttons" class="ux4g-nav-link">Buttons</a></li>
+          <li><a href="#section-cards" class="ux4g-nav-link">Cards</a></li>
+          <li><a href="#section-tables" class="ux4g-nav-link">Tables</a></li>
+          <li><a href="#section-stepper" class="ux4g-nav-link">Stepper</a></li>
+        </ul>
+
+        <div class="ux4g-nav-actions">
+          <a href="https://doc.ux4g.gov.in/web" target="_blank" rel="noopener" class="ux4g-btn ux4g-btn-outline-primary ux4g-btn-sm">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">open_in_new</span> Official UX4G Docs
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Specification Guide -->
+  <main class="ux4g-container" id="main-content" style="padding-top: 2.5rem; padding-bottom: 4rem;">
+    
+    <!-- Introduction Banner -->
+    <div class="ux4g-card" style="margin-bottom: 3rem; border-left: 5px solid var(--ux4g-gov-saffron);">
+      <div class="ux4g-card-body">
+        <span class="spec-tag">UX4G ARCHITECTURE CONTRACT</span>
+        <h1 style="font-size: 1.75rem; font-weight: 800; color: var(--ux4g-gov-blue); margin: 0.35rem 0 0.75rem 0;">
+          Indian Government UX4G Design System Standard
+        </h1>
+        <p style="color: var(--ux4g-text-secondary); font-size: 0.9375rem; line-height: 1.6;">
+          UX4G is India's government-grade design system developed by <strong>MeitY / NeGD / Digital India</strong>. It uses standard semantic HTML5 elements with verified <code>ux4g-*</code> CSS classes and atomic design tokens. It requires <strong>no React dependency</strong> and is designed for fast, accessible, WCAG 2.1 AA and GIGW 3.0 compliant government portals.
+        </p>
+      </div>
+    </div>
+
+    <!-- Quick Navigation Index -->
+    <div class="ux4g-card" style="margin-bottom: 3rem;">
+      <div class="ux4g-card-header">
+        <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--ux4g-gov-blue);">Component Contract Quick Links</h3>
+      </div>
+      <div class="ux4g-card-body" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+        <a href="#section-topbar" class="ux4g-btn ux4g-btn-outline-neutral ux4g-btn-sm">1. Accessibility Topbar</a>
+        <a href="#section-navbar" class="ux4g-btn ux4g-btn-outline-neutral ux4g-btn-sm">2. Government Navbar</a>
+        <a href="#section-buttons" class="ux4g-btn ux4g-btn-outline-neutral ux4g-btn-sm">3. Buttons & CTAs</a>
+        <a href="#section-cards" class="ux4g-btn ux4g-btn-outline-neutral ux4g-btn-sm">4. Cards & KPI Tiles</a>
+        <a href="#section-forms" class="ux4g-btn ux4g-btn-outline-neutral ux4g-btn-sm">5. Forms, Inputs & Toggles</a>
+        <a href="#section-badges" class="ux4g-btn ux4g-btn-outline-neutral ux4g-btn-sm">6. Badges & Chips</a>
+        <a href="#section-tables" class="ux4g-btn ux4g-btn-outline-neutral ux4g-btn-sm">7. Data Tables</a>
+        <a href="#section-stepper" class="ux4g-btn ux4g-btn-outline-neutral ux4g-btn-sm">8. Journey Timeline & Steppers</a>
+        <a href="#section-split" class="ux4g-btn ux4g-btn-outline-neutral ux4g-btn-sm">9. Cooperative Split Visualizer</a>
+        <a href="#section-toasts" class="ux4g-btn ux4g-btn-outline-neutral ux4g-btn-sm">10. Modals & Notifications</a>
+      </div>
+    </div>
+
+    <!-- ─── 1. Accessibility Topbar ─── -->
+    <section id="section-topbar" class="spec-section">
+      <span class="spec-tag">1. ACCESSIBILITY COMPONENT</span>
+      <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--ux4g-gov-blue);">UX4G Standard Topbar & Accessibility Bar</h2>
+      <p style="color: var(--ux4g-text-secondary); font-size: 0.875rem;">
+        Mandatory for all Government of India portals. Includes National flag, Skip to content, text resizing (A-, A, A+), high contrast, dark mode, and bilingual selection.
+      </p>
+
+      <div class="spec-preview-box">
+        <header class="ux4g-topbar" role="banner">
+          <div class="ux4g-container">
+            <div class="ux4g-topbar__wrap">
+              <div>
+                <a href="https://www.india.gov.in/" target="_blank" rel="noopener">
+                  <span class="india-flag"></span>
+                  <span>भारत सरकार | Government of India</span>
+                  <sup class="ux4g-icon-outlined" style="font-size:12px;">open_in_new</sup>
+                </a>
+              </div>
+              <nav style="display: flex; align-items: center;">
+                <a href="#main-content" style="font-size: 0.75rem; margin-right: 0.5rem;">Skip to Main Content</a>
+                <span class="acc-top-divider"></span>
+                <div role="group" style="display: flex; align-items: center;">
+                  <button class="ux4g-topbar__iconbtn" type="button">A-</button>
+                  <button class="ux4g-topbar__iconbtn" type="button">A</button>
+                  <button class="ux4g-topbar__iconbtn" type="button">A+</button>
+                </div>
+              </nav>
+            </div>
+          </div>
+        </header>
+      </div>
+
+      <pre class="spec-code-box"><code>&lt;!-- UX4G Accessibility Topbar --&gt;
+&lt;header class="ux4g-topbar ux4g-topbar-wide" role="banner"&gt;
+  &lt;div class="ux4g-container"&gt;
+    &lt;div class="ux4g-topbar__wrap ux4g-d-flex ux4g-jc-between ux4g-ai-center"&gt;
+      &lt;a href="https://www.india.gov.in/" target="_blank" rel="noopener"&gt;
+        &lt;span class="india-flag"&gt;&lt;/span&gt;
+        &lt;span class="ux4g-label-m-default"&gt;Government of India&lt;/span&gt;
+      &lt;/a&gt;
+      &lt;nav class="ux4g-d-flex ux4g-ai-center"&gt;
+        &lt;a class="ux4g-topbar__skip" href="#main-content"&gt;Skip to Main Content&lt;/a&gt;
+        &lt;span class="ux4g-bl-1 acc-top-divider"&gt;&lt;/span&gt;
+        &lt;div class="ux4g-topbar__group" role="group"&gt;
+          &lt;button class="ux4g-topbar__iconbtn" type="button"&gt;A-&lt;/button&gt;
+          &lt;button class="ux4g-topbar__iconbtn" type="button"&gt;A&lt;/button&gt;
+          &lt;button class="ux4g-topbar__iconbtn" type="button"&gt;A+&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/nav&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/header&gt;</code></pre>
+    </section>
+
+    <!-- ─── 2. Buttons ─── -->
+    <section id="section-buttons" class="spec-section">
+      <span class="spec-tag">2. INTERACTION COMPONENT</span>
+      <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--ux4g-gov-blue);">Buttons, CTAs & Icons</h2>
+      <p style="color: var(--ux4g-text-secondary); font-size: 0.875rem;">
+        Standard button classes supporting Primary (Gov Blue), Secondary (Saffron), Success (Green), Danger (Red), and Neutral variants.
+      </p>
+
+      <div class="spec-preview-box" style="display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center;">
+        <button type="button" class="ux4g-btn ux4g-btn-primary">ux4g-btn-primary</button>
+        <button type="button" class="ux4g-btn ux4g-btn-outline-primary">ux4g-btn-outline-primary</button>
+        <button type="button" class="ux4g-btn ux4g-btn-secondary">ux4g-btn-secondary</button>
+        <button type="button" class="ux4g-btn ux4g-btn-success">
+          <span class="ux4g-icon-outlined" style="font-size: 16px;">check</span> ux4g-btn-success
+        </button>
+        <button type="button" class="ux4g-btn ux4g-btn-danger">ux4g-btn-danger</button>
+        <button type="button" class="ux4g-btn ux4g-btn-outline-neutral">ux4g-btn-outline-neutral</button>
+        <button type="button" class="ux4g-btn ux4g-btn-primary ux4g-btn-sm">Small (.ux4g-btn-sm)</button>
+        <button type="button" class="ux4g-btn ux4g-btn-primary ux4g-btn-lg">Large (.ux4g-btn-lg)</button>
+      </div>
+
+      <pre class="spec-code-box"><code>&lt;!-- Button Variants --&gt;
+&lt;button type="button" class="ux4g-btn ux4g-btn-primary"&gt;Primary Action&lt;/button&gt;
+&lt;button type="button" class="ux4g-btn ux4g-btn-outline-primary"&gt;Outline Primary&lt;/button&gt;
+&lt;button type="button" class="ux4g-btn ux4g-btn-secondary"&gt;Saffron CTA&lt;/button&gt;
+&lt;button type="button" class="ux4g-btn ux4g-btn-success"&gt;
+  &lt;span class="ux4g-icon-outlined"&gt;check&lt;/span&gt; Success Action
+&lt;/button&gt;
+&lt;button type="button" class="ux4g-btn ux4g-btn-danger"&gt;Destructive Action&lt;/button&gt;</code></pre>
+    </section>
+
+    <!-- ─── 3. Cards & KPI Tiles ─── -->
+    <section id="section-cards" class="spec-section">
+      <span class="spec-tag">3. SURFACE COMPONENT</span>
+      <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--ux4g-gov-blue);">Cards, Containers & Stat Tiles</h2>
+      <p style="color: var(--ux4g-text-secondary); font-size: 0.875rem;">
+        Header-Body-Footer standard surface component with elevation and hover animations.
+      </p>
+
+      <div class="spec-preview-box">
+        <div class="ux4g-grid ux4g-grid-cols-2 ux4g-gap-md">
+          <div class="ux4g-card ux4g-card-interactive">
+            <div class="ux4g-card-header">
+              <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--ux4g-gov-blue);">Interactive Entity Card</h4>
+              <span class="ux4g-badge ux4g-badge-success">Active</span>
+            </div>
+            <div class="ux4g-card-body">
+              <p style="color: var(--ux4g-text-secondary); font-size: 0.875rem;">
+                Card body contains scannable details, metadata tags, and key cooperative performance metrics.
+              </p>
+            </div>
+            <div class="ux4g-card-footer">
+              <span style="font-size: 0.75rem; color: var(--ux4g-text-tertiary);">Audited Node</span>
+              <button type="button" class="ux4g-btn ux4g-btn-primary ux4g-btn-sm">View Details</button>
+            </div>
+          </div>
+
+          <div class="ux4g-card">
+            <div class="ux4g-card-body">
+              <span style="font-size: 0.75rem; font-weight: 700; color: var(--ux4g-text-tertiary); text-transform: uppercase;">Cooperative Metric Tile</span>
+              <h3 style="font-size: 2rem; font-weight: 800; color: var(--ux4g-gov-blue); margin-top: 4px;">₹4,82,500</h3>
+              <span style="font-size: 0.75rem; color: var(--ux4g-gov-green); font-weight: 600;">+15% Allocated from 142 Jobs</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <pre class="spec-code-box"><code>&lt;!-- Card Structure --&gt;
+&lt;div class="ux4g-card ux4g-card-interactive"&gt;
+  &lt;div class="ux4g-card-header"&gt;
+    &lt;h4&gt;Card Title&lt;/h4&gt;
+    &lt;span class="ux4g-badge ux4g-badge-success"&gt;Status&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="ux4g-card-body"&gt;
+    &lt;p&gt;Body content goes here...&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="ux4g-card-footer"&gt;
+    &lt;button type="button" class="ux4g-btn ux4g-btn-primary ux4g-btn-sm"&gt;Action&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <!-- ─── 4. Forms & Controls ─── -->
+    <section id="section-forms" class="spec-section">
+      <span class="spec-tag">4. INPUT CONTROLS</span>
+      <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--ux4g-gov-blue);">Form Fields, Toggles & Selects</h2>
+
+      <div class="spec-preview-box">
+        <div class="ux4g-grid ux4g-grid-cols-2 ux4g-gap-md">
+          <div class="ux4g-form-group">
+            <label class="ux4g-label ux4g-label-required" for="spec-name-input">Aadhaar Full Name</label>
+            <input type="text" id="spec-name-input" class="ux4g-input" value="Rajesh Kumar Verma" />
+            <span class="ux4g-input-helper">Must match name on Aadhaar e-KYC records</span>
+          </div>
+
+          <div class="ux4g-form-group">
+            <label class="ux4g-label ux4g-label-required" for="spec-role-select">Primary Cooperative Society</label>
+            <select class="ux4g-select" id="spec-role-select">
+              <option>Varanasi Central Service Cooperative (PSCS-UP-882)</option>
+              <option>Pune Metro Mahila Artisan PSCS</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-top: 1rem;">
+          <label class="ux4g-toggle">
+            <input type="checkbox" checked />
+            <span class="ux4g-toggle-slider"></span>
+            <span style="font-weight: 700; color: var(--ux4g-gov-blue);">Live Duty Availability Toggle (Online)</span>
+          </label>
+        </div>
+      </div>
+
+      <pre class="spec-code-box"><code>&lt;!-- Form Field with Required Label --&gt;
+&lt;div class="ux4g-form-group"&gt;
+  &lt;label class="ux4g-label ux4g-label-required" for="worker-id"&gt;Worker Name&lt;/label&gt;
+  &lt;input type="text" id="worker-id" class="ux4g-input" placeholder="Enter name" /&gt;
+  &lt;span class="ux4g-input-helper"&gt;Help description text&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- Toggle Switch --&gt;
+&lt;label class="ux4g-toggle"&gt;
+  &lt;input type="checkbox" checked /&gt;
+  &lt;span class="ux4g-toggle-slider"&gt;&lt;/span&gt;
+  &lt;span&gt;Toggle Label&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+    </section>
+
+    <!-- ─── 5. Badges & Chips ─── -->
+    <section id="section-badges" class="spec-section">
+      <span class="spec-tag">5. METADATA & STATUS</span>
+      <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--ux4g-gov-blue);">Badges, Status Tags & Pill Chips</h2>
+
+      <div class="spec-preview-box" style="display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center;">
+        <span class="ux4g-badge ux4g-badge-primary">ux4g-badge-primary</span>
+        <span class="ux4g-badge ux4g-badge-success"><span class="ux4g-icon-outlined" style="font-size:14px;">verified</span> Verified e-KYC</span>
+        <span class="ux4g-badge ux4g-badge-warning">In Progress</span>
+        <span class="ux4g-badge ux4g-badge-saffron">Welfare Fund 15%</span>
+        <span class="ux4g-badge ux4g-badge-neutral">Neutral Tag</span>
+      </div>
+
+      <pre class="spec-code-box"><code>&lt;!-- Badge Variants --&gt;
+&lt;span class="ux4g-badge ux4g-badge-primary"&gt;Primary&lt;/span&gt;
+&lt;span class="ux4g-badge ux4g-badge-success"&gt;&lt;span class="ux4g-icon-outlined"&gt;verified&lt;/span&gt; Verified&lt;/span&gt;
+&lt;span class="ux4g-badge ux4g-badge-warning"&gt;Warning&lt;/span&gt;
+&lt;span class="ux4g-badge ux4g-badge-saffron"&gt;Saffron&lt;/span&gt;</code></pre>
+    </section>
+
+    <!-- ─── 6. Journey Timeline & Stepper ─── -->
+    <section id="section-stepper" class="spec-section">
+      <span class="spec-tag">6. WORKFLOW & PIPELINE</span>
+      <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--ux4g-gov-blue);">4-Stage Journey Timeline / Stepper</h2>
+
+      <div class="spec-preview-box">
+        <div class="ux4g-stepper">
+          <div class="ux4g-step completed">
+            <div class="ux4g-step-circle">✓</div>
+            <span class="ux4g-step-label">1. Request Placed</span>
+          </div>
+          <div class="ux4g-step completed">
+            <div class="ux4g-step-circle">✓</div>
+            <span class="ux4g-step-label">2. Provider Assigned</span>
+          </div>
+          <div class="ux4g-step active">
+            <div class="ux4g-step-circle">3</div>
+            <span class="ux4g-step-label">3. Service In Progress</span>
+          </div>
+          <div class="ux4g-step">
+            <div class="ux4g-step-circle">4</div>
+            <span class="ux4g-step-label">4. Settled to Ledger</span>
+          </div>
+        </div>
+      </div>
+
+      <pre class="spec-code-box"><code>&lt;!-- 4-Step Pipeline --&gt;
+&lt;div class="ux4g-stepper"&gt;
+  &lt;div class="ux4g-step completed"&gt;
+    &lt;div class="ux4g-step-circle"&gt;✓&lt;/div&gt;
+    &lt;span class="ux4g-step-label"&gt;1. Request Placed&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="ux4g-step active"&gt;
+    &lt;div class="ux4g-step-circle"&gt;2&lt;/div&gt;
+    &lt;span class="ux4g-step-label"&gt;2. In Progress&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="ux4g-step"&gt;
+    &lt;div class="ux4g-step-circle"&gt;3&lt;/div&gt;
+    &lt;span class="ux4g-step-label"&gt;3. Completed&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <!-- ─── 7. Transparent Split Widget ─── -->
+    <section id="section-split" class="spec-section">
+      <span class="spec-tag">7. COOPERATIVE SPECIFIC PATTERN</span>
+      <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--ux4g-gov-blue);">Transparent Revenue Split Visualizer</h2>
+
+      <div class="spec-preview-box">
+        <div class="sahakar-split-bar">
+          <div class="split-segment split-provider" style="width: 80%;">Provider 80% (₹400)</div>
+          <div class="split-segment split-welfare" style="width: 15%;">PSCS Welfare 15% (₹75)</div>
+          <div class="split-segment split-platform" style="width: 5%;">Platform 5% (₹25)</div>
+        </div>
+      </div>
+
+      <pre class="spec-code-box"><code>&lt;!-- Cooperative Revenue Split Bar --&gt;
+&lt;div class="sahakar-split-bar"&gt;
+  &lt;div class="split-segment split-provider" style="width: 80%;"&gt;Provider 80%&lt;/div&gt;
+  &lt;div class="split-segment split-welfare" style="width: 15%;"&gt;Welfare 15%&lt;/div&gt;
+  &lt;div class="split-segment split-platform" style="width: 5%;"&gt;Platform 5%&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <!-- ─── 8. Data Tables ─── -->
+    <section id="section-tables" class="spec-section">
+      <span class="spec-tag">8. DATA DISPLAY</span>
+      <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--ux4g-gov-blue);">Government Ledger Table</h2>
+
+      <div class="spec-preview-box">
+        <div class="ux4g-table-container">
+          <table class="ux4g-table">
+            <thead>
+              <tr>
+                <th>Txn ID</th>
+                <th>Provider Name</th>
+                <th>Amount</th>
+                <th>Worker Net (80%)</th>
+                <th>Welfare Share (15%)</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>0x8839...ad1</code></td>
+                <td>Rajesh Kumar Verma</td>
+                <td>₹850.00</td>
+                <td style="color: var(--ux4g-gov-green); font-weight:700;">₹680.00</td>
+                <td style="color: var(--ux4g-gov-saffron); font-weight:700;">₹127.50</td>
+                <td><span class="ux4g-badge ux4g-badge-success">Settled</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="ux4g-footer">
+    <div class="ux4g-footer-strip">
+      <div class="ux4g-container">
+        <div class="ux4g-footer-strip-wrap">
+          <div class="ux4g-gov-compliance-badge">
+            <span class="india-flag"></span>
+            <span>UX4G Design System Standard Implementation Guide • Government of India</span>
+          </div>
+          <div>
+            <span>© 2026 Ministry of Cooperation & MeitY.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./assets/js/app.js"></script>
+</body>
+</html>

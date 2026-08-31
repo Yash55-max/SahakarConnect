@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Provider Workstation — SahakarConnect (Ministry of Cooperation)</title>
+  
+  <link rel="stylesheet" href="https://cdn.ux4g.gov.in/UX4G@3.1.0/index.css" />
+  <link rel="stylesheet" href="./assets/css/ux4g-theme.css" />
+  <link rel="icon" type="image/svg+xml" href="./assets/images/sahakar_logo.svg" />
+</head>
+<body>
+
+  <!-- Top Accessibility Bar -->
+  <header class="ux4g-topbar" role="banner">
+    <div class="ux4g-container">
+      <div class="ux4g-topbar__wrap">
+        <div>
+          <a aria-label="Government of India" href="https://www.india.gov.in/" target="_blank" rel="noopener">
+            <span class="india-flag"></span>
+            <span>भारत सरकार | Government of India</span>
+            <sup class="ux4g-icon-outlined" style="font-size:12px;">open_in_new</sup>
+          </a>
+        </div>
+        <nav aria-label="Accessibility Utilities" style="display: flex; align-items: center;">
+          <a href="#main-content" style="font-size: 0.75rem; margin-right: 0.5rem;">Skip to Main Content</a>
+          <span class="acc-top-divider"></span>
+          <div role="group" style="display: flex; align-items: center;">
+            <button class="ux4g-topbar__iconbtn" type="button" data-acc="font-decrease">A-</button>
+            <button class="ux4g-topbar__iconbtn" type="button" data-acc="font-reset">A</button>
+            <button class="ux4g-topbar__iconbtn" type="button" data-acc="font-increase">A+</button>
+          </div>
+          <span class="acc-top-divider"></span>
+          <button class="ux4g-topbar__iconbtn" type="button" data-acc="contrast-toggle" title="Contrast"><span class="ux4g-icon-outlined" style="font-size:14px;">contrast</span></button>
+          <button class="ux4g-topbar__iconbtn" type="button" data-acc="theme-toggle" title="Theme"><span class="ux4g-icon-outlined" style="font-size:14px;">dark_mode</span></button>
+          <span class="acc-top-divider"></span>
+          <button class="ux4g-topbar__selectbtn" type="button" data-acc="lang-toggle">
+            <span class="ux4g-icon-outlined" style="font-size:14px;">language</span>
+            <span id="current-lang-text">English</span>
+          </button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Demo Bar -->
+  <aside class="ux4g-demobar">
+    <div class="ux4g-container">
+      <div class="ux4g-demobar-content">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span class="ux4g-demo-tag">SIH26089 • Ministry of Cooperation</span>
+          <span style="font-size: 0.8125rem; font-weight: 500;">Role View:</span>
+        </div>
+        <div class="ux4g-role-switcher" role="tablist">
+          <a href="index.html" class="ux4g-role-btn">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">person</span> Citizen / Consumer
+          </a>
+          <a href="provider.html" class="ux4g-role-btn active">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">handyman</span> Cooperative Provider
+          </a>
+          <a href="admin.html" class="ux4g-role-btn">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">admin_panel_settings</span> Society Admin
+          </a>
+          <a href="governance.html" class="ux4g-role-btn">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">how_to_vote</span> Governance & Voting
+          </a>
+          <a href="regulator.html" class="ux4g-role-btn">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">account_balance</span> Registrar / Ministry
+          </a>
+          <a href="components-reference.html" class="ux4g-role-btn" style="background: rgba(255,255,255,0.15);">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">code</span> UX4G Spec Reference
+          </a>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Navbar -->
+  <nav class="ux4g-navbar">
+    <div class="ux4g-container">
+      <div class="ux4g-navbar-wrap">
+        <a href="index.html" class="ux4g-brand">
+          <img src="./assets/images/national_emblem.svg" alt="Emblem" class="ux4g-emblem" />
+          <span class="ux4g-divider-vertical"></span>
+          <img src="./assets/images/sahakar_logo.svg" alt="Logo" style="width: 44px; height: 44px;" />
+          <div class="ux4g-brand-text">
+            <span class="ux4g-brand-tagline">सहकार से समृद्धि</span>
+            <span class="ux4g-brand-title">Provider Workstation</span>
+            <span class="ux4g-brand-sub">Primary Service Cooperative Societies (PSCS) Member Portal</span>
+          </div>
+        </a>
+
+        <ul class="ux4g-navbar-links">
+          <li><a href="provider.html" class="ux4g-nav-link active">Active Jobs</a></li>
+          <li><a href="#welfare-passbook-section" class="ux4g-nav-link">Welfare Passbook</a></li>
+          <li><a href="governance.html" class="ux4g-nav-link">Member Voting (AGM)</a></li>
+        </ul>
+
+        <div class="ux4g-nav-actions">
+          <div style="display: flex; align-items: center; gap: 0.5rem; background: var(--ux4g-bg-subtle); padding: 4px 10px; border-radius: 9999px; border: 1px solid var(--ux4g-border-default);">
+            <img src="https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=150&auto=format&fit=crop&q=80" alt="Rajesh Verma" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover;">
+            <span style="font-size: 0.8125rem; font-weight: 700; color: var(--ux4g-gov-blue);">Rajesh Verma (PRV-101)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Provider Workstation Hero -->
+  <main class="ux4g-container" id="main-content" style="padding-top: 2rem; padding-bottom: 3.5rem;">
+    
+    <!-- Profile & Live Availability Bar -->
+    <div class="ux4g-card" style="margin-bottom: 2rem; border-top: 4px solid var(--ux4g-gov-green);">
+      <div class="ux4g-card-body" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 1.25rem;">
+          <img src="https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=150&auto=format&fit=crop&q=80" alt="Rajesh Verma" style="width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 3px solid var(--ux4g-gov-green);">
+          <div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--ux4g-gov-blue);">Rajesh Kumar Verma</h2>
+              <span class="ux4g-badge ux4g-badge-success"><span class="ux4g-icon-outlined" style="font-size:14px;">verified</span> Aadhaar e-KYC Verified</span>
+              <span class="ux4g-badge ux4g-badge-primary">Master Plumber</span>
+            </div>
+            <p style="color: var(--ux4g-text-secondary); font-size: 0.875rem; margin-top: 2px;">
+              Affiliated to: <strong>Varanasi Central Service Cooperative Society (Reg No. PSCS-UP-882)</strong>
+            </p>
+            <div style="display: flex; align-items: center; gap: 1rem; margin-top: 6px; font-size: 0.8125rem;">
+              <span>⭐ <strong>4.9 / 5.0</strong> (142 Jobs)</span>
+              <span>•</span>
+              <span>📅 Cooperative Member since <strong>Jan 2024</strong></span>
+              <span>•</span>
+              <span>🏛️ Share Certificate: <strong>#SC-882-9901</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Availability Toggle Control -->
+        <div style="background: var(--ux4g-bg-subtle); padding: 1rem 1.5rem; border-radius: var(--ux4g-radius-lg); border: 1px solid var(--ux4g-border-default); text-align: center;">
+          <label class="ux4g-toggle" style="margin-bottom: 0.25rem;">
+            <input type="checkbox" id="provider-avail-toggle" checked onchange="window.SahakarApp.toggleProviderAvailability()" />
+            <span class="ux4g-toggle-slider"></span>
+            <span style="font-weight: 700; font-size: 1rem; color: var(--ux4g-gov-blue);">Duty Status: ONLINE</span>
+          </label>
+          <span style="font-size: 0.75rem; color: var(--ux4g-text-tertiary); display: block;">GPS Broadcast Active for Varanasi Cluster</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Provider Financial & Welfare Metrics -->
+    <div class="ux4g-grid ux4g-grid-cols-4 ux4g-gap-md" style="margin-bottom: 2rem;">
+      <div class="ux4g-card">
+        <div class="ux4g-card-body">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <span style="font-size: 0.8125rem; font-weight: 600; color: var(--ux4g-text-tertiary); text-transform: uppercase;">Today's Take-Home</span>
+              <h3 style="font-size: 1.75rem; font-weight: 800; color: var(--ux4g-gov-green); margin-top: 4px;">₹2,040</h3>
+            </div>
+            <span class="ux4g-icon-outlined" style="background: var(--ux4g-gov-green-light); color: var(--ux4g-gov-green); padding: 8px; border-radius: 8px;">payments</span>
+          </div>
+          <span style="font-size: 0.75rem; color: var(--ux4g-text-secondary); margin-top: 0.5rem; display: block;">3 Jobs Completed Today (80% net)</span>
+        </div>
+      </div>
+
+      <div class="ux4g-card">
+        <div class="ux4g-card-body">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <span style="font-size: 0.8125rem; font-weight: 600; color: var(--ux4g-text-tertiary); text-transform: uppercase;">PSCS Welfare Accrual</span>
+              <h3 style="font-size: 1.75rem; font-weight: 800; color: var(--ux4g-gov-saffron); margin-top: 4px;">₹382.50</h3>
+            </div>
+            <span class="ux4g-icon-outlined" style="background: var(--ux4g-gov-saffron-light); color: var(--ux4g-gov-saffron); padding: 8px; border-radius: 8px;">health_and_safety</span>
+          </div>
+          <span style="font-size: 0.75rem; color: var(--ux4g-text-secondary); margin-top: 0.5rem; display: block;">Credited to your Health & Safety Fund</span>
+        </div>
+      </div>
+
+      <div class="ux4g-card">
+        <div class="ux4g-card-body">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <span style="font-size: 0.8125rem; font-weight: 600; color: var(--ux4g-text-tertiary); text-transform: uppercase;">Pension Endowment</span>
+              <h3 style="font-size: 1.75rem; font-weight: 800; color: var(--ux4g-gov-blue); margin-top: 4px;">₹42,850</h3>
+            </div>
+            <span class="ux4g-icon-outlined" style="background: var(--ux4g-gov-blue-light); color: var(--ux4g-gov-blue); padding: 8px; border-radius: 8px;">savings</span>
+          </div>
+          <span style="font-size: 0.75rem; color: var(--ux4g-text-secondary); margin-top: 0.5rem; display: block;">Cooperative Long-term Reserve</span>
+        </div>
+      </div>
+
+      <div class="ux4g-card">
+        <div class="ux4g-card-body">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <span style="font-size: 0.8125rem; font-weight: 600; color: var(--ux4g-text-tertiary); text-transform: uppercase;">Annual Dividend (Est.)</span>
+              <h3 style="font-size: 1.75rem; font-weight: 800; color: var(--ux4g-gov-blue); margin-top: 4px;">₹8,450</h3>
+            </div>
+            <span class="ux4g-icon-outlined" style="background: var(--ux4g-gov-blue-light); color: var(--ux4g-gov-blue); padding: 8px; border-radius: 8px;">pie_chart</span>
+          </div>
+          <span style="font-size: 0.75rem; color: var(--ux4g-text-secondary); margin-top: 0.5rem; display: block;">Based on 142 Society Shares</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Gigs & Work Queue -->
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+      <div>
+        <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--ux4g-gov-blue);">Assigned Service Requests</h3>
+        <p style="color: var(--ux4g-text-secondary); font-size: 0.875rem;">Manage incoming bookings and update service status in real-time.</p>
+      </div>
+      <button type="button" class="ux4g-btn ux4g-btn-outline-primary ux4g-btn-sm" onclick="window.location.reload()">
+        <span class="ux4g-icon-outlined" style="font-size:16px;">refresh</span> Refresh Feed
+      </button>
+    </div>
+
+    <div id="provider-active-jobs">
+      <!-- Populated dynamically by app.js -->
+    </div>
+
+    <!-- ─── Welfare Passbook Audit Section ─── -->
+    <div id="welfare-passbook-section" style="margin-top: 3.5rem;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+        <div>
+          <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--ux4g-gov-blue);">Your Cooperative Welfare Passbook</h3>
+          <p style="color: var(--ux4g-text-secondary); font-size: 0.875rem;">Audited ledger entries of the 15% welfare fund contributed on every job.</p>
+        </div>
+        <button type="button" class="ux4g-btn ux4g-btn-outline-neutral ux4g-btn-sm" onclick="window.SahakarApp.showToast('Passbook statement PDF generated!', 'info')">
+          <span class="ux4g-icon-outlined" style="font-size:16px;">download</span> Download PDF Passbook
+        </button>
+      </div>
+
+      <div class="ux4g-table-container">
+        <table class="ux4g-table">
+          <thead>
+            <tr>
+              <th>Date & Time</th>
+              <th>Booking ID</th>
+              <th>Gross Amount</th>
+              <th>Your Payout (80%)</th>
+              <th>Welfare Reserve (15%)</th>
+              <th>Platform Fee (5%)</th>
+              <th>Settlement Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>31 Aug 2026, 02:30 PM</td>
+              <td><strong>BKG-8839</strong></td>
+              <td>₹850.00</td>
+              <td style="color: var(--ux4g-gov-green); font-weight: 700;">₹680.00</td>
+              <td style="color: var(--ux4g-gov-saffron); font-weight: 700;">₹127.50</td>
+              <td>₹42.50</td>
+              <td><span class="ux4g-badge ux4g-badge-warning">Processing</span></td>
+            </tr>
+            <tr>
+              <td>30 Aug 2026, 11:15 AM</td>
+              <td><strong>BKG-8832</strong></td>
+              <td>₹600.00</td>
+              <td style="color: var(--ux4g-gov-green); font-weight: 700;">₹480.00</td>
+              <td style="color: var(--ux4g-gov-saffron); font-weight: 700;">₹90.00</td>
+              <td>₹30.00</td>
+              <td><span class="ux4g-badge ux4g-badge-success">Settled to Bank</span></td>
+            </tr>
+            <tr>
+              <td>29 Aug 2026, 04:45 PM</td>
+              <td><strong>BKG-8820</strong></td>
+              <td>₹1,100.00</td>
+              <td style="color: var(--ux4g-gov-green); font-weight: 700;">₹880.00</td>
+              <td style="color: var(--ux4g-gov-saffron); font-weight: 700;">₹165.00</td>
+              <td>₹55.00</td>
+              <td><span class="ux4g-badge ux4g-badge-success">Settled to Bank</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="ux4g-footer">
+    <div class="ux4g-footer-strip">
+      <div class="ux4g-container">
+        <div class="ux4g-footer-strip-wrap">
+          <div class="ux4g-gov-compliance-badge">
+            <span class="india-flag"></span>
+            <span>Empowering Cooperative Gig Providers with Dignified Work & Social Security</span>
+          </div>
+          <div>
+            <span>© 2026 Ministry of Cooperation, Government of India.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./assets/js/app.js"></script>
+</body>
+</html>

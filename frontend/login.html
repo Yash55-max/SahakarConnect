@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MeriPehchan & DigiLocker SSO — SahakarConnect (Ministry of Cooperation)</title>
+  
+  <link rel="stylesheet" href="https://cdn.ux4g.gov.in/UX4G@3.1.0/index.css" />
+  <link rel="stylesheet" href="./assets/css/ux4g-theme.css" />
+  <link rel="icon" type="image/svg+xml" href="./assets/images/sahakar_logo.svg" />
+</head>
+<body style="min-height: 100vh; display: flex; flex-direction: column;">
+
+  <!-- Accessibility Bar -->
+  <header class="ux4g-topbar" role="banner">
+    <div class="ux4g-container">
+      <div class="ux4g-topbar__wrap">
+        <a href="https://www.india.gov.in/" target="_blank" rel="noopener">
+          <span class="india-flag"></span>
+          <span>भारत सरकार | Government of India</span>
+        </a>
+        <nav style="display: flex; align-items: center;">
+          <button class="ux4g-topbar__iconbtn" type="button" data-acc="font-decrease">A-</button>
+          <button class="ux4g-topbar__iconbtn" type="button" data-acc="font-reset">A</button>
+          <button class="ux4g-topbar__iconbtn" type="button" data-acc="font-increase">A+</button>
+          <span class="acc-top-divider"></span>
+          <button class="ux4g-topbar__iconbtn" type="button" data-acc="theme-toggle"><span class="ux4g-icon-outlined" style="font-size:14px;">dark_mode</span></button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navbar -->
+  <nav class="ux4g-navbar">
+    <div class="ux4g-container">
+      <div class="ux4g-navbar-wrap">
+        <a href="index.html" class="ux4g-brand">
+          <img src="./assets/images/national_emblem.svg" alt="Emblem" class="ux4g-emblem" />
+          <span class="ux4g-divider-vertical"></span>
+          <img src="./assets/images/sahakar_logo.svg" alt="Logo" style="width: 44px; height: 44px;" />
+          <div class="ux4g-brand-text">
+            <span class="ux4g-brand-tagline">मेरी पहचान • MeriPehchan SSO</span>
+            <span class="ux4g-brand-title">SahakarConnect Auth</span>
+            <span class="ux4g-brand-sub">Government National Single Sign-On Gateway</span>
+          </div>
+        </a>
+        <a href="index.html" class="ux4g-btn ux4g-btn-outline-neutral ux4g-btn-sm">
+          ← Back to Citizen Portal
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Login Card Container -->
+  <main class="ux4g-container" style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 3rem 1rem;">
+    <div class="ux4g-card" style="width: 100%; max-width: 460px; box-shadow: var(--ux4g-shadow-lg);">
+      <div class="ux4g-card-header" style="text-align: center; display: block; border-bottom: 2px solid var(--ux4g-gov-saffron);">
+        <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--ux4g-gov-blue);">Sign In via MeriPehchan</h2>
+        <p style="font-size: 0.8125rem; color: var(--ux4g-text-tertiary); margin-top: 4px;">
+          National Single Sign-On (NSSO) • Digital India
+        </p>
+      </div>
+
+      <div class="ux4g-card-body">
+        
+        <!-- Role Selection Tabs -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; background: var(--ux4g-bg-subtle); padding: 4px; border-radius: var(--ux4g-radius-md); margin-bottom: 1.5rem;">
+          <button type="button" class="ux4g-btn ux4g-btn-primary ux4g-btn-sm" id="tab-consumer" onclick="switchLoginRole('consumer')">Citizen</button>
+          <button type="button" class="ux4g-btn ux4g-btn-outline-neutral ux4g-btn-sm" id="tab-provider" onclick="switchLoginRole('provider')">Provider</button>
+          <button type="button" class="ux4g-btn ux4g-btn-outline-neutral ux4g-btn-sm" id="tab-admin" onclick="switchLoginRole('admin')">Society</button>
+        </div>
+
+        <form id="login-form" onsubmit="handleLoginSubmit(event)">
+          <div class="ux4g-form-group">
+            <label class="ux4g-label ux4g-label-required" for="auth-phone">Aadhaar Registered Mobile / Email</label>
+            <input type="text" id="auth-phone" class="ux4g-input" required value="9876543210" placeholder="+91 98765 43210" />
+          </div>
+
+          <div class="ux4g-form-group">
+            <label class="ux4g-label ux4g-label-required" for="auth-otp">6-Digit Aadhaar / DigiLocker OTP</label>
+            <input type="password" id="auth-otp" class="ux4g-input" required value="123456" placeholder="• • • • • •" />
+            <span class="ux4g-input-helper">Demo Sandbox OTP is: <strong>123456</strong></span>
+          </div>
+
+          <button type="submit" class="ux4g-btn ux4g-btn-primary" style="width: 100%; margin-top: 0.5rem;">
+            <span class="ux4g-icon-outlined" style="font-size:18px;">fingerprint</span>
+            Verify & Sign In
+          </button>
+        </form>
+
+        <div style="margin-top: 1.5rem; text-align: center; border-top: 1px solid var(--ux4g-border-default); padding-top: 1.25rem;">
+          <p style="font-size: 0.75rem; color: var(--ux4g-text-tertiary);">
+            Secured by DigiLocker National e-KYC infrastructure (MeitY). No commercial data sharing.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="ux4g-footer">
+    <div class="ux4g-footer-strip">
+      <div class="ux4g-container">
+        <div class="ux4g-footer-strip-wrap">
+          <div class="ux4g-gov-compliance-badge">
+            <span class="india-flag"></span>
+            <span>Government of India National SSO Gateway</span>
+          </div>
+          <div>
+            <span>© 2026 Ministry of Cooperation.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./assets/js/app.js"></script>
+  <script>
+    let activeRole = 'consumer';
+    function switchLoginRole(role) {
+      activeRole = role;
+      document.getElementById('tab-consumer').className = role === 'consumer' ? 'ux4g-btn ux4g-btn-primary ux4g-btn-sm' : 'ux4g-btn ux4g-btn-outline-neutral ux4g-btn-sm';
+      document.getElementById('tab-provider').className = role === 'provider' ? 'ux4g-btn ux4g-btn-primary ux4g-btn-sm' : 'ux4g-btn ux4g-btn-outline-neutral ux4g-btn-sm';
+      document.getElementById('tab-admin').className = role === 'admin' ? 'ux4g-btn ux4g-btn-primary ux4g-btn-sm' : 'ux4g-btn ux4g-btn-outline-neutral ux4g-btn-sm';
+    }
+
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      window.SahakarApp.showToast(`Logged in successfully as ${activeRole.toUpperCase()}!`, 'success');
+      setTimeout(() => {
+        if (activeRole === 'consumer') window.location.href = 'index.html';
+        if (activeRole === 'provider') window.location.href = 'provider.html';
+        if (activeRole === 'admin') window.location.href = 'admin.html';
+      }, 700);
+    }
+  </script>
+</body>
+</html>

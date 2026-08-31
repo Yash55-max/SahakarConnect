@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Regulator Oversight — SahakarConnect (Ministry of Cooperation)</title>
+  
+  <link rel="stylesheet" href="https://cdn.ux4g.gov.in/UX4G@3.1.0/index.css" />
+  <link rel="stylesheet" href="./assets/css/ux4g-theme.css" />
+  <link rel="icon" type="image/svg+xml" href="./assets/images/sahakar_logo.svg" />
+</head>
+<body>
+
+  <!-- Top Accessibility Bar -->
+  <header class="ux4g-topbar" role="banner">
+    <div class="ux4g-container">
+      <div class="ux4g-topbar__wrap">
+        <div>
+          <a aria-label="Government of India" href="https://www.india.gov.in/" target="_blank" rel="noopener">
+            <span class="india-flag"></span>
+            <span>भारत सरकार | Government of India</span>
+            <sup class="ux4g-icon-outlined" style="font-size:12px;">open_in_new</sup>
+          </a>
+        </div>
+        <nav aria-label="Accessibility Utilities" style="display: flex; align-items: center;">
+          <a href="#main-content" style="font-size: 0.75rem; margin-right: 0.5rem;">Skip to Main Content</a>
+          <span class="acc-top-divider"></span>
+          <div role="group" style="display: flex; align-items: center;">
+            <button class="ux4g-topbar__iconbtn" type="button" data-acc="font-decrease">A-</button>
+            <button class="ux4g-topbar__iconbtn" type="button" data-acc="font-reset">A</button>
+            <button class="ux4g-topbar__iconbtn" type="button" data-acc="font-increase">A+</button>
+          </div>
+          <span class="acc-top-divider"></span>
+          <button class="ux4g-topbar__iconbtn" type="button" data-acc="contrast-toggle" title="Contrast"><span class="ux4g-icon-outlined" style="font-size:14px;">contrast</span></button>
+          <button class="ux4g-topbar__iconbtn" type="button" data-acc="theme-toggle" title="Theme"><span class="ux4g-icon-outlined" style="font-size:14px;">dark_mode</span></button>
+          <span class="acc-top-divider"></span>
+          <button class="ux4g-topbar__selectbtn" type="button" data-acc="lang-toggle">
+            <span class="ux4g-icon-outlined" style="font-size:14px;">language</span>
+            <span id="current-lang-text">English</span>
+          </button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Demo Bar -->
+  <aside class="ux4g-demobar">
+    <div class="ux4g-container">
+      <div class="ux4g-demobar-content">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span class="ux4g-demo-tag">SIH26089 • Ministry of Cooperation</span>
+          <span style="font-size: 0.8125rem; font-weight: 500;">Role View:</span>
+        </div>
+        <div class="ux4g-role-switcher" role="tablist">
+          <a href="index.html" class="ux4g-role-btn">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">person</span> Citizen / Consumer
+          </a>
+          <a href="provider.html" class="ux4g-role-btn">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">handyman</span> Cooperative Provider
+          </a>
+          <a href="admin.html" class="ux4g-role-btn">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">admin_panel_settings</span> Society Admin
+          </a>
+          <a href="governance.html" class="ux4g-role-btn">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">how_to_vote</span> Governance & Voting
+          </a>
+          <a href="regulator.html" class="ux4g-role-btn active">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">account_balance</span> Registrar / Ministry
+          </a>
+          <a href="components-reference.html" class="ux4g-role-btn" style="background: rgba(255,255,255,0.15);">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">code</span> UX4G Spec Reference
+          </a>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Navbar -->
+  <nav class="ux4g-navbar">
+    <div class="ux4g-container">
+      <div class="ux4g-navbar-wrap">
+        <a href="index.html" class="ux4g-brand">
+          <img src="./assets/images/national_emblem.svg" alt="Emblem" class="ux4g-emblem" />
+          <span class="ux4g-divider-vertical"></span>
+          <img src="./assets/images/sahakar_logo.svg" alt="Logo" style="width: 44px; height: 44px;" />
+          <div class="ux4g-brand-text">
+            <span class="ux4g-brand-tagline">केंद्रीय सहकारी निबंधक • Central Registrar</span>
+            <span class="ux4g-brand-title">Ministry & Registrar Dashboard</span>
+            <span class="ux4g-brand-sub">National Oversight of Primary Service Cooperative Societies</span>
+          </div>
+        </a>
+
+        <ul class="ux4g-navbar-links">
+          <li><a href="regulator.html" class="ux4g-nav-link active">National Overview</a></li>
+          <li><a href="#district-heatmap-section" class="ux4g-nav-link">District Audits</a></li>
+          <li><a href="#compliance-standards" class="ux4g-nav-link">Fair Gig Index</a></li>
+        </ul>
+
+        <div class="ux4g-nav-actions">
+          <span class="ux4g-badge ux4g-badge-primary">
+            <span class="ux4g-icon-outlined" style="font-size:14px;">security</span> Ministry Auditor Node
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Regulator Main Content -->
+  <main class="ux4g-container" id="main-content" style="padding-top: 2.5rem; padding-bottom: 3.5rem;">
+    
+    <!-- Header Banner -->
+    <div class="ux4g-card" style="margin-bottom: 2.5rem; background: linear-gradient(135deg, #0A192F 0%, #003366 100%); color: #FFFFFF; border: none;">
+      <div class="ux4g-card-body" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 2rem;">
+        <div>
+          <span class="ux4g-badge ux4g-badge-saffron" style="background: rgba(230,81,0,0.3); color: #FFB74D; border-color: rgba(255,183,77,0.4);">
+            National Cooperative Registry Oversight • SIH26089
+          </span>
+          <h1 style="font-size: 1.85rem; font-weight: 800; color: #FFFFFF; margin-top: 0.5rem;">
+            Primary Service Cooperative Societies (PSCS) Regulatory Monitor
+          </h1>
+          <p style="color: #CBD5E1; font-size: 0.9375rem; margin-top: 4px;">
+            Real-time compliance monitoring across 28 States, 780+ Districts, ensuring zero wage exploitation and statutory welfare reserves.
+          </p>
+        </div>
+        <div>
+          <button type="button" class="ux4g-btn ux4g-btn-secondary" onclick="window.SahakarApp.showToast('National Statutory Audit Dossier compiled successfully!', 'success')">
+            <span class="ux4g-icon-outlined" style="font-size:18px;">description</span>
+            Download Ministry Dossier (.PDF)
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- National Aggregate Metrics -->
+    <div class="ux4g-grid ux4g-grid-cols-4 ux4g-gap-md" style="margin-bottom: 2.5rem;">
+      <div class="ux4g-card">
+        <div class="ux4g-card-body">
+          <span style="font-size: 0.75rem; font-weight: 700; color: var(--ux4g-text-tertiary); text-transform: uppercase;">Registered PSCS Units</span>
+          <h3 style="font-size: 2rem; font-weight: 800; color: var(--ux4g-gov-blue); margin-top: 4px;">1,248</h3>
+          <span style="font-size: 0.75rem; color: var(--ux4g-gov-green); font-weight: 600;">Across 18 Pilot States</span>
+        </div>
+      </div>
+
+      <div class="ux4g-card">
+        <div class="ux4g-card-body">
+          <span style="font-size: 0.75rem; font-weight: 700; color: var(--ux4g-text-tertiary); text-transform: uppercase;">Total Gig Workers Enrolled</span>
+          <h3 style="font-size: 2rem; font-weight: 800; color: var(--ux4g-gov-blue); margin-top: 4px;">84,650</h3>
+          <span style="font-size: 0.75rem; color: var(--ux4g-gov-green); font-weight: 600;">99.4% Aadhaar e-KYC Verified</span>
+        </div>
+      </div>
+
+      <div class="ux4g-card">
+        <div class="ux4g-card-body">
+          <span style="font-size: 0.75rem; font-weight: 700; color: var(--ux4g-text-tertiary); text-transform: uppercase;">Total Welfare Reserves</span>
+          <h3 style="font-size: 2rem; font-weight: 800; color: var(--ux4g-gov-saffron); margin-top: 4px;">₹42.8 Cr</h3>
+          <span style="font-size: 0.75rem; color: var(--ux4g-gov-green); font-weight: 600;">100% Reserve Adequacy Ratio</span>
+        </div>
+      </div>
+
+      <div class="ux4g-card">
+        <div class="ux4g-card-body">
+          <span style="font-size: 0.75rem; font-weight: 700; color: var(--ux4g-text-tertiary); text-transform: uppercase;">Fair Gig Compliance Score</span>
+          <h3 style="font-size: 2rem; font-weight: 800; color: var(--ux4g-gov-green); margin-top: 4px;">98.2%</h3>
+          <span style="font-size: 0.75rem; color: var(--ux4g-text-secondary);">Above Central Minimum Wages</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── District-wise Audit & Compliance Table ─── -->
+    <div id="district-heatmap-section" style="margin-bottom: 3.5rem;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+        <div>
+          <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--ux4g-gov-blue);">State & District PSCS Society Performance Matrix</h3>
+          <p style="color: var(--ux4g-text-secondary); font-size: 0.875rem;">Audit compliance with Cooperative Bylaws, Worker Payout ratio, and Grievance redressal.</p>
+        </div>
+      </div>
+
+      <div class="ux4g-table-container">
+        <table class="ux4g-table">
+          <thead>
+            <tr>
+              <th>District & State</th>
+              <th>PSCS Society Entity</th>
+              <th>Enrolled Workers</th>
+              <th>Avg Worker Share</th>
+              <th>Welfare Reserve</th>
+              <th>Grievance Rate</th>
+              <th>Regulatory Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Varanasi, UP</strong></td>
+              <td>Varanasi Central Service Cooperative (PSCS-UP-882)</td>
+              <td>142 Providers</td>
+              <td><span style="color: var(--ux4g-gov-green); font-weight: 700;">80.0% (₹450/hr)</span></td>
+              <td>₹4,82,500</td>
+              <td>0.2% (Resolved)</td>
+              <td><span class="ux4g-badge ux4g-badge-success">Fully Compliant</span></td>
+            </tr>
+            <tr>
+              <td><strong>Pune, Maharashtra</strong></td>
+              <td>Pune Metro Mahila Artisan & Care PSCS</td>
+              <td>310 Providers</td>
+              <td><span style="color: var(--ux4g-gov-green); font-weight: 700;">82.5% (₹520/hr)</span></td>
+              <td>₹11,40,000</td>
+              <td>0.1% (Resolved)</td>
+              <td><span class="ux4g-badge ux4g-badge-success">Fully Compliant</span></td>
+            </tr>
+            <tr>
+              <td><strong>Delhi NCR</strong></td>
+              <td>Delhi North Progressive Artisan Cooperative</td>
+              <td>580 Providers</td>
+              <td><span style="color: var(--ux4g-gov-green); font-weight: 700;">80.0% (₹480/hr)</span></td>
+              <td>₹24,80,000</td>
+              <td>0.4% (Resolved)</td>
+              <td><span class="ux4g-badge ux4g-badge-success">Fully Compliant</span></td>
+            </tr>
+            <tr>
+              <td><strong>Jaipur, Rajasthan</strong></td>
+              <td>Jaipur Heritage Cooperative Society</td>
+              <td>190 Providers</td>
+              <td><span style="color: var(--ux4g-gov-green); font-weight: 700;">80.0% (₹420/hr)</span></td>
+              <td>₹6,20,000</td>
+              <td>0.3% (Resolved)</td>
+              <td><span class="ux4g-badge ux4g-badge-success">Fully Compliant</span></td>
+            </tr>
+            <tr>
+              <td><strong>Hyderabad, Telangana</strong></td>
+              <td>Hyderabad Artisan Guild Cooperative</td>
+              <td>245 Providers</td>
+              <td><span style="color: var(--ux4g-gov-green); font-weight: 700;">81.0% (₹490/hr)</span></td>
+              <td>₹8,90,000</td>
+              <td>0.2% (Resolved)</td>
+              <td><span class="ux4g-badge ux4g-badge-success">Fully Compliant</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Statutory Fair Gig Index Info -->
+    <div id="compliance-standards" class="ux4g-card">
+      <div class="ux4g-card-header">
+        <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--ux4g-gov-blue);">
+          Statutory Standards: Ministry of Cooperation Fair Gig Framework
+        </h3>
+        <span class="ux4g-badge ux4g-badge-primary">SIH26089 Directive</span>
+      </div>
+      <div class="ux4g-card-body">
+        <div class="ux4g-grid ux4g-grid-cols-3 ux4g-gap-md">
+          <div style="background: var(--ux4g-bg-subtle); padding: 1.25rem; border-radius: var(--ux4g-radius-md);">
+            <h4 style="font-size: 1rem; color: var(--ux4g-gov-blue); margin-bottom: 0.5rem;">1. Minimum 80% Net Payout</h4>
+            <p style="font-size: 0.8125rem; color: var(--ux4g-text-secondary); line-height: 1.6;">
+              No intermediary or technology fee may deduct more than 20% total, of which at least 15% must remain within the primary cooperative society welfare corpus.
+            </p>
+          </div>
+
+          <div style="background: var(--ux4g-bg-subtle); padding: 1.25rem; border-radius: var(--ux4g-radius-md);">
+            <h4 style="font-size: 1rem; color: var(--ux4g-gov-blue); margin-bottom: 0.5rem;">2. Mandatory Social Security</h4>
+            <p style="font-size: 0.8125rem; color: var(--ux4g-text-secondary); line-height: 1.6;">
+              All registered PSCS societies must maintain continuous outpatient medical coverage and accident indemnity insurance for every active provider.
+            </p>
+          </div>
+
+          <div style="background: var(--ux4g-bg-subtle); padding: 1.25rem; border-radius: var(--ux4g-radius-md);">
+            <h4 style="font-size: 1rem; color: var(--ux4g-gov-blue); margin-bottom: 0.5rem;">3. Cryptographic Governance Audit</h4>
+            <p style="font-size: 0.8125rem; color: var(--ux4g-text-secondary); line-height: 1.6;">
+              All member votes, general body resolutions, and commission adjustments must be logged on the tamper-proof cooperative ledger with public verifiable receipts.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="ux4g-footer">
+    <div class="ux4g-footer-strip">
+      <div class="ux4g-container">
+        <div class="ux4g-footer-strip-wrap">
+          <div class="ux4g-gov-compliance-badge">
+            <span class="india-flag"></span>
+            <span>Central Registrar of Cooperative Societies Oversight Gateway • Government of India</span>
+          </div>
+          <div>
+            <span>© 2026 Ministry of Cooperation.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Governance & Voting — SahakarConnect (Ministry of Cooperation)</title>
+  
+  <link rel="stylesheet" href="https://cdn.ux4g.gov.in/UX4G@3.1.0/index.css" />
+  <link rel="stylesheet" href="./assets/css/ux4g-theme.css" />
+  <link rel="icon" type="image/svg+xml" href="./assets/images/sahakar_logo.svg" />
+</head>
+<body>
+
+  <!-- Top Accessibility Bar -->
+  <header class="ux4g-topbar" role="banner">
+    <div class="ux4g-container">
+      <div class="ux4g-topbar__wrap">
+        <div>
+          <a aria-label="Government of India" href="https://www.india.gov.in/" target="_blank" rel="noopener">
+            <span class="india-flag"></span>
+            <span>भारत सरकार | Government of India</span>
+            <sup class="ux4g-icon-outlined" style="font-size:12px;">open_in_new</sup>
+          </a>
+        </div>
+        <nav aria-label="Accessibility Utilities" style="display: flex; align-items: center;">
+          <a href="#main-content" style="font-size: 0.75rem; margin-right: 0.5rem;">Skip to Main Content</a>
+          <span class="acc-top-divider"></span>
+          <div role="group" style="display: flex; align-items: center;">
+            <button class="ux4g-topbar__iconbtn" type="button" data-acc="font-decrease">A-</button>
+            <button class="ux4g-topbar__iconbtn" type="button" data-acc="font-reset">A</button>
+            <button class="ux4g-topbar__iconbtn" type="button" data-acc="font-increase">A+</button>
+          </div>
+          <span class="acc-top-divider"></span>
+          <button class="ux4g-topbar__iconbtn" type="button" data-acc="contrast-toggle" title="Contrast"><span class="ux4g-icon-outlined" style="font-size:14px;">contrast</span></button>
+          <button class="ux4g-topbar__iconbtn" type="button" data-acc="theme-toggle" title="Theme"><span class="ux4g-icon-outlined" style="font-size:14px;">dark_mode</span></button>
+          <span class="acc-top-divider"></span>
+          <button class="ux4g-topbar__selectbtn" type="button" data-acc="lang-toggle">
+            <span class="ux4g-icon-outlined" style="font-size:14px;">language</span>
+            <span id="current-lang-text">English</span>
+          </button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Demo Bar -->
+  <aside class="ux4g-demobar">
+    <div class="ux4g-container">
+      <div class="ux4g-demobar-content">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span class="ux4g-demo-tag">SIH26089 • Ministry of Cooperation</span>
+          <span style="font-size: 0.8125rem; font-weight: 500;">Role View:</span>
+        </div>
+        <div class="ux4g-role-switcher" role="tablist">
+          <a href="index.html" class="ux4g-role-btn">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">person</span> Citizen / Consumer
+          </a>
+          <a href="provider.html" class="ux4g-role-btn">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">handyman</span> Cooperative Provider
+          </a>
+          <a href="admin.html" class="ux4g-role-btn">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">admin_panel_settings</span> Society Admin
+          </a>
+          <a href="governance.html" class="ux4g-role-btn active">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">how_to_vote</span> Governance & Voting
+          </a>
+          <a href="regulator.html" class="ux4g-role-btn">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">account_balance</span> Registrar / Ministry
+          </a>
+          <a href="components-reference.html" class="ux4g-role-btn" style="background: rgba(255,255,255,0.15);">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">code</span> UX4G Spec Reference
+          </a>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Navbar -->
+  <nav class="ux4g-navbar">
+    <div class="ux4g-container">
+      <div class="ux4g-navbar-wrap">
+        <a href="index.html" class="ux4g-brand">
+          <img src="./assets/images/national_emblem.svg" alt="Emblem" class="ux4g-emblem" />
+          <span class="ux4g-divider-vertical"></span>
+          <img src="./assets/images/sahakar_logo.svg" alt="Logo" style="width: 44px; height: 44px;" />
+          <div class="ux4g-brand-text">
+            <span class="ux4g-brand-tagline">एक सदस्य, एक मत • Democratic Cooperative Principles</span>
+            <span class="ux4g-brand-title">Cooperative Governance Hall</span>
+            <span class="ux4g-brand-sub">Primary Service Cooperative Societies General Body Voting</span>
+          </div>
+        </a>
+
+        <ul class="ux4g-navbar-links">
+          <li><a href="governance.html" class="ux4g-nav-link active">Active Resolutions</a></li>
+          <li><a href="#agm-archive-section" class="ux4g-nav-link">AGM Minutes & Bylaws</a></li>
+          <li><a href="#propose-resolution-section" class="ux4g-nav-link">Propose Motion</a></li>
+        </ul>
+
+        <div class="ux4g-nav-actions">
+          <span class="ux4g-badge ux4g-badge-success">
+            <span class="ux4g-icon-outlined" style="font-size:14px;">how_to_reg</span> Voting Pass: Active
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Governance Main Content -->
+  <main class="ux4g-container" id="main-content" style="padding-top: 2.5rem; padding-bottom: 3.5rem;">
+    
+    <!-- Hero Banner -->
+    <div class="ux4g-card" style="margin-bottom: 2.5rem; background: linear-gradient(135deg, #1B5E20 0%, #0A3D11 100%); color: #FFFFFF; border: none;">
+      <div class="ux4g-card-body" style="padding: 2rem;">
+        <div class="ux4g-badge ux4g-badge-saffron" style="background: rgba(230,81,0,0.3); color: #FFD54F; border-color: rgba(255,213,79,0.4); margin-bottom: 0.75rem;">
+          Democratic Cooperative Architecture
+        </div>
+        <h1 style="font-size: 1.85rem; font-weight: 800; color: #FFFFFF; line-height: 1.3;">
+          Worker-Governed Marketplaces: Members Decide Commissions, Welfare, and Dividends
+        </h1>
+        <p style="color: #E8F5E9; font-size: 1rem; max-width: 820px; margin-top: 0.5rem; line-height: 1.6;">
+          Unlike corporate gig platforms where algorithm changes and commission hikes are dictated unilaterally, SahakarConnect empowers every verified cooperative member to vote on fee structures and welfare allocations with 100% cryptographic transparency.
+        </p>
+      </div>
+    </div>
+
+    <!-- Active Resolutions Header -->
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+      <div>
+        <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--ux4g-gov-blue);">Active Member Resolutions Up for Voting</h2>
+        <p style="color: var(--ux4g-text-secondary); font-size: 0.875rem;">Cast your vote. Every ballot is cryptographically signed and stored in the cooperative ledger.</p>
+      </div>
+      <button type="button" class="ux4g-btn ux4g-btn-outline-primary ux4g-btn-sm" onclick="window.SahakarApp.renderGovernancePolls()">
+        <span class="ux4g-icon-outlined" style="font-size:16px;">refresh</span> Refresh Tallies
+      </button>
+    </div>
+
+    <!-- Resolutions Container -->
+    <div id="governance-polls-container">
+      <!-- Populated dynamically by app.js -->
+    </div>
+
+    <!-- ─── 2. Propose New Member Motion Form ─── -->
+    <div id="propose-resolution-section" class="ux4g-card" style="margin-top: 3.5rem;">
+      <div class="ux4g-card-header">
+        <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--ux4g-gov-blue);">
+          <span class="ux4g-icon-outlined" style="font-size: 20px; color: var(--ux4g-gov-blue);">post_add</span>
+          Submit New Member Motion for Managing Committee Review
+        </h3>
+        <span class="ux4g-badge ux4g-badge-neutral">Requires 10 Member Co-Sponsors</span>
+      </div>
+      <div class="ux4g-card-body">
+        <form onsubmit="event.preventDefault(); window.SahakarApp.showToast('Motion submitted for Cooperative Committee Review!', 'success'); this.reset();">
+          <div class="ux4g-form-group">
+            <label class="ux4g-label ux4g-label-required" for="motion-title">Motion Title / Subject</label>
+            <input type="text" id="motion-title" class="ux4g-input" required placeholder="e.g., Proposal to create Monsoon Rain Gear Allowance of ₹1,500 per worker" />
+          </div>
+          
+          <div class="ux4g-form-group">
+            <label class="ux4g-label ux4g-label-required" for="motion-desc">Detailed Justification & Budget Impact</label>
+            <textarea id="motion-desc" class="ux4g-textarea" rows="3" required placeholder="Explain why this resolution benefits members and how it will be financed from the Cooperative Welfare Fund..."></textarea>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end;">
+            <button type="submit" class="ux4g-btn ux4g-btn-primary">
+              <span class="ux4g-icon-outlined" style="font-size:18px;">send</span>
+              Submit Proposal to General Body
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ─── 3. AGM Archive & Past Passed Resolutions ─── -->
+    <div id="agm-archive-section" style="margin-top: 3.5rem;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+        <div>
+          <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--ux4g-gov-blue);">Annual General Meeting (AGM) Passed Resolutions Archive</h3>
+          <p style="color: var(--ux4g-text-secondary); font-size: 0.875rem;">Permanent historical records of cooperative democracy in action.</p>
+        </div>
+      </div>
+
+      <div class="ux4g-table-container">
+        <table class="ux4g-table">
+          <thead>
+            <tr>
+              <th>Resolution No.</th>
+              <th>Motion Subject</th>
+              <th>Passage Date</th>
+              <th>Vote Result</th>
+              <th>Implementation Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>RES-2025-11</strong></td>
+              <td>Establishment of Dedicated Maternity & Sickness Grant of ₹10,000 for Women Gig Workers</td>
+              <td>15 Nov 2025</td>
+              <td><span class="ux4g-badge ux4g-badge-success">Passed (96% FOR)</span></td>
+              <td><span class="ux4g-badge ux4g-badge-success">Active & Enacted</span></td>
+            </tr>
+            <tr>
+              <td><strong>RES-2025-08</strong></td>
+              <td>Bulk Purchase of Toolkit Equipment with 50% Cooperative Society Subsidy</td>
+              <td>12 Aug 2025</td>
+              <td><span class="ux4g-badge ux4g-badge-success">Passed (91% FOR)</span></td>
+              <td><span class="ux4g-badge ux4g-badge-success">Disbursed (142 Kits)</span></td>
+            </tr>
+            <tr>
+              <td><strong>RES-2025-02</strong></td>
+              <td>Adoption of UX4G Standard Open Source Digital Infrastructure for SahakarConnect</td>
+              <td>20 Feb 2025</td>
+              <td><span class="ux4g-badge ux4g-badge-success">Passed (Unanimous)</span></td>
+              <td><span class="ux4g-badge ux4g-badge-success">Fully Deployed</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="ux4g-footer">
+    <div class="ux4g-footer-strip">
+      <div class="ux4g-container">
+        <div class="ux4g-footer-strip-wrap">
+          <div class="ux4g-gov-compliance-badge">
+            <span class="india-flag"></span>
+            <span>Democratic Governance Subsystem • Multi-State Cooperative Societies Act Compliant</span>
+          </div>
+          <div>
+            <span>© 2026 Ministry of Cooperation, Government of India.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./assets/js/app.js"></script>
+</body>
+</html>

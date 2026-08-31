@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import http from 'http';
 import cors from 'cors';
+import path from 'path';
 import dotenv from 'dotenv';
 import apiRouter from './routes';
 import { initSocket } from './lib/socket';
@@ -11,15 +12,19 @@ const app = express();
 const server = http.createServer(app);
 
 const PORT = process.env.PORT || 5000;
-const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5173';
+const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:3000';
 
 // Setup Socket.io
 initSocket(server, CLIENT_URL);
 
-// Middleware
+// Middleware - permissive CORS for frontend dev servers
 app.use(
   cors({
-    origin: [CLIENT_URL, 'http://localhost:5173', 'http://127.0.0.1:5173'],
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps, curl, or same-origin)
+      if (!origin) return callback(null, true);
+      return callback(null, true);
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -37,13 +42,12 @@ if (process.env.NODE_ENV === 'development') {
   });
 }
 
+// Serve UX4G Frontend statically if available
+const frontendPath = path.resolve(__dirname, '../../frontend');
+app.use(express.static(frontendPath));
+
 // API Routes
 app.use('/api', apiRouter);
-
-// 404 handler
-app.use((req: Request, res: Response) => {
-  res.status(404).json({ error: `Route ${req.method} ${req.url} not found` });
-});
 
 // Global Error Handler
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
@@ -55,7 +59,8 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 
 server.listen(PORT, () => {
   console.log(`🚀 SahakarConnect API Server running on port ${PORT}`);
-  console.log(`📡 Socket.io connected, accepting clients from ${CLIENT_URL}`);
+  console.log(`📡 Serving API at http://localhost:${PORT}/api`);
+  console.log(`🏛️ Serving UX4G Web UI at http://localhost:${PORT}/`);
 });
 
 export { app, server };

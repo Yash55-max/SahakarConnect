@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 130" width="40" height="52" fill="#003366">
+  <g id="lion-capital" stroke="#003366" stroke-width="1.2" fill="#003366">
+    <path d="M 42 15 C 42 8, 58 8, 58 15 C 62 18, 64 24, 62 30 C 60 36, 56 40, 50 42 C 44 40, 40 36, 38 30 C 36 24, 38 18, 42 15 Z" fill="#003366"/>
+    <path d="M 44 20 Q 50 25 56 20 Q 58 28 50 34 Q 42 28 44 20 Z" fill="#ffffff" opacity="0.4"/>
+    <circle cx="46" cy="24" r="1.5" fill="#ffffff"/>
+    <circle cx="54" cy="24" r="1.5" fill="#ffffff"/>
+    <path d="M 48 29 Q 50 31 52 29" stroke="#ffffff" stroke-width="1" fill="none"/>
+    <path d="M 38 22 C 34 18, 26 22, 25 30 C 24 38, 30 44, 38 45 C 39 38, 38 30, 38 22 Z" fill="#003366"/>
+    <circle cx="30" cy="28" r="1.2" fill="#ffffff"/>
+    <path d="M 62 22 C 66 18, 74 22, 75 30 C 76 38, 70 44, 62 45 C 61 38, 62 30, 62 22 Z" fill="#003366"/>
+    <circle cx="70" cy="28" r="1.2" fill="#ffffff"/>
+    <rect x="20" y="48" width="60" height="14" rx="2" fill="#003366"/>
+    <circle cx="50" cy="55" r="5" fill="#ffffff"/>
+    <circle cx="50" cy="55" r="4.2" fill="#003366"/>
+    <circle cx="50" cy="55" r="1.2" fill="#ffffff"/>
+    <line x1="50" y1="51" x2="50" y2="59" stroke="#ffffff" stroke-width="0.7"/>
+    <line x1="46" y1="55" x2="54" y2="55" stroke="#ffffff" stroke-width="0.7"/>
+    <path d="M 24 64 Q 50 67 76 64 L 72 74 Q 50 78 28 74 Z" fill="#003366"/>
+    <text x="50" y="90" font-family="'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif" font-size="7.5" font-weight="700" text-anchor="middle" fill="#003366" letter-spacing="1">सत्यमेव जयते</text>
+    <text x="50" y="102" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="5.5" font-weight="600" text-anchor="middle" fill="#556b82" letter-spacing="0.5">MINISTRY OF COOPERATION</text>
+    <text x="50" y="111" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="4.8" font-weight="600" text-anchor="middle" fill="#718096">GOVERNMENT OF INDIA</text>
+  </g>
+</svg>

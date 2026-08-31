@@ -2,22 +2,25 @@
   "name": "sahakarconnect-root",
   "version": "1.0.0",
   "private": true,
-  "description": "SahakarConnect — Cooperative Gig Services Platform for Household & Community Services",
+  "description": "SahakarConnect — Cooperative Gig Services Platform for Household & Community Services (SIH26089, Ministry of Cooperation)",
   "scripts": {
+    "start": "cd backend && npm start",
+    "dev": "cd backend && npm run dev",
     "dev:backend": "cd backend && npm run dev",
-    "dev:frontend": "cd frontend && npm run dev",
-    "build:backend": "cd backend && npm run build",
-    "build:frontend": "cd frontend && npm run build",
-    "db:migrate": "cd backend && npx prisma migrate dev",
+    "dev:frontend": "cd frontend && npm start",
+    "build": "cd backend && npm run build",
+    "db:push": "cd backend && npx prisma db push",
     "db:seed": "cd backend && npm run seed",
     "db:studio": "cd backend && npx prisma studio"
   },
   "keywords": [
     "cooperative",
     "gig-platform",
-    "sih",
-    "ministry-of-cooperation"
+    "sih26089",
+    "ux4g",
+    "ministry-of-cooperation",
+    "ncct"
   ],
-  "author": "",
+  "author": "Ministry of Cooperation / NCCT",
   "license": "ISC"
 }

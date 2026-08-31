@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="24" height="16">
+  <rect width="60" height="13.33" fill="#FF9933"/>
+  <rect y="13.33" width="60" height="13.33" fill="#FFFFFF"/>
+  <rect y="26.66" width="60" height="13.34" fill="#138808"/>
+  <!-- Ashoka Chakra -->
+  <circle cx="30" cy="20" r="5" fill="none" stroke="#000080" stroke-width="0.8"/>
+  <circle cx="30" cy="20" r="1" fill="#000080"/>
+  <!-- 24 spokes -->
+  <g stroke="#000080" stroke-width="0.4">
+    <line x1="30" y1="15" x2="30" y2="25"/>
+    <line x1="25" y1="20" x2="35" y2="20"/>
+    <line x1="26.46" y1="16.46" x2="33.54" y2="23.54"/>
+    <line x1="26.46" y1="23.54" x2="33.54" y2="16.46"/>
+  </g>
+</svg>

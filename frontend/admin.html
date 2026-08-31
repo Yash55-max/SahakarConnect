@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PSCS Society Admin — SahakarConnect (Ministry of Cooperation)</title>
+  
+  <link rel="stylesheet" href="https://cdn.ux4g.gov.in/UX4G@3.1.0/index.css" />
+  <link rel="stylesheet" href="./assets/css/ux4g-theme.css" />
+  <link rel="icon" type="image/svg+xml" href="./assets/images/sahakar_logo.svg" />
+</head>
+<body>
+
+  <!-- Top Accessibility Bar -->
+  <header class="ux4g-topbar" role="banner">
+    <div class="ux4g-container">
+      <div class="ux4g-topbar__wrap">
+        <div>
+          <a aria-label="Government of India" href="https://www.india.gov.in/" target="_blank" rel="noopener">
+            <span class="india-flag"></span>
+            <span>भारत सरकार | Government of India</span>
+            <sup class="ux4g-icon-outlined" style="font-size:12px;">open_in_new</sup>
+          </a>
+        </div>
+        <nav aria-label="Accessibility Utilities" style="display: flex; align-items: center;">
+          <a href="#main-content" style="font-size: 0.75rem; margin-right: 0.5rem;">Skip to Main Content</a>
+          <span class="acc-top-divider"></span>
+          <div role="group" style="display: flex; align-items: center;">
+            <button class="ux4g-topbar__iconbtn" type="button" data-acc="font-decrease">A-</button>
+            <button class="ux4g-topbar__iconbtn" type="button" data-acc="font-reset">A</button>
+            <button class="ux4g-topbar__iconbtn" type="button" data-acc="font-increase">A+</button>
+          </div>
+          <span class="acc-top-divider"></span>
+          <button class="ux4g-topbar__iconbtn" type="button" data-acc="contrast-toggle" title="Contrast"><span class="ux4g-icon-outlined" style="font-size:14px;">contrast</span></button>
+          <button class="ux4g-topbar__iconbtn" type="button" data-acc="theme-toggle" title="Theme"><span class="ux4g-icon-outlined" style="font-size:14px;">dark_mode</span></button>
+          <span class="acc-top-divider"></span>
+          <button class="ux4g-topbar__selectbtn" type="button" data-acc="lang-toggle">
+            <span class="ux4g-icon-outlined" style="font-size:14px;">language</span>
+            <span id="current-lang-text">English</span>
+          </button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Demo Bar -->
+  <aside class="ux4g-demobar">
+    <div class="ux4g-container">
+      <div class="ux4g-demobar-content">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span class="ux4g-demo-tag">SIH26089 • Ministry of Cooperation</span>
+          <span style="font-size: 0.8125rem; font-weight: 500;">Role View:</span>
+        </div>
+        <div class="ux4g-role-switcher" role="tablist">
+          <a href="index.html" class="ux4g-role-btn">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">person</span> Citizen / Consumer
+          </a>
+          <a href="provider.html" class="ux4g-role-btn">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">handyman</span> Cooperative Provider
+          </a>
+          <a href="admin.html" class="ux4g-role-btn active">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">admin_panel_settings</span> Society Admin
+          </a>
+          <a href="governance.html" class="ux4g-role-btn">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">how_to_vote</span> Governance & Voting
+          </a>
+          <a href="regulator.html" class="ux4g-role-btn">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">account_balance</span> Registrar / Ministry
+          </a>
+          <a href="components-reference.html" class="ux4g-role-btn" style="background: rgba(255,255,255,0.15);">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">code</span> UX4G Spec Reference
+          </a>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Navbar -->
+  <nav class="ux4g-navbar">
+    <div class="ux4g-container">
+      <div class="ux4g-navbar-wrap">
+        <a href="index.html" class="ux4g-brand">
+          <img src="./assets/images/national_emblem.svg" alt="Emblem" class="ux4g-emblem" />
+          <span class="ux4g-divider-vertical"></span>
+          <img src="./assets/images/sahakar_logo.svg" alt="Logo" style="width: 44px; height: 44px;" />
+          <div class="ux4g-brand-text">
+            <span class="ux4g-brand-tagline">सहकार से समृद्धि</span>
+            <span class="ux4g-brand-title">PSCS Society Administration</span>
+            <span class="ux4g-brand-sub">Varanasi Central Service Cooperative Society (PSCS-UP-882)</span>
+          </div>
+        </a>
+
+        <ul class="ux4g-navbar-links">
+          <li><a href="admin.html" class="ux4g-nav-link active">Provider Onboarding</a></li>
+          <li><a href="#society-ledger-section" class="ux4g-nav-link">Revenue Split Ledger</a></li>
+          <li><a href="governance.html" class="ux4g-nav-link">Bylaws & Voting</a></li>
+        </ul>
+
+        <div class="ux4g-nav-actions">
+          <span class="ux4g-badge ux4g-badge-primary">
+            <span class="ux4g-icon-outlined" style="font-size:14px;">verified_user</span> Society Secretary
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Admin Main Content -->
+  <main class="ux4g-container" id="main-content" style="padding-top: 2rem; padding-bottom: 3.5rem;">
+    
+    <!-- Society Overview Header Banner -->
+    <div class="ux4g-card" style="margin-bottom: 2rem; background: linear-gradient(135deg, #003366 0%, #0A2342 100%); color: #FFFFFF; border: none;">
+      <div class="ux4g-card-body" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem;">
+        <div>
+          <span class="ux4g-badge ux4g-badge-saffron" style="background: rgba(230,81,0,0.3); color: #FFB74D; border-color: rgba(255,183,77,0.4);">
+            Registered Cooperative Entity #PSCS-UP-882
+          </span>
+          <h2 style="font-size: 1.65rem; font-weight: 800; color: #FFFFFF; margin-top: 0.5rem;">Varanasi Central Service Cooperative Society Ltd.</h2>
+          <p style="color: #CBD5E1; font-size: 0.9375rem; margin-top: 4px;">
+            Jurisdiction: Varanasi Urban & Peri-Urban Cluster • Affiliated to UP State Cooperative Union
+          </p>
+        </div>
+        <div style="display: flex; gap: 0.75rem;">
+          <button type="button" class="ux4g-btn ux4g-btn-secondary" onclick="window.SahakarApp.showToast('DigiLocker Batch KYC sync initiated!', 'info')">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">sync</span> DigiLocker Batch KYC
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cooperative KPIs -->
+    <div class="ux4g-grid ux4g-grid-cols-4 ux4g-gap-md" style="margin-bottom: 2.5rem;">
+      <div class="ux4g-card">
+        <div class="ux4g-card-body">
+          <span style="font-size: 0.75rem; font-weight: 700; color: var(--ux4g-text-tertiary); text-transform: uppercase;">Total Active Members</span>
+          <h3 style="font-size: 2rem; font-weight: 800; color: var(--ux4g-gov-blue); margin-top: 4px;">142</h3>
+          <span style="font-size: 0.75rem; color: var(--ux4g-gov-green); font-weight: 600;">+12 new applications this month</span>
+        </div>
+      </div>
+
+      <div class="ux4g-card">
+        <div class="ux4g-card-body">
+          <span style="font-size: 0.75rem; font-weight: 700; color: var(--ux4g-text-tertiary); text-transform: uppercase;">Monthly Gross GMV</span>
+          <h3 style="font-size: 2rem; font-weight: 800; color: var(--ux4g-gov-blue); margin-top: 4px;">₹12.45 L</h3>
+          <span style="font-size: 0.75rem; color: var(--ux4g-text-secondary);">Direct Household Bookings</span>
+        </div>
+      </div>
+
+      <div class="ux4g-card">
+        <div class="ux4g-card-body">
+          <span style="font-size: 0.75rem; font-weight: 700; color: var(--ux4g-text-tertiary); text-transform: uppercase;">Welfare Reserve Fund</span>
+          <h3 style="font-size: 2rem; font-weight: 800; color: var(--ux4g-gov-saffron); margin-top: 4px;">₹4,82,500</h3>
+          <span style="font-size: 0.75rem; color: var(--ux4g-gov-green); font-weight: 600;">100% Cash-backed in SBI Coop Account</span>
+        </div>
+      </div>
+
+      <div class="ux4g-card">
+        <div class="ux4g-card-body">
+          <span style="font-size: 0.75rem; font-weight: 700; color: var(--ux4g-text-tertiary); text-transform: uppercase;">Member Dividends (YTD)</span>
+          <h3 style="font-size: 2rem; font-weight: 800; color: var(--ux4g-gov-green); margin-top: 4px;">₹2,15,000</h3>
+          <span style="font-size: 0.75rem; color: var(--ux4g-text-secondary);">Audited by District Registrar</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── 1. Provider Verification & Onboarding Table ─── -->
+    <div style="margin-bottom: 3.5rem;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+        <div>
+          <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--ux4g-gov-blue);">Provider Registry & Aadhaar e-KYC Verification</h3>
+          <p style="color: var(--ux4g-text-secondary); font-size: 0.875rem;">Approve worker applications and verify skill competency certificates.</p>
+        </div>
+      </div>
+
+      <div class="ux4g-table-container">
+        <table class="ux4g-table">
+          <thead>
+            <tr>
+              <th>Provider Profile & ID</th>
+              <th>Trade Skill</th>
+              <th>Cooperative Branch</th>
+              <th>Identity Verification</th>
+              <th>Action / Membership Status</th>
+            </tr>
+          </thead>
+          <tbody id="admin-prov-table-body">
+            <!-- Populated dynamically by app.js -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ─── 2. Transparent Revenue-Split Ledger ─── -->
+    <div id="society-ledger-section" style="margin-bottom: 3.5rem;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+        <div>
+          <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--ux4g-gov-blue);">Society Revenue Split Ledger</h3>
+          <p style="color: var(--ux4g-text-secondary); font-size: 0.875rem;">Cryptographically timestamped transaction distribution logs.</p>
+        </div>
+        <button type="button" class="ux4g-btn ux4g-btn-outline-neutral ux4g-btn-sm" onclick="window.SahakarApp.showToast('Ledger exported to CSV format.', 'info')">
+          <span class="ux4g-icon-outlined" style="font-size:16px;">file_download</span> Export Audit Ledger (.CSV)
+        </button>
+      </div>
+
+      <div class="ux4g-table-container">
+        <table class="ux4g-table">
+          <thead>
+            <tr>
+              <th>Txn Hash & Timestamp</th>
+              <th>Booking ID</th>
+              <th>Customer Paid</th>
+              <th>Provider Take-Home (80%)</th>
+              <th>Society Welfare Fund (15%)</th>
+              <th>Platform Maintenance (5%)</th>
+              <th>Audit State</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>0x7f2a...89c1</code><br><small style="color:var(--ux4g-text-tertiary);">31 Aug 2026, 14:30</small></td>
+              <td><strong>BKG-8839</strong></td>
+              <td>₹850.00</td>
+              <td style="color: var(--ux4g-gov-green); font-weight: 700;">₹680.00</td>
+              <td style="color: var(--ux4g-gov-saffron); font-weight: 700;">₹127.50</td>
+              <td>₹42.50</td>
+              <td><span class="ux4g-badge ux4g-badge-success">Settled</span></td>
+            </tr>
+            <tr>
+              <td><code>0x3d91...04ab</code><br><small style="color:var(--ux4g-text-tertiary);">31 Aug 2026, 12:15</small></td>
+              <td><strong>BKG-8838</strong></td>
+              <td>₹600.00</td>
+              <td style="color: var(--ux4g-gov-green); font-weight: 700;">₹480.00</td>
+              <td style="color: var(--ux4g-gov-saffron); font-weight: 700;">₹90.00</td>
+              <td>₹30.00</td>
+              <td><span class="ux4g-badge ux4g-badge-success">Settled</span></td>
+            </tr>
+            <tr>
+              <td><code>0x9c42...ee12</code><br><small style="color:var(--ux4g-text-tertiary);">30 Aug 2026, 18:40</small></td>
+              <td><strong>BKG-8835</strong></td>
+              <td>₹1,200.00</td>
+              <td style="color: var(--ux4g-gov-green); font-weight: 700;">₹960.00</td>
+              <td style="color: var(--ux4g-gov-saffron); font-weight: 700;">₹180.00</td>
+              <td>₹60.00</td>
+              <td><span class="ux4g-badge ux4g-badge-success">Settled</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ─── 3. Dynamic Cooperative Commission Configuration ─── -->
+    <div class="ux4g-card">
+      <div class="ux4g-card-header">
+        <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--ux4g-gov-blue);">
+          Cooperative Society Commission Split Policy
+        </h3>
+        <span class="ux4g-badge ux4g-badge-primary">Bylaw Section 14(b)</span>
+      </div>
+      <div class="ux4g-card-body">
+        <p style="color: var(--ux4g-text-secondary); font-size: 0.875rem; margin-bottom: 1.25rem;">
+          Any changes to commission rates require formal approval through member voting in the Democratic Governance Portal.
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
+          <div style="background: var(--ux4g-bg-subtle); padding: 1.25rem; border-radius: var(--ux4g-radius-md); border-top: 3px solid var(--ux4g-gov-green);">
+            <span style="font-weight: 700; color: var(--ux4g-gov-green); font-size: 1rem;">Provider Payout Rate</span>
+            <div style="font-size: 2rem; font-weight: 800; color: var(--ux4g-gov-green); margin: 0.5rem 0;">80%</div>
+            <p style="font-size: 0.75rem; color: var(--ux4g-text-tertiary);">Direct instant payout to worker bank account / UPI upon job signoff.</p>
+          </div>
+
+          <div style="background: var(--ux4g-bg-subtle); padding: 1.25rem; border-radius: var(--ux4g-radius-md); border-top: 3px solid var(--ux4g-gov-saffron);">
+            <span style="font-weight: 700; color: var(--ux4g-gov-saffron); font-size: 1rem;">Welfare Reserve Contribution</span>
+            <div style="font-size: 2rem; font-weight: 800; color: var(--ux4g-gov-saffron); margin: 0.5rem 0;">15%</div>
+            <p style="font-size: 0.75rem; color: var(--ux4g-text-tertiary);">Allocated to health insurance, accident cover, and pension corpus.</p>
+          </div>
+
+          <div style="background: var(--ux4g-bg-subtle); padding: 1.25rem; border-radius: var(--ux4g-radius-md); border-top: 3px solid var(--ux4g-gov-blue);">
+            <span style="font-weight: 700; color: var(--ux4g-gov-blue); font-size: 1rem;">Platform Infrastructure Fee</span>
+            <div style="font-size: 2rem; font-weight: 800; color: var(--ux4g-gov-blue); margin: 0.5rem 0;">5%</div>
+            <p style="font-size: 0.75rem; color: var(--ux4g-text-tertiary);">Cap governed by National Cooperative Digital Infrastructure guidelines.</p>
+          </div>
+        </div>
+      </div>
+      <div class="ux4g-card-footer">
+        <span style="font-size: 0.8125rem; color: var(--ux4g-text-tertiary);">Last amended by General Body Resolution #2025-11</span>
+        <a href="governance.html" class="ux4g-btn ux4g-btn-outline-primary ux4g-btn-sm">
+          Propose Resolution to Amend Split →
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="ux4g-footer">
+    <div class="ux4g-footer-strip">
+      <div class="ux4g-container">
+        <div class="ux4g-footer-strip-wrap">
+          <div class="ux4g-gov-compliance-badge">
+            <span class="india-flag"></span>
+            <span>Primary Service Cooperative Society Admin Node • Ministry of Cooperation</span>
+          </div>
+          <div>
+            <span>© 2026 Ministry of Cooperation, Government of India.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./assets/js/app.js"></script>
+</body>
+</html>

@@ -1,16 +1,381 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2316a34a'><path d='M16 11V3H8v6H2v12h20V11h-6zm-6-6h4v14h-4V5zm-6 8h4v6H4v-6zm16 6h-4v-6h4v6z'/></svg>" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SahakarConnect — Cooperative Gig Services Platform (Ministry of Cooperation)</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  </head>
-  <body class="bg-slate-50 text-slate-900 antialiased font-['Plus_Jakarta_Sans',sans-serif]">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SahakarConnect — Citizen Portal (Ministry of Cooperation, GoI)</title>
+  
+  <!-- UX4G 3.1.0 CDN & Theme Stylesheet -->
+  <link rel="stylesheet" href="https://cdn.ux4g.gov.in/UX4G@3.1.0/index.css" />
+  <link rel="stylesheet" href="./assets/css/ux4g-theme.css" />
+  <link rel="icon" type="image/svg+xml" href="./assets/images/sahakar_logo.svg" />
+</head>
+<body>
+
+  <!-- ─── 1. UX4G Standard Accessibility Topbar ─── -->
+  <header class="ux4g-topbar" role="banner">
+    <div class="ux4g-container">
+      <div class="ux4g-topbar__wrap">
+        <div>
+          <a aria-label="Government of India (opens in new tab)" href="https://www.india.gov.in/" target="_blank" rel="noopener">
+            <span class="india-flag"></span>
+            <span>भारत सरकार | Government of India</span>
+            <sup class="ux4g-icon-outlined" style="font-size:12px;">open_in_new</sup>
+          </a>
+        </div>
+        <nav aria-label="Top Accessibility Utilities" style="display: flex; align-items: center;">
+          <a href="#main-content" style="font-size: 0.75rem; margin-right: 0.5rem;">Skip to Main Content</a>
+          <span class="acc-top-divider"></span>
+          
+          <!-- Text Size Controls -->
+          <div aria-label="Text size controls" role="group" style="display: flex; align-items: center;">
+            <button aria-label="Decrease text size" class="ux4g-topbar__iconbtn" type="button" data-acc="font-decrease">A-</button>
+            <button aria-label="Reset text size" class="ux4g-topbar__iconbtn" type="button" data-acc="font-reset">A</button>
+            <button aria-label="Increase text size" class="ux4g-topbar__iconbtn" type="button" data-acc="font-increase">A+</button>
+          </div>
+          
+          <span class="acc-top-divider"></span>
+          <button aria-label="Toggle High Contrast" class="ux4g-topbar__iconbtn" type="button" data-acc="contrast-toggle" title="High Contrast Mode">
+            <span class="ux4g-icon-outlined" style="font-size:14px;">contrast</span>
+          </button>
+          
+          <button aria-label="Toggle Dark/Light Mode" class="ux4g-topbar__iconbtn" type="button" data-acc="theme-toggle" title="Toggle Theme">
+            <span class="ux4g-icon-outlined" style="font-size:14px;">dark_mode</span>
+          </button>
+
+          <span class="acc-top-divider"></span>
+          <button aria-label="Language Selector" class="ux4g-topbar__selectbtn" type="button" data-acc="lang-toggle">
+            <span class="ux4g-icon-outlined" style="font-size:14px;">language</span>
+            <span id="current-lang-text">English</span>
+          </button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- ─── 2. Hackathon Demo Navigation Strip ─── -->
+  <aside class="ux4g-demobar" aria-label="Hackathon Role Selector">
+    <div class="ux4g-container">
+      <div class="ux4g-demobar-content">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span class="ux4g-demo-tag">SIH26089 • Ministry of Cooperation</span>
+          <span style="font-size: 0.8125rem; font-weight: 500;">Role View:</span>
+        </div>
+        <div class="ux4g-role-switcher" role="tablist">
+          <a href="index.html" class="ux4g-role-btn active" role="tab" aria-selected="true">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">person</span> Citizen / Consumer
+          </a>
+          <a href="provider.html" class="ux4g-role-btn" role="tab" aria-selected="false">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">handyman</span> Cooperative Provider
+          </a>
+          <a href="admin.html" class="ux4g-role-btn" role="tab" aria-selected="false">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">admin_panel_settings</span> Society Admin
+          </a>
+          <a href="governance.html" class="ux4g-role-btn" role="tab" aria-selected="false">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">how_to_vote</span> Governance & Voting
+          </a>
+          <a href="regulator.html" class="ux4g-role-btn" role="tab" aria-selected="false">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">account_balance</span> Registrar / Ministry
+          </a>
+          <a href="components-reference.html" class="ux4g-role-btn" role="tab" aria-selected="false" style="background: rgba(255,255,255,0.15);">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">code</span> UX4G Spec Reference
+          </a>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ─── 3. Main Government Navbar ─── -->
+  <nav class="ux4g-navbar" role="navigation">
+    <div class="ux4g-container">
+      <div class="ux4g-navbar-wrap">
+        <a href="index.html" class="ux4g-brand">
+          <img src="./assets/images/national_emblem.svg" alt="National Emblem of India" class="ux4g-emblem" />
+          <span class="ux4g-divider-vertical"></span>
+          <img src="./assets/images/sahakar_logo.svg" alt="SahakarConnect Logo" style="width: 44px; height: 44px;" />
+          <div class="ux4g-brand-text">
+            <span class="ux4g-brand-tagline">सहकार से समृद्धि • Sahakar-se-Samriddhi</span>
+            <span class="ux4g-brand-title">SahakarConnect</span>
+            <span class="ux4g-brand-sub">Primary Service Cooperative Societies (PSCS) Platform</span>
+          </div>
+        </a>
+
+        <!-- Navigation Links -->
+        <ul class="ux4g-navbar-links">
+          <li><a href="index.html" class="ux4g-nav-link active">Services</a></li>
+          <li><a href="#active-bookings-section" class="ux4g-nav-link">My Bookings</a></li>
+          <li><a href="governance.html" class="ux4g-nav-link">Democratic Polls</a></li>
+          <li><a href="provider.html" class="ux4g-nav-link">Join as Provider</a></li>
+        </ul>
+
+        <!-- Action Links -->
+        <div class="ux4g-nav-actions">
+          <a href="login.html" class="ux4g-btn ux4g-btn-outline-primary ux4g-btn-sm">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">login</span> MeriPehchan Sign In
+          </a>
+          <a href="login.html" class="ux4g-btn ux4g-btn-secondary ux4g-btn-sm">
+            <span class="ux4g-icon-outlined" style="font-size:16px;">fingerprint</span> DigiLocker e-KYC
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ─── 4. Hero Banner with Cooperative Mission ─── -->
+  <section class="ux4g-hero-banner" id="main-content">
+    <div class="ux4g-container">
+      <div style="max-width: 820px;">
+        <div class="ux4g-hero-badge">
+          <span class="ux4g-icon-outlined" style="font-size: 16px;">diversity_3</span>
+          100% Cooperative Owned • 0% Exploitative Aggregators
+        </div>
+        <h1 class="ux4g-hero-title">Book Trusted Local Service Providers from Verified Cooperative Societies</h1>
+        <p class="ux4g-hero-sub">
+          Every booking guarantees fair earnings (80%) to skilled workers and builds a local Cooperative Welfare Fund (15%) for pensions, health insurance, and member dividends under the Ministry of Cooperation.
+        </p>
+
+        <!-- Search Bar with Location / Skill inputs -->
+        <div style="background: rgba(255, 255, 255, 0.95); padding: 0.75rem; border-radius: var(--ux4g-radius-lg); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center;">
+          <div style="flex: 1; min-width: 220px; position: relative;">
+            <span class="ux4g-icon-outlined" style="position: absolute; left: 12px; top: 12px; color: var(--ux4g-text-tertiary);">search</span>
+            <input type="text" id="service-search-input" class="ux4g-input" style="padding-left: 2.5rem;" placeholder="Search plumber, electrician, elderly caregiver..." oninput="window.SahakarApp.filterProviders('ALL', this.value)" />
+          </div>
+          <div style="width: 200px;">
+            <select class="ux4g-select" id="district-filter" onchange="window.SahakarApp.filterProviders('ALL', document.getElementById('service-search-input').value)">
+              <option value="ALL">📍 All Districts</option>
+              <option value="Varanasi">Varanasi, UP</option>
+              <option value="Pune">Pune, Maharashtra</option>
+              <option value="Delhi">Delhi NCR</option>
+              <option value="Jaipur">Jaipur, Rajasthan</option>
+              <option value="Hyderabad">Hyderabad, Telangana</option>
+            </select>
+          </div>
+          <button type="button" class="ux4g-btn ux4g-btn-secondary" onclick="window.SahakarApp.filterProviders('ALL', document.getElementById('service-search-input').value)">
+            Find Verified Providers
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 5. Service Category Chips Filter ─── -->
+  <section style="background: var(--ux4g-bg-surface); padding: 1.25rem 0; border-bottom: 1px solid var(--ux4g-border-default);">
+    <div class="ux4g-container">
+      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+        <span style="font-size: 0.875rem; font-weight: 700; color: var(--ux4g-gov-blue); text-transform: uppercase;">Category:</span>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;" id="category-chips">
+          <button type="button" class="ux4g-btn ux4g-btn-primary ux4g-btn-sm" onclick="window.SahakarApp.filterProviders('ALL')">All Services</button>
+          <button type="button" class="ux4g-btn ux4g-btn-outline-neutral ux4g-btn-sm" onclick="window.SahakarApp.filterProviders('Plumbing')">🚰 Plumbing</button>
+          <button type="button" class="ux4g-btn ux4g-btn-outline-neutral ux4g-btn-sm" onclick="window.SahakarApp.filterProviders('Electrical')">⚡ Electrical</button>
+          <button type="button" class="ux4g-btn ux4g-btn-outline-neutral ux4g-btn-sm" onclick="window.SahakarApp.filterProviders('Elder Care')">👵 Elder Care</button>
+          <button type="button" class="ux4g-btn ux4g-btn-outline-neutral ux4g-btn-sm" onclick="window.SahakarApp.filterProviders('House Cleaning')">🧹 Cleaning</button>
+          <button type="button" class="ux4g-btn ux4g-btn-outline-neutral ux4g-btn-sm" onclick="window.SahakarApp.filterProviders('Carpentry')">🪚 Carpentry</button>
+          <button type="button" class="ux4g-btn ux4g-btn-outline-neutral ux4g-btn-sm" onclick="window.SahakarApp.filterProviders('Cooking')">🍲 Cooking</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 6. Main Service Listing Grid ─── -->
+  <main class="ux4g-container" style="padding-top: 2.5rem; padding-bottom: 3.5rem;">
+    
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+      <div>
+        <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--ux4g-gov-blue);">Verified Cooperative Service Providers</h2>
+        <p style="color: var(--ux4g-text-secondary); font-size: 0.875rem;">All providers are vetted Aadhaar KYC-verified members of Registered Primary Service Cooperative Societies.</p>
+      </div>
+      <span class="ux4g-badge ux4g-badge-success">
+        <span class="ux4g-icon-outlined" style="font-size:14px;">gavel</span> Regulated by Ministry of Cooperation
+      </span>
+    </div>
+
+    <!-- Provider Cards Grid -->
+    <div class="ux4g-grid ux4g-grid-cols-3 ux4g-gap-md" id="providers-grid">
+      <!-- Populated dynamically by app.js -->
+    </div>
+
+    <!-- ─── 7. Active Citizen Bookings Section ─── -->
+    <div id="active-bookings-section" style="margin-top: 4rem;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+        <div>
+          <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--ux4g-gov-blue);">Your Service Bookings & Live Status</h2>
+          <p style="color: var(--ux4g-text-secondary); font-size: 0.875rem;">Track live progress and audit transparent cooperative fee breakdown.</p>
+        </div>
+      </div>
+
+      <div id="consumer-bookings-list">
+        <!-- Populated dynamically by app.js -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ─── 8. Booking Modal (UX4G Standard Dialog) ─── -->
+  <div class="ux4g-modal-backdrop" id="booking-modal" role="dialog" aria-modal="true" aria-labelledby="booking-modal-title">
+    <div class="ux4g-modal">
+      <div class="ux4g-modal-header">
+        <h3 class="ux4g-modal-title" id="booking-modal-title">
+          <span class="ux4g-icon-outlined" style="font-size: 20px; color: var(--ux4g-gov-blue);">calendar_month</span>
+          Book Cooperative Service Provider
+        </h3>
+        <button type="button" class="ux4g-modal-close" onclick="window.SahakarApp.closeBookingModal()" aria-label="Close dialog">
+          <span class="ux4g-icon-outlined">close</span>
+        </button>
+      </div>
+      
+      <form onsubmit="window.SahakarApp.confirmBooking(event)">
+        <div class="ux4g-modal-body">
+          <!-- Selected Provider Info Banner -->
+          <div style="background: var(--ux4g-gov-blue-light); border: 1px solid rgba(0, 51, 102, 0.15); border-radius: var(--ux4g-radius-md); padding: 1rem; margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <h4 id="modal-provider-name" style="font-size: 1.05rem; font-weight: 700; color: var(--ux4g-gov-blue);">Rajesh Kumar Verma</h4>
+              <p id="modal-provider-coop" style="font-size: 0.75rem; color: var(--ux4g-text-secondary);">Varanasi Central Service Cooperative</p>
+              <span id="modal-provider-category" class="ux4g-badge ux4g-badge-primary" style="margin-top: 4px;">Plumbing</span>
+            </div>
+            <div style="text-align: right;">
+              <span id="modal-provider-rate" style="font-size: 1.25rem; font-weight: 800; color: var(--ux4g-gov-blue);">₹350 / visit</span>
+              <span style="font-size: 0.75rem; color: var(--ux4g-text-tertiary); display: block;">Standard Coop Tariff</span>
+            </div>
+          </div>
+
+          <!-- Schedule & Address Inputs -->
+          <div class="ux4g-form-group">
+            <label class="ux4g-label ux4g-label-required" for="book-service-desc">Service Description / Problem Details</label>
+            <input type="text" id="book-service-desc" class="ux4g-input" required value="Leakage inspection and faucet valve replacement" />
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="ux4g-form-group">
+              <label class="ux4g-label ux4g-label-required" for="book-date">Preferred Date</label>
+              <input type="date" id="book-date" class="ux4g-input" required value="2026-09-01" />
+            </div>
+            <div class="ux4g-form-group">
+              <label class="ux4g-label ux4g-label-required" for="book-time">Preferred Time Slot</label>
+              <select class="ux4g-select" id="book-time" required>
+                <option value="MORNING">Morning (9:00 AM - 12:00 PM)</option>
+                <option value="AFTERNOON" selected>Afternoon (1:00 PM - 4:00 PM)</option>
+                <option value="EVENING">Evening (4:00 PM - 7:00 PM)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="ux4g-form-group">
+            <label class="ux4g-label ux4g-label-required" for="book-address">Service Address</label>
+            <input type="text" id="book-address" class="ux4g-input" required value="B-402, Shanti Kunj, Assi Ghat, Varanasi, UP - 221005" />
+          </div>
+
+          <!-- Transparent Pricing Breakdown Visualizer -->
+          <div style="background: var(--ux4g-bg-subtle); padding: 1rem; border-radius: var(--ux4g-radius-md); border: 1px solid var(--ux4g-border-default);">
+            <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 0.875rem; margin-bottom: 0.5rem;">
+              <span>Total Estimated Fee:</span>
+              <span id="calc-total" style="color: var(--ux4g-gov-blue);">₹500</span>
+            </div>
+
+            <div class="sahakar-split-bar">
+              <div class="split-segment split-provider" style="width: 80%;">Provider 80%</div>
+              <div class="split-segment split-welfare" style="width: 15%;">Welfare 15%</div>
+              <div class="split-segment split-platform" style="width: 5%;">Platform 5%</div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; font-size: 0.75rem; margin-top: 0.5rem; text-align: center;">
+              <div style="background: var(--ux4g-bg-surface); padding: 4px; border-radius: 4px;">
+                <span style="color: var(--ux4g-gov-green); font-weight: 700;">Provider Share</span>
+                <div id="calc-prov-share" style="font-weight: 600;">₹400 (80%)</div>
+              </div>
+              <div style="background: var(--ux4g-bg-surface); padding: 4px; border-radius: 4px;">
+                <span style="color: var(--ux4g-gov-saffron); font-weight: 700;">PSCS Welfare Reserve</span>
+                <div id="calc-welf-share" style="font-weight: 600;">₹75 (15%)</div>
+              </div>
+              <div style="background: var(--ux4g-bg-surface); padding: 4px; border-radius: 4px;">
+                <span style="color: var(--ux4g-gov-blue); font-weight: 700;">Platform Maintenance</span>
+                <div id="calc-plat-share" style="font-weight: 600;">₹25 (5%)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ux4g-modal-footer">
+          <button type="button" class="ux4g-btn ux4g-btn-outline-neutral" onclick="window.SahakarApp.closeBookingModal()">Cancel</button>
+          <button type="submit" class="ux4g-btn ux4g-btn-success">
+            <span class="ux4g-icon-outlined" style="font-size:18px;">lock</span>
+            Confirm & Route to Cooperative
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ─── 9. Official UX4G Government Footer ─── -->
+  <footer class="ux4g-footer" role="contentinfo">
+    <div class="ux4g-footer-top">
+      <div class="ux4g-container">
+        <div class="ux4g-grid ux4g-grid-cols-4 ux4g-gap-lg">
+          <!-- Column 1: Ministry Info -->
+          <div>
+            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+              <img src="./assets/images/national_emblem.svg" alt="Emblem" style="height: 38px; filter: brightness(0) invert(1);" />
+              <div>
+                <h4 style="color: #FFFFFF; font-size: 0.9375rem; font-weight: 700;">Ministry of Cooperation</h4>
+                <p style="font-size: 0.75rem; color: #94A3B8;">Government of India</p>
+              </div>
+            </div>
+            <p style="font-size: 0.8125rem; color: #94A3B8; line-height: 1.6;">
+              SahakarConnect is an initiative to empower informal service workers through Primary Service Cooperative Societies (PSCS).
+            </p>
+          </div>
+
+          <!-- Column 2: Citizen Resources -->
+          <div>
+            <h4 class="ux4g-footer-title">Citizen Services</h4>
+            <ul class="ux4g-footer-links">
+              <li><a href="index.html">Find Verified Providers</a></li>
+              <li><a href="#active-bookings-section">Track Service Requests</a></li>
+              <li><a href="governance.html">View Cooperative Bylaws</a></li>
+              <li><a href="#">Grievance Redressal (CPGRAMS)</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 3: Cooperative Federation -->
+          <div>
+            <h4 class="ux4g-footer-title">For Cooperatives</h4>
+            <ul class="ux4g-footer-links">
+              <li><a href="provider.html">Provider Workstation</a></li>
+              <li><a href="admin.html">PSCS Society Admin Portal</a></li>
+              <li><a href="governance.html">Democratic Voting Hall</a></li>
+              <li><a href="regulator.html">Registrar Compliance Reports</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 4: Standards & Tech -->
+          <div>
+            <h4 class="ux4g-footer-title">Standards & Compliance</h4>
+            <ul class="ux4g-footer-links">
+              <li><a href="components-reference.html">UX4G 3.1.0 Design System</a></li>
+              <li><a href="https://www.meity.gov.in" target="_blank" rel="noopener">MeitY Digital India</a></li>
+              <li><a href="#">GIGW 3.0 Accessibility Guide</a></li>
+              <li><a href="#">Cooperative Societies Act 2002</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ux4g-footer-strip">
+      <div class="ux4g-container">
+        <div class="ux4g-footer-strip-wrap">
+          <div class="ux4g-gov-compliance-badge">
+            <span class="india-flag"></span>
+            <span>An Open Public Digital Infrastructure for Household & Gig Cooperatives (SIH26089)</span>
+          </div>
+          <div>
+            <span>© 2026 Ministry of Cooperation, Government of India. Designed using UX4G Design System.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="./assets/js/app.js"></script>
+</body>
 </html>
