@@ -1,7 +1,7 @@
 # SahakarConnect — Cooperative Gig Services Platform
-**Smart India Hackathon (SIH26089) — Ministry of Cooperation, Government of India**
+**Smart India Hackathon (SIH26089) — Ministry of Cooperation & National Council for Cooperative Training (NCCT)**
 
-A decentralized, multi-stakeholder gig economy platform operated through Primary Service Cooperative Societies (PSCS). The platform replaces extractive intermediary aggregators with a democratic, transparent, and worker-owned service distribution model.
+A decentralized, multi-stakeholder gig economy platform operated through Primary Service Cooperative Societies (PSCS). The platform replaces extractive intermediary aggregators with a democratic, transparent, and worker-owned service distribution model built in strict accordance with the Government of India UX4G (v3.1.0) Design System.
 
 ---
 
@@ -11,45 +11,48 @@ SahakarConnect addresses the economic vulnerabilities inherent in conventional g
 
 1. **Democratic Platform Governance (One-Worker-One-Vote)**: Cooperative members participate directly in policy decisions, including commission rate determination and welfare fund deployment.
 2. **Transparent Revenue Splitting**: Every transaction is deterministically split and recorded on an immutable ledger:
-   - **Provider Direct Remittance**: 88%–92% of gross booking value.
-   - **Cooperative Welfare & Emergency Fund**: 6%–10% allocated for health insurance, accident compensation, and tool subsidies.
-   - **Platform Infrastructure Overhead**: 2.0% fixed for cloud infrastructure and maintenance.
+   - **Provider Direct Remittance**: 80%–85% of gross booking value.
+   - **Cooperative Welfare & Emergency Fund**: 10%–15% allocated for health insurance, accident compensation, and tool subsidies.
+   - **Platform Infrastructure Overhead**: 2.0%–5.0% capped for cloud infrastructure and maintenance.
 3. **Unified Multi-Stakeholder Portals**: Dedicated, role-gated interfaces for Consumers, Service Providers, Cooperative Society Administrators, and Ministry Regulators.
 4. **Real-Time Job Dispatch and Synchronization**: Bi-directional event processing via WebSockets for instantaneous booking requests, live status transitions, and referendum tallying.
+5. **AI-Based Demand Forecasting & Workforce Allocation**: Geo-spatial predictive modeling predicting peak booking hours and allocating provider shifts.
+6. **24x7 Emergency SOS Dispatch**: Rapid 15-minute SLA dispatch for emergency plumbing, electrical short circuits, and caregiver assistance.
+7. **UX4G Indian Government Design System (v3.1.0)**: Fully compliant with GIGW 3.0 and WCAG 2.1 AA accessibility guidelines, featuring text size scaling (A-, A, A+), high contrast mode, dark theme, and English / Hindi bilingual support.
 
 ---
 
 ## System Architecture
 
 ```
-                                  ┌────────────────────────────────┐
-                                  │      SahakarConnect Client     │
-                                  │  React 18 + Vite + TypeScript  │
-                                  │    Tailwind CSS + Lucide UI    │
-                                  └───────────────┬────────────────┘
-                                                  │
+                                  +--------------------------------+
+                                  |      SahakarConnect Client     |
+                                  |  Pure HTML5 + CSS3 + Vanilla JS|
+                                  |  UX4G Design System (v3.1.0)   |
+                                  +---------------+----------------+
+                                                  |
                                    HTTP REST & Socket.io Events
-                                                  │
-                                  ┌───────────────▼────────────────┐
-                                  │     Express + TypeScript       │
-                                  │      Node.js REST API Server   │
-                                  │    JWT Auth + Role Middleware  │
-                                  └───────────────┬────────────────┘
-                                                  │
-                                      Prisma ORM Queries
-                                                  │
-                                  ┌───────────────▼────────────────┐
-                                  │      PostgreSQL Database       │
-                                  │   Relational Multi-Coop Model  │
-                                  └────────────────────────────────┘
+                                                  |
+                                  +---------------v----------------+
+                                  |     Express + TypeScript       |
+                                  |      Node.js REST API Server   |
+                                  |    JWT Auth + Role Middleware  |
+                                  +---------------+----------------+
+                                                  |
+                                       Prisma ORM Queries
+                                                  |
+                                  +---------------v----------------+
+                                  |      PostgreSQL Database       |
+                                  |   Relational Multi-Coop Model  |
+                                  +--------------------------------+
 ```
 
 ### Technology Stack
 
 | Layer | Component | Specification | Description |
 |---|---|---|---|
-| **Frontend** | Application Framework | React 18, Vite, TypeScript | Single responsive client with role-based view isolation |
-| **Frontend** | Styling & UI | Tailwind CSS, Lucide Icons | Production-grade design system following government portal standards |
+| **Frontend** | Application Framework | Pure HTML5, CSS3, Vanilla JS | Accessible, zero-build client interface adhering directly to UX4G 3.1.0 |
+| **Frontend** | Design System & Styling | UX4G 3.1.0 CDN + Custom Tokens | Official Government of India design tokens, high contrast, text scaling |
 | **Backend** | Application Server | Node.js, Express, TypeScript | Modular RESTful architecture with Zod schema validation |
 | **Database** | Persistence Layer | PostgreSQL 15, Prisma ORM | Relational schema modeling users, cooperatives, bookings, and ledger entries |
 | **Real-Time** | Event Engine | Socket.io | Bi-directional event broadcasting for status changes and live polls |
@@ -76,23 +79,18 @@ SahakarConnect addresses the economic vulnerabilities inherent in conventional g
 │   └── tsconfig.json
 │
 ├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── layout/          # DemoBar, Navbar, Footer
-│   │   │   └── ui/              # SplitVisualizer, Modal, Badge, StarRating
-│   │   ├── context/             # AuthContext, SocketContext
-│   │   ├── pages/
-│   │   │   ├── consumer/        # ConsumerHome, ConsumerBookings
-│   │   │   ├── provider/        # ProviderDashboard
-│   │   │   ├── admin/           # AdminDashboard (Verification, Ledger, Welfare, Polls)
-│   │   │   ├── regulator/       # RegulatorDashboard (National Benchmark)
-│   │   │   ├── governance/      # GovernancePage
-│   │   │   └── auth/            # Login, Register
-│   │   ├── types/               # TypeScript interfaces and shared type declarations
-│   │   ├── App.tsx              # Client application router
-│   │   └── main.tsx             # Client entrypoint
-│   ├── package.json
-│   └── vite.config.ts
+│   ├── index.html               # Citizen / Household Service Booking Portal
+│   ├── provider.html            # Cooperative Provider Gig Workstation & Welfare Ledger
+│   ├── admin.html               # PSCS Society Admin & Provider Verification
+│   ├── governance.html          # Democratic One-Member-One-Vote Governance Hall
+│   ├── regulator.html           # Ministry of Cooperation & Registrar Oversight
+│   ├── login.html               # MeriPehchan / DigiLocker National SSO Gateway
+│   ├── components-reference.html# UX4G Components Spec & Code Snippets Guide
+│   ├── package.json             # Static server scripts
+│   └── assets/
+│       ├── css/ux4g-theme.css   # UX4G Design Tokens, Accessibility (A-/A/A+), Contrast & Dark Modes
+│       ├── js/app.js            # Client runtime, localStorage state sync, booking & voting engine
+│       └── images/              # Ashoka Lion Emblem, Tricolor Flag & Sahakar Logos
 │
 ├── docker-compose.yml           # Local PostgreSQL container service definition
 ├── SahakarConnect_Agent_Build_Plan.md
@@ -107,7 +105,7 @@ SahakarConnect addresses the economic vulnerabilities inherent in conventional g
 ### Prerequisites
 - Node.js (v18 or higher)
 - npm (v9 or higher)
-- Docker and Docker Compose
+- Docker and Docker Compose (Optional for local PostgreSQL container)
 
 ### 1. Database Provisioning
 Launch the PostgreSQL database container:
@@ -125,16 +123,15 @@ npx prisma db push
 npm run seed
 npm run dev
 ```
-The API server starts on `http://localhost:5000`.
+The API server starts on `http://localhost:5000` and automatically serves both the REST API and the static UX4G frontend.
 
-### 3. Frontend Initialization
-In a separate terminal, install dependencies and launch the client development server:
+### 3. Frontend Initialization (Standalone Option)
+Alternatively, run the frontend with any static web server:
 ```bash
 cd frontend
-npm install
-npm run dev
+npm start
 ```
-The client application will be accessible at `http://localhost:5173`.
+The client application will be accessible at `http://localhost:3000`.
 
 ---
 
@@ -146,28 +143,28 @@ The client application will be accessible at `http://localhost:5173`.
 - `POST /api/auth/refresh` — Refresh expired access token.
 - `GET /api/auth/me` — Retrieve currently authenticated user profile.
 
-### Consumer Endpoints
-- `GET /api/services` — List categories and verified service listings (with filter/search support).
+### Consumer & Citizen Endpoints
+- `GET /api/services` — List categories and verified service listings.
 - `POST /api/bookings` — Create a new service booking request.
 - `GET /api/bookings/:id` — Retrieve booking details, status, and ledger receipt.
 - `GET /api/bookings/my` — List consumer booking history.
 - `POST /api/bookings/:id/rate` — Submit provider rating and feedback.
 - `POST /api/bookings/:id/pay` — Settle booking payment through simulated gateway.
 - `POST /api/grievances` — Submit a grievance ticket to the cooperative committee.
+- `GET /api/ai/forecast` — Retrieve AI-based demand forecasting and workforce capacity data.
 
 ### Provider Endpoints
 - `GET /api/providers/me` — Retrieve provider profile, statistics, and cooperative affiliation.
-- `PATCH /api/providers/me/availability` — Toggle duty status (Online / Offline).
-- `GET /api/providers/me/jobs` — Retrieve incoming, active, and completed jobs.
+- `PATCH /api/providers/availability` — Toggle duty status (Online / Offline).
+- `GET /api/providers/jobs` — Retrieve incoming, active, and completed jobs.
 - `PATCH /api/providers/jobs/:id/accept` — Accept an incoming booking request.
-- `PATCH /api/providers/jobs/:id/reject` — Reject a booking request.
 - `PATCH /api/providers/jobs/:id/start` — Mark job as in progress / on site.
 - `PATCH /api/providers/jobs/:id/complete` — Mark job as complete and trigger ledger settlement.
-- `GET /api/providers/me/earnings` — Retrieve comprehensive earnings and welfare contributions.
+- `GET /api/providers/earnings` — Retrieve comprehensive earnings and welfare contributions.
 
 ### Cooperative Admin Endpoints
 - `GET /api/coop/:id/providers` — List society providers with verification statuses.
-- `PATCH /api/coop/providers/:id/verify` — Approve or reject provider KYC application.
+- `PATCH /api/coop/:id/providers/:providerId/verify` — Approve or reject provider KYC application.
 - `GET /api/coop/:id/ledger` — Retrieve full cooperative revenue-split ledger.
 - `GET /api/coop/:id/welfare-fund` — Retrieve welfare balance and disbursement audit logs.
 - `POST /api/coop/:id/polls` — Create a new governance referendum.
@@ -187,9 +184,9 @@ For evaluation purposes, pre-seeded accounts are provided with the default passw
 | Role | User Name | Email Address | Organization / Society |
 |---|---|---|---|
 | **Consumer** | Rahul Sharma | `rahul.sharma@example.com` | Individual Household |
-| **Provider** | Ramesh Yadav | `ramesh.yadav@sahakar.coop` | Delhi Shramik Sahakari Samiti |
-| **Cooperative Admin** | Suresh Kumar | `admin.delhi@sahakar.coop` | Delhi Shramik Sahakari Samiti |
-| **Regulator** | Dr. Rajeshwari Nair | `regulator@cooperation.gov.in` | Joint Registrar, Ministry of Cooperation |
+| **Provider** | Rajesh Kumar Verma | `rajesh.plumber@example.com` | Varanasi Central Service Cooperative |
+| **Cooperative Admin** | Suresh Kumar | `admin.varanasi@example.com` | Varanasi Central Service Cooperative |
+| **Regulator** | Dr. Rajeshwari Nair | `regulator.up@gov.in` | Joint Registrar, Ministry of Cooperation |
 
 ---
 
