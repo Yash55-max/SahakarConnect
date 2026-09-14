@@ -1,0 +1,164 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  CONSUMER
+  PROVIDER
+  COOP_ADMIN
+  REGULATOR
+}
+
+enum MembershipClass {
+  CLASS_A_VOTING
+  CLASS_B_NON_VOTING
+  NOMINAL
+}
+
+enum BookingStatus {
+  REQUESTED
+  ACCEPTED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  HELD_IN_ESCROW
+  SETTLED
+  REFUNDED
+}
+
+enum PollStatus {
+  OPEN
+  CLOSED
+}
+
+model User {
+  id           String           @id @default(uuid())
+  name         String
+  email        String           @unique
+  phone        String           @unique
+  passwordHash String
+  role         UserRole
+  createdAt    DateTime         @default(now())
+  
+  providerProfile ProviderProfile?
+  consumerBookings Booking[]       @relation("ConsumerBookings")
+
+  @@map("users")
+}
+
+model Cooperative {
+  id                     String           @id @default(uuid())
+  name                   String
+  registrationNo         String           @unique
+  state                  String
+  district               String
+  commissionPlatformRate Decimal          @default(0.04) @db.Decimal(5, 4)
+  welfareFundRate        Decimal          @default(0.08) @db.Decimal(5, 4)
+  welfareBalance         Decimal          @default(0) @db.Decimal(12, 2)
+  statutoryReserveBalance Decimal         @default(0) @db.Decimal(12, 2)
+  createdAt              DateTime         @default(now())
+
+  providers       ProviderProfile[]
+  bookings        Booking[]
+  governancePolls GovernancePoll[]
+
+  @@map("cooperatives")
+}
+
+model ProviderProfile {
+  id                    String          @id @default(uuid())
+  userId                String          @unique
+  user                  User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cooperativeId         String
+  cooperative           Cooperative     @relation(fields: [cooperativeId], references: [id])
+  membershipClass       MembershipClass @default(CLASS_A_VOTING)
+  shareCapitalAmount    Decimal         @default(500.00) @db.Decimal(10, 2)
+  skills                String[]
+  isAadhaarVerified     Boolean         @default(false)
+  isPoliceClearVerified Boolean         @default(false)
+  nsqfLevel             Int             @default(1)
+  ratingAverage         Float           @default(5.0)
+  isAvailable           Boolean         @default(false)
+  h3IndexRes8           String?
+
+  bookings  Booking[]
+  pollVotes PollVote[]
+
+  @@map("provider_profiles")
+}
+
+model ServiceCategory {
+  id       String @id @default(uuid())
+  name     String
+  iconName String
+
+  @@map("service_categories")
+}
+
+model Booking {
+  id            String         @id @default(uuid())
+  consumerId    String
+  consumer      User           @relation("ConsumerBookings", fields: [consumerId], references: [id])
+  providerId    String?
+  provider      ProviderProfile? @relation(fields: [providerId], references: [id])
+  cooperativeId String
+  cooperative   Cooperative    @relation(fields: [cooperativeId], references: [id])
+  status        BookingStatus  @default(REQUESTED)
+  completionOtp String
+  grossAmount   Decimal        @db.Decimal(10, 2)
+  createdAt     DateTime       @default(now())
+
+  paymentLedgerEntry PaymentLedgerEntry?
+
+  @@map("bookings")
+}
+
+model PaymentLedgerEntry {
+  id               String        @id @default(uuid())
+  bookingId        String        @unique
+  booking          Booking       @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  totalGross       Decimal       @db.Decimal(10, 2)
+  workerPayout     Decimal       @db.Decimal(10, 2)
+  welfareFundShare Decimal       @db.Decimal(10, 2)
+  platformShare    Decimal       @db.Decimal(10, 2)
+  status           PaymentStatus @default(HELD_IN_ESCROW)
+  settledAt        DateTime?
+
+  @@map("payment_ledger_entries")
+}
+
+model GovernancePoll {
+  id            String      @id @default(uuid())
+  cooperativeId String
+  cooperative   Cooperative @relation(fields: [cooperativeId], references: [id])
+  title         String
+  description   String
+  quorumPercent Float       @default(50.0)
+  status        PollStatus  @default(OPEN)
+  expiresAt     DateTime
+
+  votes PollVote[]
+
+  @@map("governance_polls")
+}
+
+model PollVote {
+  id         String          @id @default(uuid())
+  pollId     String
+  poll       GovernancePoll  @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  providerId String
+  provider   ProviderProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  choice     String
+  castAt     DateTime        @default(now())
+
+  @@unique([pollId, providerId])
+  @@map("poll_votes")
+}
