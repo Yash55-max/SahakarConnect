@@ -1,46 +1,35 @@
 /* ==========================================================================
-   SahakarConnect - UX4G & GIGW 3.0 Design System Stylesheet
-   Standards: Ministry of Cooperation, Government of India / WCAG 2.1 AA
+   SahakarConnect - UX4G (Government of India) Theme & GIGW 3.0 Stylesheet
+   Standards: Ministry of Cooperation / WCAG 2.1 Level AA
    ========================================================================== */
 
 :root {
   --ux4g-primary: #0b417b;
-  --ux4g-primary-dark: #072a50;
-  --ux4g-primary-light: #e8f0fe;
-  --ux4g-secondary: #475569;
-  --ux4g-accent-saffron: #d96b27;
-  --ux4g-accent-green: #137333;
-  --ux4g-surface-bg: #f8fafc;
-  --ux4g-card-bg: #ffffff;
-  --ux4g-border: #cbd5e1;
-  --ux4g-border-subtle: #e2e8f0;
-  --ux4g-text-main: #0f172a;
-  --ux4g-text-muted: #475569;
+  --ux4g-primary-hover: #072a50;
+  --ux4g-primary-subtle: #e8f0fe;
+  --ux4g-saffron: #d96b27;
+  --ux4g-green: #137333;
+  --ux4g-slate-900: #0f172a;
+  --ux4g-slate-800: #1e293b;
+  --ux4g-slate-700: #334155;
+  --ux4g-slate-600: #475569;
+  --ux4g-slate-200: #e2e8f0;
+  --ux4g-slate-100: #f1f5f9;
+  --ux4g-slate-50: #f8fafc;
   --ux4g-focus-ring: #f59e0b;
 }
 
-/* Base Reset & Typography */
-* {
-  box-sizing: border-box;
-}
-
-html {
-  font-size: 100%;
-  scroll-behavior: smooth;
-}
-
+/* Typography & Base */
 body {
   margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-  color: var(--ux4g-text-main);
-  background-color: var(--ux4g-surface-bg);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  color: var(--ux4g-slate-900);
+  background-color: #f1f5f9;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-/* WCAG 2.1 AA Focus Rings */
+/* Accessible Focus States */
 a:focus-visible,
 button:focus-visible,
 select:focus-visible,
@@ -49,8 +38,8 @@ input:focus-visible {
   outline-offset: 2px !important;
 }
 
-/* Skip to main content link for screen readers */
-.visually-hidden-focusable:not(:focus):not(:focus-within) {
+/* Screen Reader Skip Link */
+.visually-hidden-focusable:not(:focus) {
   position: absolute !important;
   width: 1px !important;
   height: 1px !important;
@@ -66,49 +55,48 @@ input:focus-visible {
   position: static !important;
   width: auto !important;
   height: auto !important;
-  overflow: visible !important;
-  clip: auto !important;
-  white-space: normal !important;
-  z-index: 1050;
   padding: 0.35rem 0.75rem;
   background-color: #000;
   color: #fff;
   border: 2px solid #fff;
 }
 
-/* Accessibility Strip */
+/* Top GIGW Accessibility Strip */
 .accessibility-strip {
-  background-color: #1e293b;
-  color: #f1f5f9;
+  background-color: var(--ux4g-slate-900);
+  color: #f8fafc;
   font-size: 0.8125rem;
+  border-bottom: 1px solid #334155;
 }
 
 .accessibility-strip .btn-outline-light {
-  border-color: #64748b;
+  border-color: #475569;
   color: #f8fafc;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem;
 }
 
 .accessibility-strip .btn-outline-light:hover {
   background-color: #334155;
-  border-color: #94a3b8;
+  color: #ffffff;
 }
 
 /* Ministry Branding Section */
 .branding-section {
-  border-bottom: 2px solid #e2e8f0;
-  background: #ffffff;
+  background-color: #ffffff;
+  border-bottom: 3px solid var(--ux4g-primary);
 }
 
 .emblem-badge {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
+  background-color: var(--ux4g-slate-50);
+  border: 1px solid var(--ux4g-slate-200);
   border-radius: 4px;
-  background: #f1f5f9;
   color: var(--ux4g-primary);
-  border: 1px solid #cbd5e1;
 }
 
 .ministry-heading {
@@ -116,12 +104,14 @@ input:focus-visible {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #475569;
+  color: var(--ux4g-slate-600);
+  line-height: 1.2;
 }
 
 .council-subheading {
   font-size: 0.7rem;
   color: #64748b;
+  line-height: 1.2;
 }
 
 .platform-title {
@@ -131,20 +121,51 @@ input:focus-visible {
   line-height: 1.2;
 }
 
+/* Buttons with UX4G Standard Colors */
+.btn-primary {
+  background-color: var(--ux4g-primary) !important;
+  border-color: var(--ux4g-primary) !important;
+  color: #ffffff !important;
+  font-weight: 600;
+  transition: all 0.15s ease-in-out;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--ux4g-primary-hover) !important;
+  border-color: var(--ux4g-primary-hover) !important;
+}
+
+.btn-outline-primary {
+  color: var(--ux4g-primary) !important;
+  border-color: var(--ux4g-primary) !important;
+  background-color: transparent;
+  font-weight: 600;
+  transition: all 0.15s ease-in-out;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+  background-color: var(--ux4g-primary) !important;
+  color: #ffffff !important;
+}
+
 /* Persona Cards */
 .persona-card {
-  border: 1px solid var(--ux4g-border);
   background: #ffffff;
+  border: 1px solid var(--ux4g-slate-200);
   border-radius: 6px;
   display: flex;
   flex-direction: column;
   height: 100%;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
 }
 
 .persona-card:hover {
   border-color: var(--ux4g-primary);
-  box-shadow: 0 4px 12px rgba(11, 65, 123, 0.08);
+  box-shadow: 0 4px 12px rgba(11, 65, 123, 0.1);
+  transform: translateY(-2px);
 }
 
 .persona-card.selected {
@@ -156,12 +177,12 @@ input:focus-visible {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   border-radius: 6px;
-  background-color: #f1f5f9;
+  background-color: var(--ux4g-primary-subtle);
   color: var(--ux4g-primary);
-  border: 1px solid #e2e8f0;
+  border: 1px solid #cbd5e1;
 }
 
 /* Feature List */
@@ -173,42 +194,45 @@ input:focus-visible {
 
 .feature-list li {
   position: relative;
-  padding-left: 1.5rem;
+  padding-left: 1.4rem;
   margin-bottom: 0.4rem;
   font-size: 0.85rem;
-  color: var(--ux4g-text-muted);
+  color: var(--ux4g-slate-600);
+  line-height: 1.4;
 }
 
 .feature-list li .check-icon {
   position: absolute;
   left: 0;
-  top: 2px;
-  color: var(--ux4g-accent-green);
+  top: 1px;
+  color: var(--ux4g-green);
+  display: inline-flex;
+  align-items: center;
 }
 
-/* Statutory Verification Banner */
+/* Statutory Banner */
 .statutory-banner {
+  background: #ffffff;
   border-left: 4px solid var(--ux4g-primary);
-  background: #f8fafc;
-  border-top: 1px solid var(--ux4g-border-subtle);
-  border-right: 1px solid var(--ux4g-border-subtle);
-  border-bottom: 1px solid var(--ux4g-border-subtle);
+  border-top: 1px solid var(--ux4g-slate-200);
+  border-right: 1px solid var(--ux4g-slate-200);
+  border-bottom: 1px solid var(--ux4g-slate-200);
   border-radius: 4px;
 }
 
 .formula-code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 0.875rem;
-  background-color: #ffffff;
-  color: #0f172a;
-  padding: 0.25rem 0.6rem;
+  font-size: 0.85rem;
+  background-color: var(--ux4g-slate-50);
+  color: var(--ux4g-slate-900);
+  padding: 0.3rem 0.6rem;
   border-radius: 4px;
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--ux4g-slate-200);
 }
 
 /* Footer Styling */
 .ux4g-footer {
-  background-color: #0f172a;
+  background-color: var(--ux4g-slate-900);
   color: #cbd5e1;
   border-top: 4px solid var(--ux4g-primary);
 }
@@ -226,8 +250,8 @@ input:focus-visible {
 }
 
 .compliance-box {
-  background-color: #1e293b;
-  border: 1px solid #334155;
+  background-color: var(--ux4g-slate-800);
+  border: 1px solid var(--ux4g-slate-700);
   color: #e2e8f0;
   border-radius: 4px;
 }
@@ -244,7 +268,9 @@ body.high-contrast .persona-card,
 body.high-contrast .statutory-banner,
 body.high-contrast .bg-white,
 body.high-contrast .bg-light,
-body.high-contrast .alert {
+body.high-contrast .alert,
+body.high-contrast .compliance-box,
+body.high-contrast .ux4g-footer {
   background-color: #000000 !important;
   color: #ffff00 !important;
   border-color: #ffff00 !important;
@@ -276,12 +302,7 @@ body.high-contrast .btn-outline-primary {
   border-color: #ffff00 !important;
 }
 
-body.high-contrast .formula-code {
-  background-color: #000000 !important;
-  color: #ffff00 !important;
-  border: 1px solid #ffff00 !important;
-}
-
+body.high-contrast .formula-code,
 body.high-contrast .badge {
   background-color: #000000 !important;
   color: #ffff00 !important;
