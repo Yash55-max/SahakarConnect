@@ -636,16 +636,19 @@ body:not([data-theme="dark"]):not(.high-contrast) .council-subheading {
 
 [data-theme="dark"] .card,
 [data-theme="dark"] .persona-card,
-[data-theme="dark"] .hero-card,
 [data-theme="dark"] .calculator-card,
-[data-theme="dark"] .breakdown-card,
-[data-theme="dark"] .stat-box,
-[data-theme="dark"] .statutory-banner,
 [data-theme="dark"] .modal-content {
   background-color: #1e293b !important;
   color: #f8fafc !important;
   border-color: #334155 !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme="dark"] .hero-card {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
+  border-color: #334155 !important;
+  color: #f8fafc !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
 }
 
 [data-theme="dark"] .hero-card::before {
@@ -658,7 +661,55 @@ body:not([data-theme="dark"]):not(.high-contrast) .council-subheading {
   border-color: #0369a1 !important;
 }
 
-[data-theme="dark"] .hero-headline,
+[data-theme="dark"] .hero-headline {
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .hero-headline .text-primary {
+  color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .hero-lead {
+  color: #cbd5e1 !important;
+}
+
+/* Stat Boxes in Dark Mode */
+[data-theme="dark"] .stat-box {
+  background: #0f172a !important;
+  border-color: #334155 !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="dark"] .stat-box:hover {
+  border-color: #38bdf8 !important;
+  transform: translateY(-2px);
+}
+
+[data-theme="dark"] .stat-number {
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .stat-number.text-primary {
+  color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .stat-number.text-success {
+  color: #4ade80 !important;
+}
+
+[data-theme="dark"] .stat-number.text-dark {
+  color: #fbbf24 !important;
+}
+
+[data-theme="dark"] .stat-number.text-secondary {
+  color: #e2e8f0 !important;
+}
+
+[data-theme="dark"] .stat-label {
+  color: #94a3b8 !important;
+}
+
+/* Accessible Text Tokens in Dark Mode */
 [data-theme="dark"] .h1,
 [data-theme="dark"] .h2,
 [data-theme="dark"] .h3,
@@ -669,10 +720,50 @@ body:not([data-theme="dark"]):not(.high-contrast) .council-subheading {
   color: #f8fafc !important;
 }
 
-[data-theme="dark"] .hero-lead,
+[data-theme="dark"] .text-primary {
+  color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .text-success {
+  color: #4ade80 !important;
+}
+
+[data-theme="dark"] .text-danger {
+  color: #f87171 !important;
+}
+
+[data-theme="dark"] .text-warning {
+  color: #fbbf24 !important;
+}
+
 [data-theme="dark"] .text-muted,
 [data-theme="dark"] .text-secondary {
   color: #cbd5e1 !important;
+}
+
+/* Breakdown Cards in Calculator */
+[data-theme="dark"] .breakdown-card {
+  background: #0f172a !important;
+  border-color: #334155 !important;
+}
+
+[data-theme="dark"] .breakdown-card.border-primary {
+  border-color: #0284c7 !important;
+}
+
+[data-theme="dark"] .breakdown-card.border-success {
+  border-color: #166534 !important;
+}
+
+[data-theme="dark"] .breakdown-card.border-secondary {
+  border-color: #475569 !important;
+}
+
+/* Statutory Banner */
+[data-theme="dark"] .statutory-banner {
+  background: #0f172a !important;
+  border-color: #334155 !important;
+  border-left-color: #38bdf8 !important;
 }
 
 [data-theme="dark"] .bg-white,
@@ -698,6 +789,11 @@ body:not([data-theme="dark"]):not(.high-contrast) .council-subheading {
   background-color: #0f172a !important;
   color: #cbd5e1 !important;
   border-color: #334155 !important;
+}
+
+[data-theme="dark"] .comparison-table th.bg-primary {
+  background-color: #0369a1 !important;
+  color: #ffffff !important;
 }
 
 [data-theme="dark"] .table tbody td,
