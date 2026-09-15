@@ -147,8 +147,8 @@ export const LiveBookingTracker: React.FC<BookingTrackerProps> = ({
           <div className="card shadow-sm border border-warning h-100 bg-white">
             <div className="card-header bg-warning-subtle border-warning-subtle py-3">
               <div className="d-flex align-items-center gap-2">
-                <ShieldCheckIcon size={20} color="#b06000" />
-                <span className="fw-bold text-dark small text-uppercase">
+                <ShieldCheckIcon size={20} className="text-warning-emphasis" color="currentColor" />
+                <span className="fw-bold text-warning-emphasis small text-uppercase">
                   Statutory Completion Security PIN
                 </span>
               </div>
@@ -163,7 +163,7 @@ export const LiveBookingTracker: React.FC<BookingTrackerProps> = ({
                 {booking.completionOtp || '••••'}
               </div>
 
-              <div className="alert alert-warning text-dark text-start small mb-0 border">
+              <div className="alert alert-warning text-start small mb-0 border">
                 <strong>GIGW Statutory Escrow Protection:</strong>
                 <p className="mb-0 mt-1" style={{ fontSize: '0.82rem' }}>
                   Share this 4-digit PIN with your cooperative provider <strong>ONLY</strong> after the work has been completed satisfactorily. Providing this PIN triggers the instant tripartite escrow release to the technician's wallet.
