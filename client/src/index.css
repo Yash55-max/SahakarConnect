@@ -319,3 +319,222 @@ body.high-contrast .emblem-badge {
 body.high-contrast svg {
   stroke: #ffff00 !important;
 }
+
+/* ==========================================================================
+   National Tricolor Accent
+   ========================================================================== */
+.tricolor-stripe {
+  height: 4px;
+  background: linear-gradient(90deg, #ff9933 0%, #ff9933 33.3%, #ffffff 33.3%, #ffffff 66.6%, #138808 66.6%, #138808 100%);
+  width: 100%;
+}
+
+/* ==========================================================================
+   UX4G Main Navigation Bar
+   ========================================================================== */
+.ux4g-navbar {
+  background-color: #ffffff;
+  border-bottom: 2px solid var(--ux4g-slate-200);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.ux4g-nav-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.75rem 1rem;
+  color: var(--ux4g-slate-700);
+  font-weight: 500;
+  font-size: 0.875rem;
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.ux4g-nav-item:hover {
+  color: var(--ux4g-primary);
+  background-color: var(--ux4g-slate-50);
+}
+
+.ux4g-nav-item.active {
+  color: var(--ux4g-primary);
+  font-weight: 700;
+  border-bottom-color: var(--ux4g-primary);
+  background-color: var(--ux4g-primary-subtle);
+}
+
+/* ==========================================================================
+   Hero Section
+   ========================================================================== */
+.hero-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid var(--ux4g-slate-200);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background: var(--ux4g-primary);
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: #e8f0fe;
+  color: #0b417b;
+  border: 1px solid #bfdbfe;
+  padding: 0.25rem 0.65rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.hero-headline {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--ux4g-slate-900);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 768px) {
+  .hero-headline {
+    font-size: 1.5rem;
+  }
+}
+
+.hero-lead {
+  font-size: 1.05rem;
+  color: var(--ux4g-slate-600);
+  line-height: 1.6;
+}
+
+/* Metric / Stat Cards */
+.stat-box {
+  background: #ffffff;
+  border: 1px solid var(--ux4g-slate-200);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.stat-box:hover {
+  transform: translateY(-2px);
+  border-color: var(--ux4g-primary);
+}
+
+.stat-number {
+  font-size: 1.85rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ux4g-slate-600);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ==========================================================================
+   Interactive Calculator & Comparison Table
+   ========================================================================== */
+.calculator-card {
+  background: #ffffff;
+  border: 1px solid var(--ux4g-slate-200);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.calc-pill {
+  padding: 0.35rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid var(--ux4g-slate-300);
+  border-radius: 4px;
+  background: #ffffff;
+  color: var(--ux4g-slate-700);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.calc-pill:hover,
+.calc-pill.active {
+  background: var(--ux4g-primary);
+  color: #ffffff;
+  border-color: var(--ux4g-primary);
+}
+
+.breakdown-card {
+  border-radius: 6px;
+  padding: 1rem;
+  border: 1px solid var(--ux4g-slate-200);
+  background-color: var(--ux4g-slate-50);
+}
+
+.comparison-table th {
+  background-color: var(--ux4g-slate-100);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ux4g-slate-700);
+  padding: 0.75rem 1rem;
+}
+
+.comparison-table td {
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  vertical-align: middle;
+}
+
+/* High contrast support for new elements */
+body.high-contrast .ux4g-navbar,
+body.high-contrast .hero-card,
+body.high-contrast .stat-box,
+body.high-contrast .calculator-card,
+body.high-contrast .breakdown-card {
+  background-color: #000000 !important;
+  color: #ffff00 !important;
+  border-color: #ffff00 !important;
+}
+
+body.high-contrast .ux4g-nav-item {
+  color: #ffff00 !important;
+}
+
+body.high-contrast .ux4g-nav-item.active {
+  background-color: #1a1a00 !important;
+  border-bottom-color: #ffff00 !important;
+}
+
+body.high-contrast .hero-headline,
+body.high-contrast .hero-lead,
+body.high-contrast .stat-label,
+body.high-contrast .stat-number {
+  color: #ffff00 !important;
+}
+
+body.high-contrast .comparison-table th,
+body.high-contrast .comparison-table td {
+  background-color: #000000 !important;
+  color: #ffff00 !important;
+  border-color: #ffff00 !important;
+}
+
