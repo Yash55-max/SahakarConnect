@@ -15,6 +15,8 @@ interface HeaderProps {
   onSelectNav: (navId: string) => void;
   currentUser?: any | null;
   onSwitchPersona?: () => void;
+  theme: 'light' | 'dark' | 'high-contrast';
+  onThemeChange: (theme: 'light' | 'dark' | 'high-contrast') => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -24,9 +26,10 @@ export const Header: React.FC<HeaderProps> = ({
   onSelectNav,
   currentUser,
   onSwitchPersona,
+  theme,
+  onThemeChange,
 }) => {
   const [fontSize, setFontSize] = useState<number>(100);
-  const [highContrast, setHighContrast] = useState<boolean>(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
   const handleFontSizeChange = (delta: number) => {
@@ -36,16 +39,6 @@ export const Header: React.FC<HeaderProps> = ({
     if (newSize > 130) newSize = 130;
     setFontSize(newSize);
     document.documentElement.style.fontSize = `${newSize}%`;
-  };
-
-  const toggleHighContrast = () => {
-    const nextVal = !highContrast;
-    setHighContrast(nextVal);
-    if (nextVal) {
-      document.body.classList.add('high-contrast');
-    } else {
-      document.body.classList.remove('high-contrast');
-    }
   };
 
   const navLinks = [
@@ -125,16 +118,36 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
             </div>
 
-            {/* High Contrast Mode Toggle */}
-            <button
-              type="button"
-              className={`btn btn-sm py-0 px-2 ${highContrast ? 'btn-warning' : 'btn-outline-light'}`}
-              onClick={toggleHighContrast}
-              title="Toggle High Contrast"
-              aria-label="Toggle High Contrast"
-            >
-              {highContrast ? 'Standard View' : 'High Contrast'}
-            </button>
+            {/* Theme Selector (Light / Dark / High Contrast) */}
+            <div className="btn-group btn-group-sm" role="group" aria-label="Theme Selection">
+              <button
+                type="button"
+                className={`btn btn-sm py-0 px-2 ${theme === 'light' ? 'btn-light text-dark fw-bold' : 'btn-outline-light'}`}
+                onClick={() => onThemeChange('light')}
+                title="Light Theme"
+                aria-label="Light Theme"
+              >
+                Light
+              </button>
+              <button
+                type="button"
+                className={`btn btn-sm py-0 px-2 ${theme === 'dark' ? 'btn-info text-dark fw-bold' : 'btn-outline-light'}`}
+                onClick={() => onThemeChange('dark')}
+                title="Dark Theme"
+                aria-label="Dark Theme"
+              >
+                Dark
+              </button>
+              <button
+                type="button"
+                className={`btn btn-sm py-0 px-2 ${theme === 'high-contrast' ? 'btn-warning text-dark fw-bold' : 'btn-outline-light'}`}
+                onClick={() => onThemeChange('high-contrast')}
+                title="High Contrast Mode"
+                aria-label="High Contrast Mode"
+              >
+                Contrast
+              </button>
+            </div>
 
             {/* Language Selector */}
             <div className="d-flex align-items-center">

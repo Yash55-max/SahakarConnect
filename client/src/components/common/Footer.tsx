@@ -1,11 +1,20 @@
 import React from 'react';
-import { ShieldCheckIcon } from './Icons';
+import { ShieldCheckIcon, ScaleIcon, DocumentIcon } from './Icons';
+import { LegalDocType } from './LegalModal';
 
 interface FooterProps {
   currentLang?: 'en' | 'hi';
+  onOpenLegal?: (docId: LegalDocType) => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ currentLang = 'en' }) => {
+export const Footer: React.FC<FooterProps> = ({ currentLang = 'en', onOpenLegal }) => {
+  const handleLinkClick = (e: React.MouseEvent, docId: LegalDocType) => {
+    e.preventDefault();
+    if (onOpenLegal) {
+      onOpenLegal(docId);
+    }
+  };
+
   return (
     <footer className="ux4g-footer pt-4 pb-3 mt-auto" role="contentinfo">
       <div className="container-fluid px-4">
@@ -25,68 +34,126 @@ export const Footer: React.FC<FooterProps> = ({ currentLang = 'en' }) => {
         {/* Links Grid */}
         <div className="row g-4 mb-4">
           <div className="col-12 col-md-4">
-            <div className="text-uppercase fw-bold text-light small mb-2">About SahakarConnect</div>
-            <p className="small text-muted mb-2">
-              National digital platform for Primary Service Cooperative Societies (PSCS). Provides multi-tenant ledger accounting, member verification, and governance operations.
+            <div className="text-uppercase fw-bold text-light small mb-2">
+              {currentLang === 'hi' ? 'सहकार कनेक्ट परिचय' : 'About SahakarConnect'}
+            </div>
+            <p className="small footer-subtext mb-2">
+              National statutory digital infrastructure for Primary Service Cooperative Societies (PSCS). Provides multi-tenant double-entry ledger accounting, tradesmen e-KYC, and democratic governance.
             </p>
-            <div className="small text-muted">
-              Standardized under GIGW 3.0 guidelines and UX4G design specifications.
+            <div className="small footer-subtext">
+              Standardized under GIGW 3.0 guidelines and official UX4G design specifications.
             </div>
           </div>
 
           <div className="col-6 col-md-2">
-            <div className="text-uppercase fw-bold text-light small mb-2">Mandatory Policies</div>
+            <div className="text-uppercase fw-bold text-light small mb-2">
+              {currentLang === 'hi' ? 'अनिवार्य नीतियां' : 'Mandatory Policies'}
+            </div>
             <ul className="list-unstyled small">
               <li className="mb-2">
-                <a href="#terms">Terms of Service</a>
+                <button
+                  type="button"
+                  className="footer-link-btn"
+                  onClick={(e) => handleLinkClick(e, 'terms')}
+                >
+                  {currentLang === 'hi' ? 'सेवा की शर्तें' : 'Terms of Service'}
+                </button>
               </li>
               <li className="mb-2">
-                <a href="#privacy">Privacy Policy</a>
+                <button
+                  type="button"
+                  className="footer-link-btn"
+                  onClick={(e) => handleLinkClick(e, 'privacy')}
+                >
+                  {currentLang === 'hi' ? 'गोपनीयता नीति' : 'Privacy Policy'}
+                </button>
               </li>
               <li className="mb-2">
-                <a href="#hyperlink-policy">Hyperlink Policy</a>
+                <button
+                  type="button"
+                  className="footer-link-btn"
+                  onClick={(e) => handleLinkClick(e, 'hyperlink')}
+                >
+                  {currentLang === 'hi' ? 'हाइपरलिंकिंग नीति' : 'Hyperlink Policy'}
+                </button>
               </li>
               <li className="mb-2">
-                <a href="#disclaimer">Copyright &amp; Disclaimer</a>
+                <button
+                  type="button"
+                  className="footer-link-btn"
+                  onClick={(e) => handleLinkClick(e, 'disclaimer')}
+                >
+                  {currentLang === 'hi' ? 'कॉपीराइट व अस्वीकरण' : 'Copyright & Disclaimer'}
+                </button>
               </li>
             </ul>
           </div>
 
           <div className="col-6 col-md-3">
-            <div className="text-uppercase fw-bold text-light small mb-2">Statutory Framework</div>
+            <div className="text-uppercase fw-bold text-light small mb-2">
+              {currentLang === 'hi' ? 'वैधानिक ढांचा' : 'Statutory Framework'}
+            </div>
             <ul className="list-unstyled small">
               <li className="mb-2">
-                <a href="#ms-coop-act">Multi-State Co-operative Societies Act, 2023</a>
+                <button
+                  type="button"
+                  className="footer-link-btn"
+                  onClick={(e) => handleLinkClick(e, 'mscs-act')}
+                >
+                  {currentLang === 'hi' ? 'एमएससीएस अधिनियम 2023' : 'MSCS Act 2023 Provisions'}
+                </button>
               </li>
               <li className="mb-2">
-                <a href="#welfare-fund">Welfare Fund Accounting Rules</a>
+                <button
+                  type="button"
+                  className="footer-link-btn"
+                  onClick={(e) => handleLinkClick(e, 'welfare-fund')}
+                >
+                  {currentLang === 'hi' ? 'कल्याण निधि नियम' : 'Welfare Fund Rules'}
+                </button>
               </li>
               <li className="mb-2">
-                <a href="#statutory-reserves">Statutory Reserve Guidelines</a>
+                <button
+                  type="button"
+                  className="footer-link-btn"
+                  onClick={(e) => handleLinkClick(e, 'statutory-reserves')}
+                >
+                  {currentLang === 'hi' ? 'सांविधिक आरक्षित दिशानिर्देश' : 'Statutory Reserve Guidelines'}
+                </button>
               </li>
               <li className="mb-2">
-                <a href="#grievance">Grievance Redressal Mechanism</a>
+                <button
+                  type="button"
+                  className="footer-link-btn"
+                  onClick={(e) => handleLinkClick(e, 'grievance')}
+                >
+                  {currentLang === 'hi' ? 'शिकायत निवारण तंत्र' : 'Grievance Redressal'}
+                </button>
               </li>
             </ul>
           </div>
 
           <div className="col-12 col-md-3">
-            <div className="text-uppercase fw-bold text-light small mb-2">Security &amp; Standards</div>
-            <div className="small text-muted mb-2 d-flex align-items-center gap-2">
+            <div className="text-uppercase fw-bold text-light small mb-2">
+              {currentLang === 'hi' ? 'सुरक्षा व मानक' : 'Security & Standards'}
+            </div>
+            <div className="small footer-subtext mb-2 d-flex align-items-center gap-2">
               <ShieldCheckIcon size={16} />
               <span>Zero-Leakage Tripartite Escrow</span>
             </div>
-            <div className="small text-muted mb-2">
-              Sovereign Cloud Infrastructure
+            <div className="small footer-subtext mb-2 d-flex align-items-center gap-2">
+              <ScaleIcon size={16} />
+              <span>Double-Entry Deterministic Ledger</span>
             </div>
-            <div className="small text-muted">
-              WCAG 2.1 Level AA Compliant
+            <div className="small footer-subtext mb-2 d-flex align-items-center gap-2">
+              <DocumentIcon size={16} />
+              <span>WCAG 2.1 Level AA Compliant</span>
             </div>
           </div>
         </div>
 
         {/* Bottom Strip */}
-        <div className="border-top border-secondary pt-3 mt-3 d-flex justify-content-between align-items-center flex-wrap small text-muted">
+        <div className="border-top border-secondary pt-3 mt-3 d-flex justify-content-between align-items-center flex-wrap small footer-subtext">
           <div>
             &copy; {new Date().getFullYear()} Ministry of Cooperation, Government of India.
           </div>
@@ -98,4 +165,5 @@ export const Footer: React.FC<FooterProps> = ({ currentLang = 'en' }) => {
     </footer>
   );
 };
+
 export default Footer;

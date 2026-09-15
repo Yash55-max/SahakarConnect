@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
+import LegalModal, { LegalDocType } from './components/common/LegalModal';
 import { SocketProvider, useSocket } from './context/SocketContext';
 import ServiceCatalog from './pages/consumer/ServiceCatalog';
 import ProviderDashboard from './pages/provider/ProviderDashboard';
@@ -33,8 +34,24 @@ export const AppContent: React.FC = () => {
   const [activeNav, setActiveNav] = useState<string>('home');
   const [backendHealth, setBackendHealth] = useState<HealthStatus | null>(null);
   const [currentUser, setCurrentUser] = useState<any | null>(null);
+  const [theme, setTheme] = useState<'light' | 'dark' | 'high-contrast'>(() => {
+    const saved = localStorage.getItem('sahakar_theme');
+    return (saved as any) || 'light';
+  });
+  const [activeLegalDoc, setActiveLegalDoc] = useState<LegalDocType | null>(null);
 
   const { connectWithToken } = useSocket();
+
+  // Apply theme to document element
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    if (theme === 'high-contrast') {
+      document.body.classList.add('high-contrast');
+    } else {
+      document.body.classList.remove('high-contrast');
+    }
+    localStorage.setItem('sahakar_theme', theme);
+  }, [theme]);
 
   // Fetch backend health status
   useEffect(() => {
@@ -101,6 +118,8 @@ export const AppContent: React.FC = () => {
         onSelectNav={handleSelectNav}
         currentUser={currentUser}
         onSwitchPersona={() => setActiveNav('home')}
+        theme={theme}
+        onThemeChange={setTheme}
       />
 
       <main id="main-content" className="flex-grow-1 py-4" role="main">
@@ -199,7 +218,16 @@ export const AppContent: React.FC = () => {
       </main>
 
       {/* Official Government of India Accessible Footer */}
-      <Footer currentLang={lang} />
+      <Footer currentLang={lang} onOpenLegal={(docId) => setActiveLegalDoc(docId)} />
+
+      {/* Statutory & Legal Policy Modal */}
+      {activeLegalDoc && (
+        <LegalModal
+          docId={activeLegalDoc}
+          onClose={() => setActiveLegalDoc(null)}
+          lang={lang}
+        />
+      )}
     </div>
   );
 };
