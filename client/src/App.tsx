@@ -1,13 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
+import type { LegalDocType } from './components/common/LegalModal';
+import { SocketProvider, useSocket } from './context/SocketContext';
+import LandingPage from './pages/landing/LandingPage';
+import { PortalSkeleton } from './components/common/Skeleton';
+
+// Lazy load portal views and modals for performance & smooth skeleton transitions
+const ServiceCatalog = lazy(() => import('./pages/consumer/ServiceCatalog'));
+const ProviderDashboard = lazy(() => import('./pages/provider/ProviderDashboard'));
+const AdminHub = lazy(() => import('./pages/admin/AdminHub'));
+const LegalModal = lazy(() => import('./components/common/LegalModal'));
 import {
   ConsumerIcon,
   ProviderIcon,
   AdminIcon,
   RegulatorIcon,
-  CheckIcon,
-  ScaleIcon,
+  HomeIcon,
+  PlumbingIcon,
+  ElectricalIcon,
+  CarpentryIcon,
+  ApplianceIcon,
 } from './components/common/Icons';
 
 interface HealthStatus {
@@ -17,250 +30,318 @@ interface HealthStatus {
   uptime?: number;
 }
 
-export const App: React.FC = () => {
-  const [lang, setLang] = useState<'en' | 'hi'>('en');
-  const [selectedPersona, setSelectedPersona] = useState<string | null>(null);
-  const [backendHealth, setBackendHealth] = useState<HealthStatus | null>(null);
-  const [loadingHealth, setLoadingHealth] = useState<boolean>(true);
+const PERSONA_CREDENTIALS: Record<string, { email: string; pass: string }> = {
+  consumer: { email: 'vikram.consumer@gmail.com', pass: 'Password@123' },
+  'portal:plumbing': { email: 'vikram.consumer@gmail.com', pass: 'Password@123' },
+  'portal:electrical': { email: 'vikram.consumer@gmail.com', pass: 'Password@123' },
+  'portal:carpentry': { email: 'vikram.consumer@gmail.com', pass: 'Password@123' },
+  'portal:appliances': { email: 'vikram.consumer@gmail.com', pass: 'Password@123' },
+  provider: { email: 'ramesh.plumber@sahakar.org', pass: 'Password@123' },
+  coop_admin: { email: 'admin.delhi@sahakar.gov.in', pass: 'Password@123' },
+  regulator: { email: 'regulator@cooperation.gov.in', pass: 'Password@123' },
+};
 
+
+export const AppContent: React.FC = () => {
+  const [lang, setLang] = useState<'en' | 'hi'>('en');
+  const [activeNav, setActiveNav] = useState<string>('home');
+  const [backendHealth, setBackendHealth] = useState<HealthStatus | null>(null);
+  const [currentUser, setCurrentUser] = useState<any | null>(null);
+  const [theme, setTheme] = useState<'light' | 'dark' | 'contrast'>(() => {
+    const saved = localStorage.getItem('sahakar_theme');
+    if (saved === 'high-contrast' || saved === 'contrast') return 'contrast';
+    return (saved as any) || 'light';
+  });
+  const [fontChoice, setFontChoice] = useState<'sm' | 'md' | 'lg'>(() => {
+    const saved = localStorage.getItem('sahakar_font_choice');
+    return (saved as any) || 'md';
+  });
+  const [activeLegalDoc, setActiveLegalDoc] = useState<LegalDocType | null>(null);
+
+  const { connectWithToken } = useSocket();
+
+  // Apply theme to document element
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    if (theme === 'contrast') {
+      document.body.classList.add('high-contrast');
+    } else {
+      document.body.classList.remove('high-contrast');
+    }
+    localStorage.setItem('sahakar_theme', theme);
+  }, [theme]);
+
+  // Apply UX4G font scaling
+  useEffect(() => {
+    const scaleMap: Record<'sm' | 'md' | 'lg', string> = {
+      sm: '0.9375',
+      md: '1',
+      lg: '1.125',
+    };
+    document.documentElement.style.setProperty('--ux4g-font-scale', scaleMap[fontChoice]);
+    localStorage.setItem('sahakar_font_choice', fontChoice);
+  }, [fontChoice]);
+
+  // Fetch backend health status
   useEffect(() => {
     fetch('http://localhost:5000/api/health')
       .then((res) => res.json())
       .then((data) => {
         setBackendHealth(data);
-        setLoadingHealth(false);
       })
       .catch((_err) => {
         setBackendHealth({ status: 'offline', db: 'unreachable', timestamp: new Date().toISOString() });
-        setLoadingHealth(false);
       });
   }, []);
 
-  const personas = [
-    {
-      id: 'consumer',
-      title: lang === 'hi' ? 'नागरिक सेवा पोर्टल' : 'Citizen Consumer Portal',
-      role: 'CONSUMER',
-      IconComponent: ConsumerIcon,
-      badgeClass: 'bg-primary text-white',
-      description:
-        lang === 'hi'
-          ? 'सत्यापित सहकारी तकनीशियनों से निर्धारित दरों पर घरेलू व व्यावसायिक सेवाएं प्राप्त करें।'
-          : 'Service booking for verified cooperative technicians with statutory rate schedules.',
-      features: [
-        'Booking dispatch requests',
-        'NSQF skill certification verification',
-        'Escrow held until 4-digit PIN completion',
-        'Direct receipt with breakdown',
-      ],
-      action: 'Enter Consumer Portal',
-    },
-    {
-      id: 'provider',
-      title: lang === 'hi' ? 'श्रमयोगी सदस्य कार्यक्षेत्र' : 'Cooperative Provider Workplace',
-      role: 'PROVIDER',
-      IconComponent: ProviderIcon,
-      badgeClass: 'bg-success text-white',
-      description:
-        lang === 'hi'
-          ? 'कार्य आवंटन, प्रत्यक्ष कल्याण निधि क्रेडिट और पारदर्शी भुगतान विवरण।'
-          : 'Job assignment, welfare fund contributions, share capital balance, and payouts.',
-      features: [
-        'Spatial availability status',
-        'Class-A voting status in cooperative',
-        'Statutory welfare fund allocation',
-        'Instant settlement upon OTP verification',
-      ],
-      action: 'Open Provider Workplace',
-    },
-    {
-      id: 'coop_admin',
-      title: lang === 'hi' ? 'समिति प्रशासनिक केंद्र' : 'Cooperative Society Admin',
-      role: 'COOP_ADMIN',
-      IconComponent: AdminIcon,
-      badgeClass: 'bg-dark text-white',
-      description:
-        lang === 'hi'
-          ? 'प्राथमिक सेवा सहकारी समिति का लेखा-जोखा, सदस्य सत्यापन और मतदान प्रबंधन।'
-          : 'Primary Service Cooperative Society administration, member checks, and polls.',
-      features: [
-        'Tripartite escrow ledger records',
-        'Member Aadhaar and police verification',
-        'Statutory governance resolutions',
-        'Reserve fund accounting balance',
-      ],
-      action: 'Manage Society Operations',
-    },
-    {
-      id: 'regulator',
-      title: lang === 'hi' ? 'सहकारिता विनियामक निरीक्षण' : 'Central Cooperative Regulator',
-      role: 'REGULATOR',
-      IconComponent: RegulatorIcon,
-      badgeClass: 'bg-secondary text-white',
-      description:
-        lang === 'hi'
-          ? 'सहकारिता मंत्रालय और राज्य रजिस्ट्रार के लिए अंतर-जिला लेखापरीक्षा।'
-          : 'Ministry of Cooperation audit access across district cooperative societies.',
-      features: [
-        'Multi-district society audit logs',
-        'Statutory reserve ratio validation',
-        'Zero-leakage ledger accounting audits',
-        'Compliance reports under MSCS Act 2023',
-      ],
-      action: 'Access Regulatory Terminal',
-    },
-  ];
+  // Handle portal selection & automatic authentication
+  const handleSelectNav = async (navId: string) => {
+    setActiveNav(navId);
+
+    if (navId === 'home') {
+      return;
+    }
+
+    const creds = PERSONA_CREDENTIALS[navId];
+    if (creds) {
+      try {
+        const res = await fetch('http://localhost:5000/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: creds.email, password: creds.pass }),
+        });
+        if (res.ok) {
+          const data = await res.json();
+          localStorage.setItem('token', data.token);
+          setCurrentUser(data.user);
+          connectWithToken(data.token);
+        }
+      } catch (err) {
+        console.error('Auto login error:', err);
+      }
+    }
+  };
+
+  const getPortalTitle = (nav: string) => {
+    switch (nav) {
+      case 'consumer':
+        return lang === 'hi' ? 'समस्त नागरिक सेवाएं' : 'Citizen Consumer Portal';
+      case 'portal:plumbing':
+        return lang === 'hi' ? 'नलसाजी एवं स्वच्छता सहकारी पोर्टल' : 'Plumbing & Sanitary Works Cooperative';
+      case 'portal:electrical':
+        return lang === 'hi' ? 'विद्युत अभियांत्रिकी सहकारी पोर्टल' : 'Electrical & Wiremen Cooperative';
+      case 'portal:carpentry':
+        return lang === 'hi' ? 'काष्ठशिल्प एवं बढ़ईगीरी सहकारी पोर्टल' : 'Woodcraft & Carpentry Cooperative';
+      case 'portal:appliances':
+        return lang === 'hi' ? 'उपकरण मरम्मत सहकारी पोर्टल' : 'Appliance Repair Cooperative';
+      case 'provider':
+        return lang === 'hi' ? 'श्रमयोगी सदस्य कार्यक्षेत्र' : 'Tradesman Provider Workplace';
+      case 'coop_admin':
+        return lang === 'hi' ? 'समिति प्रशासनिक केंद्र' : 'Cooperative Society Admin Hub';
+      case 'regulator':
+        return lang === 'hi' ? 'सहकारिता विनियामक निरीक्षण' : 'Central Cooperative Regulator Hub';
+      default:
+        return 'Overview';
+    }
+  };
+
+  const isConsumerView = activeNav === 'consumer' || activeNav.startsWith('portal:');
 
   return (
     <div className="d-flex flex-column min-vh-100">
-      <Header currentLang={lang} onLanguageChange={setLang} />
+      {/* Institutional UX4G Accessible Header & Navigation */}
+      <Header
+        currentLang={lang}
+        onLanguageChange={setLang}
+        activeNav={activeNav}
+        onSelectNav={handleSelectNav}
+        currentUser={currentUser}
+        onSwitchPersona={() => setActiveNav('home')}
+        theme={theme}
+        onThemeChange={setTheme}
+        fontChoice={fontChoice}
+        onFontChoiceChange={setFontChoice}
+      />
 
-      <main id="main-content" className="flex-grow-1 py-4" role="main">
-        <div className="container-fluid px-4">
-          {/* Main Title Section */}
-          <div className="card shadow-sm border mb-4 bg-white">
-            <div className="card-body p-4">
-              <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
-                <div>
-                  <span className="badge bg-light text-dark border px-2 py-1 mb-2" style={{ fontSize: '0.72rem' }}>
-                    UX4G Design System / GIGW 3.0
-                  </span>
-                  <h2 className="h4 fw-bold mb-1 text-dark">
-                    {lang === 'hi'
-                      ? 'सहकार कनेक्ट: प्राथमिक सेवा सहकारी समिति मंच'
-                      : 'SahakarConnect: Primary Service Cooperative Society (PSCS) Platform'}
-                  </h2>
-                  <p className="text-secondary small mb-0">
-                    {lang === 'hi'
-                      ? 'बहु-राज्य सहकारी सोसायटी अधिनियम, 2023 के तहत वैधानिक डिजिटल अवसंरचना।'
-                      : 'Statutory digital infrastructure established under the Multi-State Co-operative Societies Act, 2023.'}
-                  </p>
-                </div>
+      <main id="main-content" className={`flex-grow-1 ${activeNav === 'home' ? '' : 'py-3 py-md-4'}`} role="main">
+        {activeNav === 'home' ? (
+          <LandingPage
+            lang={lang}
+            onSelectPortal={handleSelectNav}
+            backendHealth={backendHealth}
+          />
+        ) : (
+          <div className="container-fluid px-2 px-sm-3 px-md-4">
+            {/* Breadcrumb & Quick Switcher Strip when inside a portal */}
+            <div className="card shadow-sm border mb-3 mb-md-4 bg-white">
+              <div className="card-body py-2 px-2 px-md-3">
+                <div className="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                  <div className="d-flex align-items-center gap-2 flex-wrap">
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-link p-0 text-decoration-none text-secondary d-flex align-items-center gap-1"
+                      onClick={() => setActiveNav('home')}
+                    >
+                      <HomeIcon size={14} />
+                      <span>{lang === 'hi' ? 'मुख्य पृष्ठ' : 'Home'}</span>
+                    </button>
+                    <span className="text-muted">/</span>
+                    <span className="fw-bold text-dark small">{getPortalTitle(activeNav)}</span>
+                    <span className="badge bg-primary text-uppercase ms-1" style={{ fontSize: '0.68rem' }}>
+                      {activeNav === 'portal:plumbing'
+                        ? 'PLUMBING'
+                        : activeNav === 'portal:electrical'
+                        ? 'ELECTRICAL'
+                        : activeNav === 'portal:carpentry'
+                        ? 'CARPENTRY'
+                        : activeNav === 'portal:appliances'
+                        ? 'APPLIANCES'
+                        : currentUser?.role || activeNav}
+                    </span>
 
-                {/* System Diagnostics */}
-                <div className="text-end">
-                  <div className="d-inline-flex align-items-center gap-2 px-3 py-2 bg-light border rounded">
-                    <span
-                      className={`badge ${
-                        backendHealth?.status === 'ok' ? 'bg-success' : 'bg-danger'
-                      }`}
-                      style={{ width: '8px', height: '8px', padding: 0, borderRadius: '50%' }}
-                      aria-hidden="true"
-                    />
-                    <div className="text-start">
-                      <div className="small fw-semibold text-dark">
-                        API Status:{' '}
-                        <span>
-                          {loadingHealth
-                            ? 'Checking...'
-                            : backendHealth?.status === 'ok'
-                            ? 'Online'
-                            : 'Offline'}
-                        </span>
+                    {/* Quick Trade Selector in Breadcrumb Strip */}
+                    {isConsumerView && (
+                      <div className="btn-group btn-group-sm ms-md-2 overflow-auto" role="group" aria-label="Trade portals quick switcher">
+                        <button
+                          type="button"
+                          className={`btn py-0 px-2 ${activeNav === 'portal:plumbing' || activeNav === 'consumer' ? 'btn-primary' : 'btn-outline-secondary'}`}
+                          onClick={() => handleSelectNav('portal:plumbing')}
+                          title="Plumbing Portal"
+                        >
+                          <PlumbingIcon size={12} className="me-1" />
+                          Plumbing
+                        </button>
+                        <button
+                          type="button"
+                          className={`btn py-0 px-2 ${activeNav === 'portal:electrical' ? 'btn-primary' : 'btn-outline-secondary'}`}
+                          onClick={() => handleSelectNav('portal:electrical')}
+                          title="Electrical Portal"
+                        >
+                          <ElectricalIcon size={12} className="me-1" />
+                          Electrical
+                        </button>
+                        <button
+                          type="button"
+                          className={`btn py-0 px-2 ${activeNav === 'portal:carpentry' ? 'btn-primary' : 'btn-outline-secondary'}`}
+                          onClick={() => handleSelectNav('portal:carpentry')}
+                          title="Carpentry Portal"
+                        >
+                          <CarpentryIcon size={12} className="me-1" />
+                          Carpentry
+                        </button>
+                        <button
+                          type="button"
+                          className={`btn py-0 px-2 ${activeNav === 'portal:appliances' ? 'btn-primary' : 'btn-outline-secondary'}`}
+                          onClick={() => handleSelectNav('portal:appliances')}
+                          title="Appliance Portal"
+                        >
+                          <ApplianceIcon size={12} className="me-1" />
+                          Appliances
+                        </button>
                       </div>
-                      <div className="text-muted" style={{ fontSize: '0.72rem' }}>
-                        Database: {backendHealth?.db === 'connected' ? 'Connected' : 'Disconnected'}
-                      </div>
-                    </div>
+                    )}
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          {/* Statutory Escrow Split Box */}
-          <div className="statutory-banner p-3 mb-4 shadow-sm">
-            <div className="d-flex align-items-center gap-3">
-              <div className="text-primary">
-                <ScaleIcon size={28} />
-              </div>
-              <div>
-                <div className="small fw-bold text-dark">Statutory Split Invariant:</div>
-                <div className="d-flex align-items-center gap-2 flex-wrap mt-1">
-                  <code className="formula-code">
-                    Worker Payout (W) + Welfare Fund (F) + Platform Fee (P) = Gross Amount
-                  </code>
-                  <span className="text-muted small">
-                    Enforces deterministic zero-leakage accounting. Rounding fractional remainder credited to worker.
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Persona Card Grid */}
-          <div className="row g-4">
-            {personas.map((p) => {
-              const IconComp = p.IconComponent;
-              const isSelected = selectedPersona === p.id;
-              return (
-                <div key={p.id} className="col-12 col-md-6 col-xl-3">
-                  <div className={`persona-card p-3 ${isSelected ? 'selected' : ''}`}>
-                    <div className="d-flex justify-content-between align-items-center mb-3">
-                      <div className="card-icon-wrapper">
-                        <IconComp size={22} />
-                      </div>
-                      <span className={`badge ${p.badgeClass} text-uppercase px-2 py-1`} style={{ fontSize: '0.7rem' }}>
-                        {p.role}
-                      </span>
-                    </div>
-
-                    <h3 className="h6 fw-bold mb-2 text-dark">{p.title}</h3>
-                    <p className="small text-muted mb-3 flex-grow-1">{p.description}</p>
-
-                    <div className="small fw-semibold text-uppercase text-secondary mb-2" style={{ fontSize: '0.72rem' }}>
-                      Key Capabilities
-                    </div>
-                    <ul className="feature-list mb-4">
-                      {p.features.map((feat, idx) => (
-                        <li key={idx}>
-                          <span className="check-icon">
-                            <CheckIcon size={13} />
-                          </span>
-                          <span>{feat}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <div className="mt-auto">
+                  <div className="d-flex align-items-center gap-2 flex-wrap ms-auto">
+                    <span className="small text-muted d-none d-lg-inline">Switch Portal:</span>
+                    <div className="btn-group btn-group-sm" role="group" aria-label="Portal switcher">
                       <button
                         type="button"
-                        className={`btn btn-sm w-100 ${
-                          isSelected ? 'btn-primary' : 'btn-outline-primary'
-                        }`}
-                        onClick={() => setSelectedPersona(p.id)}
+                        className={`btn ${isConsumerView ? 'btn-primary' : 'btn-outline-secondary'}`}
+                        onClick={() => handleSelectNav('consumer')}
+                        title="Citizen Consumer"
                       >
-                        {p.action}
+                        <ConsumerIcon size={13} className="me-1" />
+                        <span className="d-none d-sm-inline">Citizen</span>
+                      </button>
+                      <button
+                        type="button"
+                        className={`btn ${activeNav === 'provider' ? 'btn-success' : 'btn-outline-secondary'}`}
+                        onClick={() => handleSelectNav('provider')}
+                        title="Tradesman Provider"
+                      >
+                        <ProviderIcon size={13} className="me-1" />
+                        <span className="d-none d-sm-inline">Tradesman</span>
+                      </button>
+                      <button
+                        type="button"
+                        className={`btn ${activeNav === 'coop_admin' ? 'btn-dark' : 'btn-outline-secondary'}`}
+                        onClick={() => handleSelectNav('coop_admin')}
+                        title="Society Admin"
+                      >
+                        <AdminIcon size={13} className="me-1" />
+                        <span className="d-none d-sm-inline">Admin</span>
+                      </button>
+                      <button
+                        type="button"
+                        className={`btn ${activeNav === 'regulator' ? 'btn-secondary' : 'btn-outline-secondary'}`}
+                        onClick={() => handleSelectNav('regulator')}
+                        title="Regulator"
+                      >
+                        <RegulatorIcon size={13} className="me-1" />
+                        <span className="d-none d-sm-inline">Regulator</span>
                       </button>
                     </div>
+
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-outline-danger"
+                      onClick={() => setActiveNav('home')}
+                      title="Exit to Landing Page"
+                    >
+                      Exit
+                    </button>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-
-          {/* Persona Active View Panel */}
-          {selectedPersona && (
-            <div className="alert alert-secondary mt-4 border shadow-sm d-flex justify-content-between align-items-center">
-              <div className="small">
-                <strong>Selected Workspace:</strong>{' '}
-                <span>{personas.find((p) => p.id === selectedPersona)?.title}</span>
-                . Day 2 interactive modules mount into this workspace.
               </div>
-              <button
-                type="button"
-                className="btn btn-sm btn-outline-secondary"
-                onClick={() => setSelectedPersona(null)}
-              >
-                Clear Selection
-              </button>
             </div>
-          )}
-        </div>
+
+            <Suspense fallback={<PortalSkeleton title={getPortalTitle(activeNav)} />}>
+              {isConsumerView && (
+                <ServiceCatalog
+                  initialTrade={
+                    activeNav === 'portal:electrical'
+                      ? 'electrical'
+                      : activeNav === 'portal:carpentry'
+                      ? 'carpentry'
+                      : activeNav === 'portal:appliances'
+                      ? 'appliances'
+                      : 'plumbing'
+                  }
+                  lang={lang}
+                  onSelectTrade={(trade) => setActiveNav(`portal:${trade}`)}
+                />
+              )}
+
+              {activeNav === 'provider' && <ProviderDashboard />}
+
+              {(activeNav === 'coop_admin' || activeNav === 'regulator') && <AdminHub />}
+            </Suspense>
+          </div>
+        )}
       </main>
 
-      <Footer currentLang={lang} />
+      {/* Official Government of India Accessible Footer */}
+      <Footer currentLang={lang} onOpenLegal={(docId) => setActiveLegalDoc(docId)} />
+
+      {/* Statutory & Legal Policy Modal */}
+      {activeLegalDoc && (
+        <Suspense fallback={null}>
+          <LegalModal
+            docId={activeLegalDoc}
+            onClose={() => setActiveLegalDoc(null)}
+            lang={lang}
+          />
+        </Suspense>
+      )}
     </div>
   );
 };
+
+export const App: React.FC = () => (
+  <SocketProvider>
+    <AppContent />
+  </SocketProvider>
+);
+
 export default App;

@@ -1,321 +1,502 @@
 /* ==========================================================================
-   SahakarConnect - UX4G (Government of India) Theme & GIGW 3.0 Stylesheet
-   Standards: Ministry of Cooperation / WCAG 2.1 Level AA
+   SahakarConnect — UX4G Design System 3.0 Reference Implementation
+   Government of India · Ministry of Cooperation · MeitY · NeGD
+   Standards: ux4g.gov.in/foundations · GIGW 3.0 · WCAG 2.1 AA
    ========================================================================== */
 
+@import './styles/tokens.css';
+@import './styles/base.css';
+@import './styles/components.css';
+
+/* ==========================================================================
+   Bridge & Compatibility Layer
+   ========================================================================== */
 :root {
-  --ux4g-primary: #0b417b;
-  --ux4g-primary-hover: #072a50;
-  --ux4g-primary-subtle: #e8f0fe;
-  --ux4g-saffron: #d96b27;
-  --ux4g-green: #137333;
-  --ux4g-slate-900: #0f172a;
-  --ux4g-slate-800: #1e293b;
-  --ux4g-slate-700: #334155;
-  --ux4g-slate-600: #475569;
-  --ux4g-slate-200: #e2e8f0;
-  --ux4g-slate-100: #f1f5f9;
-  --ux4g-slate-50: #f8fafc;
-  --ux4g-focus-ring: #f59e0b;
+  --ux4g-primary: var(--ux4g-primary-600);
+  --ux4g-primary-hover: var(--ux4g-primary-700);
+  --ux4g-primary-subtle: var(--ux4g-primary-50);
+  --ux4g-saffron: var(--ux4g-secondary-400);
+  --ux4g-green: var(--ux4g-green-600);
+  --ux4g-slate-900: var(--ux4g-neutral-900);
+  --ux4g-slate-800: var(--ux4g-neutral-800);
+  --ux4g-slate-700: var(--ux4g-neutral-700);
+  --ux4g-slate-600: var(--ux4g-neutral-600);
+  --ux4g-slate-300: var(--ux4g-neutral-300);
+  --ux4g-slate-200: var(--ux4g-neutral-200);
+  --ux4g-slate-100: var(--ux4g-neutral-100);
+  --ux4g-slate-50: var(--ux4g-neutral-50);
+  --ux4g-focus-ring: var(--ux4g-primary-400);
 }
 
-/* Typography & Base */
-body {
-  margin: 0;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-  color: var(--ux4g-slate-900);
-  background-color: #f1f5f9;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
+/* High contrast compatibility for [data-theme="high-contrast"] and [data-theme="contrast"] */
+[data-theme="high-contrast"],
+[data-theme="contrast"],
+body.high-contrast {
+  --ux4g-bg-page: #000000;
+  --ux4g-bg-elevated: #000000;
+  --ux4g-bg-soft: #0a0a0a;
+  --ux4g-bg-subtle: #1a1a1a;
+  --ux4g-text-primary: #ffffff;
+  --ux4g-text-secondary: #ffffff;
+  --ux4g-text-tertiary: #f5d800;
+  --ux4g-border: #ffffff;
+  --ux4g-border-subtle: #ffffff;
+  --ux4g-primary-600: #f5d800;
+  --ux4g-primary: #f5d800;
+  --ux4g-link: #f5d800;
+  --ux4g-link-hover: #ffffff;
 }
 
-/* Accessible Focus States */
-a:focus-visible,
-button:focus-visible,
-select:focus-visible,
-input:focus-visible {
-  outline: 3px solid var(--ux4g-focus-ring) !important;
-  outline-offset: 2px !important;
-}
-
-/* Screen Reader Skip Link */
-.visually-hidden-focusable:not(:focus) {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  padding: 0 !important;
-  margin: -1px !important;
-  overflow: hidden !important;
-  clip: rect(0, 0, 0, 0) !important;
-  white-space: nowrap !important;
-  border: 0 !important;
-}
-
-.visually-hidden-focusable:focus {
-  position: static !important;
-  width: auto !important;
-  height: auto !important;
-  padding: 0.35rem 0.75rem;
-  background-color: #000;
-  color: #fff;
-  border: 2px solid #fff;
-}
-
-/* Top GIGW Accessibility Strip */
-.accessibility-strip {
-  background-color: var(--ux4g-slate-900);
-  color: #f8fafc;
-  font-size: 0.8125rem;
-  border-bottom: 1px solid #334155;
-}
-
-.accessibility-strip .btn-outline-light {
-  border-color: #475569;
-  color: #f8fafc;
-  font-size: 0.75rem;
-  padding: 0.15rem 0.5rem;
-}
-
-.accessibility-strip .btn-outline-light:hover {
-  background-color: #334155;
-  color: #ffffff;
-}
-
-/* Ministry Branding Section */
-.branding-section {
-  background-color: #ffffff;
-  border-bottom: 3px solid var(--ux4g-primary);
-}
-
-.emblem-badge {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 46px;
-  height: 46px;
-  background-color: var(--ux4g-slate-50);
-  border: 1px solid var(--ux4g-slate-200);
-  border-radius: 4px;
-  color: var(--ux4g-primary);
-}
-
-.ministry-heading {
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--ux4g-slate-600);
-  line-height: 1.2;
-}
-
-.council-subheading {
-  font-size: 0.7rem;
-  color: #64748b;
-  line-height: 1.2;
-}
-
-.platform-title {
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: var(--ux4g-primary);
-  line-height: 1.2;
-}
-
-/* Buttons with UX4G Standard Colors */
+/* Bootstrap integration overrides so entire app conforms to UX4G */
 .btn-primary {
-  background-color: var(--ux4g-primary) !important;
-  border-color: var(--ux4g-primary) !important;
+  background-color: var(--ux4g-primary-600) !important;
+  border-color: var(--ux4g-primary-600) !important;
   color: #ffffff !important;
-  font-weight: 600;
-  transition: all 0.15s ease-in-out;
 }
-
 .btn-primary:hover,
 .btn-primary:focus {
-  background-color: var(--ux4g-primary-hover) !important;
-  border-color: var(--ux4g-primary-hover) !important;
-}
-
-.btn-outline-primary {
-  color: var(--ux4g-primary) !important;
-  border-color: var(--ux4g-primary) !important;
-  background-color: transparent;
-  font-weight: 600;
-  transition: all 0.15s ease-in-out;
-}
-
-.btn-outline-primary:hover,
-.btn-outline-primary:focus {
-  background-color: var(--ux4g-primary) !important;
+  background-color: var(--ux4g-primary-700) !important;
+  border-color: var(--ux4g-primary-700) !important;
   color: #ffffff !important;
 }
-
-/* Persona Cards */
-.persona-card {
-  background: #ffffff;
-  border: 1px solid var(--ux4g-slate-200);
-  border-radius: 6px;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
-}
-
-.persona-card:hover {
-  border-color: var(--ux4g-primary);
-  box-shadow: 0 4px 12px rgba(11, 65, 123, 0.1);
-  transform: translateY(-2px);
-}
-
-.persona-card.selected {
-  border: 2px solid var(--ux4g-primary);
-  box-shadow: 0 0 0 1px var(--ux4g-primary);
-}
-
-.card-icon-wrapper {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 6px;
-  background-color: var(--ux4g-primary-subtle);
-  color: var(--ux4g-primary);
-  border: 1px solid #cbd5e1;
-}
-
-/* Feature List */
-.feature-list {
-  padding-left: 0;
-  list-style: none;
-  margin: 0;
-}
-
-.feature-list li {
-  position: relative;
-  padding-left: 1.4rem;
-  margin-bottom: 0.4rem;
-  font-size: 0.85rem;
-  color: var(--ux4g-slate-600);
-  line-height: 1.4;
-}
-
-.feature-list li .check-icon {
-  position: absolute;
-  left: 0;
-  top: 1px;
-  color: var(--ux4g-green);
-  display: inline-flex;
-  align-items: center;
-}
-
-/* Statutory Banner */
-.statutory-banner {
-  background: #ffffff;
-  border-left: 4px solid var(--ux4g-primary);
-  border-top: 1px solid var(--ux4g-slate-200);
-  border-right: 1px solid var(--ux4g-slate-200);
-  border-bottom: 1px solid var(--ux4g-slate-200);
-  border-radius: 4px;
-}
-
-.formula-code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 0.85rem;
-  background-color: var(--ux4g-slate-50);
-  color: var(--ux4g-slate-900);
-  padding: 0.3rem 0.6rem;
-  border-radius: 4px;
-  border: 1px solid var(--ux4g-slate-200);
-}
-
-/* Footer Styling */
-.ux4g-footer {
-  background-color: var(--ux4g-slate-900);
-  color: #cbd5e1;
-  border-top: 4px solid var(--ux4g-primary);
-}
-
-.ux4g-footer a {
-  color: #94a3b8;
-  text-decoration: none;
-  transition: color 0.15s ease;
-}
-
-.ux4g-footer a:hover,
-.ux4g-footer a:focus-visible {
-  color: #ffffff;
-  text-decoration: underline;
-}
-
-.compliance-box {
-  background-color: var(--ux4g-slate-800);
-  border: 1px solid var(--ux4g-slate-700);
-  color: #e2e8f0;
-  border-radius: 4px;
-}
-
-/* High Contrast Mode (Government Standard GIGW) */
-body.high-contrast {
-  background-color: #000000 !important;
-  color: #ffff00 !important;
-}
-
-body.high-contrast .branding-section,
-body.high-contrast .card,
-body.high-contrast .persona-card,
-body.high-contrast .statutory-banner,
-body.high-contrast .bg-white,
-body.high-contrast .bg-light,
-body.high-contrast .alert,
-body.high-contrast .compliance-box,
-body.high-contrast .ux4g-footer {
-  background-color: #000000 !important;
-  color: #ffff00 !important;
-  border-color: #ffff00 !important;
-}
-
-body.high-contrast a,
-body.high-contrast .text-primary,
-body.high-contrast .text-secondary,
-body.high-contrast .text-muted,
-body.high-contrast .text-dark,
-body.high-contrast .feature-list li {
-  color: #ffff00 !important;
-}
-
-body.high-contrast .btn-primary {
-  background-color: #000000 !important;
-  color: #ffff00 !important;
-  border: 2px solid #ffff00 !important;
-}
-
-body.high-contrast .btn-primary:hover,
-body.high-contrast .btn-outline-primary:hover {
-  background-color: #ffff00 !important;
+[data-theme="contrast"] .btn-primary,
+[data-theme="high-contrast"] .btn-primary {
+  background-color: #f5d800 !important;
+  border-color: #f5d800 !important;
   color: #000000 !important;
 }
 
-body.high-contrast .btn-outline-primary {
-  color: #ffff00 !important;
-  border-color: #ffff00 !important;
+.btn-outline-primary {
+  color: var(--ux4g-primary-600) !important;
+  border-color: var(--ux4g-primary-600) !important;
+  background-color: transparent !important;
+}
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+  background-color: var(--ux4g-bg-primary) !important;
+  color: var(--ux4g-primary-700) !important;
+}
+[data-theme="contrast"] .btn-outline-primary,
+[data-theme="high-contrast"] .btn-outline-primary {
+  color: #f5d800 !important;
+  border-color: #f5d800 !important;
 }
 
-body.high-contrast .formula-code,
-body.high-contrast .badge {
+.text-primary {
+  color: var(--ux4g-primary-600) !important;
+}
+.bg-primary {
+  background-color: var(--ux4g-primary-600) !important;
+}
+.border-primary {
+  border-color: var(--ux4g-primary-600) !important;
+}
+
+/* National Tricolor stripe */
+.tricolor-stripe {
+  height: 3px;
+  background: linear-gradient(90deg, #ff9933 0%, #ff9933 33.3%, #ffffff 33.3%, #ffffff 66.6%, #138808 66.6%, #138808 100%);
+  width: 100%;
+}
+
+/* Card & Surface utilities for React views */
+.surface-card {
+  background: var(--ux4g-bg-elevated);
+  border: 1px solid var(--ux4g-border-subtle);
+  border-radius: var(--ux4g-radius-lg);
+  padding: var(--ux4g-sp-7);
+}
+
+.surface-card-accent {
+  background: var(--ux4g-bg-elevated);
+  border: 1px solid var(--ux4g-border-subtle);
+  border-left: 3px solid var(--ux4g-primary-600);
+  border-radius: var(--ux4g-radius-lg);
+  padding: var(--ux4g-sp-7);
+}
+
+/* Feature list and check icons */
+.check-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ux4g-green-600);
+  flex-shrink: 0;
+}
+[data-theme="contrast"] .check-icon,
+[data-theme="high-contrast"] .check-icon {
+  color: #f5d800;
+}
+
+.feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ux4g-sp-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.feature-list li {
+  display: flex;
+  gap: var(--ux4g-sp-3);
+  align-items: flex-start;
+  font-size: var(--ux4g-fs-14);
+  color: var(--ux4g-text-secondary);
+}
+
+/* Form controls UX4G styling */
+.form-control, .form-select {
+  background-color: var(--ux4g-bg-elevated);
+  color: var(--ux4g-text-primary);
+  border: 1px solid var(--ux4g-border);
+  border-radius: var(--ux4g-radius-md);
+  font-family: var(--ux4g-ff);
+  font-size: var(--ux4g-fs-14);
+}
+.form-control:focus, .form-select:focus {
+  border-color: var(--ux4g-primary-600);
+  box-shadow: var(--ux4g-shadow-focus);
+  background-color: var(--ux4g-bg-elevated);
+  color: var(--ux4g-text-primary);
+}
+
+/* Dark mode form and component overrides */
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select {
+  background-color: #181d2a;
+  color: #f1f5f9;
+  border-color: #2e3852;
+}
+[data-theme="dark"] .form-control:focus,
+[data-theme="dark"] .form-select:focus {
+  background-color: #1a2030;
+  color: #ffffff;
+  border-color: #8670ff;
+}
+
+[data-theme="dark"] .card {
+  background-color: #141722 !important;
+  border-color: #242938 !important;
+  color: #f1f5f9 !important;
+}
+[data-theme="dark"] .card-header {
+  background-color: #181d2a !important;
+  border-bottom-color: #242938 !important;
+  color: #f1f5f9 !important;
+}
+[data-theme="dark"] .card-footer {
+  background-color: #181d2a !important;
+  border-top-color: #242938 !important;
+  color: #94a3b8 !important;
+}
+[data-theme="dark"] .bg-white {
+  background-color: #141722 !important;
+  color: #f1f5f9 !important;
+}
+[data-theme="dark"] .bg-light {
+  background-color: #181d2a !important;
+  color: #f1f5f9 !important;
+}
+[data-theme="dark"] .text-dark {
+  color: #f8fafc !important;
+}
+[data-theme="dark"] .text-muted {
+  color: #94a3b8 !important;
+}
+[data-theme="dark"] .text-secondary {
+  color: #cbd5e1 !important;
+}
+[data-theme="dark"] .border {
+  border-color: #242938 !important;
+}
+[data-theme="dark"] .border-bottom {
+  border-bottom-color: #242938 !important;
+}
+[data-theme="dark"] .border-top {
+  border-top-color: #242938 !important;
+}
+[data-theme="dark"] .border-end {
+  border-end-color: #242938 !important;
+}
+[data-theme="dark"] .border-start {
+  border-start-color: #242938 !important;
+}
+
+/* ==========================================================================
+   Dark Mode Tables (Fixes washed out / white tables in Screenshot 1, 2, 3)
+   ========================================================================== */
+[data-theme="dark"] .table,
+[data-theme="dark"] table {
+  --bs-table-bg: #141722;
+  --bs-table-color: #f1f5f9;
+  --bs-table-striped-bg: #181d2a;
+  --bs-table-striped-color: #f1f5f9;
+  --bs-table-hover-bg: #22293a;
+  --bs-table-hover-color: #ffffff;
+  --bs-table-border-color: #242938;
+  color: #f1f5f9 !important;
+  background-color: #141722 !important;
+  border-color: #242938 !important;
+}
+[data-theme="dark"] .table > :not(caption) > * > * {
+  background-color: var(--bs-table-bg, #141722) !important;
+  color: #f1f5f9 !important;
+  border-bottom-color: #242938 !important;
+  box-shadow: none !important;
+}
+[data-theme="dark"] .table-striped > tbody > tr:nth-of-type(odd) > * {
+  background-color: #181d2a !important;
+  color: #f1f5f9 !important;
+}
+[data-theme="dark"] .table-hover > tbody > tr:hover > * {
+  background-color: #22293a !important;
+  color: #ffffff !important;
+}
+[data-theme="dark"] thead.table-light,
+[data-theme="dark"] thead.table-light th,
+[data-theme="dark"] .table thead,
+[data-theme="dark"] .table thead th,
+[data-theme="dark"] .table-light {
+  background-color: #1a2030 !important;
+  color: #cbd5e1 !important;
+  border-bottom: 2px solid #2e3852 !important;
+}
+[data-theme="dark"] .table td,
+[data-theme="dark"] .table th {
+  color: #f1f5f9 !important;
+}
+[data-theme="dark"] .table td .text-muted,
+[data-theme="dark"] .table th .text-muted {
+  color: #94a3b8 !important;
+}
+[data-theme="dark"] .table td .text-success,
+[data-theme="dark"] .table th .text-success {
+  color: #4ade80 !important;
+}
+[data-theme="dark"] .table td .text-primary,
+[data-theme="dark"] .table th .text-primary {
+  color: #a391ff !important;
+}
+
+/* ==========================================================================
+   Dark Mode Navigation Tabs (Fixes stark white active tabs)
+   ========================================================================== */
+[data-theme="dark"] .nav-tabs {
+  border-bottom-color: #242938 !important;
+}
+[data-theme="dark"] .nav-tabs .nav-link {
+  color: #94a3b8 !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  border-bottom: none !important;
+  transition: all 0.2s;
+}
+[data-theme="dark"] .nav-tabs .nav-link:hover {
+  color: #f1f5f9 !important;
+  background-color: #1a2030 !important;
+  border-color: #242938 #242938 transparent !important;
+}
+[data-theme="dark"] .nav-tabs .nav-link.active {
+  background-color: #1e2438 !important;
+  color: #c0b3ff !important;
+  border-color: #4a2bc2 #4a2bc2 #1e2438 !important;
+  border-top: 3px solid #8670ff !important;
+  font-weight: 600 !important;
+}
+
+/* ==========================================================================
+   Dark Mode Badges & Skill Pills (Fixes Screenshot 1)
+   ========================================================================== */
+[data-theme="dark"] .badge.bg-light,
+[data-theme="dark"] .badge.text-bg-light {
+  background-color: #242938 !important;
+  color: #e2e8f0 !important;
+  border-color: #384259 !important;
+}
+[data-theme="dark"] .badge.bg-success-subtle,
+[data-theme="dark"] .badge.border-success-subtle,
+[data-theme="dark"] .bg-success-subtle {
+  background-color: #064e3b !important;
+  border-color: #047857 !important;
+  color: #6ee7b7 !important;
+}
+[data-theme="dark"] .badge.bg-info-subtle,
+[data-theme="dark"] .badge.border-info-subtle,
+[data-theme="dark"] .bg-info-subtle {
+  background-color: #0c4a6e !important;
+  border-color: #0284c7 !important;
+  color: #7dd3fc !important;
+}
+[data-theme="dark"] .badge.bg-warning-subtle,
+[data-theme="dark"] .badge.border-warning-subtle,
+[data-theme="dark"] .bg-warning-subtle {
+  background-color: #451a03 !important;
+  border-color: #92400e !important;
+  color: #fde68a !important;
+}
+[data-theme="dark"] .badge.bg-danger-subtle,
+[data-theme="dark"] .badge.border-danger-subtle,
+[data-theme="dark"] .bg-danger-subtle {
+  background-color: #450a0a !important;
+  border-color: #b91c1c !important;
+  color: #fca5a5 !important;
+}
+[data-theme="dark"] .badge.bg-primary-subtle,
+[data-theme="dark"] .badge.border-primary-subtle,
+[data-theme="dark"] .bg-primary-subtle {
+  background-color: #1e1b4b !important;
+  border-color: #4338ca !important;
+  color: #c0b3ff !important;
+}
+[data-theme="dark"] .text-info-emphasis {
+  color: #7dd3fc !important;
+}
+[data-theme="dark"] .text-success-emphasis {
+  color: #6ee7b7 !important;
+}
+[data-theme="dark"] .text-warning-emphasis {
+  color: #fde68a !important;
+}
+[data-theme="dark"] .text-danger-emphasis {
+  color: #fca5a5 !important;
+}
+[data-theme="dark"] .text-primary-emphasis {
+  color: #c0b3ff !important;
+}
+
+/* ==========================================================================
+   Dark Mode Security PIN Card & Alerts (Fixes Screenshot 4)
+   ========================================================================== */
+[data-theme="dark"] .border-warning,
+[data-theme="dark"] .border-warning-subtle {
+  border-color: #92400e !important;
+}
+[data-theme="dark"] .card-header.bg-warning-subtle {
+  background-color: #2e1804 !important;
+  border-bottom-color: #78350f !important;
+  color: #fde68a !important;
+}
+[data-theme="dark"] .card-header.bg-warning-subtle * {
+  color: #fde68a !important;
+}
+[data-theme="dark"] .alert-warning {
+  background-color: #241405 !important;
+  border-color: #78350f !important;
+  color: #fde68a !important;
+}
+[data-theme="dark"] .alert-warning * {
+  color: #fde68a !important;
+}
+[data-theme="dark"] .alert-warning strong {
+  color: #fef08a !important;
+}
+[data-theme="dark"] .alert-info {
+  background-color: #082238 !important;
+  border-color: #0369a1 !important;
+  color: #bae6fd !important;
+}
+[data-theme="dark"] .alert-info * {
+  color: #bae6fd !important;
+}
+[data-theme="dark"] .alert-success {
+  background-color: #062d19 !important;
+  border-color: #059669 !important;
+  color: #a7f3d0 !important;
+}
+[data-theme="dark"] .alert-success * {
+  color: #a7f3d0 !important;
+}
+[data-theme="dark"] .alert-danger {
+  background-color: #380c0c !important;
+  border-color: #dc2626 !important;
+  color: #fecaca !important;
+}
+[data-theme="dark"] .alert-danger * {
+  color: #fecaca !important;
+}
+
+/* PIN Display box in dark theme */
+[data-theme="dark"] .display-4.font-monospace {
+  background-color: #0e1320 !important;
+  border-color: #2e3852 !important;
+  color: #a391ff !important;
+}
+
+/* ==========================================================================
+   Contrast & High Contrast theme overrides
+   ========================================================================== */
+[data-theme="contrast"] .card,
+[data-theme="high-contrast"] .card,
+body.high-contrast .card {
   background-color: #000000 !important;
-  color: #ffff00 !important;
-  border: 1px solid #ffff00 !important;
+  border-color: #ffffff !important;
+  color: #ffffff !important;
 }
-
-body.high-contrast .card-icon-wrapper,
-body.high-contrast .emblem-badge {
+[data-theme="contrast"] .bg-white,
+[data-theme="high-contrast"] .bg-white,
+body.high-contrast .bg-white {
   background-color: #000000 !important;
-  color: #ffff00 !important;
-  border-color: #ffff00 !important;
+  color: #ffffff !important;
 }
-
-body.high-contrast svg {
-  stroke: #ffff00 !important;
+[data-theme="contrast"] .bg-light,
+[data-theme="high-contrast"] .bg-light,
+body.high-contrast .bg-light {
+  background-color: #111111 !important;
+  color: #ffffff !important;
+}
+[data-theme="contrast"] .text-dark,
+[data-theme="high-contrast"] .text-dark,
+body.high-contrast .text-dark {
+  color: #ffffff !important;
+}
+[data-theme="contrast"] .text-muted,
+[data-theme="high-contrast"] .text-muted,
+body.high-contrast .text-muted {
+  color: #f5d800 !important;
+}
+[data-theme="contrast"] .table,
+[data-theme="high-contrast"] .table,
+body.high-contrast .table {
+  --bs-table-bg: #000000;
+  --bs-table-color: #ffffff;
+  color: #ffffff !important;
+  background-color: #000000 !important;
+  border-color: #ffffff !important;
+}
+[data-theme="contrast"] .table > :not(caption) > * > *,
+[data-theme="high-contrast"] .table > :not(caption) > * > * {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-bottom-color: #ffffff !important;
+}
+[data-theme="contrast"] thead.table-light,
+[data-theme="high-contrast"] thead.table-light,
+[data-theme="contrast"] .table thead,
+[data-theme="high-contrast"] .table thead {
+  background-color: #111111 !important;
+  color: #f5d800 !important;
+  border-bottom: 2px solid #ffffff !important;
+}
+[data-theme="contrast"] .nav-tabs .nav-link.active,
+[data-theme="high-contrast"] .nav-tabs .nav-link.active {
+  background-color: #000000 !important;
+  color: #f5d800 !important;
+  border-color: #ffffff #ffffff #000000 !important;
+  border-top: 3px solid #f5d800 !important;
+}
+[data-theme="contrast"] .alert,
+[data-theme="high-contrast"] .alert {
+  background-color: #000000 !important;
+  border-color: #ffffff !important;
+  color: #ffffff !important;
+}
+[data-theme="contrast"] .alert *,
+[data-theme="high-contrast"] .alert * {
+  color: #ffffff !important;
+}
+[data-theme="contrast"] .display-4.font-monospace,
+[data-theme="high-contrast"] .display-4.font-monospace {
+  background-color: #000000 !important;
+  border-color: #ffffff !important;
+  color: #f5d800 !important;
 }

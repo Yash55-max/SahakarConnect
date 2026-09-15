@@ -6,7 +6,8 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:e2e": "NODE_ENV=test ts-node tests/e2e-simulation.ts"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
@@ -17,7 +18,9 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "h3-js": "^4.5.0",
     "jsonwebtoken": "^9.0.2",
+    "socket.io": "^4.8.3",
     "zod": "^3.24.1"
   },
   "devDependencies": {

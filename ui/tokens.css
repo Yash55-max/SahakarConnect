@@ -1,0 +1,167 @@
+/* ==========================================================================
+   UX4G DESIGN TOKENS — real values from https://www.ux4g.gov.in/foundations
+   Government of India · MeitY · NeGD
+   ========================================================================== */
+
+:root {
+  /* Brand: Primary (violet) */
+  --ux4g-primary-50:#f2efff; --ux4g-primary-100:#dcd4ff; --ux4g-primary-200:#c0b3ff;
+  --ux4g-primary-300:#a391ff; --ux4g-primary-400:#8670ff; --ux4g-primary-500:#6a4eff;
+  --ux4g-primary-600:#4a2bc2; --ux4g-primary-700:#3d239f; --ux4g-primary-800:#301c7d;
+  --ux4g-primary-900:#24145c; --ux4g-primary-950:#1a0e3d;
+
+  /* Brand: Secondary (amber) */
+  --ux4g-secondary-50:#fff5ea; --ux4g-secondary-100:#ffebd6; --ux4g-secondary-200:#ffd9af;
+  --ux4g-secondary-300:#ffbe6f; --ux4g-secondary-400:#e89c30; --ux4g-secondary-500:#c47d00;
+  --ux4g-secondary-600:#a46800; --ux4g-secondary-700:#764a00; --ux4g-secondary-800:#4b2d00;
+
+  /* Brand: Tertiary (soft purple) */
+  --ux4g-tertiary-50:#f6effb; --ux4g-tertiary-100:#e9daf3; --ux4g-tertiary-300:#c8a3e0;
+  --ux4g-tertiary-600:#8e55b3; --ux4g-tertiary-700:#75419a;
+
+  /* Semantic: Green / success */
+  --ux4g-green-50:#f2fcef; --ux4g-green-100:#ddf8d8; --ux4g-green-200:#beefbb;
+  --ux4g-green-300:#80da88; --ux4g-green-600:#128937; --ux4g-green-700:#006c35; --ux4g-green-800:#00522c;
+
+  /* Semantic: Red / error */
+  --ux4g-red-50:#fff8f8; --ux4g-red-100:#ffecee; --ux4g-red-200:#ffdadc;
+  --ux4g-red-300:#ffb3ae; --ux4g-red-600:#db372d; --ux4g-red-700:#b3251e; --ux4g-red-800:#8a1a16;
+
+  /* Semantic: Orange / warning */
+  --ux4g-orange-50:#fff7e6; --ux4g-orange-100:#ffe7bf; --ux4g-orange-300:#ffc973;
+  --ux4g-orange-600:#fa8c16; --ux4g-orange-800:#ad4e00;
+
+  /* Semantic: Cyan / info */
+  --ux4g-cyan-50:#e6fffb; --ux4g-cyan-100:#c9f7f2; --ux4g-cyan-300:#91e8e0;
+  --ux4g-cyan-600:#13c2c2; --ux4g-cyan-800:#006d75;
+
+  /* Accent: Blue / links */
+  --ux4g-blue-50:#f5faff; --ux4g-blue-100:#e7f2ff; --ux4g-blue-300:#a1c9ff;
+  --ux4g-blue-600:#3271ea; --ux4g-blue-700:#1157ce; --ux4g-blue-800:#04409f;
+
+  /* Neutral scale */
+  --ux4g-neutral-0:#ffffff; --ux4g-neutral-50:#fafafa; --ux4g-neutral-100:#f5f5f5;
+  --ux4g-neutral-200:#e5e5e5; --ux4g-neutral-300:#d9d9d9; --ux4g-neutral-400:#a1a1a1;
+  --ux4g-neutral-500:#737373; --ux4g-neutral-600:#525252; --ux4g-neutral-700:#404040;
+  --ux4g-neutral-800:#262626; --ux4g-neutral-900:#171717; --ux4g-neutral-950:#0a0a0a;
+  --ux4g-neutral-1000:#000000;
+
+  /* Semantic text */
+  --ux4g-text-primary: var(--ux4g-neutral-900);
+  --ux4g-text-secondary: var(--ux4g-neutral-700);
+  --ux4g-text-tertiary: var(--ux4g-neutral-500);
+  --ux4g-text-inverse: var(--ux4g-neutral-50);
+  --ux4g-text-brand: var(--ux4g-primary-600);
+  --ux4g-text-success: var(--ux4g-green-800);
+  --ux4g-text-error: var(--ux4g-red-800);
+  --ux4g-text-warning: var(--ux4g-orange-800);
+  --ux4g-text-info: var(--ux4g-cyan-800);
+  --ux4g-link: var(--ux4g-primary-600);
+  --ux4g-link-hover: var(--ux4g-primary-700);
+
+  /* Semantic background */
+  --ux4g-bg-page: var(--ux4g-neutral-50);
+  --ux4g-bg-elevated: var(--ux4g-neutral-0);
+  --ux4g-bg-soft: var(--ux4g-neutral-100);
+  --ux4g-bg-subtle: var(--ux4g-neutral-200);
+  --ux4g-bg-strong: var(--ux4g-neutral-900);
+  --ux4g-bg-primary: var(--ux4g-primary-50);
+  --ux4g-bg-primary-soft: var(--ux4g-primary-100);
+  --ux4g-bg-primary-strong: var(--ux4g-primary-600);
+  --ux4g-bg-primary-strong-hover: var(--ux4g-primary-700);
+  --ux4g-bg-secondary: var(--ux4g-secondary-50);
+  --ux4g-bg-success: var(--ux4g-green-50);
+  --ux4g-bg-success-soft: var(--ux4g-green-100);
+  --ux4g-bg-error: var(--ux4g-red-50);
+  --ux4g-bg-error-soft: var(--ux4g-red-100);
+  --ux4g-bg-warning-soft: var(--ux4g-orange-100);
+  --ux4g-bg-info-soft: var(--ux4g-cyan-100);
+  --ux4g-bg-overlay: rgba(23,23,23,.7);
+
+  /* Semantic border */
+  --ux4g-border: var(--ux4g-neutral-300);
+  --ux4g-border-subtle: var(--ux4g-neutral-200);
+  --ux4g-border-strong: var(--ux4g-neutral-500);
+  --ux4g-border-primary: var(--ux4g-primary-300);
+  --ux4g-border-primary-strong: var(--ux4g-primary-600);
+  --ux4g-border-success: var(--ux4g-green-300);
+  --ux4g-border-error: var(--ux4g-red-300);
+  --ux4g-border-warning: var(--ux4g-orange-300);
+
+  /* Typography */
+  --ux4g-ff: "Noto Sans", system-ui, sans-serif;
+  --ux4g-ff-display: "Noto Sans Display", "Noto Sans", sans-serif;
+  --ux4g-fs-12: .75rem; --ux4g-fs-14: .875rem; --ux4g-fs-16: 1rem; --ux4g-fs-18: 1.125rem;
+  --ux4g-fs-20: 1.25rem; --ux4g-fs-24: 1.5rem; --ux4g-fs-28: 1.75rem; --ux4g-fs-32: 2rem;
+  --ux4g-fs-40: 2.5rem; --ux4g-fs-48: 3rem;
+  --ux4g-lh-20: 1.25rem; --ux4g-lh-24: 1.5rem; --ux4g-lh-28: 1.75rem; --ux4g-lh-32: 2rem;
+  --ux4g-lh-36: 2.25rem; --ux4g-lh-44: 2.75rem; --ux4g-lh-52: 3.25rem;
+  --ux4g-fw-regular: 400; --ux4g-fw-medium: 500; --ux4g-fw-semibold: 600; --ux4g-fw-bold: 700;
+
+  /* Spacing (base-4) */
+  --ux4g-sp-1:2px; --ux4g-sp-2:4px; --ux4g-sp-3:6px; --ux4g-sp-4:8px; --ux4g-sp-5:12px;
+  --ux4g-sp-6:16px; --ux4g-sp-7:20px; --ux4g-sp-8:24px; --ux4g-sp-9:32px; --ux4g-sp-10:40px;
+  --ux4g-sp-11:48px; --ux4g-sp-12:56px; --ux4g-sp-13:64px; --ux4g-sp-14:80px; --ux4g-sp-15:120px;
+
+  /* Radius */
+  --ux4g-radius-sm: 4px; --ux4g-radius-md: 8px; --ux4g-radius-lg: 12px;
+  --ux4g-radius-xl: 16px; --ux4g-radius-full: 999px;
+
+  /* Elevation */
+  --ux4g-shadow-sm: 0 1px 2px rgba(10,10,10,.06), 0 1px 1px rgba(10,10,10,.04);
+  --ux4g-shadow-md: 0 2px 8px rgba(10,10,10,.08), 0 1px 2px rgba(10,10,10,.06);
+  --ux4g-shadow-lg: 0 12px 24px rgba(10,10,10,.12), 0 2px 6px rgba(10,10,10,.06);
+  --ux4g-shadow-focus: 0 0 0 3px var(--ux4g-primary-200);
+
+  /* Layout */
+  --ux4g-content-max: 1200px;
+  --ux4g-font-scale: 1;
+}
+
+/* Dark theme */
+[data-theme="dark"] {
+  --ux4g-bg-page: var(--ux4g-neutral-950);
+  --ux4g-bg-elevated: var(--ux4g-neutral-900);
+  --ux4g-bg-soft: var(--ux4g-neutral-800);
+  --ux4g-bg-subtle: var(--ux4g-neutral-700);
+  --ux4g-text-primary: var(--ux4g-neutral-50);
+  --ux4g-text-secondary: var(--ux4g-neutral-300);
+  --ux4g-text-tertiary: var(--ux4g-neutral-400);
+  --ux4g-border: var(--ux4g-neutral-700);
+  --ux4g-border-subtle: var(--ux4g-neutral-800);
+  --ux4g-bg-primary: var(--ux4g-primary-950);
+  --ux4g-bg-primary-soft: var(--ux4g-primary-900);
+  --ux4g-text-brand: var(--ux4g-primary-300);
+  --ux4g-link: var(--ux4g-primary-300);
+  --ux4g-bg-success: var(--ux4g-green-950, #002110);
+  --ux4g-bg-success-soft: #00381f;
+  --ux4g-bg-error: #3a0907;
+  --ux4g-bg-error-soft: #60150f;
+}
+
+/* High contrast theme (GIGW-style) */
+[data-theme="contrast"] {
+  --ux4g-bg-page: #000000;
+  --ux4g-bg-elevated: #000000;
+  --ux4g-bg-soft: #0a0a0a;
+  --ux4g-bg-subtle: #1a1a1a;
+  --ux4g-text-primary: #ffffff;
+  --ux4g-text-secondary: #ffffff;
+  --ux4g-text-tertiary: #f5d800;
+  --ux4g-border: #ffffff;
+  --ux4g-border-subtle: #ffffff;
+  --ux4g-bg-primary: #000000;
+  --ux4g-bg-primary-soft: #1a1a1a;
+  --ux4g-bg-primary-strong: #f5d800;
+  --ux4g-text-brand: #f5d800;
+  --ux4g-link: #f5d800;
+  --ux4g-link-hover: #ffffff;
+  --ux4g-bg-success: #001f0a;
+  --ux4g-bg-success-soft: #003d15;
+  --ux4g-text-success: #4be36a;
+  --ux4g-bg-error: #2a0000;
+  --ux4g-bg-error-soft: #4a0000;
+  --ux4g-text-error: #ff6b6b;
+}
+
+html { font-size: calc(100% * var(--ux4g-font-scale)); }

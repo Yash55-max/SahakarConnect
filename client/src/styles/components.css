@@ -1,0 +1,1973 @@
+/* ==========================================================================
+   COMPONENTS — SahakarConnect on UX4G Design System
+   ========================================================================== */
+
+/* ---------- Utility topbar ---------- */
+.topbar {
+  background: var(--ux4g-bg-strong);
+  color: var(--ux4g-neutral-200);
+  font-size: var(--ux4g-fs-12);
+  border-bottom: 1px solid var(--ux4g-neutral-800);
+}
+[data-theme="contrast"] .topbar { background: #000; border-bottom-color: #fff; }
+.topbar-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--ux4g-sp-6); padding: var(--ux4g-sp-2) 0; flex-wrap: wrap;
+}
+.topbar-left { display: flex; align-items: center; gap: var(--ux4g-sp-5); }
+.topbar-badge {
+  background: var(--ux4g-neutral-800); color: var(--ux4g-neutral-100);
+  padding: 2px var(--ux4g-sp-4); border-radius: var(--ux4g-radius-sm);
+  font-weight: var(--ux4g-fw-semibold); letter-spacing: .02em;
+}
+.topbar-right { display: flex; align-items: center; gap: var(--ux4g-sp-6); }
+.font-switch { display: flex; align-items: center; border: 1px solid var(--ux4g-neutral-700); border-radius: var(--ux4g-radius-sm); overflow: hidden; }
+.font-switch button {
+  background: transparent; border: none; color: var(--ux4g-neutral-200);
+  padding: var(--ux4g-sp-2) var(--ux4g-sp-4); cursor: pointer; font-size: var(--ux4g-fs-12);
+  border-right: 1px solid var(--ux4g-neutral-700);
+}
+.font-switch button:last-child { border-right: none; }
+.font-switch button[aria-pressed="true"] { background: var(--ux4g-neutral-100); color: var(--ux4g-neutral-900); }
+
+.theme-switch { display: flex; align-items: center; border: 1px solid var(--ux4g-neutral-700); border-radius: var(--ux4g-radius-sm); overflow: hidden; }
+.theme-switch button {
+  background: transparent; border: none; color: var(--ux4g-neutral-200);
+  padding: var(--ux4g-sp-2) var(--ux4g-sp-5); cursor: pointer; font-size: var(--ux4g-fs-12);
+  border-right: 1px solid var(--ux4g-neutral-700);
+}
+.theme-switch button:last-child { border-right: none; }
+.theme-switch button[aria-pressed="true"] { background: var(--ux4g-neutral-100); color: var(--ux4g-neutral-900); font-weight: var(--ux4g-fw-semibold); }
+
+.lang-select {
+  background: transparent; color: var(--ux4g-neutral-200); border: 1px solid var(--ux4g-neutral-700);
+  border-radius: var(--ux4g-radius-sm); padding: var(--ux4g-sp-2) var(--ux4g-sp-4); font-size: var(--ux4g-fs-12);
+}
+
+/* ---------- Header ---------- */
+.site-header { background: var(--ux4g-bg-elevated); border-bottom: 1px solid var(--ux4g-border-subtle); }
+.header-row { display: flex; align-items: center; gap: var(--ux4g-sp-6); padding: var(--ux4g-sp-6) 0; }
+.emblem {
+  width: 44px; height: 44px; border-radius: var(--ux4g-radius-md);
+  background: var(--ux4g-bg-primary); border: 1px solid var(--ux4g-border-primary);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  color: var(--ux4g-primary-600);
+}
+.header-text-block .ministry-line { font-size: var(--ux4g-fs-12); font-weight: var(--ux4g-fw-semibold); color: var(--ux4g-text-secondary); letter-spacing: .01em; }
+.header-text-block .council-line { font-size: 11px; color: var(--ux4g-text-tertiary); margin-top: 1px; }
+.header-text-block .brand-row { display: flex; align-items: baseline; gap: var(--ux4g-sp-4); margin-top: var(--ux4g-sp-1); flex-wrap: wrap; }
+.brand-name { font-family: var(--ux4g-ff-display); font-size: var(--ux4g-fs-24); font-weight: var(--ux4g-fw-bold); color: var(--ux4g-primary-600); }
+.brand-tag {
+  font-size: 11px; font-weight: var(--ux4g-fw-medium); color: var(--ux4g-text-secondary);
+  background: var(--ux4g-bg-soft); border-radius: var(--ux4g-radius-full);
+  padding: 2px var(--ux4g-sp-5);
+}
+
+/* ---------- Primary nav ---------- */
+.site-nav { background: var(--ux4g-bg-elevated); border-bottom: 1px solid var(--ux4g-border-subtle); }
+.nav-row { display: flex; align-items: center; gap: var(--ux4g-sp-2); overflow-x: auto; }
+.nav-link {
+  display: flex; align-items: center; gap: var(--ux4g-sp-3);
+  padding: var(--ux4g-sp-5) var(--ux4g-sp-5);
+  font-size: var(--ux4g-fs-14); font-weight: var(--ux4g-fw-medium); color: var(--ux4g-text-secondary);
+  border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none;
+}
+.nav-link:hover { color: var(--ux4g-text-brand); }
+.nav-link[aria-current="page"] {
+  color: var(--ux4g-text-brand); border-bottom-color: var(--ux4g-primary-600); font-weight: var(--ux4g-fw-semibold);
+}
+.nav-link svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+/* Nav dropdown */
+.nav-dropdown-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.nav-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1050;
+  min-width: 290px;
+  background: var(--ux4g-bg-elevated);
+  border: 1px solid var(--ux4g-border-subtle);
+  border-radius: var(--ux4g-radius-md);
+  box-shadow: var(--ux4g-shadow-lg);
+  padding: var(--ux4g-sp-3) 0;
+  display: flex;
+  flex-direction: column;
+}
+.nav-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: var(--ux4g-sp-4);
+  padding: var(--ux4g-sp-4) var(--ux4g-sp-6);
+  font-size: var(--ux4g-fs-14);
+  font-weight: var(--ux4g-fw-medium);
+  color: var(--ux4g-text-secondary);
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color .15s ease, color .15s ease;
+}
+.nav-dropdown-item:hover, .nav-dropdown-item:focus {
+  background: var(--ux4g-bg-soft);
+  color: var(--ux4g-text-brand);
+}
+.nav-dropdown-item[aria-current="page"] {
+  background: var(--ux4g-bg-primary);
+  color: var(--ux4g-text-brand);
+  font-weight: var(--ux4g-fw-semibold);
+}
+[data-theme="contrast"] .nav-dropdown-menu {
+  border: 2px solid #f5d800;
+}
+
+
+.env-strip {
+  display: flex; align-items: center; gap: var(--ux4g-sp-4);
+  font-size: var(--ux4g-fs-12); color: var(--ux4g-text-tertiary);
+  padding: var(--ux4g-sp-3) 0;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--ux4g-sp-4);
+  font-family: var(--ux4g-ff); font-size: var(--ux4g-fs-14); font-weight: var(--ux4g-fw-semibold);
+  padding: var(--ux4g-sp-5) var(--ux4g-sp-7); border-radius: var(--ux4g-radius-md);
+  border: 1px solid transparent; cursor: pointer; text-decoration: none; line-height: 1.2;
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+.btn svg { width: 16px; height: 16px; }
+.btn-primary { background: var(--ux4g-primary-600); color: #fff; }
+.btn-primary:hover { background: var(--ux4g-primary-700); color: #fff; }
+.btn-secondary { background: transparent; color: var(--ux4g-primary-600); border-color: var(--ux4g-primary-600); }
+.btn-secondary:hover { background: var(--ux4g-bg-primary); }
+.btn-ghost { background: transparent; color: var(--ux4g-text-secondary); border-color: var(--ux4g-border); }
+.btn-ghost:hover { background: var(--ux4g-bg-soft); }
+.btn-sm { padding: var(--ux4g-sp-4) var(--ux4g-sp-6); font-size: var(--ux4g-fs-12); }
+.btn-block { width: 100%; }
+[data-theme="contrast"] .btn-primary { background: #f5d800; color: #000; }
+[data-theme="contrast"] .btn-secondary { color: #f5d800; border-color: #f5d800; }
+
+/* ---------- Badges / tags ---------- */
+.badge {
+  display: inline-flex; align-items: center; gap: var(--ux4g-sp-2);
+  font-size: 11px; font-weight: var(--ux4g-fw-semibold); padding: 2px var(--ux4g-sp-4);
+  border-radius: var(--ux4g-radius-sm); line-height: 1.4;
+}
+.badge-neutral { background: var(--ux4g-bg-soft); color: var(--ux4g-text-secondary); border: 1px solid var(--ux4g-border); }
+.badge-primary { background: var(--ux4g-bg-primary); color: var(--ux4g-text-brand); border: 1px solid var(--ux4g-border-primary); }
+.badge-success { background: var(--ux4g-bg-success-soft); color: var(--ux4g-text-success); }
+.badge-live { background: var(--ux4g-green-600); color: #fff; }
+.badge-live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #fff; display: inline-block; }
+
+/* ---------- Surfaces ---------- */
+.surface {
+  background: var(--ux4g-bg-elevated); border: 1px solid var(--ux4g-border-subtle);
+  border-radius: var(--ux4g-radius-lg);
+}
+.eyebrow {
+  display: inline-flex; align-items: center; gap: var(--ux4g-sp-3);
+  font-size: var(--ux4g-fs-12); font-weight: var(--ux4g-fw-semibold); color: var(--ux4g-text-brand);
+}
+.eyebrow::before { content: ""; width: 16px; height: 2px; background: var(--ux4g-primary-600); display: inline-block; }
+
+/* ---------- Hero ---------- */
+.hero {
+  background: var(--ux4g-bg-elevated); border: 1px solid var(--ux4g-border-subtle);
+  border-radius: var(--ux4g-radius-xl); border-left: 4px solid var(--ux4g-primary-600);
+  padding: var(--ux4g-sp-9) var(--ux4g-sp-11);
+}
+@media (max-width: 640px) { .hero { padding: var(--ux4g-sp-8); } }
+.hero-tags { display: flex; gap: var(--ux4g-sp-4); flex-wrap: wrap; margin-bottom: var(--ux4g-sp-6); }
+.hero h1 {
+  font-size: var(--ux4g-fs-40); line-height: var(--ux4g-lh-44); letter-spacing: -.01em;
+  margin-bottom: var(--ux4g-sp-6);
+}
+.hero h1 .accent { color: var(--ux4g-primary-600); display: block; }
+.hero p.lede {
+  font-size: var(--ux4g-fs-18); line-height: var(--ux4g-lh-28); color: var(--ux4g-text-secondary);
+  max-width: 640px; margin-bottom: var(--ux4g-sp-8);
+}
+.hero-actions { display: flex; gap: var(--ux4g-sp-5); flex-wrap: wrap; margin-bottom: var(--ux4g-sp-8); }
+.trust-row { display: flex; gap: var(--ux4g-sp-8); flex-wrap: wrap; padding-top: var(--ux4g-sp-7); border-top: 1px solid var(--ux4g-border-subtle); }
+.trust-item { display: flex; align-items: center; gap: var(--ux4g-sp-3); font-size: var(--ux4g-fs-14); color: var(--ux4g-text-secondary); }
+.trust-item svg { width: 18px; height: 18px; color: var(--ux4g-green-600); flex-shrink: 0; }
+
+/* ---------- Split stat bar (inside hero or standalone) ---------- */
+.split-bar { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--ux4g-border-subtle); border-radius: var(--ux4g-radius-lg); overflow: hidden; }
+.split-cell { padding: var(--ux4g-sp-7); border-right: 1px solid var(--ux4g-border-subtle); }
+.split-cell:last-child { border-right: none; }
+.split-cell .num { font-family: var(--ux4g-ff-display); font-size: var(--ux4g-fs-32); font-weight: var(--ux4g-fw-bold); }
+.split-cell .num.brand { color: var(--ux4g-primary-600); }
+.split-cell .num.success { color: var(--ux4g-green-600); }
+.split-cell .label { font-size: var(--ux4g-fs-14); font-weight: var(--ux4g-fw-semibold); margin-top: var(--ux4g-sp-2); }
+.split-cell .sub { font-size: var(--ux4g-fs-12); color: var(--ux4g-text-tertiary); margin-top: 2px; }
+@media (max-width: 640px) {
+  .split-bar { grid-template-columns: 1fr; }
+  .split-cell { border-right: none; border-bottom: 1px solid var(--ux4g-border-subtle); }
+}
+
+/* ---------- Section heading ---------- */
+.section-head { text-align: center; max-width: 620px; margin: 0 auto var(--ux4g-sp-9); }
+.section-head .eyebrow { display: inline-flex; margin-bottom: var(--ux4g-sp-4); }
+.section-head h2 { font-size: var(--ux4g-fs-32); line-height: var(--ux4g-lh-36); margin-bottom: var(--ux4g-sp-4); }
+.section-head p { color: var(--ux4g-text-secondary); font-size: var(--ux4g-fs-16); }
+.section { padding: var(--ux4g-sp-13) 0; }
+
+/* ---------- Calculator ---------- */
+.calc-panel { padding: var(--ux4g-sp-10); }
+.calc-input-row { display: flex; gap: var(--ux4g-sp-6); align-items: stretch; margin: var(--ux4g-sp-7) 0 var(--ux4g-sp-6); flex-wrap: wrap; }
+.amount-field {
+  display: flex; align-items: center; border: 1px solid var(--ux4g-border);
+  border-radius: var(--ux4g-radius-md); overflow: hidden; flex: 1 1 220px; background: var(--ux4g-bg-elevated);
+}
+.amount-field .prefix { padding: var(--ux4g-sp-5) var(--ux4g-sp-6); background: var(--ux4g-bg-soft); color: var(--ux4g-text-secondary); font-weight: var(--ux4g-fw-semibold); }
+.amount-field input {
+  border: none; padding: var(--ux4g-sp-5) var(--ux4g-sp-6); font-size: var(--ux4g-fs-18); font-weight: var(--ux4g-fw-semibold);
+  width: 100%; background: transparent; color: var(--ux4g-text-primary); font-family: var(--ux4g-ff);
+}
+.amount-field input:focus { outline: none; }
+.quick-select { display: flex; gap: var(--ux4g-sp-3); flex-wrap: wrap; }
+.chip {
+  border: 1px solid var(--ux4g-border); background: var(--ux4g-bg-elevated); color: var(--ux4g-text-secondary);
+  padding: var(--ux4g-sp-4) var(--ux4g-sp-6); border-radius: var(--ux4g-radius-md); font-size: var(--ux4g-fs-14);
+  font-weight: var(--ux4g-fw-medium); cursor: pointer;
+}
+.chip[aria-pressed="true"] { background: var(--ux4g-primary-600); border-color: var(--ux4g-primary-600); color: #fff; }
+
+.callout {
+  display: flex; gap: var(--ux4g-sp-5); padding: var(--ux4g-sp-6); border-radius: var(--ux4g-radius-md);
+  border-left: 3px solid var(--ux4g-primary-600); background: var(--ux4g-bg-primary); margin: var(--ux4g-sp-7) 0;
+}
+.callout p { font-size: var(--ux4g-fs-14); color: var(--ux4g-text-secondary); }
+.callout strong { color: var(--ux4g-text-primary); }
+
+.split-results { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--ux4g-sp-5); margin: var(--ux4g-sp-7) 0; }
+.split-card { border: 1px solid var(--ux4g-border-subtle); border-radius: var(--ux4g-radius-md); padding: var(--ux4g-sp-6); }
+.split-card .badge { margin-bottom: var(--ux4g-sp-5); }
+.split-card .card-title { font-size: var(--ux4g-fs-14); color: var(--ux4g-text-secondary); margin-bottom: var(--ux4g-sp-2); }
+.split-card .card-amount { font-family: var(--ux4g-ff-display); font-size: var(--ux4g-fs-28); font-weight: var(--ux4g-fw-bold); }
+.split-card .card-note { font-size: var(--ux4g-fs-12); color: var(--ux4g-text-tertiary); margin-top: var(--ux4g-sp-3); }
+@media (max-width: 768px) { .split-results { grid-template-columns: 1fr; } }
+
+.compare-table { width: 100%; border-collapse: collapse; margin-top: var(--ux4g-sp-8); font-size: var(--ux4g-fs-14); }
+.compare-table th, .compare-table td { padding: var(--ux4g-sp-5) var(--ux4g-sp-6); text-align: left; border-bottom: 1px solid var(--ux4g-border-subtle); }
+.compare-table thead th { font-size: var(--ux4g-fs-12); color: var(--ux4g-text-tertiary); font-weight: var(--ux4g-fw-semibold); border-bottom: 1px solid var(--ux4g-border); }
+.compare-table thead th.col-sahakar { color: var(--ux4g-primary-600); }
+.compare-table td.row-label { font-weight: var(--ux4g-fw-semibold); }
+.compare-table td.col-private { color: var(--ux4g-text-tertiary); }
+.compare-table td.col-sahakar { color: var(--ux4g-green-700); font-weight: var(--ux4g-fw-semibold); }
+.compare-table tbody tr:last-child td { border-bottom: none; }
+
+/* ---------- Portal cards (trades) ---------- */
+.portal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--ux4g-sp-7); }
+@media (max-width: 768px) { .portal-grid { grid-template-columns: 1fr; } }
+.portal-card {
+  border: 1px solid var(--ux4g-border-subtle); border-left: 3px solid var(--ux4g-primary-600);
+  border-radius: var(--ux4g-radius-lg); padding: var(--ux4g-sp-7);
+}
+.portal-head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--ux4g-sp-5); margin-bottom: var(--ux4g-sp-5); }
+.portal-icon {
+  width: 40px; height: 40px; border-radius: var(--ux4g-radius-md); background: var(--ux4g-bg-primary);
+  color: var(--ux4g-primary-600); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.portal-card h3 { font-size: var(--ux4g-fs-20); margin-bottom: var(--ux4g-sp-1); }
+.portal-society { font-size: var(--ux4g-fs-12); color: var(--ux4g-text-tertiary); margin-bottom: var(--ux4g-sp-4); }
+.portal-desc { font-size: var(--ux4g-fs-14); color: var(--ux4g-text-secondary); margin-bottom: var(--ux4g-sp-6); }
+.portal-meta-row { display: flex; gap: var(--ux4g-sp-7); padding: var(--ux4g-sp-5) 0; border-top: 1px solid var(--ux4g-border-subtle); border-bottom: 1px solid var(--ux4g-border-subtle); margin-bottom: var(--ux4g-sp-6); }
+.portal-meta { flex: 1; }
+.portal-meta .k { font-size: 11px; color: var(--ux4g-text-tertiary); }
+.portal-meta .v { font-size: var(--ux4g-fs-14); font-weight: var(--ux4g-fw-semibold); margin-top: 2px; }
+.portal-scope { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ux4g-sp-3) var(--ux4g-sp-5); margin-bottom: var(--ux4g-sp-7); }
+.portal-scope li { display: flex; gap: var(--ux4g-sp-3); font-size: var(--ux4g-fs-12); color: var(--ux4g-text-secondary); align-items: flex-start; }
+.portal-scope svg { width: 14px; height: 14px; color: var(--ux4g-green-600); flex-shrink: 0; margin-top: 2px; }
+
+/* ---------- Role gateway cards ---------- */
+.role-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--ux4g-sp-7); }
+@media (max-width: 768px) { .role-grid { grid-template-columns: 1fr; } }
+.role-card { border: 1px solid var(--ux4g-border-subtle); border-radius: var(--ux4g-radius-lg); padding: var(--ux4g-sp-7); display: flex; flex-direction: column; }
+.role-head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: var(--ux4g-sp-5); }
+.role-icon { width: 40px; height: 40px; border-radius: var(--ux4g-radius-md); background: var(--ux4g-bg-soft); color: var(--ux4g-text-primary); display: flex; align-items: center; justify-content: center; }
+.role-card h3 { font-size: var(--ux4g-fs-20); margin-bottom: var(--ux4g-sp-2); }
+.role-sub { font-size: var(--ux4g-fs-13, 13px); font-weight: var(--ux4g-fw-semibold); color: var(--ux4g-text-brand); margin-bottom: var(--ux4g-sp-4); }
+.role-desc { font-size: var(--ux4g-fs-14); color: var(--ux4g-text-secondary); margin-bottom: var(--ux4g-sp-6); }
+.role-features { display: flex; flex-direction: column; gap: var(--ux4g-sp-3); margin-bottom: var(--ux4g-sp-7); flex: 1; }
+.role-features li { display: flex; gap: var(--ux4g-sp-3); font-size: var(--ux4g-fs-13, 13px); color: var(--ux4g-text-secondary); align-items: flex-start; }
+.role-features svg { width: 14px; height: 14px; color: var(--ux4g-green-600); flex-shrink: 0; margin-top: 2px; }
+
+/* ---------- Pillars ---------- */
+.pillar-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--ux4g-sp-6); }
+@media (max-width: 768px) { .pillar-grid { grid-template-columns: 1fr; } }
+.pillar { border: 1px solid var(--ux4g-border-subtle); border-radius: var(--ux4g-radius-lg); padding: var(--ux4g-sp-7); }
+.pillar-icon { width: 40px; height: 40px; border-radius: var(--ux4g-radius-md); background: var(--ux4g-bg-primary); color: var(--ux4g-primary-600); display: flex; align-items: center; justify-content: center; margin-bottom: var(--ux4g-sp-5); }
+.pillar h3 { font-size: var(--ux4g-fs-18); margin-bottom: var(--ux4g-sp-3); }
+.pillar p { font-size: var(--ux4g-fs-14); color: var(--ux4g-text-secondary); }
+
+/* ---------- Compliance banner ---------- */
+.compliance-banner { display: flex; gap: var(--ux4g-sp-6); padding: var(--ux4g-sp-8); }
+.compliance-banner .icon { width: 44px; height: 44px; border-radius: var(--ux4g-radius-md); background: var(--ux4g-bg-primary); color: var(--ux4g-primary-600); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.compliance-banner h3 { font-size: var(--ux4g-fs-18); margin-bottom: var(--ux4g-sp-3); }
+.compliance-banner p { font-size: var(--ux4g-fs-14); color: var(--ux4g-text-secondary); line-height: var(--ux4g-lh-24); }
+.compliance-banner .tags { display: flex; gap: var(--ux4g-sp-3); flex-wrap: wrap; margin-top: var(--ux4g-sp-5); }
+
+/* ---------- Footer ---------- */
+.site-footer { background: var(--ux4g-bg-strong); color: var(--ux4g-neutral-300); padding: var(--ux4g-sp-11) 0 var(--ux4g-sp-8); }
+[data-theme="contrast"] .site-footer { background: #000; border-top: 1px solid #fff; }
+.footer-notice {
+  display: flex; align-items: center; gap: var(--ux4g-sp-5); flex-wrap: wrap;
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
+  border-radius: var(--ux4g-radius-md); padding: var(--ux4g-sp-6); margin-bottom: var(--ux4g-sp-10);
+  font-size: var(--ux4g-fs-14);
+}
+.footer-notice strong { color: #fff; }
+.footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: var(--ux4g-sp-8); }
+@media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+.footer-col h4 { font-size: var(--ux4g-fs-12); color: var(--ux4g-neutral-400); letter-spacing: .04em; margin-bottom: var(--ux4g-sp-5); }
+.footer-col p { font-size: var(--ux4g-fs-13, 13px); color: var(--ux4g-neutral-400); line-height: var(--ux4g-lh-20); margin-bottom: var(--ux4g-sp-4); }
+.footer-col ul { display: flex; flex-direction: column; gap: var(--ux4g-sp-4); }
+.footer-col a { color: var(--ux4g-neutral-300); font-size: var(--ux4g-fs-14); text-decoration: none; }
+.footer-col a:hover { color: #fff; text-decoration: underline; }
+.footer-col li.with-icon { display: flex; gap: var(--ux4g-sp-3); align-items: flex-start; font-size: var(--ux4g-fs-13, 13px); color: var(--ux4g-neutral-300); }
+.footer-col li.with-icon svg { width: 14px; height: 14px; margin-top: 3px; flex-shrink: 0; color: var(--ux4g-green-300); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,.12); margin-top: var(--ux4g-sp-9); padding-top: var(--ux4g-sp-6); font-size: var(--ux4g-fs-12); color: var(--ux4g-neutral-400); }
+.footer-bottom p + p { margin-top: var(--ux4g-sp-2); }
+
+/* ---------- Modal (LegalModal reference) ---------- */
+.modal-overlay {
+  position: fixed; inset: 0; background: var(--ux4g-bg-overlay); z-index: 200;
+  display: none; align-items: flex-start; justify-content: center; padding: var(--ux4g-sp-9) var(--ux4g-sp-6);
+  overflow-y: auto;
+}
+.modal-overlay.is-open { display: flex; }
+.modal {
+  background: var(--ux4g-bg-elevated); border-radius: var(--ux4g-radius-xl); max-width: 720px; width: 100%;
+  box-shadow: var(--ux4g-shadow-lg); max-height: calc(100vh - 64px); display: flex; flex-direction: column;
+}
+.modal-header { display: flex; align-items: center; justify-content: space-between; padding: var(--ux4g-sp-7); border-bottom: 1px solid var(--ux4g-border-subtle); }
+.modal-header h2 { font-size: var(--ux4g-fs-20); }
+.modal-close { background: none; border: none; cursor: pointer; color: var(--ux4g-text-secondary); padding: var(--ux4g-sp-3); border-radius: var(--ux4g-radius-sm); }
+.modal-close:hover { background: var(--ux4g-bg-soft); }
+.modal-tabs { display: flex; gap: var(--ux4g-sp-2); padding: var(--ux4g-sp-5) var(--ux4g-sp-7) 0; border-bottom: 1px solid var(--ux4g-border-subtle); overflow-x: auto; }
+.modal-tab {
+  background: none; border: none; padding: var(--ux4g-sp-4) var(--ux4g-sp-5); font-size: var(--ux4g-fs-13, 13px);
+  font-weight: var(--ux4g-fw-medium); color: var(--ux4g-text-secondary); border-bottom: 2px solid transparent;
+  cursor: pointer; white-space: nowrap;
+}
+.modal-tab[aria-selected="true"] { color: var(--ux4g-text-brand); border-bottom-color: var(--ux4g-primary-600); font-weight: var(--ux4g-fw-semibold); }
+.modal-body { padding: var(--ux4g-sp-8) var(--ux4g-sp-7); overflow-y: auto; font-size: var(--ux4g-fs-14); color: var(--ux4g-text-secondary); line-height: var(--ux4g-lh-24); }
+.modal-body h3 { font-size: var(--ux4g-fs-16); color: var(--ux4g-text-primary); margin: var(--ux4g-sp-6) 0 var(--ux4g-sp-3); }
+.modal-body h3:first-child { margin-top: 0; }
+.modal-body p { margin-bottom: var(--ux4g-sp-4); }
+.modal-panel { display: none; }
+.modal-panel.is-active { display: block; }
+
+/* ---------- National Leadership & Vision Banner ---------- */
+.dignitary-section {
+  position: relative;
+  background: var(--ux4g-bg-elevated);
+  border: 1px solid var(--ux4g-border-subtle);
+  border-radius: var(--ux4g-radius-xl);
+  overflow: hidden;
+  box-shadow: var(--ux4g-shadow-sm);
+  border-left: 4px solid #FF9933; /* Indian saffron accent */
+}
+
+.dignitary-card {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: var(--ux4g-sp-8);
+  align-items: center;
+  padding: var(--ux4g-sp-8);
+}
+
+@media (max-width: 768px) {
+  .dignitary-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+.dignitary-photo-wrap {
+  position: relative;
+  width: 200px;
+  height: 240px;
+  margin: 0 auto;
+  border-radius: var(--ux4g-radius-lg);
+  overflow: hidden;
+  border: 3px solid var(--ux4g-border);
+  box-shadow: var(--ux4g-shadow-md);
+  background: var(--ux4g-bg-soft);
+}
+
+.dignitary-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: opacity 0.3s ease;
+}
+
+.dignitary-flag-badge {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: var(--ux4g-radius-sm);
+  padding: 2px 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+.dignitary-quote {
+  font-size: var(--ux4g-fs-18);
+  line-height: var(--ux4g-lh-28);
+  font-weight: var(--ux4g-fw-medium);
+  color: var(--ux4g-text-primary);
+  font-style: italic;
+  margin-bottom: var(--ux4g-sp-5);
+  position: relative;
+}
+
+.dignitary-name {
+  font-size: var(--ux4g-fs-20);
+  font-weight: var(--ux4g-fw-bold);
+  color: var(--ux4g-primary-600);
+  margin-bottom: 2px;
+}
+
+.dignitary-title {
+  font-size: var(--ux4g-fs-14);
+  font-weight: var(--ux4g-fw-semibold);
+  color: var(--ux4g-text-secondary);
+}
+
+.dignitary-motto {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ux4g-sp-2);
+  padding: 4px 12px;
+  background: rgba(255, 153, 51, 0.12);
+  color: #c25e00;
+  border: 1px solid rgba(255, 153, 51, 0.3);
+  border-radius: var(--ux4g-radius-full);
+  font-size: var(--ux4g-fs-12);
+  font-weight: var(--ux4g-fw-bold);
+  letter-spacing: 0.02em;
+  margin-bottom: var(--ux4g-sp-4);
+}
+
+[data-theme="dark"] .dignitary-motto {
+  background: rgba(255, 153, 51, 0.2);
+  color: #ffaa55;
+  border-color: rgba(255, 153, 51, 0.4);
+}
+
+[data-theme="contrast"] .dignitary-motto {
+  background: #000;
+  color: #f5d800;
+  border-color: #f5d800;
+}
+
+/* Tricolour Accent Line */
+.tricolour-stripe {
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg, #FF9933 33.33%, #FFFFFF 33.33% 66.66%, #138808 66.66%);
+  display: block;
+}
+
+/* ---------- Skeleton Loading States ---------- */
+@keyframes ux4g-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--ux4g-neutral-100) 25%,
+    var(--ux4g-neutral-200) 50%,
+    var(--ux4g-neutral-100) 75%
+  );
+  background-size: 200% 100%;
+  animation: ux4g-shimmer 1.5s infinite ease-in-out;
+  border-radius: var(--ux4g-radius-sm);
+  display: block;
+}
+
+[data-theme="dark"] .skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--ux4g-neutral-800) 25%,
+    var(--ux4g-neutral-700) 50%,
+    var(--ux4g-neutral-800) 75%
+  );
+  background-size: 200% 100%;
+}
+
+[data-theme="contrast"] .skeleton,
+[data-theme="high-contrast"] .skeleton,
+body.high-contrast .skeleton {
+  background: #111111;
+  border: 1px dashed #ffffff;
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}
+
+.skeleton-text {
+  height: 0.875rem;
+  margin-bottom: var(--ux4g-sp-3);
+  border-radius: var(--ux4g-radius-xs);
+}
+
+.skeleton-title {
+  height: 1.5rem;
+  width: 60%;
+  margin-bottom: var(--ux4g-sp-4);
+}
+
+.skeleton-rect {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--ux4g-radius-md);
+}
+
+.skeleton-circle {
+  border-radius: var(--ux4g-radius-full);
+}
+
+.skeleton-card {
+  border: 1px solid var(--ux4g-border-subtle);
+  border-radius: var(--ux4g-radius-lg);
+  padding: var(--ux4g-sp-6);
+  background: var(--ux4g-bg-elevated);
+}
+
+/* Progressive Image Lazy Loading */
+.lazy-image-container {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.lazy-image-container img {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.lazy-image-container img.is-loading {
+  opacity: 0;
+}
+
+.lazy-image-container img.is-loaded {
+  opacity: 1;
+}
+
+.lazy-image-placeholder {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   RESPONSIVE & MOBILE OPTIMIZATIONS (WCAG 2.1 AA & GIGW 3.0)
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .portal-grid {
+    grid-template-columns: 1fr;
+  }
+  .role-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Utility topbar */
+  .topbar-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--ux4g-sp-2);
+    padding: var(--ux4g-sp-3) 0;
+  }
+  .topbar-left {
+    justify-content: space-between;
+    font-size: 11px;
+    flex-wrap: wrap;
+    gap: var(--ux4g-sp-2);
+  }
+  .topbar-right {
+    justify-content: space-between;
+    gap: var(--ux4g-sp-2);
+    flex-wrap: wrap;
+  }
+
+  /* Header branding */
+  .header-row {
+    gap: var(--ux4g-sp-4);
+    padding: var(--ux4g-sp-4) 0;
+  }
+  .emblem {
+    width: 38px;
+    height: 38px;
+  }
+  .brand-name {
+    font-size: var(--ux4g-fs-20);
+  }
+  .header-text-block .council-line {
+    display: none;
+  }
+
+  /* Nav row touch scrolling */
+  .nav-row {
+    gap: var(--ux4g-sp-1);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .nav-row::-webkit-scrollbar {
+    display: none;
+  }
+  .nav-link {
+    padding: var(--ux4g-sp-4) var(--ux4g-sp-4);
+    font-size: var(--ux4g-fs-13);
+    min-height: 44px;
+  }
+  .nav-dropdown-menu {
+    position: absolute;
+    left: 0;
+    right: auto;
+    max-width: calc(100vw - 32px);
+    width: 290px;
+  }
+
+  /* Hero */
+  .hero {
+    padding: var(--ux4g-sp-7) var(--ux4g-sp-5);
+    border-radius: var(--ux4g-radius-lg);
+  }
+  .hero h1 {
+    font-size: clamp(1.6rem, 6.5vw, 2.25rem);
+    line-height: 1.2;
+    margin-bottom: var(--ux4g-sp-4);
+  }
+  .hero p.lede {
+    font-size: var(--ux4g-fs-15);
+    line-height: 1.45;
+    margin-bottom: var(--ux4g-sp-6);
+  }
+  .hero-actions {
+    flex-direction: column;
+    gap: var(--ux4g-sp-3);
+    margin-bottom: var(--ux4g-sp-6);
+  }
+  .hero-actions .btn {
+    width: 100%;
+    justify-content: center;
+    padding: var(--ux4g-sp-4) var(--ux4g-sp-5);
+  }
+  .trust-row {
+    flex-direction: column;
+    gap: var(--ux4g-sp-3);
+    align-items: flex-start;
+  }
+
+  /* Split stat bar */
+  .split-bar {
+    grid-template-columns: 1fr;
+  }
+  .split-cell {
+    padding: var(--ux4g-sp-5) var(--ux4g-sp-5);
+    border-right: none;
+    border-bottom: 1px solid var(--ux4g-border-subtle);
+  }
+  .split-cell:last-child {
+    border-bottom: none;
+  }
+  .split-cell .num {
+    font-size: var(--ux4g-fs-26);
+  }
+
+  /* National Dignitary section */
+  .dignitary-card {
+    grid-template-columns: 1fr;
+    text-align: left;
+    padding: var(--ux4g-sp-6) var(--ux4g-sp-5);
+    gap: var(--ux4g-sp-5);
+  }
+  .dignitary-photo-wrap {
+    width: 160px;
+    height: 195px;
+    margin: 0 auto;
+  }
+  .dignitary-quote {
+    font-size: var(--ux4g-fs-15);
+    line-height: 1.45;
+    margin-bottom: var(--ux4g-sp-4);
+  }
+  .dignitary-name {
+    font-size: var(--ux4g-fs-18);
+  }
+
+  /* Section headings */
+  .section {
+    padding: var(--ux4g-sp-9) 0;
+  }
+  .section-head {
+    margin-bottom: var(--ux4g-sp-6);
+  }
+  .section-head h2 {
+    font-size: var(--ux4g-fs-24);
+    line-height: var(--ux4g-lh-28);
+  }
+
+  /* Calculator */
+  .calc-panel {
+    padding: var(--ux4g-sp-6) var(--ux4g-sp-5);
+  }
+  .calc-input-row {
+    flex-direction: column;
+    gap: var(--ux4g-sp-4);
+  }
+  .amount-field {
+    width: 100%;
+    max-width: 100% !important;
+  }
+  .quick-select {
+    width: 100%;
+    gap: var(--ux4g-sp-2);
+  }
+  .chip {
+    flex: 1 1 calc(33.33% - var(--ux4g-sp-2));
+    text-align: center;
+    padding: var(--ux4g-sp-3) var(--ux4g-sp-4);
+    font-size: var(--ux4g-fs-13);
+  }
+  .split-results {
+    grid-template-columns: 1fr;
+    gap: var(--ux4g-sp-3);
+  }
+  .split-card {
+    padding: var(--ux4g-sp-5);
+  }
+  .split-card .card-amount {
+    font-size: var(--ux4g-fs-24);
+  }
+  .compare-table th, .compare-table td {
+    padding: var(--ux4g-sp-4) var(--ux4g-sp-4);
+    font-size: var(--ux4g-fs-13);
+  }
+
+  /* Cards & layout */
+  .portal-card, .role-card, .pillar, .compliance-banner {
+    padding: var(--ux4g-sp-6) var(--ux4g-sp-5);
+  }
+  .portal-scope {
+    grid-template-columns: 1fr;
+    gap: var(--ux4g-sp-2);
+  }
+  .pillar-grid {
+    grid-template-columns: 1fr;
+  }
+  .compliance-banner {
+    flex-direction: column;
+    gap: var(--ux4g-sp-4);
+  }
+  .compliance-banner .tags {
+    margin-top: var(--ux4g-sp-4);
+  }
+}
+
+@media (max-width: 576px) {
+  .topbar-badge {
+    display: none;
+  }
+  .font-switch button {
+    padding: var(--ux4g-sp-2) var(--ux4g-sp-3);
+  }
+  .theme-switch button {
+    padding: var(--ux4g-sp-2) var(--ux4g-sp-3);
+    font-size: 11px;
+  }
+  .lang-select {
+    padding: var(--ux4g-sp-2) var(--ux4g-sp-3);
+  }
+  .brand-tag {
+    display: none;
+  }
+  .portal-meta-row {
+    flex-direction: column;
+    gap: var(--ux4g-sp-3);
+  }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: var(--ux4g-sp-7);
+  }
+  .modal {
+    margin: 0;
+    max-height: 94vh;
+    border-radius: var(--ux4g-radius-lg);
+  }
+  .modal-overlay {
+    padding: var(--ux4g-sp-4);
+  }
+}
+
+/* ==========================================================================
+   MYAADHAAR-INSPIRED DESIGN SYSTEM FOR SAHAKARCONNECT
+   Faithful replication of myaadhaarbeta.uidai.gov.in aesthetic
+   ========================================================================== */
+
+/* Page Background */
+.myaadhaar-page {
+  background-color: #fbf7f4;
+  min-height: 100vh;
+}
+[data-theme="dark"] .myaadhaar-page {
+  background-color: #0d0e12;
+}
+[data-theme="contrast"] .myaadhaar-page {
+  background-color: #000000;
+}
+
+/* Header Branding Bar */
+.site-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+[data-theme="dark"] .site-header {
+  background: #11141f;
+  border-bottom: 1px solid #1f2536;
+}
+[data-theme="contrast"] .site-header {
+  background: #000000;
+  border-bottom: 1px solid #ffffff;
+}
+
+.myaadhaar-branding-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.myaadhaar-emblem-lockup {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.myaadhaar-emblem-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ux4g-primary-600);
+  flex-shrink: 0;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+[data-theme="dark"] .myaadhaar-emblem-badge {
+  background: #1e2438;
+  border-color: #333d59;
+  color: #a391ff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+[data-theme="contrast"] .myaadhaar-emblem-badge {
+  background: #000000;
+  border-color: #f5d800;
+  color: #f5d800;
+}
+
+.myaadhaar-emblem-text .gov-line {
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.myaadhaar-emblem-text .ministry-line {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 1px 0;
+}
+.myaadhaar-emblem-text .brand-sub {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+}
+[data-theme="dark"] .myaadhaar-emblem-text .gov-line {
+  color: #a5b4fc;
+}
+[data-theme="dark"] .myaadhaar-emblem-text .ministry-line {
+  color: #f8fafc;
+}
+[data-theme="dark"] .myaadhaar-emblem-text .brand-sub {
+  color: #94a3b8;
+}
+[data-theme="contrast"] .myaadhaar-emblem-text .gov-line,
+[data-theme="contrast"] .myaadhaar-emblem-text .brand-sub {
+  color: #ffffff;
+}
+[data-theme="contrast"] .myaadhaar-emblem-text .ministry-line {
+  color: #f5d800;
+}
+
+/* Header Search & Language Block */
+.myaadhaar-header-tools {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.myaadhaar-header-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 320px;
+}
+@media (max-width: 991px) {
+  .myaadhaar-header-search {
+    width: 100%;
+    order: 3;
+  }
+}
+
+.myaadhaar-header-search input {
+  width: 100%;
+  height: 40px;
+  border-radius: 9999px;
+  border: 1px solid #cbd5e1;
+  padding: 0 40px 0 16px;
+  font-size: 13px;
+  background: #ffffff;
+  color: #1e293b;
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+[data-theme="dark"] .myaadhaar-header-search input {
+  background: #1a2030;
+  border-color: #2e3852;
+  color: #f8fafc;
+}
+[data-theme="dark"] .myaadhaar-header-search input::placeholder {
+  color: #8392a5;
+}
+[data-theme="contrast"] .myaadhaar-header-search input {
+  background: #000000;
+  border-color: #ffffff;
+  color: #ffffff;
+}
+.myaadhaar-header-search input:focus {
+  outline: none;
+  border-color: var(--ux4g-primary-600);
+  box-shadow: 0 0 0 3px rgba(74, 43, 194, 0.15);
+}
+[data-theme="dark"] .myaadhaar-header-search input:focus {
+  border-color: #8670ff;
+  box-shadow: 0 0 0 3px rgba(134, 112, 255, 0.25);
+}
+
+.myaadhaar-header-search .search-btn {
+  position: absolute;
+  right: 6px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: var(--ux4g-primary-600);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.2s;
+}
+.myaadhaar-header-search .search-btn:hover {
+  background: var(--ux4g-primary-700);
+}
+[data-theme="contrast"] .myaadhaar-header-search .search-btn {
+  background: #f5d800;
+  color: #000000;
+}
+
+.myaadhaar-lang-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 9999px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e293b;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+[data-theme="dark"] .myaadhaar-lang-btn {
+  background: #1a2030;
+  border-color: #2e3852;
+  color: #e2e8f0;
+}
+[data-theme="contrast"] .myaadhaar-lang-btn {
+  background: #000000;
+  border-color: #ffffff;
+  color: #ffffff;
+}
+.myaadhaar-lang-btn:hover {
+  border-color: var(--ux4g-primary-600);
+  color: var(--ux4g-primary-600);
+}
+[data-theme="dark"] .myaadhaar-lang-btn:hover {
+  border-color: #8670ff;
+  color: #c0b3ff;
+  background: #232b42;
+}
+
+/* Secondary Nav Bar */
+.myaadhaar-navbar {
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+  position: relative;
+  z-index: 1000;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+[data-theme="dark"] .myaadhaar-navbar {
+  background: #0d1017;
+  border-top: 1px solid #1f2536;
+  border-bottom: 1px solid #1f2536;
+}
+[data-theme="contrast"] .myaadhaar-navbar {
+  background: #000000;
+  border-top: 1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
+}
+
+.myaadhaar-nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 0;
+}
+
+.myaadhaar-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.myaadhaar-nav-links::-webkit-scrollbar {
+  display: none;
+}
+
+.myaadhaar-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 500;
+  color: #334155;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+[data-theme="dark"] .myaadhaar-nav-btn {
+  color: #cbd5e1;
+}
+.myaadhaar-nav-btn:hover {
+  background: #f1f5f9;
+  color: var(--ux4g-primary-600);
+}
+[data-theme="dark"] .myaadhaar-nav-btn:hover {
+  background: #1a2030;
+  color: #c0b3ff;
+}
+.myaadhaar-nav-btn.active {
+  background: #f1f0fc;
+  color: var(--ux4g-primary-600);
+  font-weight: 600;
+  border-color: #dcd4ff;
+}
+[data-theme="dark"] .myaadhaar-nav-btn.active {
+  background: #231c4f;
+  color: #c0b3ff;
+  border-color: #4a2bc2;
+}
+[data-theme="contrast"] .myaadhaar-nav-btn {
+  color: #ffffff;
+}
+[data-theme="contrast"] .myaadhaar-nav-btn.active {
+  background: #000000;
+  color: #f5d800;
+  border-color: #f5d800;
+}
+
+.myaadhaar-login-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border-radius: 9999px;
+  background: var(--ux4g-primary-600);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(74, 43, 194, 0.25);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.myaadhaar-login-pill:hover {
+  background: var(--ux4g-primary-700);
+  box-shadow: 0 4px 12px rgba(74, 43, 194, 0.35);
+  transform: translateY(-1px);
+}
+
+/* Mega Menu Dropdown */
+.myaadhaar-mega-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border-bottom: 2px solid #e2e8f0;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  z-index: 1050;
+  animation: myAadhaarFadeSlide 0.2s ease-out;
+}
+[data-theme="dark"] .myaadhaar-mega-menu {
+  background: #141722;
+  border-color: #242938;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes myAadhaarFadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.myaadhaar-mega-cols {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+  padding: 28px 0 24px;
+}
+@media (max-width: 1100px) {
+  .myaadhaar-mega-cols {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 768px) {
+  .myaadhaar-mega-cols {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+}
+
+.myaadhaar-mega-col h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1e1b4b;
+  margin-bottom: 14px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+[data-theme="dark"] .myaadhaar-mega-col h4 {
+  color: #c0b3ff;
+  border-bottom-color: #2e344a;
+}
+
+.myaadhaar-mega-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.myaadhaar-mega-col li {
+  margin-bottom: 8px;
+}
+
+.myaadhaar-mega-col a,
+.myaadhaar-mega-col button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 4px 0;
+  font-size: 13px;
+  color: #475569;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.15s, transform 0.15s;
+}
+[data-theme="dark"] .myaadhaar-mega-col a,
+[data-theme="dark"] .myaadhaar-mega-col button {
+  color: #94a3b8;
+}
+.myaadhaar-mega-col a:hover,
+.myaadhaar-mega-col button:hover {
+  color: var(--ux4g-primary-600);
+  transform: translateX(3px);
+}
+[data-theme="dark"] .myaadhaar-mega-col a:hover,
+[data-theme="dark"] .myaadhaar-mega-col button:hover {
+  color: #c0b3ff;
+}
+
+.myaadhaar-mega-col .view-all-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ux4g-primary-600);
+  text-decoration: none;
+}
+.myaadhaar-mega-col .view-all-link:hover {
+  text-decoration: underline;
+}
+
+/* Mega Menu App Download Strip */
+.myaadhaar-mega-download-strip {
+  background: linear-gradient(90deg, #f8fafc 0%, #f1f5f9 100%);
+  border-top: 1px solid #e2e8f0;
+  padding: 16px 0;
+}
+[data-theme="dark"] .myaadhaar-mega-download-strip {
+  background: #0f121a;
+  border-color: #242938;
+}
+
+.myaadhaar-download-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.myaadhaar-download-mockup-wrap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.myaadhaar-phone-mockup {
+  width: 52px;
+  height: 84px;
+  background: #1e293b;
+  border-radius: 10px;
+  padding: 3px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+.myaadhaar-phone-screen {
+  background: #4a2bc2;
+  border-radius: 7px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  padding: 4px;
+}
+
+.myaadhaar-download-text .title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e293b;
+}
+[data-theme="dark"] .myaadhaar-download-text .title {
+  color: #f1f5f9;
+}
+.myaadhaar-download-text .sub {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.myaadhaar-store-badges {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.myaadhaar-store-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #111827;
+  color: #ffffff;
+  border-radius: 6px;
+  padding: 5px 12px;
+  text-decoration: none;
+  font-size: 11px;
+  line-height: 1.2;
+  transition: opacity 0.2s;
+}
+.myaadhaar-store-btn:hover {
+  opacity: 0.9;
+}
+
+.myaadhaar-qr-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+}
+[data-theme="dark"] .myaadhaar-qr-box {
+  background: #1e2230;
+  border-color: #333a4d;
+}
+
+/* ==========================================================================
+   MYAADHAAR HERO SECTION
+   ========================================================================== */
+.myaadhaar-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 32px;
+  align-items: start;
+  padding: 32px 0 24px;
+}
+@media (max-width: 991px) {
+  .myaadhaar-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+/* Hero Left Column */
+.myaadhaar-hero-left {
+  padding-right: 12px;
+}
+
+.myaadhaar-hero-heading {
+  margin-bottom: 24px;
+}
+
+.myaadhaar-hero-welcome {
+  display: block;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 34px;
+  font-weight: 500;
+  color: #1e293b;
+  line-height: 1.25;
+}
+[data-theme="dark"] .myaadhaar-hero-welcome {
+  color: #f1f5f9;
+}
+
+.myaadhaar-hero-question {
+  display: block;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--ux4g-primary-600);
+  line-height: 1.3;
+  margin-top: 4px;
+}
+[data-theme="dark"] .myaadhaar-hero-question {
+  color: #a391ff;
+}
+
+/* Search Pill */
+.myaadhaar-search-pill {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 9999px;
+  padding: 4px 6px 4px 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 28px;
+  max-width: 640px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+[data-theme="dark"] .myaadhaar-search-pill {
+  background: #141722;
+  border-color: #2e344a;
+}
+.myaadhaar-search-pill:focus-within {
+  border-color: var(--ux4g-primary-600);
+  box-shadow: 0 0 0 4px rgba(74, 43, 194, 0.15);
+}
+
+.myaadhaar-search-pill input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 15px;
+  color: #1e293b;
+  padding: 10px 0;
+}
+[data-theme="dark"] .myaadhaar-search-pill input {
+  color: #f8fafc;
+}
+.myaadhaar-search-pill input:focus {
+  outline: none;
+}
+
+.myaadhaar-search-pill .search-action-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #1e1b4b;
+  border: none;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.15s;
+  flex-shrink: 0;
+}
+.myaadhaar-search-pill .search-action-btn:hover {
+  background: var(--ux4g-primary-600);
+  transform: scale(1.04);
+}
+
+/* 4 Circular Action Buttons */
+.myaadhaar-quick-circles {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.myaadhaar-circle-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  text-decoration: none;
+}
+
+.myaadhaar-circle-btn {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ux4g-primary-600);
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+[data-theme="dark"] .myaadhaar-circle-btn {
+  background: #1a1e2b;
+  border-color: #2e344a;
+  color: #c0b3ff;
+}
+.myaadhaar-circle-item:hover .myaadhaar-circle-btn {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(74, 43, 194, 0.18);
+  border-color: var(--ux4g-primary-600);
+  color: var(--ux4g-primary-600);
+}
+
+.myaadhaar-circle-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+  text-align: center;
+}
+[data-theme="dark"] .myaadhaar-circle-label {
+  color: #cbd5e1;
+}
+
+/* Hero Right Sidebar (3-Card Stack) */
+.myaadhaar-hero-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Card 1: Login Card with Tricolour Accent */
+.myaadhaar-card-login {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  position: relative;
+}
+[data-theme="dark"] .myaadhaar-card-login {
+  background: #141722;
+  border-color: #242938;
+}
+
+.myaadhaar-tricolour-stripe {
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg, #ff9933 0%, #ff9933 33.3%, #ffffff 33.3%, #ffffff 66.6%, #138808 66.6%, #138808 100%);
+}
+
+.myaadhaar-card-login-body {
+  padding: 20px;
+}
+
+.myaadhaar-card-login-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.myaadhaar-card-login-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #f1f0fc;
+  color: var(--ux4g-primary-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+[data-theme="dark"] .myaadhaar-card-login-icon {
+  background: #231c4f;
+  color: #a391ff;
+}
+
+.myaadhaar-card-login-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+[data-theme="dark"] .myaadhaar-card-login-title {
+  color: #f1f5f9;
+}
+
+.myaadhaar-card-login-desc {
+  font-size: 12px;
+  color: #64748b;
+  margin: 0 0 16px;
+  line-height: 1.4;
+}
+
+.myaadhaar-card-login-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 18px;
+  border-radius: 9999px;
+  background: var(--ux4g-primary-600);
+  color: #ffffff;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.myaadhaar-card-login-action:hover {
+  background: var(--ux4g-primary-700);
+  box-shadow: 0 4px 12px rgba(74, 43, 194, 0.3);
+}
+
+/* Card 2: Did You Know Card */
+.myaadhaar-card-dyk {
+  background: #fffcf8;
+  border-radius: 14px;
+  border: 1px solid #fed7aa;
+  padding: 16px 18px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+[data-theme="dark"] .myaadhaar-card-dyk {
+  background: #1c1917;
+  border-color: #44403c;
+}
+
+.myaadhaar-dyk-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #c2410c;
+  margin-bottom: 6px;
+}
+[data-theme="dark"] .myaadhaar-dyk-title {
+  color: #fb923c;
+}
+
+.myaadhaar-dyk-content {
+  font-size: 12px;
+  color: #475569;
+  line-height: 1.45;
+  margin-bottom: 8px;
+}
+[data-theme="dark"] .myaadhaar-dyk-content {
+  color: #cbd5e1;
+}
+
+.myaadhaar-dyk-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ux4g-primary-600);
+  text-decoration: none;
+  cursor: pointer;
+}
+.myaadhaar-dyk-link:hover {
+  text-decoration: underline;
+}
+
+/* Card 3: Keep Handy Card */
+.myaadhaar-card-app {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  padding: 16px 18px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+[data-theme="dark"] .myaadhaar-card-app {
+  background: #141722;
+  border-color: #242938;
+}
+
+.myaadhaar-app-card-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* ==========================================================================
+   SECTION 2: FIND SERVICES RELEVANT TO YOU (PERSONA CARDS)
+   ========================================================================== */
+.myaadhaar-persona-section {
+  padding: 36px 0 24px;
+}
+
+.myaadhaar-section-header {
+  margin-bottom: 24px;
+}
+
+.myaadhaar-section-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 4px;
+}
+[data-theme="dark"] .myaadhaar-section-header h2 {
+  color: #f1f5f9;
+}
+
+.myaadhaar-section-header p {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0;
+}
+
+.myaadhaar-persona-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+@media (max-width: 1024px) {
+  .myaadhaar-persona-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .myaadhaar-persona-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.myaadhaar-persona-card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+}
+[data-theme="dark"] .myaadhaar-persona-card {
+  background: #141722;
+  border-color: #242938;
+}
+.myaadhaar-persona-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+.myaadhaar-persona-img-wrap {
+  width: 100%;
+  height: 180px;
+  position: relative;
+  overflow: hidden;
+  background: #e2e8f0;
+}
+
+.myaadhaar-persona-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.myaadhaar-persona-card:hover .myaadhaar-persona-img-wrap img {
+  transform: scale(1.03);
+}
+
+.myaadhaar-persona-body {
+  padding: 16px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.myaadhaar-persona-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ux4g-primary-600);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+[data-theme="dark"] .myaadhaar-persona-badge {
+  color: #a391ff;
+}
+
+.myaadhaar-persona-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 6px;
+}
+[data-theme="dark"] .myaadhaar-persona-title {
+  color: #f1f5f9;
+}
+
+.myaadhaar-persona-desc {
+  font-size: 12.5px;
+  color: #64748b;
+  line-height: 1.45;
+  margin-bottom: 16px;
+  flex: 1;
+}
+[data-theme="dark"] .myaadhaar-persona-desc {
+  color: #94a3b8;
+}
+
+.myaadhaar-persona-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.myaadhaar-circle-arrow-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #f1f0fc;
+  color: var(--ux4g-primary-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.myaadhaar-persona-card:hover .myaadhaar-circle-arrow-btn {
+  background: var(--ux4g-primary-600);
+  color: #ffffff;
+  transform: scale(1.08);
+}
+
+/* ==========================================================================
+   SECTION 3: POPULAR SERVICES CARD GRID
+   ========================================================================== */
+.myaadhaar-popular-section {
+  padding: 24px 0 36px;
+}
+
+.myaadhaar-popular-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+@media (max-width: 991px) {
+  .myaadhaar-popular-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .myaadhaar-popular-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.myaadhaar-service-card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s;
+}
+[data-theme="dark"] .myaadhaar-service-card {
+  background: #141722;
+  border-color: #242938;
+}
+.myaadhaar-service-card:hover {
+  border-color: var(--ux4g-primary-600);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.myaadhaar-service-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: #f1f0fc;
+  color: var(--ux4g-primary-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+[data-theme="dark"] .myaadhaar-service-icon-wrap {
+  background: #231c4f;
+  color: #a391ff;
+}
+
+.myaadhaar-service-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 4px;
+}
+[data-theme="dark"] .myaadhaar-service-title {
+  color: #f1f5f9;
+}
+
+.myaadhaar-service-society {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.myaadhaar-service-desc {
+  font-size: 12.5px;
+  color: #64748b;
+  line-height: 1.45;
+  margin-bottom: 16px;
+  flex: 1;
+}
+
+.myaadhaar-service-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top: 1px solid #f1f5f9;
+}
+[data-theme="dark"] .myaadhaar-service-footer {
+  border-top-color: #242938;
+}
+
+.myaadhaar-service-price {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+}
+[data-theme="dark"] .myaadhaar-service-price {
+  color: #f1f5f9;
+}
+.myaadhaar-service-price span {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: normal;
+}
+
+.myaadhaar-service-btn {
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background: var(--ux4g-primary-600);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.myaadhaar-service-btn:hover {
+  background: var(--ux4g-primary-700);
+}
+
+
