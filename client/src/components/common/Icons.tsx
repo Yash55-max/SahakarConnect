@@ -504,6 +504,40 @@ export const ChevronDownIcon: React.FC<IconProps> = ({ className = '', size = 14
   </svg>
 );
 
+export const IndianFlagIcon: React.FC<{ className?: string; width?: number; height?: number }> = ({
+  className = '',
+  width = 24,
+  height = 16,
+}) => (
+  <svg
+    width={width}
+    height={height}
+    viewBox="0 0 90 60"
+    className={className}
+    aria-label="National Flag of India"
+    role="img"
+    style={{ borderRadius: '2px', verticalAlign: 'middle', display: 'inline-block' }}
+  >
+    <rect width="90" height="20" fill="#FF9933" />
+    <rect y="20" width="90" height="20" fill="#FFFFFF" />
+    <rect y="40" width="90" height="20" fill="#138808" />
+    <circle cx="45" cy="30" r="9.25" fill="none" stroke="#000080" strokeWidth="1" />
+    <circle cx="45" cy="30" r="1.6" fill="#000080" />
+    {Array.from({ length: 24 }).map((_, i) => (
+      <line
+        key={i}
+        x1="45"
+        y1="30"
+        x2={45 + 9.25 * Math.cos((i * 15 * Math.PI) / 180)}
+        y2={30 + 9.25 * Math.sin((i * 15 * Math.PI) / 180)}
+        stroke="#000080"
+        strokeWidth="0.8"
+      />
+    ))}
+  </svg>
+);
+
+
 
 
 

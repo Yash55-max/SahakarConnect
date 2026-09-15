@@ -366,3 +366,224 @@
 .modal-body p { margin-bottom: var(--ux4g-sp-4); }
 .modal-panel { display: none; }
 .modal-panel.is-active { display: block; }
+
+/* ---------- National Leadership & Vision Banner ---------- */
+.dignitary-section {
+  position: relative;
+  background: var(--ux4g-bg-elevated);
+  border: 1px solid var(--ux4g-border-subtle);
+  border-radius: var(--ux4g-radius-xl);
+  overflow: hidden;
+  box-shadow: var(--ux4g-shadow-sm);
+  border-left: 4px solid #FF9933; /* Indian saffron accent */
+}
+
+.dignitary-card {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: var(--ux4g-sp-8);
+  align-items: center;
+  padding: var(--ux4g-sp-8);
+}
+
+@media (max-width: 768px) {
+  .dignitary-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+.dignitary-photo-wrap {
+  position: relative;
+  width: 200px;
+  height: 240px;
+  margin: 0 auto;
+  border-radius: var(--ux4g-radius-lg);
+  overflow: hidden;
+  border: 3px solid var(--ux4g-border);
+  box-shadow: var(--ux4g-shadow-md);
+  background: var(--ux4g-bg-soft);
+}
+
+.dignitary-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: opacity 0.3s ease;
+}
+
+.dignitary-flag-badge {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: var(--ux4g-radius-sm);
+  padding: 2px 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+.dignitary-quote {
+  font-size: var(--ux4g-fs-18);
+  line-height: var(--ux4g-lh-28);
+  font-weight: var(--ux4g-fw-medium);
+  color: var(--ux4g-text-primary);
+  font-style: italic;
+  margin-bottom: var(--ux4g-sp-5);
+  position: relative;
+}
+
+.dignitary-name {
+  font-size: var(--ux4g-fs-20);
+  font-weight: var(--ux4g-fw-bold);
+  color: var(--ux4g-primary-600);
+  margin-bottom: 2px;
+}
+
+.dignitary-title {
+  font-size: var(--ux4g-fs-14);
+  font-weight: var(--ux4g-fw-semibold);
+  color: var(--ux4g-text-secondary);
+}
+
+.dignitary-motto {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ux4g-sp-2);
+  padding: 4px 12px;
+  background: rgba(255, 153, 51, 0.12);
+  color: #c25e00;
+  border: 1px solid rgba(255, 153, 51, 0.3);
+  border-radius: var(--ux4g-radius-full);
+  font-size: var(--ux4g-fs-12);
+  font-weight: var(--ux4g-fw-bold);
+  letter-spacing: 0.02em;
+  margin-bottom: var(--ux4g-sp-4);
+}
+
+[data-theme="dark"] .dignitary-motto {
+  background: rgba(255, 153, 51, 0.2);
+  color: #ffaa55;
+  border-color: rgba(255, 153, 51, 0.4);
+}
+
+[data-theme="contrast"] .dignitary-motto {
+  background: #000;
+  color: #f5d800;
+  border-color: #f5d800;
+}
+
+/* Tricolour Accent Line */
+.tricolour-stripe {
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg, #FF9933 33.33%, #FFFFFF 33.33% 66.66%, #138808 66.66%);
+  display: block;
+}
+
+/* ---------- Skeleton Loading States ---------- */
+@keyframes ux4g-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--ux4g-neutral-100) 25%,
+    var(--ux4g-neutral-200) 50%,
+    var(--ux4g-neutral-100) 75%
+  );
+  background-size: 200% 100%;
+  animation: ux4g-shimmer 1.5s infinite ease-in-out;
+  border-radius: var(--ux4g-radius-sm);
+  display: block;
+}
+
+[data-theme="dark"] .skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--ux4g-neutral-800) 25%,
+    var(--ux4g-neutral-700) 50%,
+    var(--ux4g-neutral-800) 75%
+  );
+  background-size: 200% 100%;
+}
+
+[data-theme="contrast"] .skeleton,
+[data-theme="high-contrast"] .skeleton,
+body.high-contrast .skeleton {
+  background: #111111;
+  border: 1px dashed #ffffff;
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}
+
+.skeleton-text {
+  height: 0.875rem;
+  margin-bottom: var(--ux4g-sp-3);
+  border-radius: var(--ux4g-radius-xs);
+}
+
+.skeleton-title {
+  height: 1.5rem;
+  width: 60%;
+  margin-bottom: var(--ux4g-sp-4);
+}
+
+.skeleton-rect {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--ux4g-radius-md);
+}
+
+.skeleton-circle {
+  border-radius: var(--ux4g-radius-full);
+}
+
+.skeleton-card {
+  border: 1px solid var(--ux4g-border-subtle);
+  border-radius: var(--ux4g-radius-lg);
+  padding: var(--ux4g-sp-6);
+  background: var(--ux4g-bg-elevated);
+}
+
+/* Progressive Image Lazy Loading */
+.lazy-image-container {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.lazy-image-container img {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.lazy-image-container img.is-loading {
+  opacity: 0;
+}
+
+.lazy-image-container img.is-loaded {
+  opacity: 1;
+}
+
+.lazy-image-placeholder {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}

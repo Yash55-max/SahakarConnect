@@ -16,7 +16,9 @@ import {
   CarpentryIcon,
   ApplianceIcon,
   StarIcon,
+  IndianFlagIcon,
 } from '../../components/common/Icons';
+import { ImageWithSkeleton, PortalSkeleton, ServiceCatalogSkeleton } from '../../components/common/Skeleton';
 
 interface LandingPageProps {
   lang: 'en' | 'hi';
@@ -30,6 +32,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   backendHealth: _backendHealth,
 }) => {
   const [calcAmount, setCalcAmount] = useState<number>(1200);
+  const [skeletonPreviewMode, setSkeletonPreviewMode] = useState<'none' | 'portal' | 'catalog'>('none');
 
   // Compute statutory 88 / 8 / 4 split with MSCS Act 2023 rounding invariant
   const gross = Math.max(0, Number(calcAmount) || 0);
@@ -245,14 +248,70 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
   return (
     <div className="landing-page-wrapper">
+      {/* ================= SKELETON PREVIEW BANNER IF ACTIVE ================= */}
+      {skeletonPreviewMode !== 'none' && (
+        <div className="container pt-3">
+          <div className="alert alert-info border d-flex justify-content-between align-items-center flex-wrap gap-2 mb-0 shadow-sm">
+            <div className="d-flex align-items-center gap-2">
+              <span className="badge bg-primary">UX4G Skeleton Mode</span>
+              <span className="small fw-semibold">
+                {skeletonPreviewMode === 'portal'
+                  ? 'Displaying Cooperative Portal Skeleton Loading Screen'
+                  : 'Displaying Service Catalog Skeleton Loading Screen'}
+              </span>
+            </div>
+            <div className="d-flex gap-2">
+              <button
+                type="button"
+                className={`btn btn-sm ${skeletonPreviewMode === 'portal' ? 'btn-primary' : 'btn-outline-primary'}`}
+                onClick={() => setSkeletonPreviewMode('portal')}
+              >
+                Portal Skeleton
+              </button>
+              <button
+                type="button"
+                className={`btn btn-sm ${skeletonPreviewMode === 'catalog' ? 'btn-primary' : 'btn-outline-primary'}`}
+                onClick={() => setSkeletonPreviewMode('catalog')}
+              >
+                Catalog Skeleton
+              </button>
+              <button
+                type="button"
+                className="btn btn-sm btn-outline-danger"
+                onClick={() => setSkeletonPreviewMode('none')}
+              >
+                Exit Skeleton Preview
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Render selected skeleton screen if in preview mode */}
+      {skeletonPreviewMode === 'portal' && (
+        <div className="container py-4">
+          <PortalSkeleton title="Previewing Portal Loading State" />
+        </div>
+      )}
+
+      {skeletonPreviewMode === 'catalog' && (
+        <div className="container py-4">
+          <ServiceCatalogSkeleton />
+        </div>
+      )}
+
       {/* ================= 1. HERO ================= */}
       <div className="container hero-wrap" style={{ paddingTop: 'var(--ux4g-sp-6)' }}>
         <section className="hero">
           <div className="hero-tags">
-            <span className="badge badge-primary">
-              {lang === 'hi' ? 'सहकारिता मंत्रालय | भारत सरकार' : 'Ministry of Cooperation | Govt of India'}
+            <span className="badge badge-primary d-inline-flex align-items-center gap-2">
+              <IndianFlagIcon width={16} height={11} />
+              <span>{lang === 'hi' ? 'सहकारिता मंत्रालय | भारत सरकार' : 'Ministry of Cooperation | Govt of India'}</span>
             </span>
             <span className="badge badge-neutral">MSCS Act 2023</span>
+            <span className="badge badge-success d-inline-flex align-items-center gap-1">
+              <span>{lang === 'hi' ? 'सहकार से समृद्धि' : 'Sahakar Se Samriddhi'}</span>
+            </span>
           </div>
 
           <h1>
@@ -339,6 +398,76 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           </div>
         </div>
       </div>
+
+      {/* ================= NATIONAL LEADERSHIP & COOPERATIVE VISION ================= */}
+      <section className="section" style={{ paddingTop: 'var(--ux4g-sp-7)', paddingBottom: 'var(--ux4g-sp-4)' }}>
+        <div className="container">
+          <div className="dignitary-section">
+            <div className="tricolour-stripe" />
+            <div className="dignitary-card">
+              <div className="dignitary-photo-wrap">
+                <ImageWithSkeleton
+                  src="/images/pm-narendra-modi.jpg"
+                  alt={lang === 'hi' ? 'माननीय प्रधानमंत्री श्री नरेन्द्र मोदी' : "Shri Narendra Modi, Hon'ble Prime Minister of India"}
+                  width={200}
+                  height={240}
+                  className="dignitary-photo"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div className="dignitary-flag-badge" title={lang === 'hi' ? 'भारत का राष्ट्रीय ध्वज' : 'National Flag of India'}>
+                  <IndianFlagIcon width={20} height={14} />
+                  <span style={{ fontSize: '10px', fontWeight: 600, color: '#111' }}>भारत</span>
+                </div>
+              </div>
+
+              <div className="dignitary-content">
+                <div className="dignitary-motto">
+                  <IndianFlagIcon width={16} height={11} />
+                  <span>{lang === 'hi' ? 'सहकार से समृद्धि' : 'Sahakar Se Samriddhi'}</span>
+                </div>
+
+                <blockquote className="dignitary-quote">
+                  {lang === 'hi'
+                    ? '“सहकारिता केवल एक व्यवसाय मॉडल नहीं है, यह भारत के करोड़ों कामगारों के स्वावलंबन और आर्थिक लोकतंत्र का सबसे सशक्त माध्यम है। सहकार कनेक्ट के माध्यम से प्रत्येक श्रमयोगी को उसका उचित 88% प्रत्यक्ष पारिश्रमिक और सामाजिक सुरक्षा कवच सुनिश्चित हो रहा है।”'
+                    : '“The cooperative movement is the foundation of economic democracy and self-reliance in India. By organizing urban tradesmen into democratic cooperatives with guaranteed 88% direct payouts and statutory welfare, SahakarConnect realizes the vision of Sahakar Se Samriddhi — empowering every tradesman with ownership and national dignity.”'}
+                </blockquote>
+
+                <div className="d-flex align-items-center justify-content-between flex-wrap gap-3 mt-3">
+                  <div>
+                    <div className="dignitary-name">
+                      {lang === 'hi' ? 'श्री नरेन्द्र मोदी' : 'Shri Narendra Modi'}
+                    </div>
+                    <div className="dignitary-title">
+                      {lang === 'hi' ? 'माननीय प्रधानमंत्री, भारत' : "Hon'ble Prime Minister of India"}
+                    </div>
+                  </div>
+
+                  <div className="d-flex align-items-center gap-2 p-2 rounded border bg-light">
+                    <img
+                      src="/images/flag-of-india.svg"
+                      alt="Flag of India"
+                      width="38"
+                      height="25"
+                      loading="lazy"
+                      decoding="async"
+                      style={{
+                        borderRadius: '3px',
+                        boxShadow: '0 1px 2px rgba(0,0,0,0.15)',
+                        border: '1px solid rgba(0,0,0,0.1)',
+                      }}
+                    />
+                    <div style={{ fontSize: '11px', lineHeight: 1.25 }}>
+                      <div className="fw-semibold text-dark">{lang === 'hi' ? 'भारत सरकार' : 'Government of India'}</div>
+                      <div className="text-muted">{lang === 'hi' ? 'सहकारिता मंत्रालय' : 'Ministry of Cooperation'}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ================= 2. CALCULATOR ================= */}
       <section className="section" id="calculator">
@@ -619,10 +748,22 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 <strong>Guidelines for Indian Government Websites (GIGW 3.0)</strong> and WCAG 2.1 Level AA accessibility
                 criteria.
               </p>
-              <div className="tags">
+              <div className="tags align-items-center">
+                <span className="badge badge-neutral d-inline-flex align-items-center gap-1">
+                  <IndianFlagIcon width={16} height={11} />
+                  <span>Republic of India</span>
+                </span>
                 <span className="badge badge-neutral">MSCS Act 2023 Sec. 63</span>
                 <span className="badge badge-neutral">NCCT certified syllabus</span>
                 <span className="badge badge-neutral">GIGW 3.0 accessible</span>
+                <button
+                  type="button"
+                  className="btn btn-sm btn-ghost ms-md-auto"
+                  onClick={() => setSkeletonPreviewMode(skeletonPreviewMode === 'none' ? 'portal' : 'none')}
+                  style={{ fontSize: '11px', padding: '2px 8px' }}
+                >
+                  {skeletonPreviewMode === 'none' ? 'Test Skeleton Loading Screen' : 'Exit Skeleton Preview'}
+                </button>
               </div>
             </div>
           </div>

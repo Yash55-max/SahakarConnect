@@ -11,6 +11,7 @@ import {
   CarpentryIcon,
   ApplianceIcon,
   ChevronDownIcon,
+  IndianFlagIcon,
 } from './Icons';
 
 interface HeaderProps {
@@ -96,7 +97,10 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="container topbar-row">
           <div className="topbar-left">
             <span className="topbar-badge">GIGW 3.0 / WCAG 2.1 AA</span>
-            <span>Government of India | भारत सरकार</span>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+              <IndianFlagIcon width={18} height={12} />
+              <span>Government of India | भारत सरकार</span>
+            </span>
           </div>
 
           <div className="topbar-right">

@@ -15,6 +15,7 @@ import {
   StarIcon,
   ClockIcon,
 } from '../../../components/common/Icons';
+import { ServiceCatalogSkeleton } from '../../../components/common/Skeleton';
 
 interface TradeServicePortalProps {
   portalId: 'plumbing' | 'electrical' | 'carpentry' | 'appliances';
@@ -33,6 +34,7 @@ export const TradeServicePortal: React.FC<TradeServicePortalProps> = ({
   const [selectedPackage, setSelectedPackage] = useState<ServicePackage | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [activeBooking, setActiveBooking] = useState<any | null>(null);
+  const [isSwitchingTrade, setIsSwitchingTrade] = useState<boolean>(false);
 
 
   // Fetch consumer's bookings
@@ -83,6 +85,15 @@ export const TradeServicePortal: React.FC<TradeServicePortalProps> = ({
     { id: 'appliances', label: lang === 'hi' ? 'उपकरण पोर्टल' : 'Appliance Portal', Icon: ApplianceIcon },
   ];
 
+  const handleTradeNavClick = (newId: 'plumbing' | 'electrical' | 'carpentry' | 'appliances') => {
+    if (newId === portalId) return;
+    setIsSwitchingTrade(true);
+    setTimeout(() => {
+      onSwitchPortal(newId);
+      setIsSwitchingTrade(false);
+    }, 180);
+  };
+
   return (
     <div className="service-portal-wrapper">
       {/* 1. Quick Trade Switcher Strip */}
@@ -102,7 +113,7 @@ export const TradeServicePortal: React.FC<TradeServicePortalProps> = ({
                   className={`btn d-inline-flex align-items-center gap-1 ${
                     isCurrent ? 'btn-primary' : 'btn-outline-secondary'
                   }`}
-                  onClick={() => onSwitchPortal(pNav.id)}
+                  onClick={() => handleTradeNavClick(pNav.id)}
                 >
                   <NavIcon size={14} />
                   <span>{pNav.label}</span>
@@ -122,8 +133,12 @@ export const TradeServicePortal: React.FC<TradeServicePortalProps> = ({
         </div>
       </div>
 
-      {/* 2. Dedicated Portal Hero Header */}
-      <div className="card shadow-sm border mb-4 bg-white overflow-hidden" style={{ borderLeft: `6px solid ${portal.accentColor}` }}>
+      {isSwitchingTrade ? (
+        <ServiceCatalogSkeleton />
+      ) : (
+        <>
+          {/* 2. Dedicated Portal Hero Header */}
+          <div className="card shadow-sm border mb-4 bg-white overflow-hidden" style={{ borderLeft: `6px solid ${portal.accentColor}` }}>
         <div className="card-body p-4 p-md-5">
           <div className="row align-items-center g-4">
             <div className="col-12 col-lg-8">
@@ -320,6 +335,8 @@ export const TradeServicePortal: React.FC<TradeServicePortalProps> = ({
           ))}
         </div>
       </div>
+      </>
+      )}
 
       {/* 6. Booking Modal */}
       {isModalOpen && selectedPackage && (

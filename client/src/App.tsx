@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
-import LegalModal, { LegalDocType } from './components/common/LegalModal';
+import type { LegalDocType } from './components/common/LegalModal';
 import { SocketProvider, useSocket } from './context/SocketContext';
-import ServiceCatalog from './pages/consumer/ServiceCatalog';
-import ProviderDashboard from './pages/provider/ProviderDashboard';
-import AdminHub from './pages/admin/AdminHub';
 import LandingPage from './pages/landing/LandingPage';
+import { PortalSkeleton } from './components/common/Skeleton';
+
+// Lazy load portal views and modals for performance & smooth skeleton transitions
+const ServiceCatalog = lazy(() => import('./pages/consumer/ServiceCatalog'));
+const ProviderDashboard = lazy(() => import('./pages/provider/ProviderDashboard'));
+const AdminHub = lazy(() => import('./pages/admin/AdminHub'));
+const LegalModal = lazy(() => import('./components/common/LegalModal'));
 import {
   ConsumerIcon,
   ProviderIcon,
@@ -296,25 +300,27 @@ export const AppContent: React.FC = () => {
             />
           )}
 
-          {isConsumerView && (
-            <ServiceCatalog
-              initialTrade={
-                activeNav === 'portal:electrical'
-                  ? 'electrical'
-                  : activeNav === 'portal:carpentry'
-                  ? 'carpentry'
-                  : activeNav === 'portal:appliances'
-                  ? 'appliances'
-                  : 'plumbing'
-              }
-              lang={lang}
-              onSelectTrade={(trade) => setActiveNav(`portal:${trade}`)}
-            />
-          )}
+          <Suspense fallback={<PortalSkeleton title={getPortalTitle(activeNav)} />}>
+            {isConsumerView && (
+              <ServiceCatalog
+                initialTrade={
+                  activeNav === 'portal:electrical'
+                    ? 'electrical'
+                    : activeNav === 'portal:carpentry'
+                    ? 'carpentry'
+                    : activeNav === 'portal:appliances'
+                    ? 'appliances'
+                    : 'plumbing'
+                }
+                lang={lang}
+                onSelectTrade={(trade) => setActiveNav(`portal:${trade}`)}
+              />
+            )}
 
-          {activeNav === 'provider' && <ProviderDashboard />}
+            {activeNav === 'provider' && <ProviderDashboard />}
 
-          {(activeNav === 'coop_admin' || activeNav === 'regulator') && <AdminHub />}
+            {(activeNav === 'coop_admin' || activeNav === 'regulator') && <AdminHub />}
+          </Suspense>
 
         </div>
       </main>
@@ -324,11 +330,13 @@ export const AppContent: React.FC = () => {
 
       {/* Statutory & Legal Policy Modal */}
       {activeLegalDoc && (
-        <LegalModal
-          docId={activeLegalDoc}
-          onClose={() => setActiveLegalDoc(null)}
-          lang={lang}
-        />
+        <Suspense fallback={null}>
+          <LegalModal
+            docId={activeLegalDoc}
+            onClose={() => setActiveLegalDoc(null)}
+            lang={lang}
+          />
+        </Suspense>
       )}
     </div>
   );
