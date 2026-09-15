@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import {
-  ConsumerIcon,
-  ProviderIcon,
-  AdminIcon,
-  RegulatorIcon,
   ScaleIcon,
   ShieldCheckIcon,
-  CheckIcon,
   MapPinIcon,
   LockIcon,
   VoteIcon,
@@ -17,6 +12,11 @@ import {
   ApplianceIcon,
   StarIcon,
   IndianFlagIcon,
+  SearchIcon,
+  ChevronRightIcon,
+  FingerprintIcon,
+  InfoIcon,
+  QrCodeIcon,
 } from '../../components/common/Icons';
 import { ImageWithSkeleton, PortalSkeleton, ServiceCatalogSkeleton } from '../../components/common/Skeleton';
 
@@ -32,6 +32,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   backendHealth: _backendHealth,
 }) => {
   const [calcAmount, setCalcAmount] = useState<number>(1200);
+  const [heroSearch, setHeroSearch] = useState<string>('');
   const [skeletonPreviewMode, setSkeletonPreviewMode] = useState<'none' | 'portal' | 'catalog'>('none');
 
   // Compute statutory 88 / 8 / 4 split with MSCS Act 2023 rounding invariant
@@ -45,169 +46,140 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   const formatINR = (val: number) =>
     new Intl.NumberFormat('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(val);
 
-  const tradePortals = [
+  const handleHeroSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!heroSearch.trim()) return;
+    const q = heroSearch.toLowerCase();
+    if (q.includes('plumb') || q.includes('pipe') || q.includes('leak') || q.includes('drain')) {
+      onSelectPortal('portal:plumbing');
+    } else if (q.includes('elect') || q.includes('wire') || q.includes('mcb') || q.includes('light')) {
+      onSelectPortal('portal:electrical');
+    } else if (q.includes('carp') || q.includes('wood') || q.includes('door') || q.includes('lock')) {
+      onSelectPortal('portal:carpentry');
+    } else if (q.includes('appl') || q.includes('ac') || q.includes('fridge') || q.includes('wash')) {
+      onSelectPortal('portal:appliances');
+    } else {
+      onSelectPortal('consumer');
+    }
+  };
+
+  // Popular Services Grid (matching the UIDAI myAadhaar Card Grid)
+  const popularServices = [
     {
       id: 'portal:plumbing',
-      title: lang === 'hi' ? 'नलसाजी एवं स्वच्छता पोर्टल' : 'Plumbing & Sanitary Works Portal',
+      title: lang === 'hi' ? 'नलसाजी एवं स्वच्छता अभियांत्रिकी' : 'Plumbing & Sanitary Engineering',
       society: 'Delhi Urban Plumbing & Sanitary PSCS',
-      code: 'PSCS-DEL-PLUMB-01',
+      code: 'BIS 12183',
       icon: PlumbingIcon,
+      price: '₹250',
       quality: '4.88',
-      tradesmen: '42 verified',
-      baseline: '₹250',
-      description:
-        lang === 'hi'
-          ? 'पाइपलाइन लीकेज, ड्रेन सफाई, सेनेटरी फिटिंग और जल आपूर्ति प्रणाली की वैधानिक मरम्मत।'
-          : 'Statutory sanitary engineering — high-pressure leak resolution, hydro-jet drain unblocking, and RO/tank installations.',
-      scope: [
-        'High-pressure leak diagnosis',
-        'Hydro-jet drain unblocking',
-        'Sanitary ware fitting (BIS 12183)',
-        'Overhead tank valve overhaul',
-      ],
-      cta: lang === 'hi' ? 'नलसाजी पोर्टल खोलें' : 'Enter plumbing portal',
+      desc: lang === 'hi'
+        ? 'पाइपलाइन रिसाव, ड्रेन ब्लॉकेज एवं वॉटर टैंक वाल्व की वैधानिक मरम्मत।'
+        : 'High-pressure pipe leak resolution, hydro-jet drain unblocking, and RO/tank overhaul.',
     },
     {
       id: 'portal:electrical',
-      title: lang === 'hi' ? 'विद्युत एवं वायरमैन पोर्टल' : 'Electrical & Wiremen Portal',
+      title: lang === 'hi' ? 'विद्युत एवं वायरमैन सेवाएं' : 'Electrical & Certified Wiremen',
       society: 'Delhi Certified Wiremen & Electricians PSCS',
-      code: 'PSCS-DEL-ELEC-02',
+      code: 'CEA / IS 732',
       icon: ElectricalIcon,
+      price: '₹200',
       quality: '4.92',
-      tradesmen: '38 verified',
-      baseline: '₹200',
-      description:
-        lang === 'hi'
-          ? 'एमसीबी ट्रिपिंग, वायरिंग रीकंडीशनिंग, अर्थिंग परीक्षण और प्रमाणित वायरमैन द्वारा सुरक्षा ऑडिट।'
-          : 'CEA-certified wiremen for circuit load balancing, MCB trip analysis, earthing resistance audits, and surge protection.',
-      scope: [
-        'Circuit breaker & MCB diagnostics',
-        'Complete rewiring & conduiting',
-        'Earthing resistance verification',
-        'Inverter & UPS panel wiring',
-      ],
-      cta: lang === 'hi' ? 'विद्युत पोर्टल खोलें' : 'Enter electrical portal',
+      desc: lang === 'hi'
+        ? 'एमसीबी ट्रिपिंग, वायरिंग रीकंडीशनिंग, अर्थिंग और सर्ज प्रोटेक्शन ऑडिट।'
+        : 'CEA-certified wiremen for circuit load balancing, MCB trip analysis, and earthing audits.',
     },
     {
       id: 'portal:carpentry',
-      title: lang === 'hi' ? 'काष्ठशिल्प एवं बढ़ईगीरी पोर्टल' : 'Woodcraft & Carpentry Portal',
+      title: lang === 'hi' ? 'काष्ठशिल्प एवं मॉड्यूलर फर्नीचर' : 'Woodcraft & Modular Carpentry',
       society: 'Indraprastha Woodcraft Artisans PSCS',
-      code: 'PSCS-DEL-CARP-03',
+      code: 'BIS IS 2202',
       icon: CarpentryIcon,
+      price: '₹300',
       quality: '4.85',
-      tradesmen: '29 verified',
-      baseline: '₹300',
-      description:
-        lang === 'hi'
-          ? 'दरवाजे, खिड़कियां, मॉड्यूलर फर्नीचर संरेखण, ताला प्रतिष्ठापन और कस्टम काष्ठशिल्प सेवाएं।'
-          : 'Certified joiners and carpenters for moisture-tested hardwood repairs, acoustic door alignment, modular cabinetry, and mortise locks.',
-      scope: [
-        'Flush door & acoustic planing',
-        'Modular cabinet hinge overhaul',
-        'High-security mortise lock fitting',
-        'Structural timber reinforcement',
-      ],
-      cta: lang === 'hi' ? 'बढ़ईगीरी पोर्टल खोलें' : 'Enter carpentry portal',
+      desc: lang === 'hi'
+        ? 'दरवाजे, कब्जे, खिड़की संरेखण, मॉड्यूलर कैबिनेटरी और मोर्टिज़ ताले।'
+        : 'Flush door alignment, acoustic planing, modular cabinet overhaul, and mortise locks.',
     },
     {
       id: 'portal:appliances',
-      title: lang === 'hi' ? 'उपकरण मरम्मत सहकारी पोर्टल' : 'Appliance Repair Cooperative',
+      title: lang === 'hi' ? 'घरेलू उपकरण मरम्मत' : 'Home Appliance Repair Cooperative',
       society: 'Capital Electro-Mechanical & Appliances PSCS',
-      code: 'PSCS-DEL-APPL-04',
+      code: 'BEE Star / MoEFCC',
       icon: ApplianceIcon,
+      price: '₹350',
       quality: '4.81',
-      tradesmen: '35 verified',
-      baseline: '₹350',
-      description:
-        lang === 'hi'
-          ? 'एसी गैस रीफिलिंग, इन्वर्टर रेफ्रिजरेटर, फ्रंट-लोड वॉशिंग मशीन और माइक्रोवेव ओवन की मरम्मत।'
-          : 'MoEFCC-compliant certified technicians for inverter compressor repair, sealed R-32 refrigerant recovery, and washing machine drum balancing.',
-      scope: [
-        'Inverter AC sealed system servicing',
-        'Frost-free fridge PCB defrosting',
-        'Front-load washing machine damping',
-        'Microwave magnetron calibration',
-      ],
-      cta: lang === 'hi' ? 'उपकरण पोर्टल खोलें' : 'Enter appliance portal',
+      desc: lang === 'hi'
+        ? 'इन्वर्टर एसी सीलबंद गैस रिकवरी, रेफ्रिजरेटर पीसीबी और वॉशिंग मशीन डैम्पिंग।'
+        : 'MoEFCC-compliant certified technicians for inverter compressor repair and sealed gas servicing.',
+    },
+    {
+      id: 'portal:electrical',
+      title: lang === 'hi' ? 'रूफटॉप सोलर एवं हरित ऊर्जा' : 'Rooftop Solar & Renewable Energy',
+      society: 'Clean Energy Technicians Cooperative',
+      code: 'MNRE / BIS',
+      icon: ElectricalIcon,
+      price: '₹499',
+      quality: '4.94',
+      desc: lang === 'hi'
+        ? 'रूफटॉप सोलर पैनल इंस्टालेशन, इन्वर्टर ग्रिड सिंक्रोनाइज़ेशन व ऑडिट।'
+        : 'MNRE-certified technicians for solar rooftop inspection, panel wiring, and net-metering setup.',
+    },
+    {
+      id: 'portal:plumbing',
+      title: lang === 'hi' ? 'आपातकालीन रिसाव एवं जल संरक्षण' : 'Emergency Leakage & Water Safety',
+      society: 'Delhi Urban Rapid Response PSCS',
+      code: 'Urgent Dispatch',
+      icon: PlumbingIcon,
+      price: '₹299',
+      quality: '4.90',
+      desc: lang === 'hi'
+        ? 'अतिशीघ्र स्थानिक प्रेषण (H3 स्थानिक ग्रिड), मुख्य वॉल्व एवं सीवेज राहत।'
+        : 'Instant Uber H3 spatial dispatch within ~460m hexagonal radius for emergency domestic floods.',
     },
   ];
 
-  const roleGateways = [
+  // 4 Persona Carousel Cards with Authentic Photography
+  const personaCards = [
     {
       id: 'consumer',
-      title: lang === 'hi' ? 'नागरिक सेवा पोर्टल' : 'Citizen consumer portal',
-      sub: 'Statutory rate schedules & certified technicians',
-      badge: 'Consumer',
-      badgeClass: 'badge-primary',
-      icon: ConsumerIcon,
-      desc:
-        lang === 'hi'
-          ? 'सत्यापित सहकारी तकनीशियनों से सेवाएं प्राप्त करें। 4-अंकीय पिन सत्यापन के बाद ही राशि विमुक्त की जाती है।'
-          : 'Book certified plumbers, electricians, carpenters and appliance mechanics. Payment is held in statutory escrow until you verify completion with your 4-digit PIN.',
-      features: [
-        'Instant H3 spatial matching to the nearest tradesman',
-        'NSQF level 3–5 skill-certified tradesmen only',
-        'Transparent tripartite price breakdown before booking',
-        '4-digit PIN, zero-risk escrow release',
-      ],
-      cta: lang === 'hi' ? 'नागरिक पोर्टल खोलें' : 'Book a certified service',
+      image: '/images/citizen-family.jpg',
+      badge: lang === 'hi' ? 'नागरिक व परिवार' : 'Household & Citizens',
+      title: lang === 'hi' ? 'निष्पक्ष-व्यापार नागरिक सेवाएं' : 'Fair-Trade Citizen Services',
+      desc: lang === 'hi'
+        ? 'सत्यापित सहकारी तकनीशियनों से पारदर्शी सेवाएं। 4-अंकीय पिन सत्यापन के बाद ही एस्क्रो राशि विमुक्त होती है।'
+        : 'Book certified plumbers, electricians, and mechanics. Funds stay in statutory escrow until you release them with your 4-digit PIN.',
+      cta: lang === 'hi' ? 'नागरिक पोर्टल खोलें' : 'Enter Citizen Portal',
     },
     {
       id: 'provider',
-      title: lang === 'hi' ? 'श्रमयोगी सदस्य कार्यक्षेत्र' : 'Cooperative provider workplace',
-      sub: '88% guaranteed take-home & welfare safety net',
-      badge: 'Tradesman',
-      badgeClass: 'badge-success',
-      icon: ProviderIcon,
-      desc:
-        lang === 'hi'
-          ? 'मध्यस्थों के कमीशन से मुक्त कार्यक्षेत्र। वास्तविक समय में कार्य सूचनाएं, त्वरित बैंक अंतरण और कल्याण निधि सुरक्षा।'
-          : 'Zero intermediary exploitation. Receive real-time local job alerts, instant payout release upon customer PIN entry, and statutory welfare contributions.',
-      features: [
-        'Real-time duty availability toggle',
-        'Guaranteed 88% direct payout, no deductions',
-        'Statutory healthcare & welfare accumulation',
-        'Class-A democratic voting membership',
-      ],
-      cta: lang === 'hi' ? 'श्रमयोगी कार्यक्षेत्र खोलें' : 'Open tradesman workplace',
+      image: '/images/artisan-worker.jpg',
+      badge: lang === 'hi' ? 'प्रमाणित श्रमयोगी' : 'Skilled Tradespeople',
+      title: lang === 'hi' ? 'शून्य-कमीशन श्रमयोगी कार्यक्षेत्र' : '0% Commission Workplace',
+      desc: lang === 'hi'
+        ? 'निजी बिचौलियों के कमीशन से मुक्त कार्यक्षेत्र। 88% प्रत्यक्ष दैनिक बैंक अंतरण, कल्याण निधि एवं सहकारी मताधिकार।'
+        : 'Zero intermediary commission. Guaranteed 88% direct pay, 8% healthcare & pension welfare, and Class-A democratic voting shares.',
+      cta: lang === 'hi' ? 'श्रमयोगी पोर्टल खोलें' : 'Enter Provider Portal',
     },
     {
       id: 'coop_admin',
-      title: lang === 'hi' ? 'समिति प्रशासनिक केंद्र' : 'Cooperative society admin',
-      sub: 'e-KYC verification & double-entry ledger',
-      badge: 'Society admin',
-      badgeClass: 'badge-neutral',
-      icon: AdminIcon,
-      desc:
-        lang === 'hi'
-          ? 'प्राथमिक सेवा सहकारी समिति (PSCS) का सम्पूर्ण संचालन। सदस्यों का आधार सत्यापन और बही-खाता प्रबंधन।'
-          : 'Complete operational cockpit for Primary Service Cooperative Societies. Manage tradesmen e-KYC queues, audit tripartite ledger entries, and administer governance.',
-      features: [
-        'Tradesmen Aadhaar & police clearance e-KYC',
-        'Double-entry, zero-leakage ledger inspector',
-        'Statutory reserve fund balance tracking',
-        'One-click statutory CSV export for audits',
-      ],
-      cta: lang === 'hi' ? 'समिति प्रशासन खोलें' : 'Manage society operations',
+      image: '/images/coop-leaders.jpg',
+      badge: lang === 'hi' ? 'सहकारी समितियां एवं पैक्स' : 'Cooperative Societies & PACS',
+      title: lang === 'hi' ? 'समिति प्रशासनिक केंद्र' : 'Society Administration Hub',
+      desc: lang === 'hi'
+        ? 'प्राथमिक सेवा सहकारी समिति (PSCS) का सम्पूर्ण संचालन। सदस्यों का आधार सत्यापन, डिजिटल उप-नियम और बही-खाता।'
+        : 'Operational hub for Primary Service Cooperatives. Manage tradesmen e-KYC queues, audit tripartite ledgers, and manage governance.',
+      cta: lang === 'hi' ? 'समिति प्रशासन खोलें' : 'Enter Society Admin',
     },
     {
       id: 'regulator',
-      title: lang === 'hi' ? 'सहकारिता विनियामक निरीक्षण' : 'Central / state regulator',
-      sub: 'Ministry of Cooperation compliance oversight',
-      badge: 'Regulator',
-      badgeClass: 'badge-neutral',
-      icon: RegulatorIcon,
-      desc:
-        lang === 'hi'
-          ? 'सहकारिता मंत्रालय एवं राज्य रजिस्ट्रार कार्यालय के लिए निगरानी टर्मिनल। वैधानिक अनुपालन सुनिश्चित करें।'
-          : 'Supervisory oversight terminal for the Ministry of Cooperation and State Cooperative Registrars. Audit solvency, reserve ratios, and welfare disbursements.',
-      features: [
-        'Multi-district society audit trails',
-        'Statutory 25% reserve ratio verification',
-        'Mathematical ledger invariant validation',
-        'Real-time compliance monitoring under MSCS Act',
-      ],
-      cta: lang === 'hi' ? 'विनियामक टर्मिनल खोलें' : 'Access regulatory terminal',
+      image: null, // Renders Ashoka Emblem & State Crest
+      badge: lang === 'hi' ? 'केंद्रीय व राज्य विनियामक' : 'Central & State Regulators',
+      title: lang === 'hi' ? 'सहकारिता विनियामक निरीक्षण' : 'Regulatory Oversight Terminal',
+      desc: lang === 'hi'
+        ? 'सहकारिता मंत्रालय एवं राज्य रजिस्ट्रार कार्यालय के लिए निगरानी टर्मिनल। 15% आरक्षित निधि एवं साल्वेंसी ऑडिट।'
+        : 'Supervisory oversight terminal for the Ministry of Cooperation. Audit statutory solvency, reserve ratios, and welfare disbursements.',
+      cta: lang === 'hi' ? 'विनियामक टर्मिनल खोलें' : 'Enter Regulator Hub',
     },
   ];
 
@@ -215,39 +187,35 @@ export const LandingPage: React.FC<LandingPageProps> = ({
     {
       icon: MapPinIcon,
       title: lang === 'hi' ? 'उबर एच3 स्थानिक प्रेषण' : 'Uber H3 spatial dispatch',
-      desc:
-        lang === 'hi'
-          ? 'रिज़ॉल्यूशन-8 हेक्सागोनल ग्रिड के माध्यम से निकटतम उपलब्ध एवं प्रमाणित श्रमयोगियों का सेकंडों में चयन।'
-          : 'Resolution-8 hexagonal indexing finds and dispatches the closest active, certified tradesman within ~460m grid disks in seconds.',
+      desc: lang === 'hi'
+        ? 'रिज़ॉल्यूशन-8 हेक्सागोनल ग्रिड के माध्यम से निकटतम उपलब्ध एवं प्रमाणित श्रमयोगियों का सेकंडों में चयन।'
+        : 'Resolution-8 hexagonal indexing finds and dispatches the closest active, certified tradesman within ~460m grid disks in seconds.',
     },
     {
       icon: LockIcon,
       title: lang === 'hi' ? '4-अंकीय पिन एस्क्रो संरक्षण' : 'Atomic 4-digit PIN escrow',
-      desc:
-        lang === 'hi'
-          ? 'सेवा पूर्ण होने पर नागरिक द्वारा दिया गया 4-अंकीय पिन दर्ज करने के बाद ही राशि का परमाणु विभाजन और अंतरण।'
-          : 'Citizen funds remain locked in escrow until the customer personally shares their 4-digit PIN upon inspecting the completed work.',
+      desc: lang === 'hi'
+        ? 'सेवा पूर्ण होने पर नागरिक द्वारा दिया गया 4-अंकीय पिन दर्ज करने के बाद ही राशि का परमाणु विभाजन और अंतरण।'
+        : 'Citizen funds remain locked in escrow until the customer personally shares their 4-digit PIN upon inspecting the completed work.',
     },
     {
       icon: VoteIcon,
       title: lang === 'hi' ? 'लोकतांत्रिक कोरम व मतदान' : 'Democratic quorum & governance',
-      desc:
-        lang === 'hi'
-          ? 'एक-सदस्य एक-मत के सिद्धांत पर सांविधिक प्रस्तावों, टूल सब्सिडी और कल्याणकारी योजनाओं पर सीधा मतदान।'
-          : 'Statutory one-member-one-vote resolutions. Class-A voting members approve equipment grants, dividend distributions, and welfare policies.',
+      desc: lang === 'hi'
+        ? 'एक-सदस्य एक-मत के सिद्धांत पर सांविधिक प्रस्तावों, टूल सब्सिडी और कल्याणकारी योजनाओं पर सीधा मतदान।'
+        : 'Statutory one-member-one-vote resolutions. Class-A voting members approve equipment grants, dividend distributions, and welfare policies.',
     },
     {
       icon: ScaleIcon,
       title: lang === 'hi' ? 'शून्य-रिसाव द्वि-प्रविष्टि बही' : 'Deterministic zero-leakage ledger',
-      desc:
-        lang === 'hi'
-          ? 'प्रत्येक पैसे का पारदर्शी हिसाब। राउंडिंग की शेष राशि श्रमिक के पक्ष में जोड़कर सांविधिक समानता सुनिश्चित।'
-          : 'Double-entry accounting guarantees Worker (88%) + Welfare (8%) + Platform (4%) = gross amount, with zero rounding leakage.',
+      desc: lang === 'hi'
+        ? 'प्रत्येक पैसे का पारदर्शी हिसाब। राउंडिंग की शेष राशि श्रमिक के पक्ष में जोड़कर सांविधिक समानता सुनिश्चित।'
+        : 'Double-entry accounting guarantees Worker (88%) + Welfare (8%) + Platform (4%) = gross amount, with zero rounding leakage.',
     },
   ];
 
   return (
-    <div className="landing-page-wrapper">
+    <div className="myaadhaar-page">
       {/* ================= SKELETON PREVIEW BANNER IF ACTIVE ================= */}
       {skeletonPreviewMode !== 'none' && (
         <div className="container pt-3">
@@ -287,7 +255,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         </div>
       )}
 
-      {/* Render selected skeleton screen if in preview mode */}
       {skeletonPreviewMode === 'portal' && (
         <div className="container py-4">
           <PortalSkeleton title="Previewing Portal Loading State" />
@@ -300,107 +267,322 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         </div>
       )}
 
-      {/* ================= 1. HERO ================= */}
-      <div className="container hero-wrap" style={{ paddingTop: 'var(--ux4g-sp-6)' }}>
-        <section className="hero">
-          <div className="hero-tags">
-            <span className="badge badge-primary d-inline-flex align-items-center gap-2">
-              <IndianFlagIcon width={16} height={11} />
-              <span>{lang === 'hi' ? 'सहकारिता मंत्रालय | भारत सरकार' : 'Ministry of Cooperation | Govt of India'}</span>
-            </span>
-            <span className="badge badge-neutral">MSCS Act 2023</span>
-            <span className="badge badge-success d-inline-flex align-items-center gap-1">
-              <span>{lang === 'hi' ? 'सहकार से समृद्धि' : 'Sahakar Se Samriddhi'}</span>
-            </span>
+      {/* ==========================================================================
+          1. HERO SECTION (UIDAI myAadhaar Layout: Left Hero Search + Right 3-Card Stack)
+          ========================================================================== */}
+      <section className="container">
+        <div className="myaadhaar-hero-grid">
+          {/* Left Column: Heading, Search Pill, 4 Circular Quick Action Buttons */}
+          <div className="myaadhaar-hero-left">
+            <div className="myaadhaar-hero-heading">
+              <span className="myaadhaar-hero-welcome">
+                {lang === 'hi' ? 'सहकार कनेक्ट में आपका स्वागत है' : 'Welcome to SahakarConnect'}
+              </span>
+              <span className="myaadhaar-hero-question">
+                {lang === 'hi' ? 'आज आप क्या सेवा प्राप्त करना चाहते हैं?' : 'What do you want to do today?'}
+              </span>
+            </div>
+
+            {/* Rounded Search Pill */}
+            <form onSubmit={handleHeroSearch} className="myaadhaar-search-pill" role="search">
+              <input
+                type="text"
+                placeholder={
+                  lang === 'hi'
+                    ? 'सेवा, सहकारी समिति, या कौशल दर्ज करें (उदा. विद्युत, नलसाजी, काष्ठशिल्प)...'
+                    : 'Enter service, cooperative PACS, or trade skill (e.g. Electrical, Plumbing, Solar)...'
+                }
+                value={heroSearch}
+                onChange={(e) => setHeroSearch(e.target.value)}
+                aria-label="Search cooperative services"
+              />
+              <button type="submit" className="search-action-btn" aria-label="Search">
+                <SearchIcon size={18} color="#ffffff" />
+              </button>
+            </form>
+
+            {/* 4 Circular Action Buttons (Matching Screenshot 1) */}
+            <div className="myaadhaar-quick-circles">
+              <button
+                type="button"
+                className="myaadhaar-circle-item"
+                onClick={() => onSelectPortal('portal:plumbing')}
+                title={lang === 'hi' ? 'नलसाजी सेवा' : 'Plumbing Works'}
+              >
+                <div className="myaadhaar-circle-btn">
+                  <PlumbingIcon size={28} />
+                </div>
+                <span className="myaadhaar-circle-label">{lang === 'hi' ? 'नलसाजी' : 'Plumbing'}</span>
+              </button>
+
+              <button
+                type="button"
+                className="myaadhaar-circle-item"
+                onClick={() => onSelectPortal('portal:electrical')}
+                title={lang === 'hi' ? 'विद्युत सेवा' : 'Electrical Works'}
+              >
+                <div className="myaadhaar-circle-btn">
+                  <ElectricalIcon size={28} />
+                </div>
+                <span className="myaadhaar-circle-label">{lang === 'hi' ? 'विद्युत' : 'Electrical'}</span>
+              </button>
+
+              <button
+                type="button"
+                className="myaadhaar-circle-item"
+                onClick={() => onSelectPortal('portal:carpentry')}
+                title={lang === 'hi' ? 'काष्ठशिल्प सेवा' : 'Carpentry Works'}
+              >
+                <div className="myaadhaar-circle-btn">
+                  <CarpentryIcon size={28} />
+                </div>
+                <span className="myaadhaar-circle-label">{lang === 'hi' ? 'काष्ठशिल्प' : 'Carpentry'}</span>
+              </button>
+
+              <button
+                type="button"
+                className="myaadhaar-circle-item"
+                onClick={() => onSelectPortal('portal:appliances')}
+                title={lang === 'hi' ? 'उपकरण सेवा' : 'Appliance Repair'}
+              >
+                <div className="myaadhaar-circle-btn">
+                  <ApplianceIcon size={28} />
+                </div>
+                <span className="myaadhaar-circle-label">{lang === 'hi' ? 'उपकरण' : 'Appliances'}</span>
+              </button>
+            </div>
+
+            {/* Statutory Guarantee Badge */}
+            <div style={{ marginTop: '28px', display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+              <div className="badge badge-primary d-inline-flex align-items-center gap-2" style={{ padding: '6px 12px' }}>
+                <IndianFlagIcon width={16} height={11} />
+                <span>{lang === 'hi' ? 'सहकारिता मंत्रालय | भारत सरकार' : 'Ministry of Cooperation | Govt of India'}</span>
+              </div>
+              <div className="badge badge-success d-inline-flex align-items-center gap-1" style={{ padding: '6px 12px' }}>
+                <ShieldCheckIcon size={14} color="#128937" />
+                <span>{lang === 'hi' ? '88% प्रत्यक्ष पारिश्रमिक गारंटी' : '88% Direct Worker Pay Guaranteed'}</span>
+              </div>
+            </div>
           </div>
 
-          <h1>
-            {lang === 'hi' ? (
-              <>
-                सहकारी अवसंरचना के माध्यम से <span className="accent">श्रमयोगियों का लोकतांत्रिक सशक्तीकरण</span>
-              </>
-            ) : (
-              <>
-                Empowering urban tradesmen through{' '}
-                <span className="accent">democratic cooperative infrastructure</span>
-              </>
-            )}
-          </h1>
+          {/* Right Column: Stack of 3 Cards */}
+          <div className="myaadhaar-hero-right">
+            {/* Card 1: Login Card with Indian Tricolour Accent */}
+            <div className="myaadhaar-card-login">
+              <div className="myaadhaar-tricolour-stripe" />
+              <div className="myaadhaar-card-login-body">
+                <div className="myaadhaar-card-login-header">
+                  <div className="myaadhaar-card-login-icon">
+                    <FingerprintIcon size={24} />
+                  </div>
+                  <div>
+                    <h3 className="myaadhaar-card-login-title">
+                      {lang === 'hi' ? 'सहकार कनेक्ट पोर्टल प्रवेश' : 'Access SahakarConnect'}
+                    </h3>
+                    <div style={{ fontSize: '11px', color: '#64748b' }}>
+                      {lang === 'hi' ? 'नागरिक, श्रमयोगी या समिति' : 'Citizen, Tradesman or Society'}
+                    </div>
+                  </div>
+                </div>
 
-          <p className="lede">
-            {lang === 'hi'
-              ? 'बहु-राज्य सहकारी सोसायटी अधिनियम, 2023 के तहत स्थापित डिजिटल मंच। प्रत्येक नागरिक भुगतान का 88% प्रत्यक्ष भुगतान श्रमयोगी को, 8% सदस्य कल्याण निधि में, और 4% प्लेटफॉर्म आरक्षित निधि में बिना किसी छिपाव के अंतरित होता है।'
-              : 'A statutory digital platform under the Multi-State Co-operative Societies (MSCS) Act, 2023. Every rupee a citizen pays splits automatically: 88% direct to the tradesman, 8% into a member welfare fund, and a 4% platform reserve — with nothing held back.'}
-          </p>
+                <p className="myaadhaar-card-login-desc">
+                  {lang === 'hi'
+                    ? 'मोबाइल ओटीपी, आधार ई-केवाईसी या समिति पंजीयन संख्या से तुरंत अपने डैशबोर्ड में लॉगिन करें।'
+                    : 'Login with Mobile OTP or Society ID to book, track daily payouts, and audit transactions.'}
+                </p>
 
-          <div className="hero-actions">
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={() => onSelectPortal('consumer')}
-            >
-              <ConsumerIcon size={16} />
-              <span>{lang === 'hi' ? 'नागरिक सेवा देखें' : 'Explore citizen services'}</span>
-            </button>
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={() => onSelectPortal('provider')}
-            >
-              <ProviderIcon size={16} />
-              <span>{lang === 'hi' ? 'श्रमयोगी सदस्य पोर्टल' : 'Tradesman member portal'}</span>
-            </button>
-            <button
-              type="button"
-              className="btn btn-ghost"
-              onClick={() => onSelectPortal('coop_admin')}
-            >
-              <AdminIcon size={16} />
-              <span>{lang === 'hi' ? 'समिति प्रशासन केंद्र' : 'Society admin hub'}</span>
-            </button>
-          </div>
+                <button
+                  type="button"
+                  className="myaadhaar-card-login-action"
+                  onClick={() => onSelectPortal('consumer')}
+                >
+                  <span>{lang === 'hi' ? 'ओटीपी द्वारा लॉगिन करें' : 'Login with OTP'}</span>
+                  <ChevronRightIcon size={16} color="#ffffff" />
+                </button>
+              </div>
+            </div>
 
-          {/* Trust Row — Stated once */}
-          <div className="trust-row">
-            <div className="trust-item">
-              <ShieldCheckIcon size={18} color="var(--ux4g-green-600)" />
-              <span>GIGW 3.0 &amp; WCAG 2.1 AA compliant</span>
+            {/* Card 2: "Did you know?" Card */}
+            <div className="myaadhaar-card-dyk">
+              <div className="myaadhaar-dyk-title">
+                <InfoIcon size={18} color="#c2410c" />
+                <span>{lang === 'hi' ? 'क्या आप जानते हैं?' : 'Did you know?'}</span>
+              </div>
+              <p className="myaadhaar-dyk-content">
+                {lang === 'hi'
+                  ? 'निजी एग्रीगेटर 25-35% तक का छिपा हुआ कमीशन काटते हैं। सहकार कनेक्ट पर प्रत्येक सेवा शुल्क का 88% सीधे कामगार को और 8% कल्याण कोष में जाता है। 0% कॉर्पोरेट बिचौलिया कटौती।'
+                  : 'Every rupee paid on SahakarConnect distributes 88% directly to skilled workers and 8% to statutory welfare reserves. 0% is extracted by commercial aggregators.'}
+              </p>
+              <a
+                href="#calculator"
+                className="myaadhaar-dyk-link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                <span>{lang === 'hi' ? 'त्रिपक्षीय अर्थशास्त्र देखें →' : 'Explore Tripartite Economics →'}</span>
+              </a>
             </div>
-            <div className="trust-item">
-              <ShieldCheckIcon size={18} color="var(--ux4g-green-600)" />
-              <span>Zero intermediary commission</span>
-            </div>
-            <div className="trust-item">
-              <ShieldCheckIcon size={18} color="var(--ux4g-green-600)" />
-              <span>Direct beneficiary transfer (DBT)</span>
-            </div>
-          </div>
-        </section>
 
-        {/* Inline trust stat bar — numbers that matter, stated once */}
-        <div style={{ marginTop: 'var(--ux4g-sp-7)' }}>
-          <div className="split-bar surface">
-            <div className="split-cell">
-              <div className="num brand">88%</div>
-              <div className="label">{lang === 'hi' ? 'प्रत्यक्ष श्रमिक भुगतान' : 'Direct worker pay'}</div>
-              <div className="sub">{lang === 'hi' ? 'सांविधिक न्यूनतम गारंटी' : 'Guaranteed statutory floor'}</div>
-            </div>
-            <div className="split-cell">
-              <div className="num success">8%</div>
-              <div className="label">{lang === 'hi' ? 'कल्याण निधि' : 'Welfare fund'}</div>
-              <div className="sub">{lang === 'hi' ? 'स्वास्थ्य, पेंशन व सुरक्षा' : 'Healthcare, pension & safety'}</div>
-            </div>
-            <div className="split-cell">
-              <div className="num">4%</div>
-              <div className="label">{lang === 'hi' ? 'प्लेटफॉर्म आरक्षित निधि' : 'Platform reserve'}</div>
-              <div className="sub">{lang === 'hi' ? 'सांविधिक सीमा — शून्य छिपा कमीशन' : 'Statutory cap — zero hidden margin'}</div>
+            {/* Card 3: Mobile App Strip Card */}
+            <div className="myaadhaar-card-app">
+              <div className="myaadhaar-app-card-row">
+                <div className="myaadhaar-phone-mockup" style={{ width: '44px', height: '68px' }}>
+                  <div className="myaadhaar-phone-screen">
+                    <EmblemIcon size={14} color="#ffffff" />
+                    <div style={{ fontSize: '6px', fontWeight: 'bold' }}>App</div>
+                  </div>
+                </div>
+
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: '13px', fontWeight: 700, color: '#1e293b' }}>
+                    {lang === 'hi' ? 'सहकार ऐप डाउनलोड करें' : 'Keep SahakarConnect handy'}
+                  </div>
+                  <div style={{ fontSize: '11px', color: '#64748b', margin: '2px 0 6px' }}>
+                    {lang === 'hi' ? 'एंड्रॉइड व आईओएस के लिए उपलब्ध' : 'Available for Android & iOS'}
+                  </div>
+                  <div style={{ display: 'flex', gap: '6px' }}>
+                    <span className="badge badge-neutral" style={{ fontSize: '10px' }}>Google Play</span>
+                    <span className="badge badge-neutral" style={{ fontSize: '10px' }}>App Store</span>
+                  </div>
+                </div>
+
+                <QrCodeIcon size={36} color="#334155" />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* ================= NATIONAL LEADERSHIP & COOPERATIVE VISION ================= */}
-      <section className="section" style={{ paddingTop: 'var(--ux4g-sp-7)', paddingBottom: 'var(--ux4g-sp-4)' }}>
+      {/* ==========================================================================
+          2. FIND SERVICES RELEVANT TO YOU (PERSONA CARDS WITH AUTHENTIC PHOTOGRAPHY)
+          ========================================================================== */}
+      <section className="container myaadhaar-persona-section">
+        <div className="myaadhaar-section-header">
+          <h2>{lang === 'hi' ? 'आपके लिए प्रासंगिक सेवाएं खोजें' : 'Find Services relevant to you'}</h2>
+          <p>
+            {lang === 'hi'
+              ? 'नागरिकों, कुशल श्रमयोगियों, प्राथमिक सहकारी समितियों एवं सरकारी विनियामकों के लिए विशेष रूप से तैयार कार्यप्रवाह।'
+              : 'Tailored workflows for citizens, skilled tradesmen, primary cooperative societies, and statutory authorities.'}
+          </p>
+        </div>
+
+        <div className="myaadhaar-persona-grid">
+          {personaCards.map((p) => (
+            <div
+              key={p.id}
+              className="myaadhaar-persona-card"
+              onClick={() => onSelectPortal(p.id)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === 'Enter' && onSelectPortal(p.id)}
+            >
+              <div className="myaadhaar-persona-img-wrap">
+                {p.image ? (
+                  <img src={p.image} alt={p.title} loading="lazy" decoding="async" />
+                ) : (
+                  <div
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      background: 'linear-gradient(135deg, #24145c 0%, #4a2bc2 100%)',
+                      color: '#ffffff',
+                      flexDirection: 'column',
+                      gap: '8px',
+                    }}
+                  >
+                    <EmblemIcon size={52} color="#ffffff" />
+                    <span style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.05em' }}>
+                      MINISTRY OF COOPERATION
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              <div className="myaadhaar-persona-body">
+                <span className="myaadhaar-persona-badge">{p.badge}</span>
+                <h3 className="myaadhaar-persona-title">{p.title}</h3>
+                <p className="myaadhaar-persona-desc">{p.desc}</p>
+                <div className="myaadhaar-persona-footer">
+                  <button
+                    type="button"
+                    className="myaadhaar-circle-arrow-btn"
+                    aria-label={`Open ${p.title}`}
+                  >
+                    <ChevronRightIcon size={16} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ==========================================================================
+          3. POPULAR COOPERATIVE SERVICES (GRID MATCHING IMAGE 1)
+          ========================================================================== */}
+      <section className="container myaadhaar-popular-section" id="services">
+        <div className="myaadhaar-section-header">
+          <h2>{lang === 'hi' ? 'लोकप्रिय सहकारी सेवाएं' : 'Popular Cooperative Services'}</h2>
+          <p>
+            {lang === 'hi'
+              ? 'प्रमाणित प्राथमिक सेवा सहकारी समितियों (PSCS) द्वारा अनुमोदित दर सूची व त्वरित स्थानिक प्रेषण।'
+              : 'Direct booking from certified Primary Service Cooperative Societies with statutory rates and zero price gouging.'}
+          </p>
+        </div>
+
+        <div className="myaadhaar-popular-grid">
+          {popularServices.map((service, index) => {
+            const SIcon = service.icon;
+            return (
+              <div key={index} className="myaadhaar-service-card">
+                <div className="d-flex justify-content-between align-items-start">
+                  <div className="myaadhaar-service-icon-wrap">
+                    <SIcon size={22} />
+                  </div>
+                  <span className="badge badge-neutral" style={{ fontSize: '10px' }}>
+                    {service.code}
+                  </span>
+                </div>
+
+                <h3 className="myaadhaar-service-title">{service.title}</h3>
+                <div className="myaadhaar-service-society">{service.society}</div>
+                <p className="myaadhaar-service-desc">{service.desc}</p>
+
+                <div className="myaadhaar-service-footer">
+                  <div>
+                    <div className="myaadhaar-service-price">
+                      {service.price} <span>baseline</span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px', color: '#64748b' }}>
+                      <span>{service.quality}</span>
+                      <StarIcon size={12} color="#eab308" />
+                      <span>verified</span>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    className="myaadhaar-service-btn"
+                    onClick={() => onSelectPortal(service.id)}
+                  >
+                    {lang === 'hi' ? 'सेवा चुनें →' : 'Book Now →'}
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ==========================================================================
+          4. NATIONAL LEADERSHIP & COOPERATIVE VISION (PM NARENDRA MODI & INDIAN FLAG)
+          ========================================================================== */}
+      <section className="section" style={{ paddingTop: '24px', paddingBottom: '32px' }}>
         <div className="container">
           <div className="dignitary-section">
             <div className="tricolour-stripe" />
@@ -469,7 +651,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         </div>
       </section>
 
-      {/* ================= 2. CALCULATOR ================= */}
+      {/* ==========================================================================
+          5. TRIPARTITE TRANSPARENCY CALCULATOR
+          ========================================================================== */}
       <section className="section" id="calculator">
         <div className="container">
           <div className="surface calc-panel">
@@ -584,131 +768,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         </div>
       </section>
 
-      {/* ================= 3. DEDICATED TRADE PORTALS ================= */}
-      <section className="section" id="services" style={{ background: 'var(--ux4g-bg-soft)' }}>
-        <div className="container">
-          <div className="section-head">
-            <span className="eyebrow">
-              {lang === 'hi' ? 'प्राथमिक सेवा सहकारी समितियां' : 'Primary Service Cooperative Societies'}
-            </span>
-            <h2>{lang === 'hi' ? 'विशिष्ट सहकारी सेवा पोर्टल' : 'Dedicated cooperative trade portals'}</h2>
-            <p>
-              {lang === 'hi'
-                ? 'प्रत्येक सेवा एक स्वायत्त प्राथमिक सेवा सहकारी समिति द्वारा संचालित है। अपनी आवश्यकतानुसार विशिष्ट सेवा पोर्टल चुनें और सत्यापित श्रमयोगियों से कार्य कराएं।'
-                : 'Every trade operates under its own registered Primary Service Cooperative Society under the MSCS Act 2023 — each with trade-specific engineering standards, statutory rate schedules, and direct member dispatch.'}
-            </p>
-          </div>
-
-          <div className="portal-grid">
-            {tradePortals.map((tp) => {
-              const PortalIcon = tp.icon;
-              return (
-                <article key={tp.id} className="portal-card surface">
-                  <div className="portal-head">
-                    <div className="portal-icon">
-                      <PortalIcon size={20} />
-                    </div>
-                    <span className="badge badge-neutral">{tp.code}</span>
-                  </div>
-                  <h3>{tp.title}</h3>
-                  <div className="portal-society">{tp.society}</div>
-                  <p className="portal-desc">{tp.description}</p>
-                  <div className="portal-meta-row">
-                    <div className="portal-meta">
-                      <div className="k">Quality index</div>
-                      <div className="v" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                        <span>{tp.quality}</span>
-                        <StarIcon size={13} color="#eab308" />
-                      </div>
-                    </div>
-                    <div className="portal-meta">
-                      <div className="k">Active tradesmen</div>
-                      <div className="v">{tp.tradesmen}</div>
-                    </div>
-                    <div className="portal-meta">
-                      <div className="k">Starting baseline</div>
-                      <div className="v">{tp.baseline}</div>
-                    </div>
-                  </div>
-                  <ul className="portal-scope">
-                    {tp.scope.map((item, idx) => (
-                      <li key={idx}>
-                        <CheckIcon size={14} color="var(--ux4g-green-600)" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <button
-                    type="button"
-                    className="btn btn-primary btn-block"
-                    onClick={() => onSelectPortal(tp.id)}
-                  >
-                    {tp.cta}
-                  </button>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ================= 4. ROLE GATEWAYS ================= */}
-      <section className="section" id="workplace">
-        <div className="container">
-          <div className="section-head">
-            <span className="eyebrow">{lang === 'hi' ? 'भूमिका-आधारित पहुंच' : 'Access terminals'}</span>
-            <h2>{lang === 'hi' ? 'समर्पित भूमिका-आधारित कार्यक्षेत्र' : 'Dedicated role-based gateways'}</h2>
-            <p>
-              {lang === 'hi'
-                ? 'नागरिकों, श्रमयोगियों, सहकारी प्रशासकों और सरकारी विनियामकों के लिए सुरक्षित, अलग-अलग पोर्टल।'
-                : 'Select your operational role to enter the verified workspace with isolated data boundaries.'}
-            </p>
-          </div>
-
-          <div className="role-grid">
-            {roleGateways.map((rg) => {
-              const RoleIcon = rg.icon;
-              return (
-                <article key={rg.id} className="role-card surface">
-                  <div className="role-head">
-                    <div className="role-icon">
-                      <RoleIcon size={20} />
-                    </div>
-                    <span className={`badge ${rg.badgeClass}`}>{rg.badge}</span>
-                  </div>
-                  <h3>{rg.title}</h3>
-                  <div className="role-sub">{rg.sub}</div>
-                  <p className="role-desc">{rg.desc}</p>
-                  <ul className="role-features">
-                    {rg.features.map((feat, idx) => (
-                      <li key={idx}>
-                        <CheckIcon size={14} color="var(--ux4g-green-600)" />
-                        <span>{feat}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <button
-                    type="button"
-                    className="btn btn-primary btn-block"
-                    onClick={() => onSelectPortal(rg.id)}
-                  >
-                    {rg.cta}
-                  </button>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ================= 5. ARCHITECTURE PILLARS ================= */}
-      <section className="section" style={{ background: 'var(--ux4g-bg-soft)' }}>
+      {/* ==========================================================================
+          6. ARCHITECTURE PILLARS
+          ========================================================================== */}
+      <section className="section" style={{ background: '#f8fafc' }}>
         <div className="container">
           <div className="section-head">
             <span className="eyebrow">{lang === 'hi' ? 'तकनीकी दक्षता' : 'Technical rigour'}</span>
             <h2>{lang === 'hi' ? 'सहकार कनेक्ट के प्रमुख तकनीकी स्तंभ' : 'Architectural pillars of SahakarConnect'}</h2>
             <p>
-              Built on open infrastructure adhering to Government of India guidelines, zero-trust
+              Built on open digital public infrastructure adhering to Government of India guidelines, zero-trust
               cryptographic verification, and spatial routing.
             </p>
           </div>
@@ -729,7 +798,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         </div>
       </section>
 
-      {/* ================= 6. COMPLIANCE BANNER ================= */}
+      {/* ==========================================================================
+          7. STATUTORY MANDATE & COMPLIANCE BANNER
+          ========================================================================== */}
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
           <div className="surface compliance-banner">
