@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SahakarConnect — Ministry of Cooperation | Government of India</title>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<style>
+  /* Page-specific layout only — everything else lives in components.css */
+  .hero-wrap { padding-top: var(--ux4g-sp-9); }
+  .split-bar-section { margin-top: var(--ux4g-sp-9); }
+  .icon-inline { width: 20px; height: 20px; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<!-- ================= UTILITY TOPBAR ================= -->
+<div class="topbar">
+  <div class="container topbar-row">
+    <div class="topbar-left">
+      <span class="topbar-badge">GIGW 3.0 / WCAG 2.1 AA</span>
+      <span>Government of India | भारत सरकार</span>
+    </div>
+    <div class="topbar-right">
+      <div class="font-switch" role="group" aria-label="Text size">
+        <button type="button" data-font-choice="sm" aria-pressed="false">A−</button>
+        <button type="button" data-font-choice="md" aria-pressed="true">A</button>
+        <button type="button" data-font-choice="lg" aria-pressed="false">A+</button>
+      </div>
+      <div class="theme-switch" role="group" aria-label="Colour theme">
+        <button type="button" data-theme-choice="light" aria-pressed="true">Light</button>
+        <button type="button" data-theme-choice="dark" aria-pressed="false">Dark</button>
+        <button type="button" data-theme-choice="contrast" aria-pressed="false">Contrast</button>
+      </div>
+      <select class="lang-select" aria-label="Select language">
+        <option>English</option>
+        <option>हिन्दी</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- ================= HEADER ================= -->
+<header class="site-header">
+  <div class="container header-row">
+    <div class="emblem" aria-hidden="true">
+      <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+    </div>
+    <div class="header-text-block">
+      <div class="ministry-line">MINISTRY OF COOPERATION</div>
+      <div class="council-line">National Council for Cooperative Training (NCCT)</div>
+      <div class="brand-row">
+        <span class="brand-name">SahakarConnect</span>
+        <span class="brand-tag">PSCS Platform</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ================= PRIMARY NAV ================= -->
+<nav class="site-nav" aria-label="Primary">
+  <div class="container">
+    <div class="nav-row" id="nav-row">
+      <a class="nav-link" href="index.html" aria-current="page">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><path d="M3 11l9-7 9 7"/><path d="M5 10v9h14v-9"/></svg>
+        Home / Overview
+      </a>
+      <a class="nav-link" href="#services">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><rect x="4" y="7" width="16" height="13" rx="1.5"/><path d="M9 7V5a3 3 0 016 0v2"/></svg>
+        Citizen Services
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M6 9l6 6 6-6"/></svg>
+      </a>
+      <a class="nav-link" href="#workplace">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><path d="M14.7 6.3a4 4 0 01-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 015.4-5.4l-3 3-2-2 3-3z"/></svg>
+        Tradesman Workplace
+      </a>
+      <a class="nav-link" href="#admin">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><path d="M4 21V9l8-5 8 5v12"/><path d="M9 21v-6h6v6"/></svg>
+        Cooperative Admin
+      </a>
+      <a class="nav-link" href="#regulator">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><rect x="3" y="5" width="18" height="13" rx="1.5"/><path d="M8 21h8M12 18v3"/></svg>
+        Regulatory Terminal
+      </a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="env-strip">
+    <span>Statutory Demo Environment</span>
+    <span class="badge badge-live">Live API</span>
+  </div>
+</div>
+
+<main id="main-content">
+
+  <!-- ================= HERO ================= -->
+  <div class="container hero-wrap">
+    <section class="hero">
+      <div class="hero-tags">
+        <span class="badge badge-primary">Ministry of Cooperation | Govt of India</span>
+        <span class="badge badge-neutral">MSCS Act 2023</span>
+      </div>
+      <h1>
+        Empowering urban tradesmen through
+        <span class="accent">democratic cooperative infrastructure</span>
+      </h1>
+      <p class="lede">
+        A statutory digital platform under the Multi-State Co-operative Societies (MSCS) Act, 2023.
+        Every rupee a citizen pays splits automatically: 88% direct to the tradesman, 8% into a member
+        welfare fund, and a 4% platform reserve — with nothing held back.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#services">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="4" y="7" width="16" height="13" rx="1.5"/><path d="M9 7V5a3 3 0 016 0v2"/></svg>
+          Explore citizen services
+        </a>
+        <a class="btn btn-secondary" href="#workplace">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M14.7 6.3a4 4 0 01-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 015.4-5.4l-3 3-2-2 3-3z"/></svg>
+          Tradesman member portal
+        </a>
+        <a class="btn btn-ghost" href="#admin">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M4 21V9l8-5 8 5v12"/></svg>
+          Society admin hub
+        </a>
+      </div>
+      <div class="trust-row">
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+          GIGW 3.0 &amp; WCAG 2.1 AA compliant
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+          Zero intermediary commission
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+          Direct beneficiary transfer (DBT)
+        </div>
+      </div>
+    </section>
+
+    <!-- Inline trust stat bar — the numbers that matter, stated once -->
+    <div class="split-bar-section">
+      <div class="split-bar surface">
+        <div class="split-cell">
+          <div class="num brand">88%</div>
+          <div class="label">Direct worker pay</div>
+          <div class="sub">Guaranteed statutory floor</div>
+        </div>
+        <div class="split-cell">
+          <div class="num success">8%</div>
+          <div class="label">Welfare fund</div>
+          <div class="sub">Healthcare, pension &amp; safety</div>
+        </div>
+        <div class="split-cell">
+          <div class="num">4%</div>
+          <div class="label">Platform reserve</div>
+          <div class="sub">Statutory cap — zero hidden margin</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CALCULATOR ================= -->
+  <section class="section" id="calculator">
+    <div class="container">
+      <div class="surface calc-panel">
+        <span class="eyebrow">Statutory escrow engine</span>
+        <h2 style="font-size:var(--ux4g-fs-28);margin:var(--ux4g-sp-4) 0 var(--ux4g-sp-3);">Tripartite transparency calculator</h2>
+        <p style="color:var(--ux4g-text-secondary);max-width:640px;">
+          Commercial aggregators deduct 25–35% in opaque commission. On SahakarConnect, every service
+          fee is split deterministically under statutory law — see it for yourself.
+        </p>
+
+        <div class="calc-input-row">
+          <label class="amount-field" for="calc-amount" style="max-width:280px;">
+            <span class="prefix">₹</span>
+            <input type="number" id="calc-amount" value="1200" min="0" step="1" aria-label="Test service amount in rupees">
+          </label>
+          <div class="quick-select" role="group" aria-label="Quick amount select">
+            <button type="button" class="chip" data-quick-amount="500">₹500</button>
+            <button type="button" class="chip" data-quick-amount="1200" aria-pressed="true">₹1,200</button>
+            <button type="button" class="chip" data-quick-amount="2500">₹2,500</button>
+            <button type="button" class="chip" data-quick-amount="5000">₹5,000</button>
+            <button type="button" class="chip" data-quick-amount="10000">₹10,000</button>
+          </div>
+        </div>
+
+        <div class="callout">
+          <p><strong>MSCS Act 2023 rounding invariant:</strong> any fractional remainder from rounding is
+          legally mandated to be credited to the tradesman, so the platform can never round in its own favour.</p>
+        </div>
+
+        <div class="split-results">
+          <div class="split-card">
+            <span class="badge badge-primary">88% Statutory</span>
+            <div class="card-title">Worker direct payout</div>
+            <div class="card-amount" id="calc-worker">₹1,056.00</div>
+            <div class="card-note">Remitted instantly on 4-digit PIN verification.</div>
+          </div>
+          <div class="split-card">
+            <span class="badge badge-success">8% Statutory</span>
+            <div class="card-title">Society welfare fund</div>
+            <div class="card-amount" id="calc-welfare">₹96.00</div>
+            <div class="card-note">Healthcare, pension and emergency aid.</div>
+          </div>
+          <div class="split-card">
+            <span class="badge badge-neutral">4% Non-profit</span>
+            <div class="card-title">Platform infrastructure</div>
+            <div class="card-amount" id="calc-platform">₹48.00</div>
+            <div class="card-note">Server hosting, SMS gateway, spatial routing.</div>
+          </div>
+        </div>
+
+        <table class="compare-table">
+          <thead>
+            <tr><th>Dimension</th><th>Private gig platforms</th><th class="col-sahakar">SahakarConnect PSCS</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="row-label">Platform commission</td><td class="col-private">25–35% (hidden)</td><td class="col-sahakar">4.0% (statutory cap)</td></tr>
+            <tr><td class="row-label">Tradesman take-home</td><td class="col-private">65–75%</td><td class="col-sahakar">88.0% guaranteed</td></tr>
+            <tr><td class="row-label">Welfare &amp; social security</td><td class="col-private">0% (no protection)</td><td class="col-sahakar">8.0% dedicated fund</td></tr>
+            <tr><td class="row-label">Governance &amp; ownership</td><td class="col-private">Algorithmic, no say</td><td class="col-sahakar">1 member, 1 vote</td></tr>
+            <tr><td class="row-label">Payment release</td><td class="col-private">Delayed weekly payouts</td><td class="col-sahakar">Instant 4-digit PIN escrow</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TRADE PORTALS ================= -->
+  <section class="section" id="services" style="background:var(--ux4g-bg-soft);">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Primary Service Cooperative Societies</span>
+        <h2>Dedicated cooperative trade portals</h2>
+        <p>Every trade operates under its own registered Primary Service Cooperative Society under the
+        MSCS Act 2023 — each with trade-specific engineering standards, statutory rate schedules, and
+        direct member dispatch.</p>
+      </div>
+
+      <div class="portal-grid">
+        <article class="portal-card surface">
+          <div class="portal-head">
+            <div class="portal-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="20" height="20"><path d="M10 3L4 9l2 2 6-6"/><path d="M14 7l6 6-7 7-6-6z"/><path d="M6 18l-2 2"/></svg>
+            </div>
+            <span class="badge badge-neutral">PSCS-DEL-PLUMB-01</span>
+          </div>
+          <h3>Plumbing &amp; Sanitary Works Portal</h3>
+          <div class="portal-society">Delhi Urban Plumbing &amp; Sanitary PSCS</div>
+          <p class="portal-desc">Statutory sanitary engineering — high-pressure leak resolution, hydro-jet
+          drain unblocking, and RO/tank installations.</p>
+          <div class="portal-meta-row">
+            <div class="portal-meta"><div class="k">Quality index</div><div class="v">4.88 ★</div></div>
+            <div class="portal-meta"><div class="k">Active tradesmen</div><div class="v">42 verified</div></div>
+            <div class="portal-meta"><div class="k">Starting baseline</div><div class="v">₹250</div></div>
+          </div>
+          <ul class="portal-scope">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>High-pressure leak diagnosis</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Hydro-jet drain unblocking</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Sanitary ware fitting (BIS 12183)</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Overhead tank valve overhaul</li>
+          </ul>
+          <a class="btn btn-primary btn-block" href="#">Enter plumbing portal</a>
+        </article>
+
+        <article class="portal-card surface">
+          <div class="portal-head">
+            <div class="portal-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="20" height="20"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/></svg>
+            </div>
+            <span class="badge badge-neutral">PSCS-DEL-ELEC-02</span>
+          </div>
+          <h3>Electrical &amp; Wiremen Portal</h3>
+          <div class="portal-society">Delhi Certified Wiremen &amp; Electricians PSCS</div>
+          <p class="portal-desc">CEA-certified wiremen for circuit load balancing, MCB trip analysis,
+          earthing resistance audits, and surge protection.</p>
+          <div class="portal-meta-row">
+            <div class="portal-meta"><div class="k">Quality index</div><div class="v">4.92 ★</div></div>
+            <div class="portal-meta"><div class="k">Active tradesmen</div><div class="v">38 verified</div></div>
+            <div class="portal-meta"><div class="k">Starting baseline</div><div class="v">₹200</div></div>
+          </div>
+          <ul class="portal-scope">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Circuit breaker &amp; MCB diagnostics</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Complete rewiring &amp; conduiting</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Earthing resistance verification</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Inverter &amp; UPS panel wiring</li>
+          </ul>
+          <a class="btn btn-primary btn-block" href="#">Enter electrical portal</a>
+        </article>
+
+        <article class="portal-card surface">
+          <div class="portal-head">
+            <div class="portal-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="20" height="20"><path d="M6 3v6l-2 3v9h16v-9l-2-3V3"/><path d="M9 3h6"/></svg>
+            </div>
+            <span class="badge badge-neutral">PSCS-DEL-CARP-03</span>
+          </div>
+          <h3>Woodcraft &amp; Carpentry Portal</h3>
+          <div class="portal-society">Indraprastha Woodcraft Artisans PSCS</div>
+          <p class="portal-desc">Certified joiners and carpenters for moisture-tested hardwood repairs,
+          acoustic door alignment, modular cabinetry, and mortise locks.</p>
+          <div class="portal-meta-row">
+            <div class="portal-meta"><div class="k">Quality index</div><div class="v">4.85 ★</div></div>
+            <div class="portal-meta"><div class="k">Active tradesmen</div><div class="v">29 verified</div></div>
+            <div class="portal-meta"><div class="k">Starting baseline</div><div class="v">₹300</div></div>
+          </div>
+          <ul class="portal-scope">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Flush door &amp; acoustic planing</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Modular cabinet hinge overhaul</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>High-security mortise lock fitting</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Structural timber reinforcement</li>
+          </ul>
+          <a class="btn btn-primary btn-block" href="#">Enter carpentry portal</a>
+        </article>
+
+        <article class="portal-card surface">
+          <div class="portal-head">
+            <div class="portal-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="20" height="20"><rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="14" r="3.5"/><path d="M9 6h2"/></svg>
+            </div>
+            <span class="badge badge-neutral">PSCS-DEL-APPL-04</span>
+          </div>
+          <h3>Appliance Repair Cooperative</h3>
+          <div class="portal-society">Capital Electro-Mechanical &amp; Appliances PSCS</div>
+          <p class="portal-desc">MoEFCC-compliant certified technicians for inverter compressor repair,
+          sealed R-32 refrigerant recovery, and washing machine drum balancing.</p>
+          <div class="portal-meta-row">
+            <div class="portal-meta"><div class="k">Quality index</div><div class="v">4.81 ★</div></div>
+            <div class="portal-meta"><div class="k">Active tradesmen</div><div class="v">35 verified</div></div>
+            <div class="portal-meta"><div class="k">Starting baseline</div><div class="v">₹350</div></div>
+          </div>
+          <ul class="portal-scope">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Inverter AC sealed system servicing</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Frost-free fridge PCB defrosting</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Front-load washing machine damping</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Microwave magnetron calibration</li>
+          </ul>
+          <a class="btn btn-primary btn-block" href="#">Enter appliance portal</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ROLE GATEWAYS ================= -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Access terminals</span>
+        <h2>Dedicated role-based gateways</h2>
+        <p>Select your operational role to enter the verified workspace with isolated data boundaries.</p>
+      </div>
+
+      <div class="role-grid">
+        <article class="role-card">
+          <div class="role-head">
+            <div class="role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="20" height="20"><rect x="4" y="7" width="16" height="13" rx="1.5"/><path d="M9 7V5a3 3 0 016 0v2"/></svg></div>
+            <span class="badge badge-primary">Consumer</span>
+          </div>
+          <h3>Citizen consumer portal</h3>
+          <div class="role-sub">Statutory rate schedules &amp; certified technicians</div>
+          <p class="role-desc">Book certified plumbers, electricians, carpenters and appliance mechanics.
+          Payment is held in statutory escrow until you verify completion with your 4-digit PIN.</p>
+          <ul class="role-features">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Instant H3 spatial matching to the nearest tradesman</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>NSQF level 3–5 skill-certified tradesmen only</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Transparent tripartite price breakdown before booking</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>4-digit PIN, zero-risk escrow release</li>
+          </ul>
+          <a class="btn btn-primary btn-block" href="#">Book a certified service</a>
+        </article>
+
+        <article class="role-card">
+          <div class="role-head">
+            <div class="role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="20" height="20"><path d="M14.7 6.3a4 4 0 01-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 015.4-5.4l-3 3-2-2 3-3z"/></svg></div>
+            <span class="badge badge-success">Tradesman</span>
+          </div>
+          <h3>Cooperative provider workplace</h3>
+          <div class="role-sub">88% guaranteed take-home &amp; welfare safety net</div>
+          <p class="role-desc">Zero intermediary exploitation. Receive real-time local job alerts, instant
+          payout release upon customer PIN entry, and statutory welfare contributions.</p>
+          <ul class="role-features">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Real-time duty availability toggle</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Guaranteed 88% direct payout, no deductions</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Statutory healthcare &amp; welfare accumulation</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Class-A democratic voting membership</li>
+          </ul>
+          <a class="btn btn-primary btn-block" href="#">Open tradesman workplace</a>
+        </article>
+
+        <article class="role-card">
+          <div class="role-head">
+            <div class="role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="20" height="20"><path d="M4 21V9l8-5 8 5v12"/><path d="M9 21v-6h6v6"/></svg></div>
+            <span class="badge badge-neutral">Society admin</span>
+          </div>
+          <h3>Cooperative society admin</h3>
+          <div class="role-sub">e-KYC verification &amp; double-entry ledger</div>
+          <p class="role-desc">Complete operational cockpit for Primary Service Cooperative Societies.
+          Manage tradesmen e-KYC queues, audit tripartite ledger entries, and administer governance.</p>
+          <ul class="role-features">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Tradesmen Aadhaar &amp; police clearance e-KYC</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Double-entry, zero-leakage ledger inspector</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Statutory reserve fund balance tracking</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>One-click statutory CSV export for audits</li>
+          </ul>
+          <a class="btn btn-primary btn-block" href="#">Manage society operations</a>
+        </article>
+
+        <article class="role-card">
+          <div class="role-head">
+            <div class="role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="20" height="20"><rect x="3" y="5" width="18" height="13" rx="1.5"/><path d="M8 21h8M12 18v3"/></svg></div>
+            <span class="badge badge-neutral">Regulator</span>
+          </div>
+          <h3>Central / state regulator</h3>
+          <div class="role-sub">Ministry of Cooperation compliance oversight</div>
+          <p class="role-desc">Supervisory oversight terminal for the Ministry of Cooperation and State
+          Cooperative Registrars. Audit solvency, reserve ratios, and welfare disbursements.</p>
+          <ul class="role-features">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Multi-district society audit trails</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Statutory 25% reserve ratio verification</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Mathematical ledger invariant validation</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Real-time compliance monitoring under MSCS Act</li>
+          </ul>
+          <a class="btn btn-primary btn-block" href="#">Access regulatory terminal</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ARCHITECTURE PILLARS ================= -->
+  <section class="section" style="background:var(--ux4g-bg-soft);">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Technical rigour</span>
+        <h2>Architectural pillars of SahakarConnect</h2>
+        <p>Built on open infrastructure adhering to Government of India guidelines, zero-trust
+        cryptographic verification, and spatial routing.</p>
+      </div>
+      <div class="pillar-grid">
+        <div class="pillar surface">
+          <div class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="20" height="20"><path d="M12 21s7-5.5 7-11a7 7 0 10-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+          <h3>Uber H3 spatial dispatch</h3>
+          <p>Resolution-8 hexagonal indexing finds and dispatches the closest active, certified tradesman
+          within ~460m grid disks in seconds.</p>
+        </div>
+        <div class="pillar surface">
+          <div class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="20" height="20"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 018 0v4"/></svg></div>
+          <h3>Atomic 4-digit PIN escrow</h3>
+          <p>Citizen funds remain locked in escrow until the customer personally shares their 4-digit PIN
+          upon inspecting the completed work.</p>
+        </div>
+        <div class="pillar surface">
+          <div class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="20" height="20"><path d="M4 21V9l8-5 8 5v12"/><path d="M9 21v-6h6v6"/></svg></div>
+          <h3>Democratic quorum &amp; governance</h3>
+          <p>Statutory one-member-one-vote resolutions. Class-A voting members approve equipment grants,
+          dividend distributions, and welfare policies.</p>
+        </div>
+        <div class="pillar surface">
+          <div class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="20" height="20"><path d="M12 3v18M6 8l-3 6a3 3 0 006 0l-3-6zM18 8l-3 6a3 3 0 006 0l-3-6z"/><path d="M4 21h16"/></svg></div>
+          <h3>Deterministic zero-leakage ledger</h3>
+          <p>Double-entry accounting guarantees Worker (88%) + Welfare (8%) + Platform (4%) = gross amount,
+          with zero rounding leakage.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= COMPLIANCE BANNER ================= -->
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="surface compliance-banner">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="22" height="22"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z"/></svg></div>
+        <div>
+          <h3>Statutory mandate &amp; legislative compliance</h3>
+          <p>SahakarConnect is engineered in strict accordance with the provisions of the
+          <strong>Multi-State Co-operative Societies (MSCS) Act, 2023</strong>, and the statutory directives
+          of the <strong>Ministry of Cooperation, Government of India</strong>. All financial transactions
+          execute via double-entry ledger bookkeeping with deterministic zero-leakage parity. Digital
+          interfaces comply with <strong>Guidelines for Indian Government Websites (GIGW 3.0)</strong> and
+          WCAG 2.1 Level AA accessibility criteria.</p>
+          <div class="tags">
+            <span class="badge badge-neutral">MSCS Act 2023 Sec. 63</span>
+            <span class="badge badge-neutral">NCCT certified syllabus</span>
+            <span class="badge badge-neutral">GIGW 3.0 accessible</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-notice">
+      <span><strong>Statutory compliance:</strong> Operating under the provisions of the Multi-State
+      Co-operative Societies Act, 2023, Ministry of Cooperation, Government of India.</span>
+    </div>
+
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>About SahakarConnect</h4>
+        <p>National statutory digital infrastructure for Primary Service Cooperative Societies (PSCS).
+        Provides multi-tenant double-entry ledger accounting, tradesman e-KYC, and democratic governance.</p>
+        <p>Standardised under GIGW 3.0 guidelines and official UX4G design specifications.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Mandatory policies</h4>
+        <ul>
+          <li><a href="#" data-open-legal="panel-terms">Terms of service</a></li>
+          <li><a href="#" data-open-legal="panel-privacy">Privacy policy</a></li>
+          <li><a href="#" data-open-legal="panel-hyperlink">Hyperlink policy</a></li>
+          <li><a href="#" data-open-legal="panel-copyright">Copyright &amp; disclaimer</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Statutory framework</h4>
+        <ul>
+          <li><a href="#" data-open-legal="panel-mscs">MSCS Act 2023 provisions</a></li>
+          <li><a href="#" data-open-legal="panel-welfare">Welfare fund rules</a></li>
+          <li><a href="#" data-open-legal="panel-reserve">Statutory reserve guidelines</a></li>
+          <li><a href="#" data-open-legal="panel-grievance">Grievance redressal</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Security &amp; standards</h4>
+        <ul>
+          <li class="with-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>Zero-leakage tripartite escrow</li>
+          <li class="with-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 21V9l8-5 8 5v12"/></svg>Double-entry deterministic ledger</li>
+          <li class="with-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>WCAG 2.1 level AA compliant</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Ministry of Cooperation, Government of India.</p>
+      <p>Content managed by National Council for Cooperative Training (NCCT).</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= LEGAL MODAL (LegalModal.tsx reference) ================= -->
+<div class="modal-overlay" id="legal-modal" role="dialog" aria-modal="true" aria-labelledby="legal-modal-title" aria-hidden="true">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="legal-modal-title">Statutory policies</h2>
+      <button type="button" class="modal-close" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="modal-tabs" role="tablist">
+      <button class="modal-tab" role="tab" data-panel="panel-terms" aria-selected="true">Terms of service</button>
+      <button class="modal-tab" role="tab" data-panel="panel-privacy" aria-selected="false">Privacy (DPDP 2023)</button>
+      <button class="modal-tab" role="tab" data-panel="panel-hyperlink" aria-selected="false">Hyperlink policy</button>
+      <button class="modal-tab" role="tab" data-panel="panel-copyright" aria-selected="false">Copyright</button>
+      <button class="modal-tab" role="tab" data-panel="panel-mscs" aria-selected="false">MSCS Act 2023</button>
+      <button class="modal-tab" role="tab" data-panel="panel-welfare" aria-selected="false">Welfare fund</button>
+      <button class="modal-tab" role="tab" data-panel="panel-reserve" aria-selected="false">Reserve guidelines</button>
+      <button class="modal-tab" role="tab" data-panel="panel-grievance" aria-selected="false">Citizen charter</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-panel is-active" id="panel-terms">
+        <h3>Terms of service</h3>
+        <p>Use of SahakarConnect is governed by the Multi-State Co-operative Societies (MSCS) Act, 2023
+        and byelaws of the relevant Primary Service Cooperative Society (PSCS). Citizens booking a service
+        agree to statutory escrow terms: funds release only on entry of the 4-digit completion PIN.</p>
+        <p>Tradesmen registering as PSCS members agree to NSQF skill certification requirements, periodic
+        e-KYC renewal, and the cooperative's one-member-one-vote governance byelaws.</p>
+      </div>
+      <div class="modal-panel" id="panel-privacy">
+        <h3>Privacy policy — DPDP Act 2023</h3>
+        <p>Personal data (Aadhaar e-KYC, contact details, service history) is processed strictly for
+        service fulfilment, statutory audit, and welfare fund administration, consistent with the
+        Digital Personal Data Protection Act, 2023.</p>
+        <p>Data is not shared with private commercial aggregators. Citizens may request access,
+        correction, or erasure of their data through the grievance redressal channel below.</p>
+      </div>
+      <div class="modal-panel" id="panel-hyperlink">
+        <h3>Hyperlink policy</h3>
+        <p>SahakarConnect may link to external cooperative society and government resources for reference.
+        Such links do not constitute an endorsement of the content, products, or services on those sites.</p>
+      </div>
+      <div class="modal-panel" id="panel-copyright">
+        <h3>Copyright &amp; disclaimer</h3>
+        <p>Content on this platform is owned by the Ministry of Cooperation, Government of India, unless
+        otherwise stated, and may be reproduced for non-commercial use with attribution.</p>
+      </div>
+      <div class="modal-panel" id="panel-mscs">
+        <h3>MSCS Act 2023 provisions</h3>
+        <p>SahakarConnect operates under the Multi-State Co-operative Societies (MSCS) Act, 2023, which
+        governs the registration, byelaws, and statutory obligations of Primary Service Cooperative
+        Societies (PSCS) formed on this platform.</p>
+        <p>Section 63 mandates the 88/8/4 tripartite payment split described in the transparency
+        calculator, and prohibits any PSCS from retaining a platform margin above the statutory 4% cap.</p>
+      </div>
+      <div class="modal-panel" id="panel-welfare">
+        <h3>Welfare fund rules</h3>
+        <p>The 8% statutory welfare contribution accumulates in each tradesman's individual welfare
+        account, administered by the PSCS. Funds cover healthcare, accident insurance, pension
+        contributions, and emergency aid, disbursed under society byelaws approved by member vote.</p>
+      </div>
+      <div class="modal-panel" id="panel-reserve">
+        <h3>Statutory reserve guidelines</h3>
+        <p>Each PSCS is required to maintain a minimum statutory reserve ratio, audited quarterly by the
+        State Cooperative Registrar and the Ministry of Cooperation, to guarantee solvency of the welfare
+        fund and continuity of member payouts.</p>
+      </div>
+      <div class="modal-panel" id="panel-grievance">
+        <h3>Citizen charter &amp; grievance redressal</h3>
+        <p>Citizens and tradesmen may raise a grievance through the in-app support channel. Societies are
+        required to acknowledge a grievance within 48 hours and resolve it within 15 working days, per
+        the Ministry of Cooperation's citizen charter commitments.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -43,9 +43,14 @@ export const AppContent: React.FC = () => {
   const [activeNav, setActiveNav] = useState<string>('home');
   const [backendHealth, setBackendHealth] = useState<HealthStatus | null>(null);
   const [currentUser, setCurrentUser] = useState<any | null>(null);
-  const [theme, setTheme] = useState<'light' | 'dark' | 'high-contrast'>(() => {
+  const [theme, setTheme] = useState<'light' | 'dark' | 'contrast'>(() => {
     const saved = localStorage.getItem('sahakar_theme');
+    if (saved === 'high-contrast' || saved === 'contrast') return 'contrast';
     return (saved as any) || 'light';
+  });
+  const [fontChoice, setFontChoice] = useState<'sm' | 'md' | 'lg'>(() => {
+    const saved = localStorage.getItem('sahakar_font_choice');
+    return (saved as any) || 'md';
   });
   const [activeLegalDoc, setActiveLegalDoc] = useState<LegalDocType | null>(null);
 
@@ -54,13 +59,24 @@ export const AppContent: React.FC = () => {
   // Apply theme to document element
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-    if (theme === 'high-contrast') {
+    if (theme === 'contrast') {
       document.body.classList.add('high-contrast');
     } else {
       document.body.classList.remove('high-contrast');
     }
     localStorage.setItem('sahakar_theme', theme);
   }, [theme]);
+
+  // Apply UX4G font scaling
+  useEffect(() => {
+    const scaleMap: Record<'sm' | 'md' | 'lg', string> = {
+      sm: '0.9375',
+      md: '1',
+      lg: '1.125',
+    };
+    document.documentElement.style.setProperty('--ux4g-font-scale', scaleMap[fontChoice]);
+    localStorage.setItem('sahakar_font_choice', fontChoice);
+  }, [fontChoice]);
 
   // Fetch backend health status
   useEffect(() => {
@@ -139,6 +155,8 @@ export const AppContent: React.FC = () => {
         onSwitchPersona={() => setActiveNav('home')}
         theme={theme}
         onThemeChange={setTheme}
+        fontChoice={fontChoice}
+        onFontChoiceChange={setFontChoice}
       />
 
       <main id="main-content" className="flex-grow-1 py-4" role="main">
