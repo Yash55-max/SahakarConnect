@@ -849,6 +849,20 @@ body.high-contrast .skeleton {
 }
 
 /* Header Branding Bar */
+.site-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+[data-theme="dark"] .site-header {
+  background: #11141f;
+  border-bottom: 1px solid #1f2536;
+}
+[data-theme="contrast"] .site-header {
+  background: #000000;
+  border-bottom: 1px solid #ffffff;
+}
+
 .myaadhaar-branding-row {
   display: flex;
   align-items: center;
@@ -878,10 +892,18 @@ body.high-contrast .skeleton {
   justify-content: center;
   color: var(--ux4g-primary-600);
   flex-shrink: 0;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
 }
 [data-theme="dark"] .myaadhaar-emblem-badge {
-  background: #1e2230;
-  border-color: #2e344a;
+  background: #1e2438;
+  border-color: #333d59;
+  color: #a391ff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+[data-theme="contrast"] .myaadhaar-emblem-badge {
+  background: #000000;
+  border-color: #f5d800;
+  color: #f5d800;
 }
 
 .myaadhaar-emblem-text .gov-line {
@@ -902,12 +924,21 @@ body.high-contrast .skeleton {
   color: #64748b;
   font-weight: 500;
 }
-[data-theme="dark"] .myaadhaar-emblem-text .ministry-line {
-  color: #f1f5f9;
+[data-theme="dark"] .myaadhaar-emblem-text .gov-line {
+  color: #a5b4fc;
 }
-[data-theme="dark"] .myaadhaar-emblem-text .gov-line,
+[data-theme="dark"] .myaadhaar-emblem-text .ministry-line {
+  color: #f8fafc;
+}
 [data-theme="dark"] .myaadhaar-emblem-text .brand-sub {
   color: #94a3b8;
+}
+[data-theme="contrast"] .myaadhaar-emblem-text .gov-line,
+[data-theme="contrast"] .myaadhaar-emblem-text .brand-sub {
+  color: #ffffff;
+}
+[data-theme="contrast"] .myaadhaar-emblem-text .ministry-line {
+  color: #f5d800;
 }
 
 /* Header Search & Language Block */
@@ -940,17 +971,29 @@ body.high-contrast .skeleton {
   font-size: 13px;
   background: #ffffff;
   color: #1e293b;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
 }
 [data-theme="dark"] .myaadhaar-header-search input {
-  background: #1a1e2b;
-  border-color: #333a4d;
+  background: #1a2030;
+  border-color: #2e3852;
   color: #f8fafc;
+}
+[data-theme="dark"] .myaadhaar-header-search input::placeholder {
+  color: #8392a5;
+}
+[data-theme="contrast"] .myaadhaar-header-search input {
+  background: #000000;
+  border-color: #ffffff;
+  color: #ffffff;
 }
 .myaadhaar-header-search input:focus {
   outline: none;
   border-color: var(--ux4g-primary-600);
   box-shadow: 0 0 0 3px rgba(74, 43, 194, 0.15);
+}
+[data-theme="dark"] .myaadhaar-header-search input:focus {
+  border-color: #8670ff;
+  box-shadow: 0 0 0 3px rgba(134, 112, 255, 0.25);
 }
 
 .myaadhaar-header-search .search-btn {
@@ -972,6 +1015,10 @@ body.high-contrast .skeleton {
 .myaadhaar-header-search .search-btn:hover {
   background: var(--ux4g-primary-700);
 }
+[data-theme="contrast"] .myaadhaar-header-search .search-btn {
+  background: #f5d800;
+  color: #000000;
+}
 
 .myaadhaar-lang-btn {
   display: inline-flex;
@@ -988,13 +1035,23 @@ body.high-contrast .skeleton {
   transition: all 0.2s;
 }
 [data-theme="dark"] .myaadhaar-lang-btn {
-  background: #1a1e2b;
-  border-color: #333a4d;
-  color: #f8fafc;
+  background: #1a2030;
+  border-color: #2e3852;
+  color: #e2e8f0;
+}
+[data-theme="contrast"] .myaadhaar-lang-btn {
+  background: #000000;
+  border-color: #ffffff;
+  color: #ffffff;
 }
 .myaadhaar-lang-btn:hover {
   border-color: var(--ux4g-primary-600);
   color: var(--ux4g-primary-600);
+}
+[data-theme="dark"] .myaadhaar-lang-btn:hover {
+  border-color: #8670ff;
+  color: #c0b3ff;
+  background: #232b42;
 }
 
 /* Secondary Nav Bar */
@@ -1004,10 +1061,17 @@ body.high-contrast .skeleton {
   border-bottom: 1px solid #e2e8f0;
   position: relative;
   z-index: 1000;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 [data-theme="dark"] .myaadhaar-navbar {
-  background: #141722;
-  border-color: #242938;
+  background: #0d1017;
+  border-top: 1px solid #1f2536;
+  border-bottom: 1px solid #1f2536;
+}
+[data-theme="contrast"] .myaadhaar-navbar {
+  background: #000000;
+  border-top: 1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
 }
 
 .myaadhaar-nav-row {
@@ -1052,7 +1116,8 @@ body.high-contrast .skeleton {
   color: var(--ux4g-primary-600);
 }
 [data-theme="dark"] .myaadhaar-nav-btn:hover {
-  background: #1e2333;
+  background: #1a2030;
+  color: #c0b3ff;
 }
 .myaadhaar-nav-btn.active {
   background: #f1f0fc;
@@ -1062,8 +1127,16 @@ body.high-contrast .skeleton {
 }
 [data-theme="dark"] .myaadhaar-nav-btn.active {
   background: #231c4f;
-  color: #a391ff;
-  border-color: #3b28cc;
+  color: #c0b3ff;
+  border-color: #4a2bc2;
+}
+[data-theme="contrast"] .myaadhaar-nav-btn {
+  color: #ffffff;
+}
+[data-theme="contrast"] .myaadhaar-nav-btn.active {
+  background: #000000;
+  color: #f5d800;
+  border-color: #f5d800;
 }
 
 .myaadhaar-login-pill {

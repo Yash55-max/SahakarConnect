@@ -174,7 +174,7 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
 
       {/* ================= HEADER BRANDING ROW (UIDAI myAadhaar Style) ================= */}
-      <header className="site-header" style={{ background: '#ffffff' }}>
+      <header className="site-header">
         <div className="container">
           <div className="myaadhaar-branding-row">
             {/* Left: National Emblem Lockup */}
@@ -186,7 +186,7 @@ export const Header: React.FC<HeaderProps> = ({
               onKeyDown={(e) => e.key === 'Enter' && onSelectNav('home')}
             >
               <div className="myaadhaar-emblem-badge" aria-label="National Emblem of India">
-                <EmblemIcon size={26} color="#4a2bc2" />
+                <EmblemIcon size={26} color="currentColor" />
               </div>
               <div className="myaadhaar-emblem-text">
                 <div className="gov-line">
