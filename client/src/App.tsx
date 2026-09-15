@@ -13,6 +13,10 @@ import {
   AdminIcon,
   RegulatorIcon,
   HomeIcon,
+  PlumbingIcon,
+  ElectricalIcon,
+  CarpentryIcon,
+  ApplianceIcon,
 } from './components/common/Icons';
 
 interface HealthStatus {
@@ -24,10 +28,15 @@ interface HealthStatus {
 
 const PERSONA_CREDENTIALS: Record<string, { email: string; pass: string }> = {
   consumer: { email: 'vikram.consumer@gmail.com', pass: 'Password@123' },
+  'portal:plumbing': { email: 'vikram.consumer@gmail.com', pass: 'Password@123' },
+  'portal:electrical': { email: 'vikram.consumer@gmail.com', pass: 'Password@123' },
+  'portal:carpentry': { email: 'vikram.consumer@gmail.com', pass: 'Password@123' },
+  'portal:appliances': { email: 'vikram.consumer@gmail.com', pass: 'Password@123' },
   provider: { email: 'ramesh.plumber@sahakar.org', pass: 'Password@123' },
   coop_admin: { email: 'admin.delhi@sahakar.gov.in', pass: 'Password@123' },
   regulator: { email: 'regulator@cooperation.gov.in', pass: 'Password@123' },
 };
+
 
 export const AppContent: React.FC = () => {
   const [lang, setLang] = useState<'en' | 'hi'>('en');
@@ -96,7 +105,15 @@ export const AppContent: React.FC = () => {
   const getPortalTitle = (nav: string) => {
     switch (nav) {
       case 'consumer':
-        return lang === 'hi' ? 'नागरिक सेवा पोर्टल' : 'Citizen Consumer Portal';
+        return lang === 'hi' ? 'समस्त नागरिक सेवाएं' : 'Citizen Consumer Portal';
+      case 'portal:plumbing':
+        return lang === 'hi' ? 'नलसाजी एवं स्वच्छता सहकारी पोर्टल' : 'Plumbing & Sanitary Works Cooperative';
+      case 'portal:electrical':
+        return lang === 'hi' ? 'विद्युत अभियांत्रिकी सहकारी पोर्टल' : 'Electrical & Wiremen Cooperative';
+      case 'portal:carpentry':
+        return lang === 'hi' ? 'काष्ठशिल्प एवं बढ़ईगीरी सहकारी पोर्टल' : 'Woodcraft & Carpentry Cooperative';
+      case 'portal:appliances':
+        return lang === 'hi' ? 'उपकरण मरम्मत सहकारी पोर्टल' : 'Appliance Repair Cooperative';
       case 'provider':
         return lang === 'hi' ? 'श्रमयोगी सदस्य कार्यक्षेत्र' : 'Tradesman Provider Workplace';
       case 'coop_admin':
@@ -107,6 +124,8 @@ export const AppContent: React.FC = () => {
         return 'Overview';
     }
   };
+
+  const isConsumerView = activeNav === 'consumer' || activeNav.startsWith('portal:');
 
   return (
     <div className="d-flex flex-column min-vh-100">
@@ -129,7 +148,7 @@ export const AppContent: React.FC = () => {
             <div className="card shadow-sm border mb-4 bg-white">
               <div className="card-body py-2 px-3">
                 <div className="d-flex justify-content-between align-items-center flex-wrap gap-2">
-                  <div className="d-flex align-items-center gap-2">
+                  <div className="d-flex align-items-center gap-2 flex-wrap">
                     <button
                       type="button"
                       className="btn btn-sm btn-link p-0 text-decoration-none text-secondary d-flex align-items-center gap-1"
@@ -140,9 +159,59 @@ export const AppContent: React.FC = () => {
                     </button>
                     <span className="text-muted">/</span>
                     <span className="fw-bold text-dark small">{getPortalTitle(activeNav)}</span>
-                    <span className="badge bg-primary text-uppercase ms-2" style={{ fontSize: '0.68rem' }}>
-                      {currentUser?.role || activeNav}
+                    <span className="badge bg-primary text-uppercase ms-1" style={{ fontSize: '0.68rem' }}>
+                      {activeNav === 'portal:plumbing'
+                        ? 'PLUMBING'
+                        : activeNav === 'portal:electrical'
+                        ? 'ELECTRICAL'
+                        : activeNav === 'portal:carpentry'
+                        ? 'CARPENTRY'
+                        : activeNav === 'portal:appliances'
+                        ? 'APPLIANCES'
+                        : currentUser?.role || activeNav}
                     </span>
+
+                    {/* Quick Trade Selector in Breadcrumb Strip */}
+                    {isConsumerView && (
+                      <div className="btn-group btn-group-sm ms-2 d-none d-md-inline-flex" role="group" aria-label="Trade portals quick switcher">
+                        <button
+                          type="button"
+                          className={`btn py-0 px-2 ${activeNav === 'portal:plumbing' || activeNav === 'consumer' ? 'btn-primary' : 'btn-outline-secondary'}`}
+                          onClick={() => handleSelectNav('portal:plumbing')}
+                          title="Plumbing Portal"
+                        >
+                          <PlumbingIcon size={12} className="me-1" />
+                          Plumbing
+                        </button>
+                        <button
+                          type="button"
+                          className={`btn py-0 px-2 ${activeNav === 'portal:electrical' ? 'btn-primary' : 'btn-outline-secondary'}`}
+                          onClick={() => handleSelectNav('portal:electrical')}
+                          title="Electrical Portal"
+                        >
+                          <ElectricalIcon size={12} className="me-1" />
+                          Electrical
+                        </button>
+                        <button
+                          type="button"
+                          className={`btn py-0 px-2 ${activeNav === 'portal:carpentry' ? 'btn-primary' : 'btn-outline-secondary'}`}
+                          onClick={() => handleSelectNav('portal:carpentry')}
+                          title="Carpentry Portal"
+                        >
+                          <CarpentryIcon size={12} className="me-1" />
+                          Carpentry
+                        </button>
+                        <button
+                          type="button"
+                          className={`btn py-0 px-2 ${activeNav === 'portal:appliances' ? 'btn-primary' : 'btn-outline-secondary'}`}
+                          onClick={() => handleSelectNav('portal:appliances')}
+                          title="Appliance Portal"
+                        >
+                          <ApplianceIcon size={12} className="me-1" />
+                          Appliances
+                        </button>
+                      </div>
+                    )}
                   </div>
 
                   <div className="d-flex align-items-center gap-2">
@@ -150,7 +219,7 @@ export const AppContent: React.FC = () => {
                     <div className="btn-group btn-group-sm" role="group" aria-label="Portal switcher">
                       <button
                         type="button"
-                        className={`btn ${activeNav === 'consumer' ? 'btn-primary' : 'btn-outline-secondary'}`}
+                        className={`btn ${isConsumerView ? 'btn-primary' : 'btn-outline-secondary'}`}
                         onClick={() => handleSelectNav('consumer')}
                         title="Citizen Consumer"
                       >
@@ -209,11 +278,26 @@ export const AppContent: React.FC = () => {
             />
           )}
 
-          {activeNav === 'consumer' && <ServiceCatalog />}
+          {isConsumerView && (
+            <ServiceCatalog
+              initialTrade={
+                activeNav === 'portal:electrical'
+                  ? 'electrical'
+                  : activeNav === 'portal:carpentry'
+                  ? 'carpentry'
+                  : activeNav === 'portal:appliances'
+                  ? 'appliances'
+                  : 'plumbing'
+              }
+              lang={lang}
+              onSelectTrade={(trade) => setActiveNav(`portal:${trade}`)}
+            />
+          )}
 
           {activeNav === 'provider' && <ProviderDashboard />}
 
           {(activeNav === 'coop_admin' || activeNav === 'regulator') && <AdminHub />}
+
         </div>
       </main>
 

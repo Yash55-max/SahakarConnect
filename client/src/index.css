@@ -369,6 +369,100 @@ body.high-contrast svg {
 }
 
 /* ==========================================================================
+   Navigation Dropdown
+   ========================================================================== */
+.ux4g-nav-dropdown-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.ux4g-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1050;
+  min-width: 290px;
+  padding: 0.5rem 0;
+  margin: 0.125rem 0 0;
+  background-color: #ffffff;
+  border: 1px solid var(--ux4g-slate-200);
+  border-radius: 6px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .ux4g-dropdown-menu {
+  background-color: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+body.high-contrast .ux4g-dropdown-menu {
+  background-color: #000000;
+  border: 2px solid #ffff00;
+}
+
+.ux4g-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.65rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ux4g-slate-800);
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+}
+
+.ux4g-dropdown-item:hover,
+.ux4g-dropdown-item:focus {
+  background-color: var(--ux4g-slate-100);
+  color: var(--ux4g-primary);
+  outline: none;
+}
+
+[data-theme="dark"] .ux4g-dropdown-item {
+  color: #f1f5f9;
+}
+
+[data-theme="dark"] .ux4g-dropdown-item:hover,
+[data-theme="dark"] .ux4g-dropdown-item:focus {
+  background-color: #334155;
+  color: #38bdf8;
+}
+
+body.high-contrast .ux4g-dropdown-item {
+  color: #ffffff;
+}
+
+body.high-contrast .ux4g-dropdown-item:hover,
+body.high-contrast .ux4g-dropdown-item:focus {
+  background-color: #ffff00;
+  color: #000000;
+}
+
+.ux4g-dropdown-item.active {
+  background-color: var(--ux4g-primary-subtle);
+  color: var(--ux4g-primary);
+  font-weight: 700;
+}
+
+[data-theme="dark"] .ux4g-dropdown-item.active {
+  background-color: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+}
+
+body.high-contrast .ux4g-dropdown-item.active {
+  background-color: #ffff00;
+  color: #000000;
+  font-weight: 900;
+}
+
+
+/* ==========================================================================
    Hero Section
    ========================================================================== */
 .hero-card {

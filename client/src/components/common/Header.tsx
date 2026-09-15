@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   EmblemIcon,
   HomeIcon,
@@ -6,6 +6,11 @@ import {
   ProviderIcon,
   AdminIcon,
   RegulatorIcon,
+  PlumbingIcon,
+  ElectricalIcon,
+  CarpentryIcon,
+  ApplianceIcon,
+  ChevronDownIcon,
 } from './Icons';
 
 interface HeaderProps {
@@ -31,6 +36,21 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const [fontSize, setFontSize] = useState<number>(100);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
+  const [servicesDropdownOpen, setServicesDropdownOpen] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setServicesDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const handleFontSizeChange = (delta: number) => {
     let newSize = fontSize + delta;
@@ -40,6 +60,37 @@ export const Header: React.FC<HeaderProps> = ({
     setFontSize(newSize);
     document.documentElement.style.fontSize = `${newSize}%`;
   };
+
+  const tradePortalsList = [
+    {
+      id: 'portal:plumbing',
+      label: currentLang === 'hi' ? 'नलसाजी एवं स्वच्छता पोर्टल' : 'Plumbing & Sanitary Portal',
+      sublabel: 'PSCS-DEL-PLUMB-01 | BIS 12183',
+      Icon: PlumbingIcon,
+      color: '#0284c7',
+    },
+    {
+      id: 'portal:electrical',
+      label: currentLang === 'hi' ? 'विद्युत एवं वायरमैन पोर्टल' : 'Electrical & Wiremen Portal',
+      sublabel: 'PSCS-DEL-ELEC-02 | CEA / IS 732',
+      Icon: ElectricalIcon,
+      color: '#d97706',
+    },
+    {
+      id: 'portal:carpentry',
+      label: currentLang === 'hi' ? 'काष्ठशिल्प एवं बढ़ईगीरी पोर्टल' : 'Woodcraft & Carpentry Portal',
+      sublabel: 'PSCS-DEL-CARP-03 | BIS IS 2202',
+      Icon: CarpentryIcon,
+      color: '#b45309',
+    },
+    {
+      id: 'portal:appliances',
+      label: currentLang === 'hi' ? 'उपकरण मरम्मत पोर्टल' : 'Appliance Repair Portal',
+      sublabel: 'PSCS-DEL-APPL-04 | BEE Star Compliant',
+      Icon: ApplianceIcon,
+      color: '#4f46e5',
+    },
+  ];
 
   const navLinks = [
     {
@@ -51,6 +102,7 @@ export const Header: React.FC<HeaderProps> = ({
       id: 'consumer',
       label: currentLang === 'hi' ? 'नागरिक सेवाएं' : 'Citizen Services',
       Icon: ConsumerIcon,
+      isDropdown: true,
     },
     {
       id: 'provider',
@@ -68,6 +120,7 @@ export const Header: React.FC<HeaderProps> = ({
       Icon: RegulatorIcon,
     },
   ];
+
 
   return (
     <header className="ux4g-header-wrapper" role="banner">
@@ -242,7 +295,104 @@ export const Header: React.FC<HeaderProps> = ({
           <div className={`d-md-flex align-items-center flex-wrap ${mobileMenuOpen ? 'd-flex flex-column w-100 py-2' : 'd-none'}`}>
             {navLinks.map((item) => {
               const ItemIcon = item.Icon;
-              const isActive = activeNav === item.id;
+              const isServiceActive = activeNav === 'consumer' || activeNav.startsWith('portal:');
+              const isActive = item.isDropdown ? isServiceActive : activeNav === item.id;
+
+              if (item.isDropdown) {
+                return (
+                  <div key={item.id} className="ux4g-nav-dropdown-wrapper" ref={dropdownRef}>
+                    <button
+                      type="button"
+                      className={`ux4g-nav-item ${isActive ? 'active' : ''}`}
+                      onClick={() => setServicesDropdownOpen(!servicesDropdownOpen)}
+                      aria-expanded={servicesDropdownOpen}
+                      aria-haspopup="true"
+                    >
+                      <ItemIcon size={16} />
+                      <span>{item.label}</span>
+                      <ChevronDownIcon size={13} className="ms-1" />
+                    </button>
+
+                    {/* Desktop Dropdown Menu */}
+                    {servicesDropdownOpen && (
+                      <div className="ux4g-dropdown-menu" role="menu">
+                        <div className="px-3 py-1 text-muted text-uppercase fw-bold" style={{ fontSize: '0.68rem', letterSpacing: '0.5px' }}>
+                          {currentLang === 'hi' ? 'समर्पित सहकारी सेवा पोर्टल' : 'Dedicated Cooperative Portals'}
+                        </div>
+                        {tradePortalsList.map((portal) => {
+                          const PortalIcon = portal.Icon;
+                          const isPortalActive = activeNav === portal.id;
+                          return (
+                            <button
+                              key={portal.id}
+                              type="button"
+                              className={`ux4g-dropdown-item ${isPortalActive ? 'active' : ''}`}
+                              onClick={() => {
+                                onSelectNav(portal.id);
+                                setServicesDropdownOpen(false);
+                              }}
+                              role="menuitem"
+                            >
+                              <div style={{ color: portal.color }}>
+                                <PortalIcon size={18} />
+                              </div>
+                              <div className="flex-grow-1">
+                                <div className="fw-semibold text-dark">{portal.label}</div>
+                                <div className="text-muted" style={{ fontSize: '0.7rem' }}>
+                                  {portal.sublabel}
+                                </div>
+                              </div>
+                            </button>
+                          );
+                        })}
+                        <hr className="my-1 border-secondary opacity-25" />
+                        <button
+                          type="button"
+                          className={`ux4g-dropdown-item ${activeNav === 'consumer' ? 'active' : ''}`}
+                          onClick={() => {
+                            onSelectNav('consumer');
+                            setServicesDropdownOpen(false);
+                          }}
+                          role="menuitem"
+                        >
+                          <ConsumerIcon size={16} />
+                          <div className="flex-grow-1">
+                            <div className="fw-semibold text-dark">
+                              {currentLang === 'hi' ? 'सभी सेवाएं (कैटलॉग)' : 'All Services Catalog'}
+                            </div>
+                            <div className="text-muted" style={{ fontSize: '0.7rem' }}>
+                              {currentLang === 'hi' ? 'समस्त 20+ सेवाएं देखें' : 'Browse full 20+ service directory'}
+                            </div>
+                          </div>
+                        </button>
+                      </div>
+                    )}
+
+                    {/* Mobile Nested Sub-items */}
+                    {mobileMenuOpen && (
+                      <div className="ps-4 w-100 d-flex flex-column gap-1 my-1">
+                        {tradePortalsList.map((portal) => (
+                          <button
+                            key={portal.id}
+                            type="button"
+                            className={`btn btn-sm text-start py-1 px-2 ${
+                              activeNav === portal.id ? 'btn-primary text-white' : 'btn-outline-secondary'
+                            }`}
+                            onClick={() => {
+                              onSelectNav(portal.id);
+                              setMobileMenuOpen(false);
+                            }}
+                          >
+                            <portal.Icon size={14} className="me-2" />
+                            <span style={{ fontSize: '0.8rem' }}>{portal.label}</span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
               return (
                 <button
                   key={item.id}
@@ -266,10 +416,18 @@ export const Header: React.FC<HeaderProps> = ({
             {activeNav !== 'home' ? (
               <div className="d-flex align-items-center gap-2 bg-light border px-2 py-1 rounded">
                 <span className="badge bg-primary text-uppercase" style={{ fontSize: '0.7rem' }}>
-                  {currentUser?.role || activeNav}
+                  {activeNav === 'portal:plumbing'
+                    ? 'PLUMBING'
+                    : activeNav === 'portal:electrical'
+                    ? 'ELECTRICAL'
+                    : activeNav === 'portal:carpentry'
+                    ? 'CARPENTRY'
+                    : activeNav === 'portal:appliances'
+                    ? 'APPLIANCES'
+                    : currentUser?.role || activeNav}
                 </span>
                 <span className="small text-dark fw-semibold" style={{ fontSize: '0.8rem' }}>
-                  {currentUser?.name || 'Active Session'}
+                  {currentUser?.name || (activeNav.startsWith('portal:') ? 'Citizen Session' : 'Active Session')}
                 </span>
                 {onSwitchPersona && (
                   <button

@@ -374,3 +374,136 @@ export const CheckCircleIcon: React.FC<IconProps> = ({ className = '', size = 18
   </svg>
 );
 
+export const PlumbingIcon: React.FC<IconProps> = ({ className = '', size = 20, color = 'currentColor' }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-hidden="true"
+  >
+    <path d="M12 2v6" />
+    <path d="m4.93 10.93 4.24 4.24" />
+    <path d="M2 18h6" />
+    <path d="M14 18h8" />
+    <path d="M18 14v8" />
+    <circle cx="12" cy="14" r="4" />
+  </svg>
+);
+
+export const ElectricalIcon: React.FC<IconProps> = ({ className = '', size = 20, color = 'currentColor' }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-hidden="true"
+  >
+    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+  </svg>
+);
+
+export const CarpentryIcon: React.FC<IconProps> = ({ className = '', size = 20, color = 'currentColor' }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-hidden="true"
+  >
+    <path d="m15 12-8.5 8.5c-.83.83-2.17.83-3 0 0 0 0 0 0 0a2.12 2.12 0 0 1 0-3L12 9" />
+    <path d="M17.64 15 22 10.64" />
+    <path d="m20.91 3.26-6.36 6.36a1 1 0 0 0 0 1.41l1.41 1.41a1 1 0 0 0 1.41 0l6.36-6.36a1 1 0 0 0 0-1.41L22.32 3.26a1 1 0 0 0-1.41 0Z" />
+  </svg>
+);
+
+export const ApplianceIcon: React.FC<IconProps> = ({ className = '', size = 20, color = 'currentColor' }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-hidden="true"
+  >
+    <rect width="18" height="20" x="3" y="2" rx="2" />
+    <line x1="3" x2="21" y1="8" y2="8" />
+    <line x1="3" x2="21" y1="16" y2="16" />
+    <circle cx="12" cy="12" r="2" />
+  </svg>
+);
+
+export const StarIcon: React.FC<IconProps> = ({ className = '', size = 16, color = 'currentColor' }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    stroke={color}
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-hidden="true"
+  >
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+  </svg>
+);
+
+export const ClockIcon: React.FC<IconProps> = ({ className = '', size = 16, color = 'currentColor' }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-hidden="true"
+  >
+    <circle cx="12" cy="12" r="10" />
+    <polyline points="12 6 12 12 16 14" />
+  </svg>
+);
+
+export const ChevronDownIcon: React.FC<IconProps> = ({ className = '', size = 14, color = 'currentColor' }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-hidden="true"
+  >
+    <polyline points="6 9 12 15 18 9" />
+  </svg>
+);
+
+
+
+

@@ -14,7 +14,13 @@ import {
   VoteIcon,
   ArrowRightIcon,
   EmblemIcon,
+  PlumbingIcon,
+  ElectricalIcon,
+  CarpentryIcon,
+  ApplianceIcon,
+  StarIcon,
 } from '../../components/common/Icons';
+
 
 interface LandingPageProps {
   lang: 'en' | 'hi';
@@ -163,7 +169,107 @@ export const LandingPage: React.FC<LandingPageProps> = ({
     },
   ];
 
+  const tradePortals = [
+    {
+      id: 'portal:plumbing',
+      title: lang === 'hi' ? 'नलसाजी एवं स्वच्छता पोर्टल' : 'Plumbing & Sanitary Works Portal',
+      society: 'Delhi Urban Plumbing & Sanitary PSCS',
+      code: 'PSCS-DEL-PLUMB-01',
+      standard: 'BIS 12183 / Uniform Plumbing Code',
+      icon: PlumbingIcon,
+      color: '#0284c7',
+      activeCount: 42,
+      warranty: 30,
+      rating: '4.88',
+      startingRate: 250,
+      description:
+        lang === 'hi'
+          ? 'पाइपलाइन लीकेज, ड्रेन सफाई, सेनेटरी फिटिंग और जल आपूर्ति प्रणाली की वैधानिक मरम्मत।'
+          : 'Statutory sanitary engineering, high-pressure leak resolution, hydro-jet drain unblocking, and RO/tank installations.',
+      services: [
+        'High-Pressure Leak Diagnosis',
+        'Hydro-Jet Drain Unblocking',
+        'Sanitary Ware Fitting (BIS 12183)',
+        'Overhead Tank Valve Overhaul',
+      ],
+      cta: lang === 'hi' ? 'नलसाजी पोर्टल खोलें' : 'Enter Plumbing Portal',
+    },
+    {
+      id: 'portal:electrical',
+      title: lang === 'hi' ? 'विद्युत अभियांत्रिकी पोर्टल' : 'Electrical & Wiremen Portal',
+      society: 'Delhi Certified Wiremen & Electricians PSCS',
+      code: 'PSCS-DEL-ELEC-02',
+      standard: 'CEA Regulations / IS 732',
+      icon: ElectricalIcon,
+      color: '#d97706',
+      activeCount: 38,
+      warranty: 45,
+      rating: '4.92',
+      startingRate: 200,
+      description:
+        lang === 'hi'
+          ? 'एमसीबी ट्रिपिंग, वायरिंग रीकंडीशनिंग, अर्थिंग परीक्षण और प्रमाणित वायरमैन द्वारा सुरक्षा ऑडिट।'
+          : 'CEA-certified wiremen for circuit load balancing, MCB trip analysis, earthing resistance audits, and surge protection.',
+      services: [
+        'Circuit Breaker & MCB Diagnostics',
+        'Complete Rewiring & Conduiting',
+        'Earthing Resistance Verification',
+        'Inverter & UPS Panel Wiring',
+      ],
+      cta: lang === 'hi' ? 'विद्युत पोर्टल खोलें' : 'Enter Electrical Portal',
+    },
+    {
+      id: 'portal:carpentry',
+      title: lang === 'hi' ? 'काष्ठशिल्प एवं बढ़ईगीरी पोर्टल' : 'Woodcraft & Carpentry Portal',
+      society: 'Indraprastha Woodcraft Artisans PSCS',
+      code: 'PSCS-DEL-CARP-03',
+      standard: 'BIS IS 2202 Seasoned Wood',
+      icon: CarpentryIcon,
+      color: '#b45309',
+      activeCount: 29,
+      warranty: 60,
+      rating: '4.85',
+      startingRate: 300,
+      description:
+        lang === 'hi'
+          ? 'दरवाजे, खिड़कियां, मॉड्यूलर फर्नीचर संरेखण, ताला प्रतिष्ठापन और कस्टम काष्ठशिल्प सेवाएं।'
+          : 'Certified joiners and carpenters for moisture-tested hardwood repairs, acoustic door alignment, modular cabinetry, and mortise locks.',
+      services: [
+        'Flush Door & Acoustic Planing',
+        'Modular Cabinet Hinge Overhaul',
+        'High-Security Mortise Lock Fitting',
+        'Structural Timber Reinforcement',
+      ],
+      cta: lang === 'hi' ? 'बढ़ईगीरी पोर्टल खोलें' : 'Enter Carpentry Portal',
+    },
+    {
+      id: 'portal:appliances',
+      title: lang === 'hi' ? 'उपकरण मरम्मत सहकारी पोर्टल' : 'Appliance Repair Cooperative',
+      society: 'Capital Electro-Mechanical & Appliances PSCS',
+      code: 'PSCS-DEL-APPL-04',
+      standard: 'BEE Star / MoEFCC E-Waste',
+      icon: ApplianceIcon,
+      color: '#4f46e5',
+      activeCount: 35,
+      warranty: 45,
+      rating: '4.81',
+      startingRate: 350,
+      description:
+        lang === 'hi'
+          ? 'एसी गैस रीफिलिंग, इन्वर्टर रेफ्रिजरेटर, फ्रंट-लोड वॉशिंग मशीन और माइक्रोवेव ओवन की मरम्मत।'
+          : 'MoEFCC-compliant certified technicians for inverter compressor repair, sealed R-32 refrigerant recovery, and washing machine drum balancing.',
+      services: [
+        'Inverter AC Sealed System Servicing',
+        'Frost-Free Fridge PCB & Defrosting',
+        'Front-Load Washing Machine Damping',
+        'Microwave Magnetron Calibration',
+      ],
+      cta: lang === 'hi' ? 'उपकरण पोर्टल खोलें' : 'Enter Appliance Portal',
+    },
+  ];
+
   return (
+
     <div className="landing-page-wrapper">
       {/* 1. Hero Section */}
       <div className="hero-card p-4 p-md-5 mb-5 shadow-sm">
@@ -443,8 +549,120 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         </div>
       </div>
 
+      {/* 2.5 Specialized Cooperative Trade Portals */}
+      <div className="mb-5">
+        <div className="text-center mb-4">
+          <span className="badge bg-light text-primary border px-3 py-1 mb-2 fw-semibold">
+            {lang === 'hi' ? 'प्राथमिक सेवा सहकारी समितियां' : 'Primary Service Cooperative Societies'}
+          </span>
+          <h2 className="h4 fw-bold text-dark">
+            {lang === 'hi' ? 'विशिष्ट सहकारी सेवा पोर्टल' : 'Dedicated Cooperative Trade Portals'}
+          </h2>
+          <p className="text-muted small mx-auto" style={{ maxWidth: '680px' }}>
+            {lang === 'hi'
+              ? 'प्रत्येक सेवा एक स्वायत्त प्राथमिक सेवा सहकारी समिति द्वारा संचालित है। अपनी आवश्यकतानुसार विशिष्ट सेवा पोर्टल चुनें और सत्यापित श्रमयोगियों से कार्य कराएं।'
+              : 'Every trade operates under its own registered Primary Service Cooperative Society under the MSCS Act 2023. Select a dedicated portal for trade-specific engineering standards, statutory rate schedules, and direct member dispatches.'}
+          </p>
+        </div>
+
+        <div className="row g-4">
+          {tradePortals.map((tp) => {
+            const TradeIcon = tp.icon;
+            const workerPay = Math.round(tp.startingRate * 0.88);
+            const welfarePay = Math.round(tp.startingRate * 0.08);
+
+            return (
+              <div key={tp.id} className="col-12 col-md-6 col-xl-3">
+                <div
+                  className="persona-card p-3 p-xl-4 d-flex flex-column h-100 bg-white"
+                  style={{ borderTop: `4px solid ${tp.color}` }}
+                >
+                  <div className="d-flex justify-content-between align-items-center mb-3">
+                    <div
+                      className="card-icon-wrapper"
+                      style={{ backgroundColor: `${tp.color}15`, color: tp.color, borderColor: `${tp.color}40` }}
+                    >
+                      <TradeIcon size={22} />
+                    </div>
+                    <span className="badge bg-light text-dark border small" style={{ fontSize: '0.68rem' }}>
+                      {tp.code}
+                    </span>
+                  </div>
+
+                  <h3 className="h6 fw-bold mb-1 text-dark">{tp.title}</h3>
+                  <div className="small text-muted mb-2" style={{ fontSize: '0.75rem' }}>
+                    {tp.society}
+                  </div>
+
+                  <p className="small text-muted mb-3 flex-grow-1" style={{ fontSize: '0.82rem' }}>
+                    {tp.description}
+                  </p>
+
+                  {/* Performance Indicators */}
+                  <div className="p-2 mb-3 bg-light border rounded">
+                    <div className="d-flex justify-content-between align-items-center mb-1">
+                      <span className="small text-muted" style={{ fontSize: '0.72rem' }}>Quality Index:</span>
+                      <div className="d-inline-flex align-items-center gap-1 small fw-bold text-dark" style={{ fontSize: '0.75rem' }}>
+                        <span>{tp.rating}</span>
+                        <StarIcon size={13} color="#eab308" />
+                      </div>
+                    </div>
+                    <div className="d-flex justify-content-between align-items-center mb-1">
+                      <span className="small text-muted" style={{ fontSize: '0.72rem' }}>Active Tradesmen:</span>
+                      <span className="small fw-semibold text-success" style={{ fontSize: '0.75rem' }}>{tp.activeCount} Verified</span>
+                    </div>
+                    <div className="d-flex justify-content-between align-items-center">
+                      <span className="small text-muted" style={{ fontSize: '0.72rem' }}>Free Warranty:</span>
+                      <span className="small fw-semibold text-primary" style={{ fontSize: '0.75rem' }}>{tp.warranty} Days</span>
+                    </div>
+                  </div>
+
+                  {/* Statutory Starting Rate */}
+                  <div className="mb-3 px-2 py-1 border rounded bg-white">
+                    <div className="d-flex justify-content-between align-items-baseline">
+                      <span className="small text-muted" style={{ fontSize: '0.72rem' }}>Starting Baseline:</span>
+                      <span className="fw-bold text-primary">₹{tp.startingRate}</span>
+                    </div>
+                    <div className="d-flex justify-content-between small text-muted" style={{ fontSize: '0.68rem' }}>
+                      <span>Worker: ₹{workerPay} (88%)</span>
+                      <span>Welfare: ₹{welfarePay} (8%)</span>
+                    </div>
+                  </div>
+
+                  <div className="small fw-bold text-uppercase text-secondary mb-2" style={{ fontSize: '0.68rem' }}>
+                    Standard Scope
+                  </div>
+                  <ul className="feature-list mb-4">
+                    {tp.services.map((srv, idx) => (
+                      <li key={idx} style={{ fontSize: '0.78rem' }}>
+                        <span className="check-icon">
+                          <CheckIcon size={12} />
+                        </span>
+                        <span>{srv}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="mt-auto pt-2 border-top">
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-primary w-100 d-flex justify-content-between align-items-center"
+                      onClick={() => onSelectPortal(tp.id)}
+                    >
+                      <span className="fw-semibold">{tp.cta}</span>
+                      <ArrowRightIcon size={14} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
       {/* 3. Four Institutional Gateway Portals */}
       <div className="mb-5">
+
         <div className="text-center mb-4">
           <span className="badge bg-light text-dark border px-3 py-1 mb-2">Access Terminals</span>
           <h2 className="h4 fw-bold text-dark">
