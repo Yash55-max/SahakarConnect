@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
+import { SocketProvider, useSocket } from './context/SocketContext';
+import ServiceCatalog from './pages/consumer/ServiceCatalog';
+import ProviderDashboard from './pages/provider/ProviderDashboard';
+import AdminHub from './pages/admin/AdminHub';
 import {
   ConsumerIcon,
   ProviderIcon,
@@ -17,11 +21,21 @@ interface HealthStatus {
   uptime?: number;
 }
 
-export const App: React.FC = () => {
+const PERSONA_CREDENTIALS: Record<string, { email: string; pass: string }> = {
+  consumer: { email: 'vikram.consumer@gmail.com', pass: 'Password@123' },
+  provider: { email: 'ramesh.plumber@sahakar.org', pass: 'Password@123' },
+  coop_admin: { email: 'admin.delhi@sahakar.gov.in', pass: 'Password@123' },
+  regulator: { email: 'regulator@cooperation.gov.in', pass: 'Password@123' },
+};
+
+export const AppContent: React.FC = () => {
   const [lang, setLang] = useState<'en' | 'hi'>('en');
   const [selectedPersona, setSelectedPersona] = useState<string | null>(null);
   const [backendHealth, setBackendHealth] = useState<HealthStatus | null>(null);
   const [loadingHealth, setLoadingHealth] = useState<boolean>(true);
+  const [currentUser, setCurrentUser] = useState<any | null>(null);
+
+  const { connectWithToken } = useSocket();
 
   useEffect(() => {
     fetch('http://localhost:5000/api/health')
@@ -35,6 +49,28 @@ export const App: React.FC = () => {
         setLoadingHealth(false);
       });
   }, []);
+
+  const handleSelectPersona = async (personaId: string) => {
+    setSelectedPersona(personaId);
+    const creds = PERSONA_CREDENTIALS[personaId];
+    if (creds) {
+      try {
+        const res = await fetch('http://localhost:5000/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: creds.email, password: creds.pass }),
+        });
+        if (res.ok) {
+          const data = await res.json();
+          localStorage.setItem('token', data.token);
+          setCurrentUser(data.user);
+          connectWithToken(data.token);
+        }
+      } catch (err) {
+        console.error('Auto login error:', err);
+      }
+    }
+  };
 
   const personas = [
     {
@@ -168,93 +204,101 @@ export const App: React.FC = () => {
             </div>
           </div>
 
-          {/* Statutory Escrow Split Box */}
-          <div className="statutory-banner p-3 mb-4 shadow-sm">
-            <div className="d-flex align-items-center gap-3">
-              <div className="text-primary">
-                <ScaleIcon size={28} />
-              </div>
-              <div>
-                <div className="small fw-bold text-dark">Statutory Split Invariant:</div>
-                <div className="d-flex align-items-center gap-2 flex-wrap mt-1">
-                  <code className="formula-code">
-                    Worker Payout (W) + Welfare Fund (F) + Platform Fee (P) = Gross Amount
-                  </code>
-                  <span className="text-muted small">
-                    Enforces deterministic zero-leakage accounting. Rounding fractional remainder credited to worker.
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Persona Card Grid */}
-          <div className="row g-4">
-            {personas.map((p) => {
-              const IconComp = p.IconComponent;
-              const isSelected = selectedPersona === p.id;
-              return (
-                <div key={p.id} className="col-12 col-md-6 col-xl-3">
-                  <div className={`persona-card p-3 ${isSelected ? 'selected' : ''}`}>
-                    <div className="d-flex justify-content-between align-items-center mb-3">
-                      <div className="card-icon-wrapper">
-                        <IconComp size={22} />
-                      </div>
-                      <span className={`badge ${p.badgeClass} text-uppercase px-2 py-1`} style={{ fontSize: '0.7rem' }}>
-                        {p.role}
-                      </span>
-                    </div>
-
-                    <h3 className="h6 fw-bold mb-2 text-dark">{p.title}</h3>
-                    <p className="small text-muted mb-3 flex-grow-1">{p.description}</p>
-
-                    <div className="small fw-semibold text-uppercase text-secondary mb-2" style={{ fontSize: '0.72rem' }}>
-                      Key Capabilities
-                    </div>
-                    <ul className="feature-list mb-4">
-                      {p.features.map((feat, idx) => (
-                        <li key={idx}>
-                          <span className="check-icon">
-                            <CheckIcon size={13} />
-                          </span>
-                          <span>{feat}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <div className="mt-auto">
-                      <button
-                        type="button"
-                        className={`btn btn-sm w-100 ${
-                          isSelected ? 'btn-primary' : 'btn-outline-primary'
-                        }`}
-                        onClick={() => setSelectedPersona(p.id)}
-                      >
-                        {p.action}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Persona Active View Panel */}
+          {/* Persona Switcher Bar if active */}
           {selectedPersona && (
-            <div className="alert alert-secondary mt-4 border shadow-sm d-flex justify-content-between align-items-center">
-              <div className="small">
-                <strong>Selected Workspace:</strong>{' '}
-                <span>{personas.find((p) => p.id === selectedPersona)?.title}</span>
-                . Day 2 interactive modules mount into this workspace.
+            <div className="alert alert-light border shadow-sm mb-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
+              <div className="d-flex align-items-center gap-2">
+                <span className="badge bg-primary text-uppercase">{currentUser?.role || selectedPersona}</span>
+                <span className="small fw-semibold text-dark">
+                  Active Persona: {currentUser?.name || selectedPersona} ({currentUser?.email})
+                </span>
               </div>
               <button
                 type="button"
                 className="btn btn-sm btn-outline-secondary"
                 onClick={() => setSelectedPersona(null)}
               >
-                Clear Selection
+                ← Switch Persona
               </button>
             </div>
+          )}
+
+          {/* Active Persona Workspace View */}
+          {selectedPersona === 'consumer' && <ServiceCatalog />}
+          {selectedPersona === 'provider' && <ProviderDashboard />}
+          {(selectedPersona === 'coop_admin' || selectedPersona === 'regulator') && <AdminHub />}
+
+          {/* Home Landing View */}
+          {!selectedPersona && (
+            <>
+              {/* Statutory Escrow Split Box */}
+              <div className="statutory-banner p-3 mb-4 shadow-sm">
+                <div className="d-flex align-items-center gap-3">
+                  <div className="text-primary">
+                    <ScaleIcon size={28} />
+                  </div>
+                  <div>
+                    <div className="small fw-bold text-dark">Statutory Split Invariant:</div>
+                    <div className="d-flex align-items-center gap-2 flex-wrap mt-1">
+                      <code className="formula-code">
+                        Worker Payout (W) + Welfare Fund (F) + Platform Fee (P) = Gross Amount
+                      </code>
+                      <span className="text-muted small">
+                        Enforces deterministic zero-leakage accounting. Rounding fractional remainder credited to worker.
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Persona Card Grid */}
+              <div className="row g-4">
+                {personas.map((p) => {
+                  const IconComp = p.IconComponent;
+                  return (
+                    <div key={p.id} className="col-12 col-md-6 col-xl-3">
+                      <div className="persona-card p-3">
+                        <div className="d-flex justify-content-between align-items-center mb-3">
+                          <div className="card-icon-wrapper">
+                            <IconComp size={22} />
+                          </div>
+                          <span className={`badge ${p.badgeClass} text-uppercase px-2 py-1`} style={{ fontSize: '0.7rem' }}>
+                            {p.role}
+                          </span>
+                        </div>
+
+                        <h3 className="h6 fw-bold mb-2 text-dark">{p.title}</h3>
+                        <p className="small text-muted mb-3 flex-grow-1">{p.description}</p>
+
+                        <div className="small fw-semibold text-uppercase text-secondary mb-2" style={{ fontSize: '0.72rem' }}>
+                          Key Capabilities
+                        </div>
+                        <ul className="feature-list mb-4">
+                          {p.features.map((feat, idx) => (
+                            <li key={idx}>
+                              <span className="check-icon">
+                                <CheckIcon size={13} />
+                              </span>
+                              <span>{feat}</span>
+                            </li>
+                          ))}
+                        </ul>
+
+                        <div className="mt-auto">
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-primary w-100"
+                            onClick={() => handleSelectPersona(p.id)}
+                          >
+                            {p.action}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </>
           )}
         </div>
       </main>
@@ -263,4 +307,11 @@ export const App: React.FC = () => {
     </div>
   );
 };
+
+export const App: React.FC = () => (
+  <SocketProvider>
+    <AppContent />
+  </SocketProvider>
+);
+
 export default App;
