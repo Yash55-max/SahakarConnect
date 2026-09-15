@@ -7,7 +7,7 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "test": "vitest run",
-    "test:e2e": "ts-node tests/e2e-simulation.ts"
+    "test:e2e": "NODE_ENV=test ts-node tests/e2e-simulation.ts"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"

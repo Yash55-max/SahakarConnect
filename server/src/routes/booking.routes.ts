@@ -239,14 +239,15 @@ router.patch('/:id/status', requireAuth, async (req: Request, res: Response) => 
 // PATCH /api/bookings/:id/complete - Complete job with 4-digit PIN and trigger escrow settlement
 router.patch('/:id/complete', requireAuth, requireRole([UserRole.PROVIDER]), async (req: Request, res: Response) => {
   try {
-    const { completionOtp } = req.body;
+    const { completionOtp, pin } = req.body;
+    const otpToVerify = completionOtp || pin;
 
-    if (!completionOtp) {
+    if (!otpToVerify) {
       return res.status(400).json({ error: '4-digit completion PIN is required' });
     }
 
     // Execute atomic escrow settlement with zero rounding leakage
-    const settlement = await settleEscrowTransaction(req.params.id as string, completionOtp, prisma);
+    const settlement = await settleEscrowTransaction(req.params.id as string, otpToVerify, prisma);
 
     const fullBooking = await prisma.booking.findUnique({
       where: { id: req.params.id as string },
