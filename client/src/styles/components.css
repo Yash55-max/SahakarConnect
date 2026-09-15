@@ -587,3 +587,247 @@ body.high-contrast .skeleton {
   inset: 0;
   z-index: 1;
 }
+
+/* ==========================================================================
+   RESPONSIVE & MOBILE OPTIMIZATIONS (WCAG 2.1 AA & GIGW 3.0)
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .portal-grid {
+    grid-template-columns: 1fr;
+  }
+  .role-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Utility topbar */
+  .topbar-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--ux4g-sp-2);
+    padding: var(--ux4g-sp-3) 0;
+  }
+  .topbar-left {
+    justify-content: space-between;
+    font-size: 11px;
+    flex-wrap: wrap;
+    gap: var(--ux4g-sp-2);
+  }
+  .topbar-right {
+    justify-content: space-between;
+    gap: var(--ux4g-sp-2);
+    flex-wrap: wrap;
+  }
+
+  /* Header branding */
+  .header-row {
+    gap: var(--ux4g-sp-4);
+    padding: var(--ux4g-sp-4) 0;
+  }
+  .emblem {
+    width: 38px;
+    height: 38px;
+  }
+  .brand-name {
+    font-size: var(--ux4g-fs-20);
+  }
+  .header-text-block .council-line {
+    display: none;
+  }
+
+  /* Nav row touch scrolling */
+  .nav-row {
+    gap: var(--ux4g-sp-1);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .nav-row::-webkit-scrollbar {
+    display: none;
+  }
+  .nav-link {
+    padding: var(--ux4g-sp-4) var(--ux4g-sp-4);
+    font-size: var(--ux4g-fs-13);
+    min-height: 44px;
+  }
+  .nav-dropdown-menu {
+    position: absolute;
+    left: 0;
+    right: auto;
+    max-width: calc(100vw - 32px);
+    width: 290px;
+  }
+
+  /* Hero */
+  .hero {
+    padding: var(--ux4g-sp-7) var(--ux4g-sp-5);
+    border-radius: var(--ux4g-radius-lg);
+  }
+  .hero h1 {
+    font-size: clamp(1.6rem, 6.5vw, 2.25rem);
+    line-height: 1.2;
+    margin-bottom: var(--ux4g-sp-4);
+  }
+  .hero p.lede {
+    font-size: var(--ux4g-fs-15);
+    line-height: 1.45;
+    margin-bottom: var(--ux4g-sp-6);
+  }
+  .hero-actions {
+    flex-direction: column;
+    gap: var(--ux4g-sp-3);
+    margin-bottom: var(--ux4g-sp-6);
+  }
+  .hero-actions .btn {
+    width: 100%;
+    justify-content: center;
+    padding: var(--ux4g-sp-4) var(--ux4g-sp-5);
+  }
+  .trust-row {
+    flex-direction: column;
+    gap: var(--ux4g-sp-3);
+    align-items: flex-start;
+  }
+
+  /* Split stat bar */
+  .split-bar {
+    grid-template-columns: 1fr;
+  }
+  .split-cell {
+    padding: var(--ux4g-sp-5) var(--ux4g-sp-5);
+    border-right: none;
+    border-bottom: 1px solid var(--ux4g-border-subtle);
+  }
+  .split-cell:last-child {
+    border-bottom: none;
+  }
+  .split-cell .num {
+    font-size: var(--ux4g-fs-26);
+  }
+
+  /* National Dignitary section */
+  .dignitary-card {
+    grid-template-columns: 1fr;
+    text-align: left;
+    padding: var(--ux4g-sp-6) var(--ux4g-sp-5);
+    gap: var(--ux4g-sp-5);
+  }
+  .dignitary-photo-wrap {
+    width: 160px;
+    height: 195px;
+    margin: 0 auto;
+  }
+  .dignitary-quote {
+    font-size: var(--ux4g-fs-15);
+    line-height: 1.45;
+    margin-bottom: var(--ux4g-sp-4);
+  }
+  .dignitary-name {
+    font-size: var(--ux4g-fs-18);
+  }
+
+  /* Section headings */
+  .section {
+    padding: var(--ux4g-sp-9) 0;
+  }
+  .section-head {
+    margin-bottom: var(--ux4g-sp-6);
+  }
+  .section-head h2 {
+    font-size: var(--ux4g-fs-24);
+    line-height: var(--ux4g-lh-28);
+  }
+
+  /* Calculator */
+  .calc-panel {
+    padding: var(--ux4g-sp-6) var(--ux4g-sp-5);
+  }
+  .calc-input-row {
+    flex-direction: column;
+    gap: var(--ux4g-sp-4);
+  }
+  .amount-field {
+    width: 100%;
+    max-width: 100% !important;
+  }
+  .quick-select {
+    width: 100%;
+    gap: var(--ux4g-sp-2);
+  }
+  .chip {
+    flex: 1 1 calc(33.33% - var(--ux4g-sp-2));
+    text-align: center;
+    padding: var(--ux4g-sp-3) var(--ux4g-sp-4);
+    font-size: var(--ux4g-fs-13);
+  }
+  .split-results {
+    grid-template-columns: 1fr;
+    gap: var(--ux4g-sp-3);
+  }
+  .split-card {
+    padding: var(--ux4g-sp-5);
+  }
+  .split-card .card-amount {
+    font-size: var(--ux4g-fs-24);
+  }
+  .compare-table th, .compare-table td {
+    padding: var(--ux4g-sp-4) var(--ux4g-sp-4);
+    font-size: var(--ux4g-fs-13);
+  }
+
+  /* Cards & layout */
+  .portal-card, .role-card, .pillar, .compliance-banner {
+    padding: var(--ux4g-sp-6) var(--ux4g-sp-5);
+  }
+  .portal-scope {
+    grid-template-columns: 1fr;
+    gap: var(--ux4g-sp-2);
+  }
+  .pillar-grid {
+    grid-template-columns: 1fr;
+  }
+  .compliance-banner {
+    flex-direction: column;
+    gap: var(--ux4g-sp-4);
+  }
+  .compliance-banner .tags {
+    margin-top: var(--ux4g-sp-4);
+  }
+}
+
+@media (max-width: 576px) {
+  .topbar-badge {
+    display: none;
+  }
+  .font-switch button {
+    padding: var(--ux4g-sp-2) var(--ux4g-sp-3);
+  }
+  .theme-switch button {
+    padding: var(--ux4g-sp-2) var(--ux4g-sp-3);
+    font-size: 11px;
+  }
+  .lang-select {
+    padding: var(--ux4g-sp-2) var(--ux4g-sp-3);
+  }
+  .brand-tag {
+    display: none;
+  }
+  .portal-meta-row {
+    flex-direction: column;
+    gap: var(--ux4g-sp-3);
+  }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: var(--ux4g-sp-7);
+  }
+  .modal {
+    margin: 0;
+    max-height: 94vh;
+    border-radius: var(--ux4g-radius-lg);
+  }
+  .modal-overlay {
+    padding: var(--ux4g-sp-4);
+  }
+}
+

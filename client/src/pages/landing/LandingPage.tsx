@@ -542,42 +542,44 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               </div>
             </div>
 
-            <table className="compare-table">
-              <thead>
-                <tr>
-                  <th>Dimension</th>
-                  <th>Private gig platforms</th>
-                  <th className="col-sahakar">SahakarConnect PSCS</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="row-label">Platform commission</td>
-                  <td className="col-private">25–35% (hidden)</td>
-                  <td className="col-sahakar">4.0% (statutory cap)</td>
-                </tr>
-                <tr>
-                  <td className="row-label">Tradesman take-home</td>
-                  <td className="col-private">65–75%</td>
-                  <td className="col-sahakar">88.0% guaranteed</td>
-                </tr>
-                <tr>
-                  <td className="row-label">Welfare &amp; social security</td>
-                  <td className="col-private">0% (no protection)</td>
-                  <td className="col-sahakar">8.0% dedicated fund</td>
-                </tr>
-                <tr>
-                  <td className="row-label">Governance &amp; ownership</td>
-                  <td className="col-private">Algorithmic, no say</td>
-                  <td className="col-sahakar">1 member, 1 vote</td>
-                </tr>
-                <tr>
-                  <td className="row-label">Payment release</td>
-                  <td className="col-private">Delayed weekly payouts</td>
-                  <td className="col-sahakar">Instant 4-digit PIN escrow</td>
-                </tr>
-              </tbody>
-            </table>
+            <div className="table-responsive-wrapper" style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', width: '100%', marginTop: 'var(--ux4g-sp-8)' }}>
+              <table className="compare-table" style={{ minWidth: '560px', marginTop: 0 }}>
+                <thead>
+                  <tr>
+                    <th>Dimension</th>
+                    <th>Private gig platforms</th>
+                    <th className="col-sahakar">SahakarConnect PSCS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="row-label">Platform commission</td>
+                    <td className="col-private">25–35% (hidden)</td>
+                    <td className="col-sahakar">4.0% (statutory cap)</td>
+                  </tr>
+                  <tr>
+                    <td className="row-label">Tradesman take-home</td>
+                    <td className="col-private">65–75%</td>
+                    <td className="col-sahakar">88.0% guaranteed</td>
+                  </tr>
+                  <tr>
+                    <td className="row-label">Welfare &amp; social security</td>
+                    <td className="col-private">0% (zero protection)</td>
+                    <td className="col-sahakar">8.0% dedicated fund</td>
+                  </tr>
+                  <tr>
+                    <td className="row-label">Governance &amp; ownership</td>
+                    <td className="col-private">Algorithmic deprioritization</td>
+                    <td className="col-sahakar">1-member-1-vote democratic</td>
+                  </tr>
+                  <tr>
+                    <td className="row-label">Payment release mechanism</td>
+                    <td className="col-private">Delayed weekly payouts</td>
+                    <td className="col-sahakar">Instant 4-digit PIN escrow</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </section>

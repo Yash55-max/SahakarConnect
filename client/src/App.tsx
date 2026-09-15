@@ -163,12 +163,18 @@ export const AppContent: React.FC = () => {
         onFontChoiceChange={setFontChoice}
       />
 
-      <main id="main-content" className="flex-grow-1 py-4" role="main">
-        <div className="container-fluid px-4">
-          {/* Breadcrumb & Quick Switcher Strip when inside a portal */}
-          {activeNav !== 'home' && (
-            <div className="card shadow-sm border mb-4 bg-white">
-              <div className="card-body py-2 px-3">
+      <main id="main-content" className={`flex-grow-1 ${activeNav === 'home' ? '' : 'py-3 py-md-4'}`} role="main">
+        {activeNav === 'home' ? (
+          <LandingPage
+            lang={lang}
+            onSelectPortal={handleSelectNav}
+            backendHealth={backendHealth}
+          />
+        ) : (
+          <div className="container-fluid px-2 px-sm-3 px-md-4">
+            {/* Breadcrumb & Quick Switcher Strip when inside a portal */}
+            <div className="card shadow-sm border mb-3 mb-md-4 bg-white">
+              <div className="card-body py-2 px-2 px-md-3">
                 <div className="d-flex justify-content-between align-items-center flex-wrap gap-2">
                   <div className="d-flex align-items-center gap-2 flex-wrap">
                     <button
@@ -195,7 +201,7 @@ export const AppContent: React.FC = () => {
 
                     {/* Quick Trade Selector in Breadcrumb Strip */}
                     {isConsumerView && (
-                      <div className="btn-group btn-group-sm ms-2 d-none d-md-inline-flex" role="group" aria-label="Trade portals quick switcher">
+                      <div className="btn-group btn-group-sm ms-md-2 overflow-auto" role="group" aria-label="Trade portals quick switcher">
                         <button
                           type="button"
                           className={`btn py-0 px-2 ${activeNav === 'portal:plumbing' || activeNav === 'consumer' ? 'btn-primary' : 'btn-outline-secondary'}`}
@@ -236,8 +242,8 @@ export const AppContent: React.FC = () => {
                     )}
                   </div>
 
-                  <div className="d-flex align-items-center gap-2">
-                    <span className="small text-muted d-none d-md-inline">Switch Portal:</span>
+                  <div className="d-flex align-items-center gap-2 flex-wrap ms-auto">
+                    <span className="small text-muted d-none d-lg-inline">Switch Portal:</span>
                     <div className="btn-group btn-group-sm" role="group" aria-label="Portal switcher">
                       <button
                         type="button"
@@ -246,7 +252,7 @@ export const AppContent: React.FC = () => {
                         title="Citizen Consumer"
                       >
                         <ConsumerIcon size={13} className="me-1" />
-                        Citizen
+                        <span className="d-none d-sm-inline">Citizen</span>
                       </button>
                       <button
                         type="button"
@@ -255,7 +261,7 @@ export const AppContent: React.FC = () => {
                         title="Tradesman Provider"
                       >
                         <ProviderIcon size={13} className="me-1" />
-                        Tradesman
+                        <span className="d-none d-sm-inline">Tradesman</span>
                       </button>
                       <button
                         type="button"
@@ -264,7 +270,7 @@ export const AppContent: React.FC = () => {
                         title="Society Admin"
                       >
                         <AdminIcon size={13} className="me-1" />
-                        Admin
+                        <span className="d-none d-sm-inline">Admin</span>
                       </button>
                       <button
                         type="button"
@@ -273,13 +279,13 @@ export const AppContent: React.FC = () => {
                         title="Regulator"
                       >
                         <RegulatorIcon size={13} className="me-1" />
-                        Regulator
+                        <span className="d-none d-sm-inline">Regulator</span>
                       </button>
                     </div>
 
                     <button
                       type="button"
-                      className="btn btn-sm btn-outline-danger ms-2"
+                      className="btn btn-sm btn-outline-danger"
                       onClick={() => setActiveNav('home')}
                       title="Exit to Landing Page"
                     >
@@ -289,40 +295,30 @@ export const AppContent: React.FC = () => {
                 </div>
               </div>
             </div>
-          )}
 
-          {/* Active View Router */}
-          {activeNav === 'home' && (
-            <LandingPage
-              lang={lang}
-              onSelectPortal={handleSelectNav}
-              backendHealth={backendHealth}
-            />
-          )}
+            <Suspense fallback={<PortalSkeleton title={getPortalTitle(activeNav)} />}>
+              {isConsumerView && (
+                <ServiceCatalog
+                  initialTrade={
+                    activeNav === 'portal:electrical'
+                      ? 'electrical'
+                      : activeNav === 'portal:carpentry'
+                      ? 'carpentry'
+                      : activeNav === 'portal:appliances'
+                      ? 'appliances'
+                      : 'plumbing'
+                  }
+                  lang={lang}
+                  onSelectTrade={(trade) => setActiveNav(`portal:${trade}`)}
+                />
+              )}
 
-          <Suspense fallback={<PortalSkeleton title={getPortalTitle(activeNav)} />}>
-            {isConsumerView && (
-              <ServiceCatalog
-                initialTrade={
-                  activeNav === 'portal:electrical'
-                    ? 'electrical'
-                    : activeNav === 'portal:carpentry'
-                    ? 'carpentry'
-                    : activeNav === 'portal:appliances'
-                    ? 'appliances'
-                    : 'plumbing'
-                }
-                lang={lang}
-                onSelectTrade={(trade) => setActiveNav(`portal:${trade}`)}
-              />
-            )}
+              {activeNav === 'provider' && <ProviderDashboard />}
 
-            {activeNav === 'provider' && <ProviderDashboard />}
-
-            {(activeNav === 'coop_admin' || activeNav === 'regulator') && <AdminHub />}
-          </Suspense>
-
-        </div>
+              {(activeNav === 'coop_admin' || activeNav === 'regulator') && <AdminHub />}
+            </Suspense>
+          </div>
+        )}
       </main>
 
       {/* Official Government of India Accessible Footer */}
