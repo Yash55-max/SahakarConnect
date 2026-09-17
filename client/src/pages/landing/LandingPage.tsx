@@ -18,7 +18,7 @@ import {
   InfoIcon,
   QrCodeIcon,
 } from '../../components/common/Icons';
-import { ImageWithSkeleton, PortalSkeleton, ServiceCatalogSkeleton } from '../../components/common/Skeleton';
+import { ImageWithSkeleton } from '../../components/common/Skeleton';
 
 interface LandingPageProps {
   lang: 'en' | 'hi';
@@ -33,7 +33,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 }) => {
   const [calcAmount, setCalcAmount] = useState<number>(1200);
   const [heroSearch, setHeroSearch] = useState<string>('');
-  const [skeletonPreviewMode, setSkeletonPreviewMode] = useState<'none' | 'portal' | 'catalog'>('none');
 
   // Compute statutory 88 / 8 / 4 split with MSCS Act 2023 rounding invariant
   const gross = Math.max(0, Number(calcAmount) || 0);
@@ -216,57 +215,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
   return (
     <div className="myaadhaar-page">
-      {/* ================= SKELETON PREVIEW BANNER IF ACTIVE ================= */}
-      {skeletonPreviewMode !== 'none' && (
-        <div className="container pt-3">
-          <div className="alert alert-info border d-flex justify-content-between align-items-center flex-wrap gap-2 mb-0 shadow-sm">
-            <div className="d-flex align-items-center gap-2">
-              <span className="badge bg-primary">UX4G Skeleton Mode</span>
-              <span className="small fw-semibold">
-                {skeletonPreviewMode === 'portal'
-                  ? 'Displaying Cooperative Portal Skeleton Loading Screen'
-                  : 'Displaying Service Catalog Skeleton Loading Screen'}
-              </span>
-            </div>
-            <div className="d-flex gap-2">
-              <button
-                type="button"
-                className={`btn btn-sm ${skeletonPreviewMode === 'portal' ? 'btn-primary' : 'btn-outline-primary'}`}
-                onClick={() => setSkeletonPreviewMode('portal')}
-              >
-                Portal Skeleton
-              </button>
-              <button
-                type="button"
-                className={`btn btn-sm ${skeletonPreviewMode === 'catalog' ? 'btn-primary' : 'btn-outline-primary'}`}
-                onClick={() => setSkeletonPreviewMode('catalog')}
-              >
-                Catalog Skeleton
-              </button>
-              <button
-                type="button"
-                className="btn btn-sm btn-outline-danger"
-                onClick={() => setSkeletonPreviewMode('none')}
-              >
-                Exit Skeleton Preview
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {skeletonPreviewMode === 'portal' && (
-        <div className="container py-4">
-          <PortalSkeleton title="Previewing Portal Loading State" />
-        </div>
-      )}
-
-      {skeletonPreviewMode === 'catalog' && (
-        <div className="container py-4">
-          <ServiceCatalogSkeleton />
-        </div>
-      )}
-
       {/* ==========================================================================
           1. HERO SECTION (UIDAI myAadhaar Layout: Left Hero Search + Right 3-Card Stack)
           ========================================================================== */}
@@ -480,7 +428,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             >
               <div className="myaadhaar-persona-img-wrap">
                 {p.image ? (
-                  <img src={p.image} alt={p.title} loading="lazy" decoding="async" />
+                  <ImageWithSkeleton
+                    src={p.image}
+                    alt={p.title}
+                    loading="lazy"
+                    decoding="async"
+                    containerStyle={{ width: '100%', height: '100%' }}
+                  />
                 ) : (
                   <div
                     style={{
@@ -829,14 +783,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 <span className="badge badge-neutral">MSCS Act 2023 Sec. 63</span>
                 <span className="badge badge-neutral">NCCT certified syllabus</span>
                 <span className="badge badge-neutral">GIGW 3.0 accessible</span>
-                <button
-                  type="button"
-                  className="btn btn-sm btn-ghost ms-md-auto"
-                  onClick={() => setSkeletonPreviewMode(skeletonPreviewMode === 'none' ? 'portal' : 'none')}
-                  style={{ fontSize: '11px', padding: '2px 8px' }}
-                >
-                  {skeletonPreviewMode === 'none' ? 'Test Skeleton Loading Screen' : 'Exit Skeleton Preview'}
-                </button>
               </div>
             </div>
           </div>

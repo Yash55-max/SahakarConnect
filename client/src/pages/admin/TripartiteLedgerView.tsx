@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { LedgerSkeleton } from '../../components/common/Skeleton';
 
 export const TripartiteLedgerView: React.FC = () => {
   const [ledgerData, setLedgerData] = useState<any | null>(null);
@@ -53,11 +54,7 @@ export const TripartiteLedgerView: React.FC = () => {
   };
 
   if (loading) {
-    return (
-      <div className="text-center py-5">
-        <div className="spinner-border text-primary" role="status" />
-      </div>
-    );
+    return <LedgerSkeleton />;
   }
 
   const metrics = ledgerData?.metrics || {

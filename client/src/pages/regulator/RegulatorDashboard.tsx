@@ -11,6 +11,11 @@ import {
   DocumentIcon,
   MapPinIcon,
 } from '../../components/common/Icons';
+import { RegulatorSkeleton } from '../../components/common/Skeleton';
+
+interface RegulatorDashboardProps {
+  onOpenAuth?: () => void;
+}
 
 interface RegulatorKPIs {
   totalCooperatives: number;
@@ -94,7 +99,7 @@ interface RegulatorData {
   statutoryMandate: StatutoryMandate;
 }
 
-export const RegulatorDashboard: React.FC = () => {
+export const RegulatorDashboard: React.FC<RegulatorDashboardProps> = ({ onOpenAuth }) => {
   const [data, setData] = useState<RegulatorData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -109,31 +114,14 @@ export const RegulatorDashboard: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      let token = localStorage.getItem('token');
-
-      // Auto-authenticate as regulator if needed
-      let res = await fetch('http://localhost:5000/api/regulator/analytics', {
+      const token = localStorage.getItem('token');
+      const res = await fetch('http://localhost:5000/api/regulator/analytics', {
         headers: { ...(token && { Authorization: `Bearer ${token}` }) },
       });
 
       if (res.status === 401 || res.status === 403) {
-        // Attempt login as regulator
-        const loginRes = await fetch('http://localhost:5000/api/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email: 'regulator@cooperation.gov.in',
-            password: 'Password@123',
-          }),
-        });
-        if (loginRes.ok) {
-          const authData = await loginRes.json();
-          token = authData.token;
-          localStorage.setItem('token', token!);
-          res = await fetch('http://localhost:5000/api/regulator/analytics', {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-        }
+        setError('UNAUTHORIZED');
+        return;
       }
 
       if (!res.ok) {
@@ -247,14 +235,33 @@ export const RegulatorDashboard: React.FC = () => {
   };
 
   if (loading) {
+    return <RegulatorSkeleton />;
+  }
+
+  if (error === 'UNAUTHORIZED') {
     return (
-      <div className="py-5 text-center">
-        <div className="spinner-border text-primary" role="status">
-          <span className="visually-hidden">Loading Regulatory Console...</span>
+      <div className="card shadow-sm border p-4 p-md-5 text-center my-4 bg-white">
+        <div
+          className="mx-auto mb-3 p-3 rounded-circle d-inline-flex align-items-center justify-content-center"
+          style={{ background: 'var(--ux4g-bg-primary, #f2efff)', width: '64px', height: '64px' }}
+        >
+          <RegulatorIcon size={32} color="var(--ux4g-primary-600, #4a2bc2)" />
         </div>
-        <p className="mt-3 text-secondary small fw-semibold">
-          Verifying multi-state cooperative ledgers &amp; statutory compliance...
+        <h3 className="h5 fw-bold text-dark mb-2">Statutory Regulator Credentials Required</h3>
+        <p className="text-secondary small max-w-md mx-auto mb-4" style={{ maxWidth: '540px' }}>
+          Access to the Central Regulatory Oversight Dashboard is restricted to authorized officers of the Ministry of Cooperation and State Cooperative Registrars under Section 120 of the Multi-State Co-operative Societies Act, 2023.
         </p>
+        <div>
+          {onOpenAuth && (
+            <button
+              type="button"
+              className="btn btn-primary btn-sm px-4 py-2 fw-semibold"
+              onClick={onOpenAuth}
+            >
+              Sign In with Institutional Credentials
+            </button>
+          )}
+        </div>
       </div>
     );
   }

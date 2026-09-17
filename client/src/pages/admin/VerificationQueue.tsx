@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { CardGridSkeleton } from '../../components/common/Skeleton';
 
 export const VerificationQueue: React.FC = () => {
   const [providers, setProviders] = useState<any[]>([]);
@@ -56,11 +57,7 @@ export const VerificationQueue: React.FC = () => {
   };
 
   if (loading) {
-    return (
-      <div className="text-center py-5">
-        <div className="spinner-border text-primary" role="status" />
-      </div>
-    );
+    return <CardGridSkeleton count={4} />;
   }
 
   return (

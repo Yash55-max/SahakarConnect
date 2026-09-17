@@ -5,6 +5,7 @@ import { prisma } from '../src/lib/prisma';
 import { signToken, requireRole, requireCoopTenant, AuthenticatedUser } from '../src/middleware/auth';
 import { UserRole } from '@prisma/client';
 import express, { Request, Response } from 'express';
+import { credentials } from '../src/config/credentials';
 
 describe('Auth & Multi-Tenant Role Gateways', () => {
   let delhiAdminToken: string;
@@ -28,7 +29,7 @@ describe('Auth & Multi-Tenant Role Gateways', () => {
       .post('/api/auth/login')
       .send({
         email: 'admin.delhi@sahakar.gov.in',
-        password: 'Password@123',
+        password: credentials.defaultPassword,
       });
 
     expect(res.status).toBe(200);
@@ -44,7 +45,7 @@ describe('Auth & Multi-Tenant Role Gateways', () => {
       .post('/api/auth/login')
       .send({
         email: 'ramesh.plumber@sahakar.org',
-        password: 'Password@123',
+        password: credentials.defaultPassword,
       });
 
     expect(res.status).toBe(200);
@@ -65,6 +66,40 @@ describe('Auth & Multi-Tenant Role Gateways', () => {
 
     expect(res.status).toBe(401);
     expect(res.body.error).toBe('Invalid credentials');
+  });
+
+  it('POST /api/auth/register registers a new Indian citizen consumer and returns JWT', async () => {
+    const uniqueEmail = `test.citizen.${Date.now()}@gmail.com`;
+    const uniquePhone = `+9199${Math.floor(10000000 + Math.random() * 90000000)}`;
+
+    const res = await request(app)
+      .post('/api/auth/register')
+      .send({
+        name: 'Aarav Patel',
+        email: uniqueEmail,
+        phone: uniquePhone,
+        password: credentials.defaultPassword,
+        role: UserRole.CONSUMER,
+      });
+
+    expect(res.status).toBe(201);
+    expect(res.body.token).toBeDefined();
+    expect(res.body.user.name).toBe('Aarav Patel');
+    expect(res.body.user.role).toBe(UserRole.CONSUMER);
+  });
+
+  it('POST /api/auth/register rejects duplicate email with 409 Conflict', async () => {
+    const res = await request(app)
+      .post('/api/auth/register')
+      .send({
+        name: 'Duplicate Citizen',
+        email: 'vikram.consumer@gmail.com',
+        phone: '+919988776655',
+        password: credentials.defaultPassword,
+      });
+
+    expect(res.status).toBe(409);
+    expect(res.body.error).toBe('Account already exists');
   });
 
   it('GET /api/auth/me returns authenticated user details', async () => {

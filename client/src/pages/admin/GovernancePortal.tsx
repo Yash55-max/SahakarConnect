@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { CardGridSkeleton } from '../../components/common/Skeleton';
 
 export const GovernancePortal: React.FC = () => {
   const [polls, setPolls] = useState<any[]>([]);
@@ -64,11 +65,7 @@ export const GovernancePortal: React.FC = () => {
   };
 
   if (loading) {
-    return (
-      <div className="text-center py-5">
-        <div className="spinner-border text-primary" role="status" />
-      </div>
-    );
+    return <CardGridSkeleton count={3} />;
   }
 
   return (

@@ -4,7 +4,12 @@ import Footer from './components/common/Footer';
 import type { LegalDocType } from './components/common/LegalModal';
 import { SocketProvider, useSocket } from './context/SocketContext';
 import LandingPage from './pages/landing/LandingPage';
-import { PortalSkeleton } from './components/common/Skeleton';
+import {
+  PortalSkeleton,
+  ServiceCatalogSkeleton,
+  RegulatorSkeleton,
+} from './components/common/Skeleton';
+import AuthModal from './components/common/AuthModal';
 
 // Lazy load portal views and modals for performance & smooth skeleton transitions
 const ServiceCatalog = lazy(() => import('./pages/consumer/ServiceCatalog'));
@@ -31,23 +36,13 @@ interface HealthStatus {
   uptime?: number;
 }
 
-const PERSONA_CREDENTIALS: Record<string, { email: string; pass: string }> = {
-  consumer: { email: 'vikram.consumer@gmail.com', pass: 'Password@123' },
-  'portal:plumbing': { email: 'vikram.consumer@gmail.com', pass: 'Password@123' },
-  'portal:electrical': { email: 'vikram.consumer@gmail.com', pass: 'Password@123' },
-  'portal:carpentry': { email: 'vikram.consumer@gmail.com', pass: 'Password@123' },
-  'portal:appliances': { email: 'vikram.consumer@gmail.com', pass: 'Password@123' },
-  provider: { email: 'ramesh.plumber@sahakar.org', pass: 'Password@123' },
-  coop_admin: { email: 'admin.delhi@sahakar.gov.in', pass: 'Password@123' },
-  regulator: { email: 'regulator@cooperation.gov.in', pass: 'Password@123' },
-};
-
-
 export const AppContent: React.FC = () => {
   const [lang, setLang] = useState<'en' | 'hi'>('en');
   const [activeNav, setActiveNav] = useState<string>('home');
   const [backendHealth, setBackendHealth] = useState<HealthStatus | null>(null);
   const [currentUser, setCurrentUser] = useState<any | null>(null);
+  const [authModalOpen, setAuthModalOpen] = useState<boolean>(false);
+  const [authModalRole, setAuthModalRole] = useState<'consumer' | 'provider' | 'coop_admin' | 'regulator'>('consumer');
   const [theme, setTheme] = useState<'light' | 'dark' | 'contrast'>(() => {
     const saved = localStorage.getItem('sahakar_theme');
     if (saved === 'high-contrast' || saved === 'contrast') return 'contrast';
@@ -95,32 +90,95 @@ export const AppContent: React.FC = () => {
       });
   }, []);
 
-  // Handle portal selection & automatic authentication
-  const handleSelectNav = async (navId: string) => {
-    setActiveNav(navId);
+  // Restore authenticated session on initial mount
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      fetch('http://localhost:5000/api/auth/me', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then((res) => {
+          if (res.ok) return res.json();
+          throw new Error('Session expired');
+        })
+        .then((data) => {
+          if (data.user) {
+            setCurrentUser(data.user);
+            connectWithToken(token);
+          }
+        })
+        .catch(() => {
+          localStorage.removeItem('token');
+          setCurrentUser(null);
+        });
+    }
+  }, []);
 
+  const handleLoginSuccess = (token: string, user: any) => {
+    localStorage.setItem('token', token);
+    setCurrentUser(user);
+    connectWithToken(token);
+    setAuthModalOpen(false);
+
+    if (user.role === 'PROVIDER') {
+      setActiveNav('provider');
+    } else if (user.role === 'ADMIN') {
+      setActiveNav('coop_admin');
+    } else if (user.role === 'REGULATOR') {
+      setActiveNav('regulator');
+    } else {
+      setActiveNav('consumer');
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setCurrentUser(null);
+    setActiveNav('home');
+  };
+
+  // Handle portal selection & permissions check
+  const handleSelectNav = (navId: string) => {
     if (navId === 'home') {
+      setActiveNav('home');
       return;
     }
 
-    const creds = PERSONA_CREDENTIALS[navId];
-    if (creds) {
-      try {
-        const res = await fetch('http://localhost:5000/api/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: creds.email, password: creds.pass }),
-        });
-        if (res.ok) {
-          const data = await res.json();
-          localStorage.setItem('token', data.token);
-          setCurrentUser(data.user);
-          connectWithToken(data.token);
-        }
-      } catch (err) {
-        console.error('Auto login error:', err);
-      }
+    // Public / consumer catalogs are accessible without mandatory login
+    if (navId === 'consumer' || navId.startsWith('portal:')) {
+      setActiveNav(navId);
+      return;
     }
+
+    // Role-protected workspaces: navigate and trigger auth modal if user lacks permissions
+    if (navId === 'provider') {
+      setActiveNav('provider');
+      if (!currentUser || currentUser.role !== 'PROVIDER') {
+        setAuthModalRole('provider');
+        setAuthModalOpen(true);
+      }
+      return;
+    }
+
+    if (navId === 'coop_admin') {
+      setActiveNav('coop_admin');
+      if (!currentUser || currentUser.role !== 'ADMIN') {
+        setAuthModalRole('coop_admin');
+        setAuthModalOpen(true);
+      }
+      return;
+    }
+
+    if (navId === 'regulator') {
+      setActiveNav('regulator');
+      if (!currentUser || currentUser.role !== 'REGULATOR') {
+        setAuthModalRole('regulator');
+        setAuthModalOpen(true);
+      }
+      return;
+    }
+
+    setActiveNav(navId);
   };
 
   const getPortalTitle = (nav: string) => {
@@ -158,6 +216,8 @@ export const AppContent: React.FC = () => {
         onSelectNav={handleSelectNav}
         currentUser={currentUser}
         onSwitchPersona={() => setActiveNav('home')}
+        onLogout={handleLogout}
+        onLoginSuccess={handleLoginSuccess}
         theme={theme}
         onThemeChange={setTheme}
         fontChoice={fontChoice}
@@ -297,7 +357,17 @@ export const AppContent: React.FC = () => {
               </div>
             </div>
 
-            <Suspense fallback={<PortalSkeleton title={getPortalTitle(activeNav)} />}>
+            <Suspense
+              fallback={
+                isConsumerView ? (
+                  <ServiceCatalogSkeleton />
+                ) : activeNav === 'regulator' ? (
+                  <RegulatorSkeleton />
+                ) : (
+                  <PortalSkeleton title={getPortalTitle(activeNav)} />
+                )
+              }
+            >
               {isConsumerView && (
                 <ServiceCatalog
                   initialTrade={
@@ -314,11 +384,33 @@ export const AppContent: React.FC = () => {
                 />
               )}
 
-              {activeNav === 'provider' && <ProviderDashboard />}
+              {activeNav === 'provider' && (
+                <ProviderDashboard
+                  onOpenAuth={() => {
+                    setAuthModalRole('provider');
+                    setAuthModalOpen(true);
+                  }}
+                />
+              )}
 
-              {activeNav === 'coop_admin' && <AdminHub />}
+              {activeNav === 'coop_admin' && (
+                <AdminHub
+                  currentUser={currentUser}
+                  onOpenAuth={() => {
+                    setAuthModalRole('coop_admin');
+                    setAuthModalOpen(true);
+                  }}
+                />
+              )}
 
-              {activeNav === 'regulator' && <RegulatorDashboard />}
+              {activeNav === 'regulator' && (
+                <RegulatorDashboard
+                  onOpenAuth={() => {
+                    setAuthModalRole('regulator');
+                    setAuthModalOpen(true);
+                  }}
+                />
+              )}
             </Suspense>
           </div>
         )}
@@ -337,6 +429,15 @@ export const AppContent: React.FC = () => {
           />
         </Suspense>
       )}
+
+      {/* Authentic Citizen & Member Auth Modal */}
+      <AuthModal
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+        onLoginSuccess={handleLoginSuccess}
+        initialRole={authModalRole}
+        lang={lang}
+      />
     </div>
   );
 };

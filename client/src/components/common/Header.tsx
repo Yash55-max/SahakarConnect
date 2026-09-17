@@ -19,6 +19,7 @@ import {
   LockIcon,
   CalculatorIcon,
 } from './Icons';
+import AuthModal from './AuthModal';
 
 interface HeaderProps {
   currentLang: 'en' | 'hi';
@@ -27,6 +28,8 @@ interface HeaderProps {
   onSelectNav: (navId: string) => void;
   currentUser?: any | null;
   onSwitchPersona?: () => void;
+  onLogout?: () => void;
+  onLoginSuccess?: (token: string, user: any) => void;
   theme: 'light' | 'dark' | 'contrast' | 'high-contrast';
   onThemeChange: (theme: 'light' | 'dark' | 'contrast') => void;
   fontChoice?: 'sm' | 'md' | 'lg';
@@ -40,6 +43,8 @@ export const Header: React.FC<HeaderProps> = ({
   onSelectNav,
   currentUser,
   onSwitchPersona,
+  onLogout,
+  onLoginSuccess,
   theme,
   onThemeChange,
   fontChoice = 'md',
@@ -662,156 +667,67 @@ export const Header: React.FC<HeaderProps> = ({
         )}
       </nav>
 
-      {/* ================= DEMO / ACTIVE SESSION STRIP ================= */}
+      {/* ================= PUBLIC / ACTIVE SESSION STRIP ================= */}
       <div className="container">
         <div
           className="env-strip"
           style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ux4g-sp-4)' }}>
-            <span>Statutory Demo Environment</span>
-            <span className="badge badge-live">Live API</span>
+            <span style={{ fontWeight: 600 }}>National Cooperative Public Infrastructure</span>
+            <span className="badge badge-live">Live System</span>
             <span style={{ fontSize: '11px', color: 'var(--ux4g-text-tertiary)' }}>
-              MSCS Act 2023 Parity
+              Multi-State Co-operative Societies (MSCS) Act, 2023 Parity
             </span>
           </div>
 
-          {activeNav !== 'home' && (
+          {currentUser ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ux4g-sp-3)' }}>
-              <span className="badge badge-primary">
-                {activeNav === 'portal:plumbing'
-                  ? 'PLUMBING'
-                  : activeNav === 'portal:electrical'
-                  ? 'ELECTRICAL'
-                  : activeNav === 'portal:carpentry'
-                  ? 'CARPENTRY'
-                  : activeNav === 'portal:appliances'
-                  ? 'APPLIANCES'
-                  : currentUser?.role || activeNav.toUpperCase()}
+              <span className="badge badge-primary text-uppercase">
+                {currentUser.role || 'CITIZEN'}
               </span>
-              <span style={{ fontSize: 'var(--ux4g-fs-12)', color: 'var(--ux4g-text-secondary)' }}>
-                {currentUser?.name || (activeNav.startsWith('portal:') ? 'Citizen Session' : 'Active Session')}
+              <span style={{ fontSize: 'var(--ux4g-fs-12)', color: 'var(--ux4g-text-secondary)', fontWeight: 600 }}>
+                {currentUser.name}
               </span>
-              {onSwitchPersona && (
+              {onLogout && (
                 <button
                   type="button"
-                  onClick={onSwitchPersona}
-                  className="btn btn-ghost btn-sm"
+                  onClick={onLogout}
+                  className="btn btn-outline-danger btn-sm"
                   style={{ padding: '1px var(--ux4g-sp-3)', fontSize: '11px' }}
                 >
-                  Switch
+                  {currentLang === 'hi' ? 'लॉग आउट' : 'Sign Out'}
                 </button>
               )}
+            </div>
+          ) : (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ux4g-sp-3)' }}>
+              <span style={{ fontSize: 'var(--ux4g-fs-12)', color: 'var(--ux4g-text-secondary)' }}>
+                {currentLang === 'hi' ? 'नागरिक एवं श्रमयोगी डिजिटल सेवा' : 'Citizen & Skilled Tradesmen Public Gateway'}
+              </span>
+              <button
+                type="button"
+                onClick={() => setLoginModalOpen(true)}
+                className="btn btn-primary btn-sm"
+                style={{ padding: '2px var(--ux4g-sp-4)', fontSize: '11px', fontWeight: 600 }}
+              >
+                {currentLang === 'hi' ? 'प्रवेश / पंजीकरण' : 'Sign In / Register'}
+              </button>
             </div>
           )}
         </div>
       </div>
 
-      {/* Quick Login Modal */}
-      {loginModalOpen && (
-        <div
-          className="modal-overlay"
-          onClick={() => setLoginModalOpen(false)}
-          role="dialog"
-          aria-modal="true"
-        >
-          <div
-            className="modal"
-            style={{ maxWidth: '440px' }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="modal-header">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <EmblemIcon size={20} color="var(--ux4g-primary-600)" />
-                <h3 style={{ margin: 0, fontSize: '18px' }}>
-                  {currentLang === 'hi' ? 'सहकार कनेक्ट लॉगिन' : 'Login to SahakarConnect'}
-                </h3>
-              </div>
-              <button
-                type="button"
-                className="btn btn-ghost btn-sm"
-                onClick={() => setLoginModalOpen(false)}
-                aria-label="Close modal"
-              >
-                ✕
-              </button>
-            </div>
-            <div className="modal-body" style={{ padding: '20px 24px' }}>
-              <p style={{ fontSize: '13px', color: '#64748b', marginBottom: '16px' }}>
-                {currentLang === 'hi'
-                  ? 'अपनी भूमिका चुनें और तत्काल प्रमाणित कार्यक्षेत्र में प्रवेश करें:'
-                  : 'Select your operational role to enter your verified workspace:'}
-              </p>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <button
-                  type="button"
-                  className="btn btn-primary btn-block"
-                  style={{ justifyContent: 'flex-start', padding: '12px 16px' }}
-                  onClick={() => {
-                    onSelectNav('consumer');
-                    setLoginModalOpen(false);
-                  }}
-                >
-                  <ConsumerIcon size={18} />
-                  <div style={{ textAlign: 'left', marginLeft: '8px' }}>
-                    <div style={{ fontWeight: 600 }}>Citizen Consumer (OTP Login)</div>
-                    <div style={{ fontSize: '11px', opacity: 0.85 }}>Book fair-trade services & verify with 4-digit PIN</div>
-                  </div>
-                </button>
-
-                <button
-                  type="button"
-                  className="btn btn-secondary btn-block"
-                  style={{ justifyContent: 'flex-start', padding: '12px 16px' }}
-                  onClick={() => {
-                    onSelectNav('provider');
-                    setLoginModalOpen(false);
-                  }}
-                >
-                  <ProviderIcon size={18} />
-                  <div style={{ textAlign: 'left', marginLeft: '8px' }}>
-                    <div style={{ fontWeight: 600 }}>Tradesman Member (Aadhaar e-KYC)</div>
-                    <div style={{ fontSize: '11px', opacity: 0.85 }}>88% instant daily payout & welfare accumulation</div>
-                  </div>
-                </button>
-
-                <button
-                  type="button"
-                  className="btn btn-ghost btn-block"
-                  style={{ justifyContent: 'flex-start', padding: '12px 16px', border: '1px solid #cbd5e1' }}
-                  onClick={() => {
-                    onSelectNav('coop_admin');
-                    setLoginModalOpen(false);
-                  }}
-                >
-                  <AdminIcon size={18} />
-                  <div style={{ textAlign: 'left', marginLeft: '8px' }}>
-                    <div style={{ fontWeight: 600 }}>Cooperative Society Admin (PSCS)</div>
-                    <div style={{ fontSize: '11px', opacity: 0.85 }}>Bylaw compliance, e-KYC approvals & ledger</div>
-                  </div>
-                </button>
-
-                <button
-                  type="button"
-                  className="btn btn-ghost btn-block"
-                  style={{ justifyContent: 'flex-start', padding: '12px 16px', border: '1px solid #cbd5e1' }}
-                  onClick={() => {
-                    onSelectNav('regulator');
-                    setLoginModalOpen(false);
-                  }}
-                >
-                  <RegulatorIcon size={18} />
-                  <div style={{ textAlign: 'left', marginLeft: '8px' }}>
-                    <div style={{ fontWeight: 600 }}>Central / State Regulator</div>
-                    <div style={{ fontSize: '11px', opacity: 0.85 }}>Solvency audit, 15% reserve ratios & oversight</div>
-                  </div>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Authentic Citizen & Member Auth Modal */}
+      <AuthModal
+        isOpen={loginModalOpen}
+        onClose={() => setLoginModalOpen(false)}
+        onLoginSuccess={(token, user) => {
+          onLoginSuccess?.(token, user);
+          setLoginModalOpen(false);
+        }}
+        lang={currentLang}
+      />
     </>
   );
 };

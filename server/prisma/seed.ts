@@ -1,6 +1,8 @@
 import { PrismaClient, UserRole, MembershipClass, BookingStatus, PaymentStatus, PollStatus } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 
+import { credentials } from '../src/config/credentials';
+
 const prisma = new PrismaClient();
 
 // Zero-leakage calculation matching statutory ledger service
@@ -25,7 +27,7 @@ async function main() {
   await prisma.user.deleteMany();
   await prisma.cooperative.deleteMany();
 
-  const defaultPasswordHash = bcrypt.hashSync('Password@123', 10);
+  const defaultPasswordHash = bcrypt.hashSync(credentials.defaultPassword, 10);
 
   // 1. Seed 4 Cooperatives across 3 States (Delhi, Maharashtra, Karnataka)
   const delhiCoop = await prisma.cooperative.create({

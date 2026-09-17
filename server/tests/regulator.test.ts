@@ -3,6 +3,7 @@ import request from 'supertest';
 import app from '../src/index';
 import { prisma } from '../src/lib/prisma';
 import { UserRole } from '@prisma/client';
+import { credentials } from '../src/config/credentials';
 
 describe('Regulator Analytics & Statutory Oversight Suite', () => {
   let regulatorToken: string;
@@ -15,8 +16,8 @@ describe('Regulator Analytics & Statutory Oversight Suite', () => {
     const regRes = await request(app)
       .post('/api/auth/login')
       .send({
-        email: 'regulator@cooperation.gov.in',
-        password: 'Password@123',
+        email: credentials.regulator.email,
+        password: credentials.defaultPassword,
       });
     regulatorToken = regRes.body.token;
 
@@ -24,8 +25,8 @@ describe('Regulator Analytics & Statutory Oversight Suite', () => {
     const conRes = await request(app)
       .post('/api/auth/login')
       .send({
-        email: 'vikram.consumer@gmail.com',
-        password: 'Password@123',
+        email: credentials.consumer.email,
+        password: credentials.defaultPassword,
       });
     consumerToken = conRes.body.token;
 
@@ -33,8 +34,8 @@ describe('Regulator Analytics & Statutory Oversight Suite', () => {
     const provRes = await request(app)
       .post('/api/auth/login')
       .send({
-        email: 'ramesh.plumber@sahakar.org',
-        password: 'Password@123',
+        email: credentials.provider.email,
+        password: credentials.defaultPassword,
       });
     providerToken = provRes.body.token;
 
@@ -42,8 +43,8 @@ describe('Regulator Analytics & Statutory Oversight Suite', () => {
     const admRes = await request(app)
       .post('/api/auth/login')
       .send({
-        email: 'admin.delhi@sahakar.gov.in',
-        password: 'Password@123',
+        email: credentials.admin.email,
+        password: credentials.defaultPassword,
       });
     adminToken = admRes.body.token;
   });
