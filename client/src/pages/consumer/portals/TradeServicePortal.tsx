@@ -170,7 +170,7 @@ export const TradeServicePortal: React.FC<TradeServicePortalProps> = ({
               <div className="d-flex align-items-center gap-3 flex-wrap">
                 <div className="d-inline-flex align-items-center gap-1 small text-dark fw-semibold">
                   <MapPinIcon size={15} color="var(--ux4g-primary)" />
-                  <span>Uber H3 Res-8 Local Radial Dispatch</span>
+                  <span>Hyperlocal Verified Dispatch</span>
                 </div>
                 <div className="d-inline-flex align-items-center gap-1 small text-dark fw-semibold">
                   <ShieldCheckIcon size={15} color="var(--ux4g-green)" />

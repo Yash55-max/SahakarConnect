@@ -257,3 +257,151 @@ export const ServiceCatalogSkeleton: React.FC = () => {
     </div>
   );
 };
+
+/**
+ * Central Regulator Dashboard Skeleton Screen
+ */
+export const RegulatorSkeleton: React.FC = () => {
+  return (
+    <div className="container-fluid py-4" role="status" aria-busy="true" aria-label="Loading Ministry Regulatory Console...">
+      {/* Authority Banner Skeleton */}
+      <div className="card shadow-sm border mb-4 bg-white p-3 p-md-4">
+        <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
+          <div className="d-flex align-items-center gap-3">
+            <Skeleton variant="circular" width={48} height={48} />
+            <div>
+              <Skeleton variant="title" width={320} height={22} style={{ marginBottom: 6 }} />
+              <Skeleton variant="text" width={240} height={12} style={{ marginBottom: 0 }} />
+            </div>
+          </div>
+          <div className="d-flex gap-2">
+            <Skeleton variant="rectangular" width={100} height={32} />
+            <Skeleton variant="rectangular" width={120} height={32} />
+          </div>
+        </div>
+      </div>
+
+      {/* 6 High-Level KPI Tiles Skeleton */}
+      <div className="row g-3 mb-4">
+        {[1, 2, 3, 4, 5, 6].map((i) => (
+          <div key={i} className="col-6 col-md-4 col-xl-2">
+            <div className="p-3 bg-white border rounded shadow-sm h-100">
+              <Skeleton variant="text" width="60%" height={10} style={{ marginBottom: 8 }} />
+              <Skeleton variant="title" width="80%" height={24} style={{ marginBottom: 8 }} />
+              <Skeleton variant="text" width="50%" height={10} style={{ marginBottom: 0 }} />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Filter Toolbar Skeleton */}
+      <div className="card shadow-sm border mb-4 bg-white p-3">
+        <div className="row g-2 align-items-center">
+          <div className="col-12 col-md-4">
+            <Skeleton variant="rectangular" width="100%" height={32} />
+          </div>
+          <div className="col-6 col-md-2">
+            <Skeleton variant="rectangular" width="100%" height={32} />
+          </div>
+          <div className="col-6 col-md-2">
+            <Skeleton variant="rectangular" width="100%" height={32} />
+          </div>
+          <div className="col-12 col-md-4">
+            <Skeleton variant="rectangular" width="100%" height={32} />
+          </div>
+        </div>
+      </div>
+
+      {/* Table Skeleton */}
+      <div className="card shadow-sm border bg-white mb-4">
+        <div className="p-3 border-bottom d-flex justify-content-between align-items-center">
+          <Skeleton variant="text" width={220} height={14} />
+          <Skeleton variant="rectangular" width={80} height={20} />
+        </div>
+        <div className="p-3">
+          {[1, 2, 3, 4, 5].map((row) => (
+            <div key={row} className="py-3 border-bottom d-flex justify-content-between align-items-center">
+              <div style={{ width: '30%' }}>
+                <Skeleton variant="text" width="80%" height={14} style={{ marginBottom: 4 }} />
+                <Skeleton variant="text" width="50%" height={10} />
+              </div>
+              <Skeleton variant="text" width="15%" height={12} />
+              <Skeleton variant="text" width="15%" height={12} />
+              <Skeleton variant="text" width="15%" height={12} />
+              <Skeleton variant="rectangular" width={80} height={24} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/**
+ * Tripartite Ledger Skeleton Screen
+ */
+export const LedgerSkeleton: React.FC = () => {
+  return (
+    <div className="py-3" role="status" aria-busy="true" aria-label="Loading Tripartite Ledger...">
+      <div className="row g-3 mb-4">
+        {[1, 2, 3, 4].map((i) => (
+          <div key={i} className="col-12 col-md-3">
+            <div className="p-3 bg-white border rounded shadow-sm">
+              <Skeleton variant="text" width="60%" height={11} style={{ marginBottom: 8 }} />
+              <Skeleton variant="title" width="85%" height={26} style={{ marginBottom: 6 }} />
+              <Skeleton variant="text" width="40%" height={10} />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="card shadow-sm border bg-white">
+        <div className="p-3 border-bottom d-flex justify-content-between align-items-center">
+          <Skeleton variant="text" width={200} height={14} />
+          <Skeleton variant="rectangular" width={110} height={28} />
+        </div>
+        <div className="p-3">
+          {[1, 2, 3, 4, 5, 6].map((row) => (
+            <div key={row} className="py-2 border-bottom d-flex justify-content-between align-items-center">
+              <Skeleton variant="text" width="18%" height={12} />
+              <Skeleton variant="text" width="18%" height={12} />
+              <Skeleton variant="text" width="15%" height={12} />
+              <Skeleton variant="text" width="15%" height={12} />
+              <Skeleton variant="rectangular" width={75} height={22} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/**
+ * Card Grid Skeleton (for Verification Queue & Governance Polls)
+ */
+export const CardGridSkeleton: React.FC<{ count?: number }> = ({ count = 3 }) => {
+  return (
+    <div className="py-3" role="status" aria-busy="true" aria-label="Loading Records...">
+      <div className="row g-3">
+        {Array.from({ length: count }).map((_, i) => (
+          <div key={i} className="col-12 col-md-6 col-lg-4">
+            <div className="card p-4 border shadow-sm bg-white h-100">
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <Skeleton variant="text" width="50%" height={14} />
+                <Skeleton variant="rectangular" width={60} height={20} />
+              </div>
+              <Skeleton variant="title" width="90%" height={18} style={{ marginBottom: 8 }} />
+              <Skeleton variant="text" width="100%" height={12} />
+              <Skeleton variant="text" width="70%" height={12} style={{ marginBottom: 16 }} />
+              <div className="mt-auto pt-3 border-top d-flex gap-2">
+                <Skeleton variant="rectangular" width="50%" height={32} />
+                <Skeleton variant="rectangular" width="50%" height={32} />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+

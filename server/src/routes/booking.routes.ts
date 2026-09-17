@@ -1,16 +1,54 @@
 import { Router, Request, Response } from 'express';
+import { z } from 'zod';
 import { prisma } from '../lib/prisma';
 import { requireAuth, requireRole } from '../middleware/auth';
 import { UserRole, BookingStatus } from '@prisma/client';
 import { settleEscrowTransaction } from '../services/ledger.service';
 import { findNearbyProviders } from '../services/dispatch.service';
 import { broadcastBookingStatus, emitToProviders, emitToUser } from '../services/socket.service';
+import { getIdempotentRecord, setIdempotentRecord, hashPayload } from '../lib/idempotency';
 
 const router = Router();
+
+const createBookingSchema = z.object({
+  grossAmount: z.number().positive('grossAmount must be greater than 0'),
+  serviceCategoryId: z.string().optional(),
+  serviceCategoryName: z.string().optional(),
+  cooperativeId: z.string().optional(),
+  consumerH3Index: z.string().optional(),
+  scheduledDate: z.string().optional(),
+  notes: z.string().optional(),
+  address: z.string().optional(),
+});
 
 // POST /api/bookings - Consumer creates a booking request
 router.post('/', requireAuth, requireRole([UserRole.CONSUMER]), async (req: Request, res: Response) => {
   try {
+    const parsed = createBookingSchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({
+        error: 'Validation failed',
+        message: 'Invalid booking parameters',
+        details: parsed.error.issues.map((i) => i.message),
+      });
+    }
+
+    // Check Idempotency-Key to prevent duplicate dispatches
+    const idempotencyKey = (req.headers['idempotency-key'] || req.headers['x-idempotency-key']) as string | undefined;
+    if (idempotencyKey) {
+      const currentHash = hashPayload(req.body);
+      const existing = getIdempotentRecord(idempotencyKey);
+      if (existing) {
+        if (existing.requestHash !== currentHash) {
+          return res.status(422).json({
+            error: 'Idempotency conflict',
+            message: 'Idempotency key reused with a different payload',
+          });
+        }
+        return res.status(existing.responseStatus).json(existing.responseBody);
+      }
+    }
+
     const {
       serviceCategoryId,
       serviceCategoryName,
@@ -20,11 +58,7 @@ router.post('/', requireAuth, requireRole([UserRole.CONSUMER]), async (req: Requ
       scheduledDate,
       notes,
       address,
-    } = req.body;
-
-    if (!grossAmount || Number(grossAmount) <= 0) {
-      return res.status(400).json({ error: 'Valid grossAmount is required' });
-    }
+    } = parsed.data;
 
     // Default cooperative (South Delhi PSCS) if not provided
     let cooperativeId = inputCoopId;
@@ -85,12 +119,18 @@ router.post('/', requireAuth, requireRole([UserRole.CONSUMER]), async (req: Requ
       });
     }
 
-    return res.status(201).json({
+    const responsePayload = {
       booking,
       completionOtp: booking.completionOtp,
       candidatesFound: nearbyProviders.length,
       topCandidates: nearbyProviders.slice(0, 3),
-    });
+    };
+
+    if (idempotencyKey) {
+      setIdempotentRecord(idempotencyKey, hashPayload(req.body), 201, responsePayload);
+    }
+
+    return res.status(201).json(responsePayload);
   } catch (error: any) {
     console.error('[Booking Create Error]', error);
     return res.status(500).json({ error: error.message });
@@ -168,8 +208,9 @@ router.patch('/:id/accept', requireAuth, requireRole([UserRole.PROVIDER]), async
     }
 
     if (booking.status !== BookingStatus.REQUESTED) {
-      return res.status(400).json({
-        error: `Cannot accept booking in ${booking.status} status`,
+      return res.status(409).json({
+        error: 'State conflict',
+        message: `Cannot accept booking in ${booking.status} status`,
       });
     }
 
@@ -208,7 +249,10 @@ router.patch('/:id/status', requireAuth, async (req: Request, res: Response) => 
   try {
     const { status } = req.body;
     if (!status || !Object.values(BookingStatus).includes(status)) {
-      return res.status(400).json({ error: `Invalid status: ${status}` });
+      return res.status(400).json({
+        error: 'Validation failed',
+        message: `Invalid status: ${status}. Must be one of: ${Object.values(BookingStatus).join(', ')}`,
+      });
     }
 
     const updatedBooking = await prisma.booking.update({
@@ -243,7 +287,28 @@ router.patch('/:id/complete', requireAuth, requireRole([UserRole.PROVIDER]), asy
     const otpToVerify = completionOtp || pin;
 
     if (!otpToVerify) {
-      return res.status(400).json({ error: '4-digit completion PIN is required' });
+      return res.status(400).json({
+        error: 'Validation failed',
+        message: '4-digit completion PIN is required',
+      });
+    }
+
+    const booking = await prisma.booking.findUnique({
+      where: { id: req.params.id as string },
+    });
+
+    if (!booking) {
+      return res.status(404).json({
+        error: 'Resource not found',
+        message: 'Booking not found',
+      });
+    }
+
+    if (booking.status === BookingStatus.COMPLETED) {
+      return res.status(409).json({
+        error: 'State conflict',
+        message: `Booking ${req.params.id} has already been completed and settled`,
+      });
     }
 
     // Execute atomic escrow settlement with zero rounding leakage
@@ -273,8 +338,11 @@ router.patch('/:id/complete', requireAuth, requireRole([UserRole.PROVIDER]), asy
     });
   } catch (error: any) {
     console.error('[Booking Complete Error]', error);
-    if (error.message.includes('Invalid completion PIN')) {
-      return res.status(400).json({ error: error.message });
+    if (error.message && error.message.includes('Invalid completion PIN')) {
+      return res.status(400).json({
+        error: 'Invalid completion PIN',
+        message: error.message,
+      });
     }
     return res.status(500).json({ error: error.message });
   }

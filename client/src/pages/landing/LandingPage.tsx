@@ -18,7 +18,7 @@ import {
   InfoIcon,
   QrCodeIcon,
 } from '../../components/common/Icons';
-import { ImageWithSkeleton, PortalSkeleton, ServiceCatalogSkeleton } from '../../components/common/Skeleton';
+import { ImageWithSkeleton } from '../../components/common/Skeleton';
 
 interface LandingPageProps {
   lang: 'en' | 'hi';
@@ -33,7 +33,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 }) => {
   const [calcAmount, setCalcAmount] = useState<number>(1200);
   const [heroSearch, setHeroSearch] = useState<string>('');
-  const [skeletonPreviewMode, setSkeletonPreviewMode] = useState<'none' | 'portal' | 'catalog'>('none');
 
   // Compute statutory 88 / 8 / 4 split with MSCS Act 2023 rounding invariant
   const gross = Math.max(0, Number(calcAmount) || 0);
@@ -134,139 +133,88 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       price: '₹299',
       quality: '4.90',
       desc: lang === 'hi'
-        ? 'अतिशीघ्र स्थानिक प्रेषण (H3 स्थानिक ग्रिड), मुख्य वॉल्व एवं सीवेज राहत।'
-        : 'Instant Uber H3 spatial dispatch within ~460m hexagonal radius for emergency domestic floods.',
+        ? 'त्वरित स्थानीय प्रेषण, मुख्य वॉल्व एवं घरेलू सीवेज रिसाव का तत्काल समाधान।'
+        : 'Immediate neighborhood dispatch for domestic pipe bursts, valve failure, and emergency water leaks.',
     },
   ];
 
-  // 4 Persona Carousel Cards with Authentic Photography
+  // 4 Persona Carousel Cards with Authentic Photography & Clean Portal Routing
   const personaCards = [
     {
       id: 'consumer',
       image: '/images/citizen-family.jpg',
       badge: lang === 'hi' ? 'नागरिक व परिवार' : 'Household & Citizens',
-      title: lang === 'hi' ? 'निष्पक्ष-व्यापार नागरिक सेवाएं' : 'Fair-Trade Citizen Services',
+      title: lang === 'hi' ? 'पारदर्शी नागरिक सेवाएं' : 'Fair-Trade Citizen Services',
       desc: lang === 'hi'
         ? 'सत्यापित सहकारी तकनीशियनों से पारदर्शी सेवाएं। 4-अंकीय पिन सत्यापन के बाद ही एस्क्रो राशि विमुक्त होती है।'
-        : 'Book certified plumbers, electricians, and mechanics. Funds stay in statutory escrow until you release them with your 4-digit PIN.',
-      cta: lang === 'hi' ? 'नागरिक पोर्टल खोलें' : 'Enter Citizen Portal',
+        : 'Book certified plumbers, electricians, and technicians. Payment is protected in government-regulated escrow until you share your 4-digit PIN.',
+      cta: lang === 'hi' ? 'सेवाएं चुनें व बुक करें' : 'Browse Services',
     },
     {
-      id: 'provider',
+      id: 'login:provider',
       image: '/images/artisan-worker.jpg',
       badge: lang === 'hi' ? 'प्रमाणित श्रमयोगी' : 'Skilled Tradespeople',
       title: lang === 'hi' ? 'शून्य-कमीशन श्रमयोगी कार्यक्षेत्र' : '0% Commission Workplace',
       desc: lang === 'hi'
         ? 'निजी बिचौलियों के कमीशन से मुक्त कार्यक्षेत्र। 88% प्रत्यक्ष दैनिक बैंक अंतरण, कल्याण निधि एवं सहकारी मताधिकार।'
         : 'Zero intermediary commission. Guaranteed 88% direct pay, 8% healthcare & pension welfare, and Class-A democratic voting shares.',
-      cta: lang === 'hi' ? 'श्रमयोगी पोर्टल खोलें' : 'Enter Provider Portal',
+      cta: lang === 'hi' ? 'श्रमयोगी पोर्टल प्रवेश' : 'Tradesman Sign In',
     },
     {
-      id: 'coop_admin',
+      id: 'login:coop_admin',
       image: '/images/coop-leaders.jpg',
       badge: lang === 'hi' ? 'सहकारी समितियां एवं पैक्स' : 'Cooperative Societies & PACS',
       title: lang === 'hi' ? 'समिति प्रशासनिक केंद्र' : 'Society Administration Hub',
       desc: lang === 'hi'
         ? 'प्राथमिक सेवा सहकारी समिति (PSCS) का सम्पूर्ण संचालन। सदस्यों का आधार सत्यापन, डिजिटल उप-नियम और बही-खाता।'
         : 'Operational hub for Primary Service Cooperatives. Manage tradesmen e-KYC queues, audit tripartite ledgers, and manage governance.',
-      cta: lang === 'hi' ? 'समिति प्रशासन खोलें' : 'Enter Society Admin',
+      cta: lang === 'hi' ? 'समिति प्रशासन प्रवेश' : 'Society Admin Sign In',
     },
     {
-      id: 'regulator',
+      id: 'login:regulator',
       image: null, // Renders Ashoka Emblem & State Crest
       badge: lang === 'hi' ? 'केंद्रीय व राज्य विनियामक' : 'Central & State Regulators',
       title: lang === 'hi' ? 'सहकारिता विनियामक निरीक्षण' : 'Regulatory Oversight Terminal',
       desc: lang === 'hi'
         ? 'सहकारिता मंत्रालय एवं राज्य रजिस्ट्रार कार्यालय के लिए निगरानी टर्मिनल। 15% आरक्षित निधि एवं साल्वेंसी ऑडिट।'
         : 'Supervisory oversight terminal for the Ministry of Cooperation. Audit statutory solvency, reserve ratios, and welfare disbursements.',
-      cta: lang === 'hi' ? 'विनियामक टर्मिनल खोलें' : 'Enter Regulator Hub',
+      cta: lang === 'hi' ? 'विनियामक टर्मिनल प्रवेश' : 'Regulator Sign In',
     },
   ];
 
   const pillars = [
     {
       icon: MapPinIcon,
-      title: lang === 'hi' ? 'उबर एच3 स्थानिक प्रेषण' : 'Uber H3 spatial dispatch',
+      title: lang === 'hi' ? 'त्वरित स्थानीय प्रेषण' : 'Hyperlocal Rapid Dispatch',
       desc: lang === 'hi'
-        ? 'रिज़ॉल्यूशन-8 हेक्सागोनल ग्रिड के माध्यम से निकटतम उपलब्ध एवं प्रमाणित श्रमयोगियों का सेकंडों में चयन।'
-        : 'Resolution-8 hexagonal indexing finds and dispatches the closest active, certified tradesman within ~460m grid disks in seconds.',
+        ? 'आपके वार्ड और मुहल्ले से सीधे सत्यापित व प्रशिक्षित तकनीशियन कुछ ही मिनटों में आपकी सेवा के लिए उपलब्ध।'
+        : 'Smart geolocation instantly connects you with certified, background-verified tradesmen from your municipal ward.',
     },
     {
       icon: LockIcon,
-      title: lang === 'hi' ? '4-अंकीय पिन एस्क्रो संरक्षण' : 'Atomic 4-digit PIN escrow',
+      title: lang === 'hi' ? '4-अंकीय पिन सुरक्षित भुगतान' : 'Customer-Locked Escrow Protection',
       desc: lang === 'hi'
-        ? 'सेवा पूर्ण होने पर नागरिक द्वारा दिया गया 4-अंकीय पिन दर्ज करने के बाद ही राशि का परमाणु विभाजन और अंतरण।'
-        : 'Citizen funds remain locked in escrow until the customer personally shares their 4-digit PIN upon inspecting the completed work.',
+        ? 'काम पूरा होने और आपकी संतुष्टि के बाद 4-अंकीय पिन साझा करने पर ही भुगतान विमुक्त होता है। 100% सुरक्षित।'
+        : 'Your money stays safely protected in statutory escrow until you personally verify the completed work and share your 4-digit PIN.',
     },
     {
       icon: VoteIcon,
-      title: lang === 'hi' ? 'लोकतांत्रिक कोरम व मतदान' : 'Democratic quorum & governance',
+      title: lang === 'hi' ? 'लोकतांत्रिक स्वामित्व व मतदान' : 'Democratic Cooperative Ownership',
       desc: lang === 'hi'
-        ? 'एक-सदस्य एक-मत के सिद्धांत पर सांविधिक प्रस्तावों, टूल सब्सिडी और कल्याणकारी योजनाओं पर सीधा मतदान।'
-        : 'Statutory one-member-one-vote resolutions. Class-A voting members approve equipment grants, dividend distributions, and welfare policies.',
+        ? 'श्रमयोगी स्वयं अपनी प्राथमिक सहकारी समिति के मालिक हैं। एक-सदस्य एक-मत के आधार पर पारदर्शी निर्णय।'
+        : 'Every tradesman is an equal shareholder under the MSCS Act 2023 with 1-member-1-vote rights. No corporate exploitation.',
     },
     {
       icon: ScaleIcon,
-      title: lang === 'hi' ? 'शून्य-रिसाव द्वि-प्रविष्टि बही' : 'Deterministic zero-leakage ledger',
+      title: lang === 'hi' ? '100% पारदर्शी शुल्क विभाजन' : '100% Transparent Fair Share',
       desc: lang === 'hi'
-        ? 'प्रत्येक पैसे का पारदर्शी हिसाब। राउंडिंग की शेष राशि श्रमिक के पक्ष में जोड़कर सांविधिक समानता सुनिश्चित।'
-        : 'Double-entry accounting guarantees Worker (88%) + Welfare (8%) + Platform (4%) = gross amount, with zero rounding leakage.',
+        ? '88% सीधे कामगार को, 8% कामगार कल्याण व स्वास्थ्य कोष में, और केवल 4% न्यूनतम परिचालन शुल्क।'
+        : 'Guaranteed 88% direct worker pay, 8% dedicated healthcare & social welfare, and 4% non-profit platform maintenance. 0% middleman cut.',
     },
   ];
 
   return (
     <div className="myaadhaar-page">
-      {/* ================= SKELETON PREVIEW BANNER IF ACTIVE ================= */}
-      {skeletonPreviewMode !== 'none' && (
-        <div className="container pt-3">
-          <div className="alert alert-info border d-flex justify-content-between align-items-center flex-wrap gap-2 mb-0 shadow-sm">
-            <div className="d-flex align-items-center gap-2">
-              <span className="badge bg-primary">UX4G Skeleton Mode</span>
-              <span className="small fw-semibold">
-                {skeletonPreviewMode === 'portal'
-                  ? 'Displaying Cooperative Portal Skeleton Loading Screen'
-                  : 'Displaying Service Catalog Skeleton Loading Screen'}
-              </span>
-            </div>
-            <div className="d-flex gap-2">
-              <button
-                type="button"
-                className={`btn btn-sm ${skeletonPreviewMode === 'portal' ? 'btn-primary' : 'btn-outline-primary'}`}
-                onClick={() => setSkeletonPreviewMode('portal')}
-              >
-                Portal Skeleton
-              </button>
-              <button
-                type="button"
-                className={`btn btn-sm ${skeletonPreviewMode === 'catalog' ? 'btn-primary' : 'btn-outline-primary'}`}
-                onClick={() => setSkeletonPreviewMode('catalog')}
-              >
-                Catalog Skeleton
-              </button>
-              <button
-                type="button"
-                className="btn btn-sm btn-outline-danger"
-                onClick={() => setSkeletonPreviewMode('none')}
-              >
-                Exit Skeleton Preview
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {skeletonPreviewMode === 'portal' && (
-        <div className="container py-4">
-          <PortalSkeleton title="Previewing Portal Loading State" />
-        </div>
-      )}
-
-      {skeletonPreviewMode === 'catalog' && (
-        <div className="container py-4">
-          <ServiceCatalogSkeleton />
-        </div>
-      )}
-
       {/* ==========================================================================
           1. HERO SECTION (UIDAI myAadhaar Layout: Left Hero Search + Right 3-Card Stack)
           ========================================================================== */}
@@ -367,7 +315,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
           {/* Right Column: Stack of 3 Cards */}
           <div className="myaadhaar-hero-right">
-            {/* Card 1: Login Card with Indian Tricolour Accent */}
+            {/* Card 1: Dedicated Access Gateway with 4 Classified Roles */}
             <div className="myaadhaar-card-login">
               <div className="myaadhaar-tricolour-stripe" />
               <div className="myaadhaar-card-login-body">
@@ -377,26 +325,41 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                   </div>
                   <div>
                     <h3 className="myaadhaar-card-login-title">
-                      {lang === 'hi' ? 'सहकार कनेक्ट पोर्टल प्रवेश' : 'Access SahakarConnect'}
+                      {lang === 'hi' ? 'राष्ट्रीय सहकारिता प्रवेश द्वार' : 'National Portal Sign In'}
                     </h3>
                     <div style={{ fontSize: '11px', color: '#64748b' }}>
-                      {lang === 'hi' ? 'नागरिक, श्रमयोगी या समिति' : 'Citizen, Tradesman or Society'}
+                      {lang === 'hi' ? '४ अधिकृत भूमिकाएं · एकल साइन-ऑन' : '4 Classified Roles · Single Sign-On'}
                     </div>
                   </div>
                 </div>
 
+                <div className="d-flex flex-wrap gap-1 mb-2">
+                  <span className="badge" style={{ backgroundColor: '#dcfce7', color: '#15803d', fontSize: '0.68rem' }}>
+                    Citizen
+                  </span>
+                  <span className="badge" style={{ backgroundColor: '#fef3c7', color: '#b45309', fontSize: '0.68rem' }}>
+                    Tradesman
+                  </span>
+                  <span className="badge" style={{ backgroundColor: '#f3e8ff', color: '#6d28d9', fontSize: '0.68rem' }}>
+                    Society Admin
+                  </span>
+                  <span className="badge" style={{ backgroundColor: '#ffe4e6', color: '#be123c', fontSize: '0.68rem' }}>
+                    Regulator
+                  </span>
+                </div>
+
                 <p className="myaadhaar-card-login-desc">
                   {lang === 'hi'
-                    ? 'मोबाइल ओटीपी, आधार ई-केवाईसी या समिति पंजीयन संख्या से तुरंत अपने डैशबोर्ड में लॉगिन करें।'
-                    : 'Login with Mobile OTP or Society ID to book, track daily payouts, and audit transactions.'}
+                    ? 'सुरक्षित भूमिका-आधारित प्रमाणीकरण द्वारा अपनी अधिकृत कार्यक्षेत्र में तुरंत प्रवेश करें।'
+                    : 'Select your role and sign in with encrypted 256-bit institutional credentials.'}
                 </p>
 
                 <button
                   type="button"
                   className="myaadhaar-card-login-action"
-                  onClick={() => onSelectPortal('consumer')}
+                  onClick={() => onSelectPortal('login')}
                 >
-                  <span>{lang === 'hi' ? 'ओटीपी द्वारा लॉगिन करें' : 'Login with OTP'}</span>
+                  <span>{lang === 'hi' ? 'प्रवेश द्वार खोलें' : 'Sign In to Portal'}</span>
                   <ChevronRightIcon size={16} color="#ffffff" />
                 </button>
               </div>
@@ -480,7 +443,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             >
               <div className="myaadhaar-persona-img-wrap">
                 {p.image ? (
-                  <img src={p.image} alt={p.title} loading="lazy" decoding="async" />
+                  <ImageWithSkeleton
+                    src={p.image}
+                    alt={p.title}
+                    loading="lazy"
+                    decoding="async"
+                    containerStyle={{ width: '100%', height: '100%' }}
+                  />
                 ) : (
                   <div
                     style={{
@@ -774,11 +743,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       <section className="section" style={{ background: '#f8fafc' }}>
         <div className="container">
           <div className="section-head">
-            <span className="eyebrow">{lang === 'hi' ? 'तकनीकी दक्षता' : 'Technical rigour'}</span>
-            <h2>{lang === 'hi' ? 'सहकार कनेक्ट के प्रमुख तकनीकी स्तंभ' : 'Architectural pillars of SahakarConnect'}</h2>
+            <span className="eyebrow">{lang === 'hi' ? 'विश्वास एवं सुरक्षा' : 'Trust & Safety Pillars'}</span>
+            <h2>{lang === 'hi' ? 'सहकार कनेक्ट के मूल सिद्धांत' : 'Core Foundations of SahakarConnect'}</h2>
             <p>
-              Built on open digital public infrastructure adhering to Government of India guidelines, zero-trust
-              cryptographic verification, and spatial routing.
+              {lang === 'hi'
+                ? 'भारत सरकार के दिशानिर्देशों के अनुरूप निर्मित सुरक्षित डिजिटल सार्वजनिक अवसंरचना, जो प्रत्येक नागरिक और कामगार को सुरक्षा व निष्पक्षता प्रदान करती है।'
+                : 'Engineered as secure digital public infrastructure compliant with Government of India guidelines, guaranteeing safety, fairness, and transparency for every citizen and tradesman.'}
             </p>
           </div>
           <div className="pillar-grid">
@@ -829,14 +799,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 <span className="badge badge-neutral">MSCS Act 2023 Sec. 63</span>
                 <span className="badge badge-neutral">NCCT certified syllabus</span>
                 <span className="badge badge-neutral">GIGW 3.0 accessible</span>
-                <button
-                  type="button"
-                  className="btn btn-sm btn-ghost ms-md-auto"
-                  onClick={() => setSkeletonPreviewMode(skeletonPreviewMode === 'none' ? 'portal' : 'none')}
-                  style={{ fontSize: '11px', padding: '2px 8px' }}
-                >
-                  {skeletonPreviewMode === 'none' ? 'Test Skeleton Loading Screen' : 'Exit Skeleton Preview'}
-                </button>
               </div>
             </div>
           </div>

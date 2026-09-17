@@ -4,12 +4,19 @@ import Footer from './components/common/Footer';
 import type { LegalDocType } from './components/common/LegalModal';
 import { SocketProvider, useSocket } from './context/SocketContext';
 import LandingPage from './pages/landing/LandingPage';
-import { PortalSkeleton } from './components/common/Skeleton';
+import {
+  PortalSkeleton,
+  ServiceCatalogSkeleton,
+  RegulatorSkeleton,
+} from './components/common/Skeleton';
+import AuthModal from './components/common/AuthModal';
 
-// Lazy load portal views and modals for performance & smooth skeleton transitions
+// Lazy load portal views, auth pages, and modals for performance & smooth skeleton transitions
 const ServiceCatalog = lazy(() => import('./pages/consumer/ServiceCatalog'));
 const ProviderDashboard = lazy(() => import('./pages/provider/ProviderDashboard'));
 const AdminHub = lazy(() => import('./pages/admin/AdminHub'));
+const RegulatorDashboard = lazy(() => import('./pages/regulator/RegulatorDashboard'));
+const LoginPage = lazy(() => import('./pages/auth/LoginPage'));
 const LegalModal = lazy(() => import('./components/common/LegalModal'));
 import {
   ConsumerIcon,
@@ -30,23 +37,13 @@ interface HealthStatus {
   uptime?: number;
 }
 
-const PERSONA_CREDENTIALS: Record<string, { email: string; pass: string }> = {
-  consumer: { email: 'vikram.consumer@gmail.com', pass: 'Password@123' },
-  'portal:plumbing': { email: 'vikram.consumer@gmail.com', pass: 'Password@123' },
-  'portal:electrical': { email: 'vikram.consumer@gmail.com', pass: 'Password@123' },
-  'portal:carpentry': { email: 'vikram.consumer@gmail.com', pass: 'Password@123' },
-  'portal:appliances': { email: 'vikram.consumer@gmail.com', pass: 'Password@123' },
-  provider: { email: 'ramesh.plumber@sahakar.org', pass: 'Password@123' },
-  coop_admin: { email: 'admin.delhi@sahakar.gov.in', pass: 'Password@123' },
-  regulator: { email: 'regulator@cooperation.gov.in', pass: 'Password@123' },
-};
-
-
 export const AppContent: React.FC = () => {
   const [lang, setLang] = useState<'en' | 'hi'>('en');
   const [activeNav, setActiveNav] = useState<string>('home');
   const [backendHealth, setBackendHealth] = useState<HealthStatus | null>(null);
   const [currentUser, setCurrentUser] = useState<any | null>(null);
+  const [authModalOpen, setAuthModalOpen] = useState<boolean>(false);
+  const [loginInitialRole, setLoginInitialRole] = useState<'consumer' | 'provider' | 'coop_admin' | 'regulator'>('consumer');
   const [theme, setTheme] = useState<'light' | 'dark' | 'contrast'>(() => {
     const saved = localStorage.getItem('sahakar_theme');
     if (saved === 'high-contrast' || saved === 'contrast') return 'contrast';
@@ -94,36 +91,117 @@ export const AppContent: React.FC = () => {
       });
   }, []);
 
-  // Handle portal selection & automatic authentication
-  const handleSelectNav = async (navId: string) => {
-    setActiveNav(navId);
+  // Restore authenticated session on initial mount
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      fetch('http://localhost:5000/api/auth/me', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then((res) => {
+          if (res.ok) return res.json();
+          throw new Error('Session expired');
+        })
+        .then((data) => {
+          if (data.user) {
+            setCurrentUser(data.user);
+            connectWithToken(token);
+          }
+        })
+        .catch(() => {
+          localStorage.removeItem('token');
+          setCurrentUser(null);
+        });
+    }
+  }, []);
 
+  const handleLoginSuccess = (token: string, user: any) => {
+    localStorage.setItem('token', token);
+    setCurrentUser(user);
+    connectWithToken(token);
+    setAuthModalOpen(false);
+
+    if (user.role === 'PROVIDER') {
+      setActiveNav('provider');
+    } else if (user.role === 'COOP_ADMIN' || user.role === 'ADMIN') {
+      setActiveNav('coop_admin');
+    } else if (user.role === 'REGULATOR') {
+      setActiveNav('regulator');
+    } else {
+      setActiveNav('consumer');
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setCurrentUser(null);
+    setActiveNav('home');
+  };
+
+  // Handle portal selection & role-based routing
+  const handleSelectNav = (navId: string) => {
     if (navId === 'home') {
+      setActiveNav('home');
       return;
     }
 
-    const creds = PERSONA_CREDENTIALS[navId];
-    if (creds) {
-      try {
-        const res = await fetch('http://localhost:5000/api/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: creds.email, password: creds.pass }),
-        });
-        if (res.ok) {
-          const data = await res.json();
-          localStorage.setItem('token', data.token);
-          setCurrentUser(data.user);
-          connectWithToken(data.token);
-        }
-      } catch (err) {
-        console.error('Auto login error:', err);
+    // Direct Login / Portal Access Gateway
+    if (navId === 'login' || navId.startsWith('login:')) {
+      const parts = navId.split(':');
+      const role = parts[1] as any;
+      if (role && ['consumer', 'provider', 'coop_admin', 'regulator'].includes(role)) {
+        setLoginInitialRole(role);
+      } else {
+        setLoginInitialRole('consumer');
       }
+      setActiveNav('login');
+      return;
     }
+
+    // Public / consumer catalogs are accessible without mandatory login
+    if (navId === 'consumer' || navId.startsWith('portal:')) {
+      setActiveNav(navId);
+      return;
+    }
+
+    // Role-protected workspaces: navigate if authorized, else redirect to classified login
+    if (navId === 'provider') {
+      if (currentUser && currentUser.role === 'PROVIDER') {
+        setActiveNav('provider');
+      } else {
+        setLoginInitialRole('provider');
+        setActiveNav('login');
+      }
+      return;
+    }
+
+    if (navId === 'coop_admin') {
+      if (currentUser && (currentUser.role === 'COOP_ADMIN' || currentUser.role === 'ADMIN')) {
+        setActiveNav('coop_admin');
+      } else {
+        setLoginInitialRole('coop_admin');
+        setActiveNav('login');
+      }
+      return;
+    }
+
+    if (navId === 'regulator') {
+      if (currentUser && currentUser.role === 'REGULATOR') {
+        setActiveNav('regulator');
+      } else {
+        setLoginInitialRole('regulator');
+        setActiveNav('login');
+      }
+      return;
+    }
+
+    setActiveNav(navId);
   };
 
   const getPortalTitle = (nav: string) => {
     switch (nav) {
+      case 'login':
+        return lang === 'hi' ? 'राष्ट्रीय सहकारिता प्रवेश द्वार' : 'National Portal Sign In';
       case 'consumer':
         return lang === 'hi' ? 'समस्त नागरिक सेवाएं' : 'Citizen Consumer Portal';
       case 'portal:plumbing':
@@ -157,6 +235,8 @@ export const AppContent: React.FC = () => {
         onSelectNav={handleSelectNav}
         currentUser={currentUser}
         onSwitchPersona={() => setActiveNav('home')}
+        onLogout={handleLogout}
+        onLoginSuccess={handleLoginSuccess}
         theme={theme}
         onThemeChange={setTheme}
         fontChoice={fontChoice}
@@ -170,6 +250,15 @@ export const AppContent: React.FC = () => {
             onSelectPortal={handleSelectNav}
             backendHealth={backendHealth}
           />
+        ) : activeNav === 'login' ? (
+          <Suspense fallback={<PortalSkeleton title={lang === 'hi' ? 'राष्ट्रीय सहकारिता प्रवेश द्वार' : 'Authentication Gateway'} />}>
+            <LoginPage
+              initialRole={loginInitialRole}
+              onLoginSuccess={handleLoginSuccess}
+              onBackToHome={() => setActiveNav('home')}
+              lang={lang}
+            />
+          </Suspense>
         ) : (
           <div className="container-fluid px-2 px-sm-3 px-md-4">
             {/* Breadcrumb & Quick Switcher Strip when inside a portal */}
@@ -296,7 +385,17 @@ export const AppContent: React.FC = () => {
               </div>
             </div>
 
-            <Suspense fallback={<PortalSkeleton title={getPortalTitle(activeNav)} />}>
+            <Suspense
+              fallback={
+                isConsumerView ? (
+                  <ServiceCatalogSkeleton />
+                ) : activeNav === 'regulator' ? (
+                  <RegulatorSkeleton />
+                ) : (
+                  <PortalSkeleton title={getPortalTitle(activeNav)} />
+                )
+              }
+            >
               {isConsumerView && (
                 <ServiceCatalog
                   initialTrade={
@@ -313,9 +412,24 @@ export const AppContent: React.FC = () => {
                 />
               )}
 
-              {activeNav === 'provider' && <ProviderDashboard />}
+              {activeNav === 'provider' && (
+                <ProviderDashboard
+                  onOpenAuth={() => handleSelectNav('login:provider')}
+                />
+              )}
 
-              {(activeNav === 'coop_admin' || activeNav === 'regulator') && <AdminHub />}
+              {activeNav === 'coop_admin' && (
+                <AdminHub
+                  currentUser={currentUser}
+                  onOpenAuth={() => handleSelectNav('login:coop_admin')}
+                />
+              )}
+
+              {activeNav === 'regulator' && (
+                <RegulatorDashboard
+                  onOpenAuth={() => handleSelectNav('login:regulator')}
+                />
+              )}
             </Suspense>
           </div>
         )}
@@ -334,6 +448,15 @@ export const AppContent: React.FC = () => {
           />
         </Suspense>
       )}
+
+      {/* Authentic Citizen & Member Auth Modal */}
+      <AuthModal
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+        onLoginSuccess={handleLoginSuccess}
+        initialRole={loginInitialRole}
+        lang={lang}
+      />
     </div>
   );
 };

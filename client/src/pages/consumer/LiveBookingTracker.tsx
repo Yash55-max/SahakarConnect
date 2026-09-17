@@ -218,7 +218,7 @@ export const LiveBookingTracker: React.FC<BookingTrackerProps> = ({
                     Searching for nearby verified cooperative providers...
                   </div>
                   <div className="text-muted small mt-1">
-                    Using Uber H3 Resolution-8 spatial dispatch matching in your sector.
+                    Matching with verified cooperative tradesmen in your immediate sector.
                   </div>
                 </div>
               )}

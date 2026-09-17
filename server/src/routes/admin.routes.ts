@@ -269,7 +269,10 @@ router.post('/polls/:id/vote', requireAuth, requireRole([UserRole.PROVIDER]), as
     });
   } catch (error: any) {
     if (error.code === 'P2002') {
-      return res.status(400).json({ error: 'You have already cast your vote on this resolution' });
+      return res.status(409).json({
+        error: 'Conflict',
+        message: 'You have already cast your vote on this resolution',
+      });
     }
     return res.status(500).json({ error: error.message });
   }

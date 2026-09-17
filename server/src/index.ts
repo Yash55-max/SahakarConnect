@@ -8,6 +8,7 @@ import bookingRoutes from './routes/booking.routes';
 import providerRoutes from './routes/provider.routes';
 import adminRoutes from './routes/admin.routes';
 import categoryRoutes from './routes/category.routes';
+import regulatorRoutes from './routes/regulator.routes';
 import { initSocketServer } from './services/socket.service';
 
 dotenv.config();
@@ -28,6 +29,7 @@ app.use('/api/bookings', bookingRoutes);
 app.use('/api/providers', providerRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/categories', categoryRoutes);
+app.use('/api/regulator', regulatorRoutes);
 
 const httpServer = http.createServer(app);
 

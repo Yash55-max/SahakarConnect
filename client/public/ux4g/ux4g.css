@@ -1,0 +1,28 @@
+/* ==========================================================================
+   UX4G DESIGN SYSTEM 3.2.0 — STABLE ENTRY POINT
+   Government of India · MeitY · NeGD
+   Excludes the upstream broken CDN import (patterns/ux4g-patterns.css -> 404)
+   ========================================================================== */
+
+/* ─── CSS Cascade Layer Hierarchy ─── */
+@layer ux4g-tokens, ux4g-semantics, ux4g-reset, ux4g-foundations, ux4g-layout, ux4g-components, ux4g-patterns, ux4g-utilities;
+
+/* ─── 1. Primitive Design Tokens ─── */
+@import "https://cdn.ux4g.gov.in/UX4G@3.2.0/tokens/ux4g-tokens.css" layer(ux4g-tokens);
+
+/* ─── 2. Semantic Tokens & Themes ─── */
+@import "https://cdn.ux4g.gov.in/UX4G@3.2.0/semantics/ux4g-semantic.css" layer(ux4g-semantics);
+@import "https://cdn.ux4g.gov.in/UX4G@3.2.0/themes/dark.css" layer(ux4g-semantics);
+
+/* ─── 3. Reset & Base Foundations ─── */
+@import "https://cdn.ux4g.gov.in/UX4G@3.2.0/reset/reset.css" layer(ux4g-reset);
+@import "https://cdn.ux4g.gov.in/UX4G@3.2.0/foundations/ux4g.foundations.css" layer(ux4g-foundations);
+
+/* ─── 4. Layout Grid & Structure ─── */
+@import "https://cdn.ux4g.gov.in/UX4G@3.2.0/layout/ux4g.layout.css" layer(ux4g-layout);
+
+/* ─── 5. UI Components ─── */
+@import "https://cdn.ux4g.gov.in/UX4G@3.2.0/components/ux4g.components.css" layer(ux4g-components);
+
+/* ─── 6. Atomic Utilities ─── */
+@import "https://cdn.ux4g.gov.in/UX4G@3.2.0/utilities/ux4g-utilities.css" layer(ux4g-utilities);

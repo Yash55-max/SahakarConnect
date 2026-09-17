@@ -4,8 +4,41 @@ import TripartiteLedgerView from './TripartiteLedgerView';
 import GovernancePortal from './GovernancePortal';
 import { AdminIcon } from '../../components/common/Icons';
 
-export const AdminHub: React.FC = () => {
+interface AdminHubProps {
+  onOpenAuth?: () => void;
+  currentUser?: any | null;
+}
+
+export const AdminHub: React.FC<AdminHubProps> = ({ onOpenAuth, currentUser }) => {
   const [activeTab, setActiveTab] = useState<'ledger' | 'verification' | 'governance'>('ledger');
+
+  if (!currentUser || currentUser.role !== 'ADMIN') {
+    return (
+      <div className="card shadow-sm border p-4 p-md-5 text-center my-4 bg-white">
+        <div
+          className="mx-auto mb-3 p-3 rounded-circle d-inline-flex align-items-center justify-content-center"
+          style={{ background: 'var(--ux4g-bg-primary, #f2efff)', width: '64px', height: '64px' }}
+        >
+          <AdminIcon size={32} color="var(--ux4g-primary-600, #4a2bc2)" />
+        </div>
+        <h3 className="h5 fw-bold text-dark mb-2">Cooperative Society Administration Access</h3>
+        <p className="text-secondary small max-w-md mx-auto mb-4" style={{ maxWidth: '520px' }}>
+          This administrative center is designated for elected board members and society administrators of registered Primary Service Cooperative Societies (PSCS). Please sign in with your society credentials.
+        </p>
+        <div>
+          {onOpenAuth && (
+            <button
+              type="button"
+              className="btn btn-primary btn-sm px-4 py-2 fw-semibold"
+              onClick={onOpenAuth}
+            >
+              Sign In with Society Admin Credentials
+            </button>
+          )}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -22,7 +55,7 @@ export const AdminHub: React.FC = () => {
                   Primary Service Cooperative Society Admin Portal
                 </h2>
                 <span className="badge bg-primary text-white small">
-                  South Delhi Urban Tradesmen PSCS
+                  {currentUser?.name ? `${currentUser.name} (Admin)` : 'Primary Service Cooperative Society'}
                 </span>
               </div>
               <p className="text-muted small mb-0 mt-1">

@@ -3,6 +3,7 @@ import { io as Client, Socket as ClientSocket } from 'socket.io-client';
 import { app, httpServer } from '../src/index';
 import { prisma } from '../src/lib/prisma';
 import bcrypt from 'bcryptjs';
+import { credentials } from '../src/config/credentials';
 
 async function runE2ESimulation() {
   console.log('===============================================================');
@@ -30,8 +31,8 @@ async function runE2ESimulation() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      email: 'vikram.consumer@gmail.com',
-      password: 'Password@123',
+      email: credentials.consumer.email,
+      password: credentials.defaultPassword,
     }),
   });
   if (!consumerLoginRes.ok) {
@@ -95,8 +96,8 @@ async function runE2ESimulation() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      email: 'ramesh.plumber@sahakar.org',
-      password: 'Password@123',
+      email: credentials.provider.email,
+      password: credentials.defaultPassword,
     }),
   });
   if (!providerLoginRes.ok) {

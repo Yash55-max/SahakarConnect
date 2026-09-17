@@ -3,8 +3,13 @@ import { useSocket } from '../../context/SocketContext';
 import ActiveJobView from './ActiveJobView';
 import ProviderEarnings from './ProviderEarnings';
 import { ProviderIcon } from '../../components/common/Icons';
+import { PortalSkeleton } from '../../components/common/Skeleton';
 
-export const ProviderDashboard: React.FC = () => {
+interface ProviderDashboardProps {
+  onOpenAuth?: () => void;
+}
+
+export const ProviderDashboard: React.FC<ProviderDashboardProps> = ({ onOpenAuth }) => {
   const [profile, setProfile] = useState<any | null>(null);
   const [isAvailable, setIsAvailable] = useState<boolean>(true);
   const [jobs, setJobs] = useState<any[]>([]);
@@ -106,9 +111,33 @@ export const ProviderDashboard: React.FC = () => {
   };
 
   if (loading) {
+    return <PortalSkeleton title="Loading Tradesman Workplace..." />;
+  }
+
+  if (!profile) {
     return (
-      <div className="text-center py-5">
-        <div className="spinner-border text-primary" role="status" />
+      <div className="card shadow-sm border p-4 p-md-5 text-center my-4 bg-white">
+        <div
+          className="mx-auto mb-3 p-3 rounded-circle d-inline-flex align-items-center justify-content-center"
+          style={{ background: 'var(--ux4g-bg-primary, #f2efff)', width: '64px', height: '64px' }}
+        >
+          <ProviderIcon size={32} color="var(--ux4g-primary-600, #4a2bc2)" />
+        </div>
+        <h3 className="h5 fw-bold text-dark mb-2">Skilled Tradesman Sign In Required</h3>
+        <p className="text-secondary small max-w-md mx-auto mb-4" style={{ maxWidth: '520px' }}>
+          Please sign in with your registered mobile number or register as a skilled artisan member with your local Primary Service Cooperative Society (PSCS) to access duty dispatch alerts, active jobs, and daily earnings.
+        </p>
+        <div>
+          {onOpenAuth && (
+            <button
+              type="button"
+              className="btn btn-primary btn-sm px-4 py-2 fw-semibold"
+              onClick={onOpenAuth}
+            >
+              Sign In or Register as Tradesman
+            </button>
+          )}
+        </div>
       </div>
     );
   }
@@ -126,14 +155,14 @@ export const ProviderDashboard: React.FC = () => {
               <div>
                 <div className="d-flex align-items-center gap-2">
                   <h2 className="h5 fw-bold text-dark mb-0">
-                    {profile?.user?.name || 'Ramesh Kumar'}
+                    {profile?.user?.name || 'Tradesman Member'}
                   </h2>
                   <span className="badge bg-success-subtle text-success border border-success-subtle small">
                     NSQF Level {profile?.nsqfLevel || 4} Certified
                   </span>
                 </div>
                 <div className="text-muted small mt-1">
-                  {profile?.cooperative?.name || 'South Delhi Urban Tradesmen PSCS'} &bull; Skills: {profile?.skills?.join(', ') || 'Plumbing'}
+                  {profile?.cooperative?.name || 'Primary Service Cooperative Society'} &bull; Skills: {profile?.skills?.join(', ') || 'General Maintenance'}
                 </div>
               </div>
             </div>
@@ -171,7 +200,7 @@ export const ProviderDashboard: React.FC = () => {
           <div>
             <div className="d-flex align-items-center gap-2 mb-1">
               <span className="badge bg-danger text-white pulse">DISPATCH REQUEST</span>
-              <strong className="text-dark">New Job Available in Your H3 Resolution-8 Sector!</strong>
+              <strong className="text-dark">New Job Available in Your Local Sector!</strong>
             </div>
             <div className="small text-muted">
               Service: <strong>{incomingAlert.category}</strong> &bull; Gross Tariff: <strong>₹{incomingAlert.grossAmount}</strong> (₹{(incomingAlert.grossAmount * 0.88).toFixed(2)} Take-Home)
@@ -227,11 +256,11 @@ export const ProviderDashboard: React.FC = () => {
 
         <div className="col-12 col-md-4">
           <div className="p-3 bg-white border rounded shadow-sm">
-            <div className="small text-muted mb-1">Spatial Resolution</div>
-            <div className="h6 fw-bold text-dark mb-1 font-monospace">
-              {profile?.h3IndexRes8 || '8861969527fffff'}
+            <div className="small text-muted mb-1">Service Zone &amp; Ward</div>
+            <div className="h6 fw-bold text-dark mb-1">
+              Hauz Khas Cluster
             </div>
-            <div className="text-muted small">Uber H3 Res-8 (Hauz Khas Cluster)</div>
+            <div className="text-muted small">South Delhi Municipal Sector</div>
           </div>
         </div>
       </div>
