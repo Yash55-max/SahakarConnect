@@ -1970,4 +1970,99 @@ body.high-contrast .skeleton {
   background: var(--ux4g-primary-700);
 }
 
+/* ==========================================================================
+   PORTAL DARK & CONTRAST THEME SYSTEM OVERRIDES
+   ========================================================================== */
+[data-theme="dark"] .bg-white {
+  background-color: var(--ux4g-bg-elevated) !important;
+  color: var(--ux4g-text-primary) !important;
+}
+[data-theme="dark"] .bg-light {
+  background-color: var(--ux4g-bg-soft) !important;
+  color: var(--ux4g-text-primary) !important;
+}
+[data-theme="dark"] .card {
+  background-color: var(--ux4g-bg-elevated);
+  border-color: var(--ux4g-border-subtle);
+  color: var(--ux4g-text-primary);
+}
+[data-theme="dark"] .card-header {
+  background-color: var(--ux4g-bg-soft) !important;
+  border-color: var(--ux4g-border-subtle) !important;
+  color: var(--ux4g-text-primary) !important;
+}
+[data-theme="dark"] .card-footer {
+  background-color: var(--ux4g-bg-soft) !important;
+  border-color: var(--ux4g-border-subtle) !important;
+  color: var(--ux4g-text-secondary) !important;
+}
+[data-theme="dark"] .text-dark {
+  color: var(--ux4g-text-primary) !important;
+}
+[data-theme="dark"] .table {
+  color: var(--ux4g-text-primary);
+  border-color: var(--ux4g-border-subtle);
+}
+[data-theme="dark"] .table-light,
+[data-theme="dark"] thead.table-light tr th {
+  background-color: var(--ux4g-bg-soft) !important;
+  color: var(--ux4g-text-primary) !important;
+  border-color: var(--ux4g-border-subtle) !important;
+}
+[data-theme="dark"] .table-hover tbody tr:hover td {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--ux4g-text-primary);
+}
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select {
+  background-color: var(--ux4g-bg-soft);
+  border-color: var(--ux4g-border-subtle);
+  color: var(--ux4g-text-primary);
+}
+[data-theme="dark"] .form-control:focus,
+[data-theme="dark"] .form-select:focus {
+  background-color: var(--ux4g-bg-soft);
+  color: var(--ux4g-text-primary);
+  border-color: var(--ux4g-primary-400);
+}
+[data-theme="dark"] .input-group-text {
+  background-color: var(--ux4g-bg-soft);
+  border-color: var(--ux4g-border-subtle);
+  color: var(--ux4g-text-secondary);
+}
+
+/* Contrast theme (GIGW Compliant) */
+[data-theme="contrast"] .bg-white,
+[data-theme="contrast"] .bg-light,
+[data-theme="contrast"] .card {
+  background-color: #000000 !important;
+  border: 1px solid #ffffff !important;
+  color: #ffffff !important;
+}
+[data-theme="contrast"] .card-header,
+[data-theme="contrast"] .card-footer {
+  background-color: #0a0a0a !important;
+  border-color: #ffffff !important;
+  color: #ffffff !important;
+}
+[data-theme="contrast"] .text-dark {
+  color: #ffffff !important;
+}
+[data-theme="contrast"] .table {
+  color: #ffffff;
+  border-color: #ffffff;
+}
+[data-theme="contrast"] thead.table-light tr th {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+[data-theme="contrast"] .form-control,
+[data-theme="contrast"] .form-select,
+[data-theme="contrast"] .input-group-text {
+  background-color: #000000 !important;
+  border: 1px solid #ffffff !important;
+  color: #ffffff !important;
+}
+
 

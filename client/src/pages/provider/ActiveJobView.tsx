@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { ShieldCheckIcon, CheckIcon } from '../../components/common/Icons';
+import React, { useState, useEffect } from 'react';
+import { ShieldCheckIcon, CheckIcon, RefreshCwIcon } from '../../components/common/Icons';
+import { offlineQueue, QueuedOfflineAction } from '../../services/offlineQueue';
 
 interface ActiveJobViewProps {
   job: any;
@@ -17,10 +18,31 @@ export const ActiveJobView: React.FC<ActiveJobViewProps> = ({
   const [submitting, setSubmitting] = useState(false);
   const [settlementResult, setSettlementResult] = useState<any | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [offlineNotice, setOfflineNotice] = useState<string | null>(null);
+  const [queuedCount, setQueuedCount] = useState<number>(0);
+
+  useEffect(() => {
+    const unsub = offlineQueue.subscribe((queue: QueuedOfflineAction[]) => {
+      setQueuedCount(queue.filter((q) => q.bookingId === job.id).length);
+    });
+    return unsub;
+  }, [job.id]);
 
   const handleStartJob = async () => {
+    const token = localStorage.getItem('token');
+    if (!offlineQueue.isOnline()) {
+      offlineQueue.enqueue({
+        type: 'START_JOB',
+        bookingId: job.id,
+        payload: {},
+        token,
+      });
+      setOfflineNotice('Job start update queued locally (Offline Mode). Will sync once cell signal is restored.');
+      onJobUpdated();
+      return;
+    }
+
     try {
-      const token = localStorage.getItem('token');
       const res = await fetch(`http://localhost:5000/api/bookings/${job.id}/status`, {
         method: 'PATCH',
         headers: {
@@ -33,7 +55,15 @@ export const ActiveJobView: React.FC<ActiveJobViewProps> = ({
         onJobUpdated();
       }
     } catch (err) {
-      console.error('Error starting job:', err);
+      console.warn('Network error starting job, buffering in offline queue:', err);
+      offlineQueue.enqueue({
+        type: 'START_JOB',
+        bookingId: job.id,
+        payload: {},
+        token,
+      });
+      setOfflineNotice('Signal lost in basement. Job start update buffered in offline queue.');
+      onJobUpdated();
     }
   };
 
@@ -46,9 +76,23 @@ export const ActiveJobView: React.FC<ActiveJobViewProps> = ({
 
     setSubmitting(true);
     setError(null);
+    const token = localStorage.getItem('token');
+
+    if (!offlineQueue.isOnline()) {
+      offlineQueue.enqueue({
+        type: 'COMPLETE_WITH_PIN',
+        bookingId: job.id,
+        payload: { completionOtp: pin },
+        token,
+      });
+      setOfflineNotice('Completion PIN buffered in offline queue! Tripartite escrow settlement will process automatically upon signal recovery.');
+      setIsPinModalOpen(false);
+      setSubmitting(false);
+      onJobUpdated();
+      return;
+    }
 
     try {
-      const token = localStorage.getItem('token');
       const res = await fetch(`http://localhost:5000/api/bookings/${job.id}/complete`, {
         method: 'PATCH',
         headers: {
@@ -66,9 +110,29 @@ export const ActiveJobView: React.FC<ActiveJobViewProps> = ({
       setSettlementResult(data);
       onJobUpdated();
     } catch (err: any) {
-      setError(err.message);
+      if (err.message?.includes('fetch') || !navigator.onLine) {
+        offlineQueue.enqueue({
+          type: 'COMPLETE_WITH_PIN',
+          bookingId: job.id,
+          payload: { completionOtp: pin },
+          token,
+        });
+        setOfflineNotice('Signal interrupted. Completion PIN buffered safely in offline queue.');
+        setIsPinModalOpen(false);
+        onJobUpdated();
+      } else {
+        setError(err.message);
+      }
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const handleManualSync = async () => {
+    const res = await offlineQueue.flush();
+    if (res.syncedCount > 0) {
+      setOfflineNotice(`Synchronized ${res.syncedCount} queued action(s) with central server!`);
+      onJobUpdated();
     }
   };
 
@@ -85,6 +149,39 @@ export const ActiveJobView: React.FC<ActiveJobViewProps> = ({
       </div>
 
       <div className="card-body p-4">
+        {/* Offline Action Queue Banner */}
+        {offlineNotice && (
+          <div className="alert alert-info border d-flex justify-content-between align-items-center mb-4 p-3 rounded">
+            <div className="small">
+              <RefreshCwIcon size={14} className="me-2 text-primary" />
+              <strong>Offline Resilience:</strong> {offlineNotice}
+            </div>
+            <button
+              type="button"
+              className="btn btn-sm btn-outline-primary"
+              onClick={handleManualSync}
+            >
+              Sync Now
+            </button>
+          </div>
+        )}
+
+        {queuedCount > 0 && !offlineNotice && (
+          <div className="alert alert-warning border d-flex justify-content-between align-items-center mb-4 p-3 rounded">
+            <div className="small">
+              <RefreshCwIcon size={14} className="me-2 text-warning" />
+              <strong>{queuedCount} update(s)</strong> buffered offline for this job. Will sync automatically once online.
+            </div>
+            <button
+              type="button"
+              className="btn btn-sm btn-warning"
+              onClick={handleManualSync}
+            >
+              Flush Queue
+            </button>
+          </div>
+        )}
+
         {/* Customer & Location Overview */}
         <div className="row g-4 mb-4">
           <div className="col-12 col-md-6">

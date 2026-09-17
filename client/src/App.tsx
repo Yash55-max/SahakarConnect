@@ -10,6 +10,7 @@ import { PortalSkeleton } from './components/common/Skeleton';
 const ServiceCatalog = lazy(() => import('./pages/consumer/ServiceCatalog'));
 const ProviderDashboard = lazy(() => import('./pages/provider/ProviderDashboard'));
 const AdminHub = lazy(() => import('./pages/admin/AdminHub'));
+const RegulatorDashboard = lazy(() => import('./pages/regulator/RegulatorDashboard'));
 const LegalModal = lazy(() => import('./components/common/LegalModal'));
 import {
   ConsumerIcon,
@@ -315,7 +316,9 @@ export const AppContent: React.FC = () => {
 
               {activeNav === 'provider' && <ProviderDashboard />}
 
-              {(activeNav === 'coop_admin' || activeNav === 'regulator') && <AdminHub />}
+              {activeNav === 'coop_admin' && <AdminHub />}
+
+              {activeNav === 'regulator' && <RegulatorDashboard />}
             </Suspense>
           </div>
         )}
