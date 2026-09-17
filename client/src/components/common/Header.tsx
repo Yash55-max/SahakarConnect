@@ -385,26 +385,58 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
             </div>
 
-            {/* Right Action: [ Login ] Pill Button */}
-            <div>
+            {/* Right Action: [ Portal Sign In / Active Session ] */}
+            <div className="d-flex align-items-center gap-2">
               {currentUser ? (
-                <button
-                  type="button"
-                  className="myaadhaar-login-pill"
-                  onClick={() => onSelectNav(currentUser.role === 'provider' ? 'provider' : currentUser.role === 'admin' ? 'coop_admin' : 'consumer')}
-                  title={`Logged in as ${currentUser.name}`}
-                >
-                  <LockIcon size={14} color="#fff" />
-                  <span>{currentUser.name || 'Dashboard'}</span>
-                </button>
+                <>
+                  <button
+                    type="button"
+                    className="myaadhaar-login-pill"
+                    onClick={() =>
+                      onSelectNav(
+                        currentUser.role === 'PROVIDER'
+                          ? 'provider'
+                          : currentUser.role === 'COOP_ADMIN' || currentUser.role === 'ADMIN'
+                          ? 'coop_admin'
+                          : currentUser.role === 'REGULATOR'
+                          ? 'regulator'
+                          : 'consumer'
+                      )
+                    }
+                    title={`Logged in as ${currentUser.name} (${currentUser.role})`}
+                  >
+                    <LockIcon size={14} color="#fff" />
+                    <span className="text-truncate" style={{ maxWidth: '110px' }}>
+                      {currentUser.name.split(' ')[0]}
+                    </span>
+                  </button>
+                  {onLogout && (
+                    <button
+                      type="button"
+                      className="btn btn-sm text-white"
+                      style={{
+                        fontSize: '11px',
+                        padding: '4px 8px',
+                        border: '1px solid rgba(255,255,255,0.3)',
+                        borderRadius: '6px',
+                        background: 'rgba(255,255,255,0.1)',
+                      }}
+                      onClick={onLogout}
+                      title={currentLang === 'hi' ? 'लॉगआउट' : 'Sign Out'}
+                    >
+                      {currentLang === 'hi' ? 'लॉगआउट' : 'Sign Out'}
+                    </button>
+                  )}
+                </>
               ) : (
                 <button
                   type="button"
                   className="myaadhaar-login-pill"
-                  onClick={() => setLoginModalOpen(true)}
-                  aria-label="Login to SahakarConnect"
+                  onClick={() => onSelectNav('login')}
+                  aria-label="Sign in to SahakarConnect"
                 >
-                  <span>{currentLang === 'hi' ? 'लॉग इन' : 'Login'}</span>
+                  <LockIcon size={13} color="#fff" />
+                  <span>{currentLang === 'hi' ? 'पोर्टल प्रवेश' : 'Portal Sign In'}</span>
                   <ChevronRightIcon size={14} color="#fff" />
                 </button>
               )}
@@ -707,7 +739,7 @@ export const Header: React.FC<HeaderProps> = ({
               </span>
               <button
                 type="button"
-                onClick={() => setLoginModalOpen(true)}
+                onClick={() => onSelectNav('login')}
                 className="btn btn-primary btn-sm"
                 style={{ padding: '2px var(--ux4g-sp-4)', fontSize: '11px', fontWeight: 600 }}
               >

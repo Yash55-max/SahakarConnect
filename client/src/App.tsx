@@ -11,11 +11,12 @@ import {
 } from './components/common/Skeleton';
 import AuthModal from './components/common/AuthModal';
 
-// Lazy load portal views and modals for performance & smooth skeleton transitions
+// Lazy load portal views, auth pages, and modals for performance & smooth skeleton transitions
 const ServiceCatalog = lazy(() => import('./pages/consumer/ServiceCatalog'));
 const ProviderDashboard = lazy(() => import('./pages/provider/ProviderDashboard'));
 const AdminHub = lazy(() => import('./pages/admin/AdminHub'));
 const RegulatorDashboard = lazy(() => import('./pages/regulator/RegulatorDashboard'));
+const LoginPage = lazy(() => import('./pages/auth/LoginPage'));
 const LegalModal = lazy(() => import('./components/common/LegalModal'));
 import {
   ConsumerIcon,
@@ -42,7 +43,7 @@ export const AppContent: React.FC = () => {
   const [backendHealth, setBackendHealth] = useState<HealthStatus | null>(null);
   const [currentUser, setCurrentUser] = useState<any | null>(null);
   const [authModalOpen, setAuthModalOpen] = useState<boolean>(false);
-  const [authModalRole, setAuthModalRole] = useState<'consumer' | 'provider' | 'coop_admin' | 'regulator'>('consumer');
+  const [loginInitialRole, setLoginInitialRole] = useState<'consumer' | 'provider' | 'coop_admin' | 'regulator'>('consumer');
   const [theme, setTheme] = useState<'light' | 'dark' | 'contrast'>(() => {
     const saved = localStorage.getItem('sahakar_theme');
     if (saved === 'high-contrast' || saved === 'contrast') return 'contrast';
@@ -122,7 +123,7 @@ export const AppContent: React.FC = () => {
 
     if (user.role === 'PROVIDER') {
       setActiveNav('provider');
-    } else if (user.role === 'ADMIN') {
+    } else if (user.role === 'COOP_ADMIN' || user.role === 'ADMIN') {
       setActiveNav('coop_admin');
     } else if (user.role === 'REGULATOR') {
       setActiveNav('regulator');
@@ -137,10 +138,23 @@ export const AppContent: React.FC = () => {
     setActiveNav('home');
   };
 
-  // Handle portal selection & permissions check
+  // Handle portal selection & role-based routing
   const handleSelectNav = (navId: string) => {
     if (navId === 'home') {
       setActiveNav('home');
+      return;
+    }
+
+    // Direct Login / Portal Access Gateway
+    if (navId === 'login' || navId.startsWith('login:')) {
+      const parts = navId.split(':');
+      const role = parts[1] as any;
+      if (role && ['consumer', 'provider', 'coop_admin', 'regulator'].includes(role)) {
+        setLoginInitialRole(role);
+      } else {
+        setLoginInitialRole('consumer');
+      }
+      setActiveNav('login');
       return;
     }
 
@@ -150,30 +164,33 @@ export const AppContent: React.FC = () => {
       return;
     }
 
-    // Role-protected workspaces: navigate and trigger auth modal if user lacks permissions
+    // Role-protected workspaces: navigate if authorized, else redirect to classified login
     if (navId === 'provider') {
-      setActiveNav('provider');
-      if (!currentUser || currentUser.role !== 'PROVIDER') {
-        setAuthModalRole('provider');
-        setAuthModalOpen(true);
+      if (currentUser && currentUser.role === 'PROVIDER') {
+        setActiveNav('provider');
+      } else {
+        setLoginInitialRole('provider');
+        setActiveNav('login');
       }
       return;
     }
 
     if (navId === 'coop_admin') {
-      setActiveNav('coop_admin');
-      if (!currentUser || currentUser.role !== 'ADMIN') {
-        setAuthModalRole('coop_admin');
-        setAuthModalOpen(true);
+      if (currentUser && (currentUser.role === 'COOP_ADMIN' || currentUser.role === 'ADMIN')) {
+        setActiveNav('coop_admin');
+      } else {
+        setLoginInitialRole('coop_admin');
+        setActiveNav('login');
       }
       return;
     }
 
     if (navId === 'regulator') {
-      setActiveNav('regulator');
-      if (!currentUser || currentUser.role !== 'REGULATOR') {
-        setAuthModalRole('regulator');
-        setAuthModalOpen(true);
+      if (currentUser && currentUser.role === 'REGULATOR') {
+        setActiveNav('regulator');
+      } else {
+        setLoginInitialRole('regulator');
+        setActiveNav('login');
       }
       return;
     }
@@ -183,6 +200,8 @@ export const AppContent: React.FC = () => {
 
   const getPortalTitle = (nav: string) => {
     switch (nav) {
+      case 'login':
+        return lang === 'hi' ? 'राष्ट्रीय सहकारिता प्रवेश द्वार' : 'National Portal Sign In';
       case 'consumer':
         return lang === 'hi' ? 'समस्त नागरिक सेवाएं' : 'Citizen Consumer Portal';
       case 'portal:plumbing':
@@ -231,6 +250,15 @@ export const AppContent: React.FC = () => {
             onSelectPortal={handleSelectNav}
             backendHealth={backendHealth}
           />
+        ) : activeNav === 'login' ? (
+          <Suspense fallback={<PortalSkeleton title={lang === 'hi' ? 'राष्ट्रीय सहकारिता प्रवेश द्वार' : 'Authentication Gateway'} />}>
+            <LoginPage
+              initialRole={loginInitialRole}
+              onLoginSuccess={handleLoginSuccess}
+              onBackToHome={() => setActiveNav('home')}
+              lang={lang}
+            />
+          </Suspense>
         ) : (
           <div className="container-fluid px-2 px-sm-3 px-md-4">
             {/* Breadcrumb & Quick Switcher Strip when inside a portal */}
@@ -386,29 +414,20 @@ export const AppContent: React.FC = () => {
 
               {activeNav === 'provider' && (
                 <ProviderDashboard
-                  onOpenAuth={() => {
-                    setAuthModalRole('provider');
-                    setAuthModalOpen(true);
-                  }}
+                  onOpenAuth={() => handleSelectNav('login:provider')}
                 />
               )}
 
               {activeNav === 'coop_admin' && (
                 <AdminHub
                   currentUser={currentUser}
-                  onOpenAuth={() => {
-                    setAuthModalRole('coop_admin');
-                    setAuthModalOpen(true);
-                  }}
+                  onOpenAuth={() => handleSelectNav('login:coop_admin')}
                 />
               )}
 
               {activeNav === 'regulator' && (
                 <RegulatorDashboard
-                  onOpenAuth={() => {
-                    setAuthModalRole('regulator');
-                    setAuthModalOpen(true);
-                  }}
+                  onOpenAuth={() => handleSelectNav('login:regulator')}
                 />
               )}
             </Suspense>
@@ -435,7 +454,7 @@ export const AppContent: React.FC = () => {
         isOpen={authModalOpen}
         onClose={() => setAuthModalOpen(false)}
         onLoginSuccess={handleLoginSuccess}
-        initialRole={authModalRole}
+        initialRole={loginInitialRole}
         lang={lang}
       />
     </div>

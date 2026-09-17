@@ -200,7 +200,7 @@ export const ProviderDashboard: React.FC<ProviderDashboardProps> = ({ onOpenAuth
           <div>
             <div className="d-flex align-items-center gap-2 mb-1">
               <span className="badge bg-danger text-white pulse">DISPATCH REQUEST</span>
-              <strong className="text-dark">New Job Available in Your H3 Resolution-8 Sector!</strong>
+              <strong className="text-dark">New Job Available in Your Local Sector!</strong>
             </div>
             <div className="small text-muted">
               Service: <strong>{incomingAlert.category}</strong> &bull; Gross Tariff: <strong>₹{incomingAlert.grossAmount}</strong> (₹{(incomingAlert.grossAmount * 0.88).toFixed(2)} Take-Home)
@@ -256,11 +256,11 @@ export const ProviderDashboard: React.FC<ProviderDashboardProps> = ({ onOpenAuth
 
         <div className="col-12 col-md-4">
           <div className="p-3 bg-white border rounded shadow-sm">
-            <div className="small text-muted mb-1">Spatial Resolution</div>
-            <div className="h6 fw-bold text-dark mb-1 font-monospace">
-              {profile?.h3IndexRes8 || '8861969527fffff'}
+            <div className="small text-muted mb-1">Service Zone &amp; Ward</div>
+            <div className="h6 fw-bold text-dark mb-1">
+              Hauz Khas Cluster
             </div>
-            <div className="text-muted small">Uber H3 Res-8 (Hauz Khas Cluster)</div>
+            <div className="text-muted small">South Delhi Municipal Sector</div>
           </div>
         </div>
       </div>
