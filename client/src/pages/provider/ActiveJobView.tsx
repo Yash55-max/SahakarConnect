@@ -29,13 +29,14 @@ export const ActiveJobView: React.FC<ActiveJobViewProps> = ({
   }, [job.id]);
 
   const handleStartJob = async () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
     if (!offlineQueue.isOnline()) {
       offlineQueue.enqueue({
         type: 'START_JOB',
         bookingId: job.id,
         payload: {},
-        token,
       });
       setOfflineNotice('Job start update queued locally (Offline Mode). Will sync once cell signal is restored.');
       onJobUpdated();
@@ -43,7 +44,7 @@ export const ActiveJobView: React.FC<ActiveJobViewProps> = ({
     }
 
     try {
-      const res = await fetch(`http://localhost:5000/api/bookings/${job.id}/status`, {
+      const res = await fetch(`${apiBase}/api/bookings/${job.id}/status`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -60,7 +61,6 @@ export const ActiveJobView: React.FC<ActiveJobViewProps> = ({
         type: 'START_JOB',
         bookingId: job.id,
         payload: {},
-        token,
       });
       setOfflineNotice('Signal lost in basement. Job start update buffered in offline queue.');
       onJobUpdated();
@@ -76,16 +76,18 @@ export const ActiveJobView: React.FC<ActiveJobViewProps> = ({
 
     setSubmitting(true);
     setError(null);
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
     if (!offlineQueue.isOnline()) {
       offlineQueue.enqueue({
         type: 'COMPLETE_WITH_PIN',
         bookingId: job.id,
         payload: { completionOtp: pin },
-        token,
       });
-      setOfflineNotice('Completion PIN buffered in offline queue! Tripartite escrow settlement will process automatically upon signal recovery.');
+      setOfflineNotice(
+        'Completion PIN buffered in offline queue! Tripartite escrow settlement will process automatically upon signal recovery.'
+      );
       setIsPinModalOpen(false);
       setSubmitting(false);
       onJobUpdated();
@@ -93,7 +95,7 @@ export const ActiveJobView: React.FC<ActiveJobViewProps> = ({
     }
 
     try {
-      const res = await fetch(`http://localhost:5000/api/bookings/${job.id}/complete`, {
+      const res = await fetch(`${apiBase}/api/bookings/${job.id}/complete`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -115,7 +117,6 @@ export const ActiveJobView: React.FC<ActiveJobViewProps> = ({
           type: 'COMPLETE_WITH_PIN',
           bookingId: job.id,
           payload: { completionOtp: pin },
-          token,
         });
         setOfflineNotice('Signal interrupted. Completion PIN buffered safely in offline queue.');
         setIsPinModalOpen(false);

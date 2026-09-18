@@ -49,8 +49,8 @@ async function main() {
       registrationNo: 'MH-PSCS-2024-042',
       state: 'Maharashtra',
       district: 'Pune',
-      commissionPlatformRate: 0.035, // 3.5% platform commission
-      welfareFundRate: 0.07,         // 7% welfare fund
+      commissionPlatformRate: 0.04,  // 4% statutory platform maintenance
+      welfareFundRate: 0.08,         // 8% statutory welfare fund
       welfareBalance: 42350.00,
       statutoryReserveBalance: 20000.00,
     },

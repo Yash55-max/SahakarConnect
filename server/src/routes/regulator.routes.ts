@@ -42,8 +42,25 @@ router.get(
         orderBy: { createdAt: 'asc' },
       });
 
-      // 2. All payment ledger entries across all cooperatives
-      const allLedgerEntries = await prisma.paymentLedgerEntry.findMany({
+      // 2. Aggregate all settled payment ledger entries across the whole platform
+      const settledAggregation = await prisma.paymentLedgerEntry.aggregate({
+        _sum: {
+          totalGross: true,
+          workerPayout: true,
+          welfareFundShare: true,
+          platformShare: true,
+        },
+        where: {
+          status: PaymentStatus.SETTLED,
+        },
+      });
+
+      const grossTransactionValue = Number(settledAggregation._sum.totalGross || 0);
+      const totalWorkerDisbursed = Number(settledAggregation._sum.workerPayout || 0);
+      const totalPlatformFees = Number(settledAggregation._sum.platformShare || 0);
+
+      // Recent 50 ledger entries for statutory auditor table
+      const recentAuditLedgerEntries = await prisma.paymentLedgerEntry.findMany({
         include: {
           booking: {
             include: {
@@ -71,21 +88,7 @@ router.get(
         }
       }
 
-      let grossTransactionValue = 0;
-      let totalWorkerDisbursed = 0;
-      let totalWelfarePoolCollected = 0;
-      let totalPlatformFees = 0;
-
-      for (const entry of allLedgerEntries) {
-        if (entry.status === PaymentStatus.SETTLED) {
-          grossTransactionValue += Number(entry.totalGross);
-          totalWorkerDisbursed += Number(entry.workerPayout);
-          totalWelfarePoolCollected += Number(entry.welfareFundShare);
-          totalPlatformFees += Number(entry.platformShare);
-        }
-      }
-
-      // Also tally balances stored in cooperative records
+      // Tally balances stored in cooperative records
       let totalCoopWelfareBalances = 0;
       let totalStatutoryReserves = 0;
 
@@ -100,8 +103,28 @@ router.get(
         0
       );
 
-      // Average turnaround time calculation (mock/computed)
-      const avgResolutionTimeHours = 1.35; // Industry average for H3 spatial dispatch
+      // Average turnaround time calculation from completed bookings' timestamps
+      let totalResolutionHours = 0;
+      let completedBookingsWithTimes = 0;
+
+      for (const coop of cooperatives) {
+        for (const b of coop.bookings) {
+          if (b.status === BookingStatus.COMPLETED && b.paymentLedgerEntry?.settledAt && b.createdAt) {
+            const diffHours =
+              (new Date(b.paymentLedgerEntry.settledAt).getTime() - new Date(b.createdAt).getTime()) /
+              (1000 * 60 * 60);
+            if (diffHours >= 0) {
+              totalResolutionHours += diffHours;
+              completedBookingsWithTimes++;
+            }
+          }
+        }
+      }
+
+      const avgResolutionTimeHours =
+        completedBookingsWithTimes > 0
+          ? Math.round((totalResolutionHours / completedBookingsWithTimes) * 100) / 100
+          : 1.35; // Standard spatial dispatch baseline if no completed bookings with timestamps
 
       // 4. State & District Rollup breakdown
       const stateMap: Record<
@@ -194,14 +217,18 @@ router.get(
           grossVolume: Math.round(coopGross * 100) / 100,
           workerPayoutTotal: Math.round(coopWorkerPayout * 100) / 100,
           complianceStatus: isCompliant ? 'COMPLIANT_MSCS_2023' : 'UNDER_REVIEW',
-          statutoryReserveRatioSatisfied: true,
+          statutoryReserveRatioSatisfied: isCompliant,
           auditStatus: 'VERIFIED_CLEAN',
           createdAt: coop.createdAt,
         };
       });
 
+      const compliantCoops = coopsSummary.filter((c) => c.complianceStatus === 'COMPLIANT_MSCS_2023').length;
+      const statutoryCompliancePercent =
+        totalCooperatives > 0 ? Math.round((compliantCoops / totalCooperatives) * 1000) / 10 : 100.0;
+
       // 6. Recent ledger entries formatted for statutory auditor
-      const recentAuditLedger = allLedgerEntries.map((e) => {
+      const recentAuditLedger = recentAuditLedgerEntries.map((e) => {
         const gross = Number(e.totalGross);
         const worker = Number(e.workerPayout);
         const welfare = Number(e.welfareFundShare);
@@ -236,11 +263,11 @@ router.get(
           completedBookings: completedBookingsCount,
           grossTransactionValue: Math.round(grossTransactionValue * 100) / 100,
           totalWorkerDisbursed: Math.round(totalWorkerDisbursed * 100) / 100,
-          totalWelfarePoolCollected: Math.round((totalWelfarePoolCollected + totalCoopWelfareBalances) * 100) / 100,
+          totalWelfarePoolCollected: Math.round(totalCoopWelfareBalances * 100) / 100,
           totalStatutoryReserves: Math.round(totalStatutoryReserves * 100) / 100,
           avgResolutionTimeHours,
           dispatchHealthPercent: totalProviders > 0 ? Math.round((totalAvailableProviders / totalProviders) * 100) : 100,
-          statutoryCompliancePercent: 100.0,
+          statutoryCompliancePercent,
         },
         stateRollups,
         cooperatives: coopsSummary,
@@ -248,7 +275,7 @@ router.get(
         statutoryMandate: {
           act: 'Multi-State Co-operative Societies (MSCS) Act, 2023',
           regulatoryAuthority: 'Ministry of Cooperation, Government of India',
-          reserveRatioMandate: 'Section 63 (Statutory Reserve Reserve Ratio Minimum 15%)',
+          reserveRatioMandate: 'Section 63 (Statutory Reserve Ratio Minimum 15%)',
           democraticPrinciple: 'One-Member One-Vote (Class-A Quorum)',
           timestamp: new Date().toISOString(),
         },

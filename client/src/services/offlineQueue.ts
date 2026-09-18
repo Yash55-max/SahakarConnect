@@ -3,6 +3,9 @@
  * Enables tradesmen working in basements, elevator shafts, or patchy cell zones
  * to buffer status updates and completion PIN entries in local storage.
  * Automatically synchronizes with the SahakarConnect backend upon reconnection.
+ *
+ * Security Note: Tokens are NOT stored in the persistent offline queue.
+ * Active session credentials are read securely at the moment of synchronization.
  */
 
 export interface QueuedOfflineAction {
@@ -10,7 +13,7 @@ export interface QueuedOfflineAction {
   type: 'START_JOB' | 'COMPLETE_WITH_PIN';
   bookingId: string;
   payload: Record<string, any>;
-  token: string | null;
+  token?: string | null;
   createdAt: number;
   retries: number;
 }
@@ -43,7 +46,9 @@ export const offlineQueue = {
   enqueue(action: Omit<QueuedOfflineAction, 'id' | 'createdAt' | 'retries'>): QueuedOfflineAction {
     const queue = this.getQueue();
     const newEntry: QueuedOfflineAction = {
-      ...action,
+      type: action.type,
+      bookingId: action.bookingId,
+      payload: action.payload,
       id: `act_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`,
       createdAt: Date.now(),
       retries: 0,
@@ -86,6 +91,9 @@ export const offlineQueue = {
       return { syncedCount: 0, errors: [] };
     }
 
+    const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    const activeToken = localStorage.getItem('token') || sessionStorage.getItem('token');
+
     let syncedCount = 0;
     const errors: any[] = [];
     const remaining: QueuedOfflineAction[] = [];
@@ -96,10 +104,10 @@ export const offlineQueue = {
         let body: any = {};
 
         if (item.type === 'START_JOB') {
-          endpoint = `http://localhost:5000/api/bookings/${item.bookingId}/status`;
+          endpoint = `${apiBase}/api/bookings/${item.bookingId}/status`;
           body = { status: 'IN_PROGRESS' };
         } else if (item.type === 'COMPLETE_WITH_PIN') {
-          endpoint = `http://localhost:5000/api/bookings/${item.bookingId}/complete`;
+          endpoint = `${apiBase}/api/bookings/${item.bookingId}/complete`;
           body = { completionOtp: item.payload.completionOtp };
         }
 
@@ -107,7 +115,7 @@ export const offlineQueue = {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
-            ...(item.token && { Authorization: `Bearer ${item.token}` }),
+            ...(activeToken && { Authorization: `Bearer ${activeToken}` }),
           },
           body: JSON.stringify(body),
         });

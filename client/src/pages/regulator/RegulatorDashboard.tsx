@@ -114,8 +114,9 @@ export const RegulatorDashboard: React.FC<RegulatorDashboardProps> = ({ onOpenAu
     setLoading(true);
     setError(null);
     try {
-      const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:5000/api/regulator/analytics', {
+      const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+      const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const res = await fetch(`${apiBase}/api/regulator/analytics`, {
         headers: { ...(token && { Authorization: `Bearer ${token}` }) },
       });
 
@@ -156,6 +157,18 @@ export const RegulatorDashboard: React.FC<RegulatorDashboardProps> = ({ onOpenAu
       return matchState && matchDistrict && matchSearch;
     });
   }, [data?.cooperatives, selectedState, selectedDistrict, searchQuery]);
+
+  // Filtered Pan-India State Rollups
+  const filteredStateRollups = useMemo(() => {
+    if (!data?.stateRollups) return [];
+    return data.stateRollups.filter((s) => {
+      const matchState = selectedState === 'ALL' || s.state === selectedState;
+      const matchDistrict =
+        selectedDistrict === 'ALL' ||
+        s.districts.some((d) => d.toLowerCase() === selectedDistrict.toLowerCase());
+      return matchState && matchDistrict;
+    });
+  }, [data?.stateRollups, selectedState, selectedDistrict]);
 
   // Filtered Audit Ledger
   const filteredLedger = useMemo(() => {
@@ -592,15 +605,24 @@ export const RegulatorDashboard: React.FC<RegulatorDashboardProps> = ({ onOpenAu
                         </div>
                       </td>
                       <td className="text-center">
-                        <span className="badge bg-success-subtle text-success border border-success small px-2 py-1">
-                          <CheckCircleIcon size={12} className="me-1" />
-                          COMPLIANT
-                        </span>
+                        {coop.complianceStatus === 'COMPLIANT_MSCS_2023' ? (
+                          <span className="badge bg-success-subtle text-success border border-success small px-2 py-1">
+                            <CheckCircleIcon size={12} className="me-1" />
+                            COMPLIANT
+                          </span>
+                        ) : (
+                          <span className="badge bg-warning-subtle text-warning border border-warning small px-2 py-1">
+                            UNDER REVIEW
+                          </span>
+                        )}
                       </td>
                       <td className="text-center">
                         <span className="badge bg-light text-dark border small px-2 py-1">
-                          <ShieldCheckIcon size={12} className="me-1 text-success" />
-                          CLEAN
+                          <ShieldCheckIcon
+                            size={12}
+                            className={`me-1 ${coop.auditStatus === 'VERIFIED_CLEAN' ? 'text-success' : 'text-warning'}`}
+                          />
+                          {coop.auditStatus ? coop.auditStatus.replace(/_/g, ' ') : 'VERIFIED CLEAN'}
                         </span>
                       </td>
                     </tr>
@@ -615,47 +637,57 @@ export const RegulatorDashboard: React.FC<RegulatorDashboardProps> = ({ onOpenAu
       {/* TAB B: Pan-India State Rollups */}
       {activeTab === 'states' && (
         <div className="row g-3 mb-4">
-          {stateRollups.map((state) => (
-            <div key={state.state} className="col-12 col-lg-4">
-              <div className="card shadow-sm border h-100 bg-white">
-                <div className="card-header bg-light py-3 d-flex justify-content-between align-items-center">
-                  <div>
-                    <h2 className="h6 fw-bold text-dark mb-0">{state.state}</h2>
-                    <span className="text-muted small">
-                      {state.districts.length} Active District{state.districts.length > 1 ? 's' : ''} ({state.districts.join(', ')})
-                    </span>
-                  </div>
-                  <span className="badge bg-success text-white">100% Compliant</span>
-                </div>
-                <div className="card-body">
-                  <div className="d-flex justify-content-between py-2 border-bottom">
-                    <span className="text-muted small">Active Societies:</span>
-                    <span className="fw-bold text-dark">{state.activeCooperatives}</span>
-                  </div>
-                  <div className="d-flex justify-content-between py-2 border-bottom">
-                    <span className="text-muted small">Verified Tradesmen:</span>
-                    <span className="fw-bold text-primary">{state.verifiedTradesmen}</span>
-                  </div>
-                  <div className="d-flex justify-content-between py-2 border-bottom">
-                    <span className="text-muted small">Gross Volume (GMV):</span>
-                    <span className="fw-bold text-dark">₹{state.grossVolume.toLocaleString('en-IN')}</span>
-                  </div>
-                  <div className="d-flex justify-content-between py-2 border-bottom">
-                    <span className="text-muted small">Welfare Pool Balance:</span>
-                    <span className="fw-semibold text-info">₹{state.welfarePool.toLocaleString('en-IN')}</span>
-                  </div>
-                  <div className="d-flex justify-content-between py-2">
-                    <span className="text-muted small">Statutory Reserve Fund:</span>
-                    <span className="fw-semibold text-warning">₹{state.reservePool.toLocaleString('en-IN')}</span>
-                  </div>
-                </div>
-                <div className="card-footer bg-light py-2 text-center small text-secondary">
-                  <ScaleIcon size={12} className="me-1 text-success" />
-                  Section 63 Multi-State Co-operative Societies Act, 2023 Verified
-                </div>
+          {filteredStateRollups.length === 0 ? (
+            <div className="col-12">
+              <div className="card shadow-sm border p-4 text-center bg-white">
+                <p className="text-muted mb-0">
+                  No state rollups match the selected filters (State: {selectedState}, District: {selectedDistrict}).
+                </p>
               </div>
             </div>
-          ))}
+          ) : (
+            filteredStateRollups.map((state) => (
+              <div key={state.state} className="col-12 col-lg-4">
+                <div className="card shadow-sm border h-100 bg-white">
+                  <div className="card-header bg-light py-3 d-flex justify-content-between align-items-center">
+                    <div>
+                      <h2 className="h6 fw-bold text-dark mb-0">{state.state}</h2>
+                      <span className="text-muted small">
+                        {state.districts.length} Active District{state.districts.length > 1 ? 's' : ''} ({state.districts.join(', ')})
+                      </span>
+                    </div>
+                    <span className="badge bg-success text-white">100% Compliant</span>
+                  </div>
+                  <div className="card-body">
+                    <div className="d-flex justify-content-between py-2 border-bottom">
+                      <span className="text-muted small">Active Societies:</span>
+                      <span className="fw-bold text-dark">{state.activeCooperatives}</span>
+                    </div>
+                    <div className="d-flex justify-content-between py-2 border-bottom">
+                      <span className="text-muted small">Verified Tradesmen:</span>
+                      <span className="fw-bold text-primary">{state.verifiedTradesmen}</span>
+                    </div>
+                    <div className="d-flex justify-content-between py-2 border-bottom">
+                      <span className="text-muted small">Gross Volume (GMV):</span>
+                      <span className="fw-bold text-dark">₹{state.grossVolume.toLocaleString('en-IN')}</span>
+                    </div>
+                    <div className="d-flex justify-content-between py-2 border-bottom">
+                      <span className="text-muted small">Welfare Pool Balance:</span>
+                      <span className="fw-semibold text-info">₹{state.welfarePool.toLocaleString('en-IN')}</span>
+                    </div>
+                    <div className="d-flex justify-content-between py-2">
+                      <span className="text-muted small">Statutory Reserve Fund:</span>
+                      <span className="fw-semibold text-warning">₹{state.reservePool.toLocaleString('en-IN')}</span>
+                    </div>
+                  </div>
+                  <div className="card-footer bg-light py-2 text-center small text-secondary">
+                    <ScaleIcon size={12} className="me-1 text-success" />
+                    Section 63 Multi-State Co-operative Societies Act, 2023 Verified
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       )}
 

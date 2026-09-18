@@ -12,7 +12,7 @@ interface AdminHubProps {
 export const AdminHub: React.FC<AdminHubProps> = ({ onOpenAuth, currentUser }) => {
   const [activeTab, setActiveTab] = useState<'ledger' | 'verification' | 'governance'>('ledger');
 
-  if (!currentUser || currentUser.role !== 'ADMIN') {
+  if (!currentUser || (currentUser.role !== 'ADMIN' && currentUser.role !== 'COOP_ADMIN')) {
     return (
       <div className="card shadow-sm border p-4 p-md-5 text-center my-4 bg-white">
         <div
