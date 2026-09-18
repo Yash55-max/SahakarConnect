@@ -137,7 +137,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
   const [identifier, setIdentifier] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [confirmedSecurityCheck, setConfirmedSecurityCheck] = useState<boolean>(true);
+  const [confirmedSecurityCheck, setConfirmedSecurityCheck] = useState<boolean>(false);
   const [rememberMe, setRememberMe] = useState<boolean>(true);
 
   // Register Form State
@@ -170,7 +170,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
   const handleFastFill = (persona: PersonaConfig) => {
     setSelectedRole(persona.key);
     setIdentifier(persona.defaultEmail);
-    setPassword('Password@123');
+    setPassword('');
     setErrorMessage(null);
   };
 
@@ -199,7 +199,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({
     setSuccessMessage(null);
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/login', {
+      const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const res = await fetch(`${apiBase}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ identifier: identifier.trim(), password }),
@@ -216,7 +217,14 @@ export const LoginPage: React.FC<LoginPageProps> = ({
           : `Authentication successful! Signing in as ${data.user.name}...`
       );
 
-      localStorage.setItem('token', data.token);
+      if (rememberMe) {
+        localStorage.setItem('token', data.token);
+        sessionStorage.removeItem('token');
+      } else {
+        sessionStorage.setItem('token', data.token);
+        localStorage.removeItem('token');
+      }
+
       setTimeout(() => {
         onLoginSuccess(data.token, data.user);
       }, 500);
@@ -246,7 +254,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({
       const role = selectedRole === 'provider' ? 'PROVIDER' : 'CONSUMER';
       const skills = selectedRole === 'provider' ? [regTrade, 'General Maintenance'] : undefined;
 
-      const res = await fetch('http://localhost:5000/api/auth/register', {
+      const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const res = await fetch(`${apiBase}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -270,7 +279,13 @@ export const LoginPage: React.FC<LoginPageProps> = ({
           : 'Registration successful! Account activated.'
       );
 
-      localStorage.setItem('token', data.token);
+      if (rememberMe) {
+        localStorage.setItem('token', data.token);
+        sessionStorage.removeItem('token');
+      } else {
+        sessionStorage.setItem('token', data.token);
+        localStorage.removeItem('token');
+      }
       setTimeout(() => {
         onLoginSuccess(data.token, data.user);
       }, 750);
@@ -668,7 +683,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                     type="button"
                     className="btn btn-sm btn-link p-0 text-decoration-none small text-muted"
                     onClick={() => setShowPassword(!showPassword)}
-                    tabIndex={-1}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
                   >
                     {showPassword ? (
                       <span className="d-inline-flex align-items-center gap-1">

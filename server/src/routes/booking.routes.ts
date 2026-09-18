@@ -6,7 +6,12 @@ import { UserRole, BookingStatus } from '@prisma/client';
 import { settleEscrowTransaction } from '../services/ledger.service';
 import { findNearbyProviders } from '../services/dispatch.service';
 import { broadcastBookingStatus, emitToProviders, emitToUser } from '../services/socket.service';
-import { getIdempotentRecord, setIdempotentRecord, hashPayload } from '../lib/idempotency';
+import {
+  claimIdempotencyKey,
+  completeIdempotencyKey,
+  releaseIdempotencyKey,
+  hashPayload,
+} from '../lib/idempotency';
 
 const router = Router();
 
@@ -23,6 +28,10 @@ const createBookingSchema = z.object({
 
 // POST /api/bookings - Consumer creates a booking request
 router.post('/', requireAuth, requireRole([UserRole.CONSUMER]), async (req: Request, res: Response) => {
+  const rawIdempotencyKey = (req.headers['idempotency-key'] || req.headers['x-idempotency-key']) as string | undefined;
+  const scopedKey = rawIdempotencyKey ? `user:${req.user!.userId}:${rawIdempotencyKey}` : undefined;
+  let claimed = false;
+
   try {
     const parsed = createBookingSchema.safeParse(req.body);
     if (!parsed.success) {
@@ -33,20 +42,30 @@ router.post('/', requireAuth, requireRole([UserRole.CONSUMER]), async (req: Requ
       });
     }
 
-    // Check Idempotency-Key to prevent duplicate dispatches
-    const idempotencyKey = (req.headers['idempotency-key'] || req.headers['x-idempotency-key']) as string | undefined;
-    if (idempotencyKey) {
+    // Check Idempotency-Key atomically to prevent duplicate dispatches and race conditions
+    if (scopedKey) {
       const currentHash = hashPayload(req.body);
-      const existing = getIdempotentRecord(idempotencyKey);
-      if (existing) {
-        if (existing.requestHash !== currentHash) {
-          return res.status(422).json({
-            error: 'Idempotency conflict',
-            message: 'Idempotency key reused with a different payload',
-          });
-        }
-        return res.status(existing.responseStatus).json(existing.responseBody);
+      const claim = claimIdempotencyKey(scopedKey, currentHash);
+
+      if (claim.state === 'MISMATCH') {
+        return res.status(422).json({
+          error: 'Idempotency conflict',
+          message: 'Idempotency key reused with a different payload',
+        });
       }
+
+      if (claim.state === 'PROCESSING') {
+        return res.status(409).json({
+          error: 'Concurrent request in progress',
+          message: 'An identical request with this idempotency key is currently processing',
+        });
+      }
+
+      if (claim.state === 'COMPLETED' && claim.record) {
+        return res.status(claim.record.responseStatus || 200).json(claim.record.responseBody);
+      }
+
+      claimed = true;
     }
 
     const {
@@ -70,6 +89,7 @@ router.post('/', requireAuth, requireRole([UserRole.CONSUMER]), async (req: Requ
     }
 
     if (!cooperativeId) {
+      if (scopedKey && claimed) releaseIdempotencyKey(scopedKey);
       return res.status(400).json({ error: 'Cooperative society not found' });
     }
 
@@ -126,12 +146,15 @@ router.post('/', requireAuth, requireRole([UserRole.CONSUMER]), async (req: Requ
       topCandidates: nearbyProviders.slice(0, 3),
     };
 
-    if (idempotencyKey) {
-      setIdempotentRecord(idempotencyKey, hashPayload(req.body), 201, responsePayload);
+    if (scopedKey && claimed) {
+      completeIdempotencyKey(scopedKey, 201, responsePayload);
     }
 
     return res.status(201).json(responsePayload);
   } catch (error: any) {
+    if (scopedKey && claimed) {
+      releaseIdempotencyKey(scopedKey);
+    }
     console.error('[Booking Create Error]', error);
     return res.status(500).json({ error: error.message });
   }
@@ -244,41 +267,110 @@ router.patch('/:id/accept', requireAuth, requireRole([UserRole.PROVIDER]), async
   }
 });
 
-// PATCH /api/bookings/:id/status - Update booking status (e.g., IN_PROGRESS)
-router.patch('/:id/status', requireAuth, async (req: Request, res: Response) => {
-  try {
-    const { status } = req.body;
-    if (!status || !Object.values(BookingStatus).includes(status)) {
-      return res.status(400).json({
-        error: 'Validation failed',
-        message: `Invalid status: ${status}. Must be one of: ${Object.values(BookingStatus).join(', ')}`,
-      });
-    }
+// PATCH /api/bookings/:id/status - Update booking status (e.g., IN_PROGRESS, CANCELLED)
+// Restricted strictly to assigned PROVIDER or authorized COOP_ADMIN
+router.patch(
+  '/:id/status',
+  requireAuth,
+  requireRole([UserRole.PROVIDER, UserRole.COOP_ADMIN]),
+  async (req: Request, res: Response) => {
+    try {
+      const { status } = req.body;
+      if (!status || !Object.values(BookingStatus).includes(status)) {
+        return res.status(400).json({
+          error: 'Validation failed',
+          message: `Invalid status: ${status}. Must be one of: ${Object.values(BookingStatus).join(', ')}`,
+        });
+      }
 
-    const updatedBooking = await prisma.booking.update({
-      where: { id: req.params.id as string },
-      data: { status },
-      include: {
-        cooperative: true,
-        consumer: { select: { id: true, name: true, phone: true } },
-        provider: {
-          include: {
-            user: { select: { id: true, name: true, phone: true } },
+      // Prohibit bypassing escrow PIN verification
+      if (status === BookingStatus.COMPLETED) {
+        return res.status(400).json({
+          error: 'Invalid state transition',
+          message:
+            'Bookings cannot be completed directly via status update. Please use the /complete endpoint with the 4-digit PIN.',
+        });
+      }
+
+      const booking = await prisma.booking.findUnique({
+        where: { id: req.params.id as string },
+        include: {
+          cooperative: true,
+          consumer: { select: { id: true, name: true, phone: true } },
+          provider: {
+            include: {
+              user: { select: { id: true, name: true, phone: true } },
+            },
           },
         },
-      },
-    });
+      });
 
-    broadcastBookingStatus(updatedBooking);
+      if (!booking) {
+        return res.status(404).json({ error: 'Booking not found' });
+      }
 
-    return res.status(200).json({
-      message: `Booking status updated to ${status}`,
-      booking: updatedBooking,
-    });
-  } catch (error: any) {
-    return res.status(500).json({ error: error.message });
+      // Check terminal state
+      if (booking.status === BookingStatus.COMPLETED || booking.status === BookingStatus.CANCELLED) {
+        return res.status(409).json({
+          error: 'State conflict',
+          message: `Cannot update booking in terminal ${booking.status} status`,
+        });
+      }
+
+      // Authorization & Tenancy verification
+      if (req.user!.role === UserRole.PROVIDER) {
+        const providerProfile = await prisma.providerProfile.findUnique({
+          where: { userId: req.user!.userId },
+        });
+
+        if (!providerProfile || booking.providerId !== providerProfile.id) {
+          return res.status(403).json({
+            error: 'Forbidden',
+            message: 'Only the assigned provider may update the progress of this booking',
+          });
+        }
+
+        // Provider state transition validation
+        if (status === BookingStatus.IN_PROGRESS && booking.status !== BookingStatus.ACCEPTED) {
+          return res.status(409).json({
+            error: 'Invalid state transition',
+            message: `Cannot start a booking that is currently in ${booking.status} state`,
+          });
+        }
+      } else if (req.user!.role === UserRole.COOP_ADMIN) {
+        if (req.user!.cooperativeId && booking.cooperativeId !== req.user!.cooperativeId) {
+          return res.status(403).json({
+            error: 'Forbidden',
+            message: 'Cross-tenant access forbidden. You can only manage bookings for your cooperative society',
+          });
+        }
+      }
+
+      const updatedBooking = await prisma.booking.update({
+        where: { id: booking.id },
+        data: { status },
+        include: {
+          cooperative: true,
+          consumer: { select: { id: true, name: true, phone: true } },
+          provider: {
+            include: {
+              user: { select: { id: true, name: true, phone: true } },
+            },
+          },
+        },
+      });
+
+      broadcastBookingStatus(updatedBooking);
+
+      return res.status(200).json({
+        message: `Booking status updated to ${status}`,
+        booking: updatedBooking,
+      });
+    } catch (error: any) {
+      return res.status(500).json({ error: error.message });
+    }
   }
-});
+);
 
 // PATCH /api/bookings/:id/complete - Complete job with 4-digit PIN and trigger escrow settlement
 router.patch('/:id/complete', requireAuth, requireRole([UserRole.PROVIDER]), async (req: Request, res: Response) => {

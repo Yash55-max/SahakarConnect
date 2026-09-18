@@ -21,7 +21,7 @@ describe('System Boundaries, Idempotency & Interface Contracts Suite', () => {
         state: 'Delhi',
         district: 'North Delhi',
         welfareBalance: 10000,
-        statutoryReserveBalance: 5000,
+        statutoryReserveBalance: 20000,
       },
     });
     delhiCoopId = testCoop.id;
@@ -191,5 +191,20 @@ describe('System Boundaries, Idempotency & Interface Contracts Suite', () => {
     expect(res.status).toBe(409);
     expect(res.body.error).toBe('State conflict');
     expect(res.body.message).toContain('already been completed');
+  });
+
+  afterAll(async () => {
+    if (delhiCoopId) {
+      await prisma.paymentLedgerEntry.deleteMany({
+        where: { booking: { cooperativeId: delhiCoopId } },
+      });
+      await prisma.booking.deleteMany({
+        where: { cooperativeId: delhiCoopId },
+      });
+      await prisma.cooperative.deleteMany({
+        where: { id: delhiCoopId },
+      });
+    }
+    await prisma.$disconnect();
   });
 });

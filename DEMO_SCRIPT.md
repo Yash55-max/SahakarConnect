@@ -113,7 +113,7 @@ sequenceDiagram
      - **4 Primary Societies** active across 3 States (Delhi, Maharashtra, Karnataka).
      - **15 NSQF-Certified Tradesmen**.
      - **₹74,600+ Gross Volume** disbursed with zero intermediary leakage.
-     - **₹239,450+ Cumulative Welfare Reserves**.
+     - **₹243,450+ Cumulative Welfare Reserves**.
      - **100% Statutory Compliance Rate**.
 2. **Multi-State & District Rollup Filters:**
    - Filter by **"Maharashtra"**: Instantly scopes metrics to Pune District Shramik PSCS and Mumbai Suburban Labour PSCS.

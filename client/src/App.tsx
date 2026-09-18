@@ -10,6 +10,7 @@ import {
   RegulatorSkeleton,
 } from './components/common/Skeleton';
 import AuthModal from './components/common/AuthModal';
+import { offlineQueue } from './services/offlineQueue';
 
 // Lazy load portal views, auth pages, and modals for performance & smooth skeleton transitions
 const ServiceCatalog = lazy(() => import('./pages/consumer/ServiceCatalog'));
@@ -81,7 +82,8 @@ export const AppContent: React.FC = () => {
 
   // Fetch backend health status
   useEffect(() => {
-    fetch('http://localhost:5000/api/health')
+    const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    fetch(`${apiBase}/api/health`)
       .then((res) => res.json())
       .then((data) => {
         setBackendHealth(data);
@@ -93,9 +95,10 @@ export const AppContent: React.FC = () => {
 
   // Restore authenticated session on initial mount
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     if (token) {
-      fetch('http://localhost:5000/api/auth/me', {
+      const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      fetch(`${apiBase}/api/auth/me`, {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then((res) => {
@@ -110,6 +113,7 @@ export const AppContent: React.FC = () => {
         })
         .catch(() => {
           localStorage.removeItem('token');
+          sessionStorage.removeItem('token');
           setCurrentUser(null);
         });
     }
@@ -134,6 +138,8 @@ export const AppContent: React.FC = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
+    offlineQueue.clear();
     setCurrentUser(null);
     setActiveNav('home');
   };

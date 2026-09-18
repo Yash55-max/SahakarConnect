@@ -59,10 +59,17 @@ router.post('/login', async (req: Request, res: Response) => {
     if (user.role === UserRole.PROVIDER && user.providerProfile) {
       cooperativeId = user.providerProfile.cooperativeId;
     } else if (user.role === UserRole.COOP_ADMIN) {
-      // Resolve assigned cooperative by admin context
-      if (user.email.includes('pune') || user.name.toLowerCase().includes('pune')) {
+      // Resolve assigned cooperative by admin context across all seeded cooperatives
+      const adminCtx = (user.email + ' ' + user.name).toLowerCase();
+      if (adminCtx.includes('pune')) {
         const puneCoop = await prisma.cooperative.findFirst({ where: { district: 'Pune' } });
         cooperativeId = puneCoop?.id || null;
+      } else if (adminCtx.includes('mumbai')) {
+        const mumbaiCoop = await prisma.cooperative.findFirst({ where: { district: 'Mumbai Suburban' } });
+        cooperativeId = mumbaiCoop?.id || null;
+      } else if (adminCtx.includes('bengaluru') || adminCtx.includes('blr') || adminCtx.includes('gowda')) {
+        const blrCoop = await prisma.cooperative.findFirst({ where: { district: 'Bengaluru Urban' } });
+        cooperativeId = blrCoop?.id || null;
       } else {
         const delhiCoop = await prisma.cooperative.findFirst({ where: { district: 'South Delhi' } });
         cooperativeId = delhiCoop?.id || null;
@@ -102,9 +109,9 @@ const registerSchema = z.object({
   email: z.string().email('Valid email address is required'),
   phone: z.string().min(10, 'Valid phone number is required'),
   password: z.string().min(6, 'Password must be at least 6 characters'),
-  role: z.nativeEnum(UserRole).optional().default(UserRole.CONSUMER),
+  // Public self-registration is strictly restricted to Consumer and Provider roles
+  role: z.enum([UserRole.CONSUMER, UserRole.PROVIDER]).optional().default(UserRole.CONSUMER),
   skills: z.array(z.string()).optional(),
-  cooperativeId: z.string().optional(),
 });
 
 router.post('/register', async (req: Request, res: Response) => {
@@ -117,7 +124,7 @@ router.post('/register', async (req: Request, res: Response) => {
       });
     }
 
-    const { name, email, phone, password, role, skills, cooperativeId: reqCoopId } = parsed.data;
+    const { name, email, phone, password, role, skills } = parsed.data;
 
     // Check if user already exists
     const existing = await prisma.user.findFirst({
@@ -148,17 +155,15 @@ router.post('/register', async (req: Request, res: Response) => {
     let assignedCoopId: string | null = null;
 
     if (role === UserRole.PROVIDER) {
-      let coop = null;
-      if (reqCoopId) {
-        coop = await prisma.cooperative.findUnique({ where: { id: reqCoopId } });
-      }
-      if (!coop) {
-        coop = await prisma.cooperative.findFirst();
-      }
+      // Assign new provider to default primary service cooperative for onboarding
+      const defaultCoop =
+        (await prisma.cooperative.findFirst({ where: { district: 'South Delhi' } })) ||
+        (await prisma.cooperative.findFirst());
 
-      assignedCoopId = coop ? coop.id : null;
+      assignedCoopId = defaultCoop ? defaultCoop.id : null;
 
       if (assignedCoopId) {
+        // New self-registered providers require e-KYC and police clearance before becoming available
         await prisma.providerProfile.create({
           data: {
             userId: user.id,
@@ -166,11 +171,11 @@ router.post('/register', async (req: Request, res: Response) => {
             membershipClass: 'CLASS_A_VOTING',
             shareCapitalAmount: 500.0,
             skills: skills && skills.length > 0 ? skills : ['General Maintenance'],
-            isAadhaarVerified: true,
-            isPoliceClearVerified: true,
-            nsqfLevel: 4,
-            ratingAverage: 5.0,
-            isAvailable: true,
+            isAadhaarVerified: false,
+            isPoliceClearVerified: false,
+            nsqfLevel: 1,
+            ratingAverage: 0.0,
+            isAvailable: false,
             h3IndexRes8: '8861969527fffff',
           },
         });
