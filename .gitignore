@@ -11,3 +11,7 @@ credentials.json
 *.credentials.json
 client/src/config/credentials.json
 server/src/config/credentials.json
+
+# Agent skills and CLI metadata
+.agent/
+.gemini/
