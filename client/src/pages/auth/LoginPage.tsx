@@ -342,9 +342,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({
               <CoopLogoIcon size={32} />
             </div>
             <div>
-              <div className="text-uppercase small fw-bold text-primary tracking-wider" style={{ letterSpacing: '0.05em' }}>
-                {lang === 'hi' ? 'सहकार कनेक्ट मंच' : 'SAHAKARCONNECT PLATFORM GATEWAY'}
-              </div>
               <h1 className="h4 fw-bold text-dark mb-1">
                 {lang === 'hi' ? 'सहकार कनेक्ट अधिकृत प्रवेश द्वार' : 'Role-Based Authentication Gateway'}
               </h1>
@@ -429,16 +426,16 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                     type="button"
                     className="btn btn-sm btn-white w-100 border text-start p-2 shadow-xs d-flex flex-column"
                     style={{
-                      borderLeft: `4px solid ${p.themeColor}`,
+                      borderColor: selectedRole === p.key ? p.borderColor : '#e2e8f0',
                       backgroundColor: selectedRole === p.key ? p.bgLight : '#ffffff',
                     }}
                     onClick={() => handleFastFill(p)}
                   >
                     <span className="fw-bold small text-dark">{p.titleEn}</span>
-                    <span className="text-secondary font-monospace" style={{ fontSize: '0.72rem' }}>
+                    <span className="text-secondary font-monospace" style={{ fontSize: '0.82rem' }}>
                       {p.defaultEmail}
                     </span>
-                    <span className="badge mt-1 align-self-start" style={{ backgroundColor: p.badgeBg, color: p.textColor, fontSize: '0.65rem' }}>
+                    <span className="badge mt-1 align-self-start" style={{ backgroundColor: p.badgeBg, color: p.textColor, fontSize: '0.82rem' }}>
                       {p.roleTag}
                     </span>
                   </button>
@@ -467,19 +464,18 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                       handleSelectRole(persona.key);
                     }
                   }}
-                  className="card h-100 shadow-sm border transition-all"
+                  className="card h-100 shadow-xs border transition-all"
                   style={{
                     cursor: 'pointer',
-                    borderColor: isSelected ? persona.themeColor : '#e2e8f0',
+                    borderColor: isSelected ? persona.borderColor : '#e2e8f0',
                     borderWidth: isSelected ? '2px' : '1px',
                     backgroundColor: isSelected ? persona.bgLight : '#ffffff',
-                    boxShadow: isSelected ? `0 6px 16px ${persona.themeColor}25` : undefined,
                   }}
                 >
                   <div className="card-body p-3 d-flex flex-column">
                     <div className="d-flex justify-content-between align-items-start mb-2">
-                      <div
-                        className="p-2 rounded-circle d-flex align-items-center justify-content-center"
+                      <span
+                        className="p-2 rounded-circle d-inline-flex align-items-center justify-content-center"
                         style={{
                           backgroundColor: isSelected ? '#ffffff' : persona.bgLight,
                           color: persona.themeColor,
@@ -489,13 +485,13 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                         }}
                       >
                         <Icon size={20} />
-                      </div>
+                      </span>
                       <span
                         className="badge"
                         style={{
                           backgroundColor: persona.badgeBg,
                           color: persona.textColor,
-                          fontSize: '0.68rem',
+                          fontSize: '0.82rem',
                           fontWeight: 600,
                         }}
                       >
@@ -506,7 +502,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                     <h3 className="h6 fw-bold text-dark mb-1">
                       {lang === 'hi' ? persona.titleHi : persona.titleEn}
                     </h3>
-                    <p className="text-secondary small mb-3 flex-grow-1" style={{ fontSize: '0.78rem', lineHeight: 1.35 }}>
+                    <p className="text-secondary small mb-3 flex-grow-1" style={{ fontSize: '0.82rem', lineHeight: 1.4 }}>
                       {lang === 'hi' ? persona.subtitleHi : persona.subtitleEn}
                     </p>
 
@@ -514,8 +510,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                     <div className="border-top pt-2 mt-auto">
                       <div className="d-flex flex-column gap-1">
                         {(lang === 'hi' ? persona.highlightsHi : persona.highlightsEn).map((hl, i) => (
-                          <div key={i} className="small d-flex align-items-center gap-1" style={{ fontSize: '0.7rem', color: persona.textColor }}>
-                            <span style={{ fontSize: '0.8rem' }}>&bull;</span>
+                          <div key={i} className="small d-flex align-items-center gap-1" style={{ fontSize: '0.82rem', color: persona.textColor }}>
+                            <span style={{ fontSize: '0.85rem' }}>&bull;</span>
                             <span className="text-truncate">{hl}</span>
                           </div>
                         ))}
@@ -523,7 +519,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                     </div>
 
                     <div className="mt-3 pt-2 border-top d-flex justify-content-between align-items-center">
-                      <span className="small fw-semibold" style={{ color: persona.themeColor, fontSize: '0.75rem' }}>
+                      <span className="small fw-semibold" style={{ color: persona.themeColor, fontSize: '0.8rem' }}>
                         {isSelected
                           ? lang === 'hi' ? 'सक्रिय भूमिका ✓' : 'Selected Persona ✓'
                           : lang === 'hi' ? 'यह भूमिका चुनें' : 'Select Persona'}
@@ -574,13 +570,13 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                   style={{
                     backgroundColor: activePersona.badgeBg,
                     color: activePersona.textColor,
-                    fontSize: '0.7rem',
+                    fontSize: '0.8rem',
                   }}
                 >
                   {activePersona.systemRole}
                 </span>
               </div>
-              <div className="text-muted small" style={{ fontSize: '0.75rem' }}>
+              <div className="text-muted small" style={{ fontSize: '0.82rem' }}>
                 {activePersona.defaultLabel} · MSCS Act 2023 Tenancy Verification
               </div>
             </div>
@@ -762,7 +758,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                 )}
               </button>
 
-              <div className="mt-3 p-2 bg-light border rounded text-center small text-muted" style={{ fontSize: '0.74rem' }}>
+              <div className="mt-3 p-2 bg-light border rounded text-center small text-muted" style={{ fontSize: '0.8rem' }}>
                 {selectedRole === 'regulator' && (
                   <span>
                     Oversight Terminal: Authorized under Section 120 of MSCS Act 2023. Unauthorized access is punishable by law.
@@ -850,7 +846,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                     <option value="Carpentry & Woodwork">Woodcraft &amp; Modular Carpentry (BIS IS 2202)</option>
                     <option value="Home Appliance Repair">Home Appliance &amp; HVAC Servicing (BEE / MoEFCC)</option>
                   </select>
-                  <div className="text-muted small mt-1" style={{ fontSize: '0.72rem' }}>
+                  <div className="text-muted small mt-1" style={{ fontSize: '0.8rem' }}>
                     NSQF skill certification will be audited by the Cooperative Society Admin after registration.
                   </div>
                 </div>

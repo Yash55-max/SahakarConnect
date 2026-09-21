@@ -568,13 +568,13 @@ export const RegulatorDashboard: React.FC<RegulatorDashboardProps> = ({ onOpenAu
                     <tr key={coop.id}>
                       <td>
                         <div className="fw-bold text-dark">{coop.name}</div>
-                        <div className="font-monospace text-muted" style={{ fontSize: '0.72rem' }}>
+                        <div className="font-monospace text-muted" style={{ fontSize: '0.8rem' }}>
                           {coop.registrationNo}
                         </div>
                       </td>
                       <td>
                         <div className="fw-medium text-dark">{coop.state}</div>
-                        <div className="text-muted" style={{ fontSize: '0.75rem' }}>
+                        <div className="text-muted" style={{ fontSize: '0.8rem' }}>
                           {coop.district}
                         </div>
                       </td>
@@ -582,25 +582,25 @@ export const RegulatorDashboard: React.FC<RegulatorDashboardProps> = ({ onOpenAu
                         <span className="badge bg-primary text-white">
                           {coop.verifiedTradesmenCount} / {coop.totalProvidersCount}
                         </span>
-                        <div className="text-muted" style={{ fontSize: '0.7rem' }}>
+                        <div className="text-muted" style={{ fontSize: '0.8rem' }}>
                           Aadhaar Verified
                         </div>
                       </td>
                       <td className="text-end">
                         <div className="fw-bold text-dark">₹{coop.grossVolume.toLocaleString('en-IN')}</div>
-                        <div className="text-success" style={{ fontSize: '0.72rem' }}>
+                        <div className="text-success" style={{ fontSize: '0.8rem' }}>
                           ₹{coop.workerPayoutTotal.toLocaleString('en-IN')} to Workers
                         </div>
                       </td>
                       <td className="text-end">
                         <div className="fw-semibold text-info">₹{coop.welfareBalance.toLocaleString('en-IN')}</div>
-                        <div className="text-muted" style={{ fontSize: '0.7rem' }}>
+                        <div className="text-muted" style={{ fontSize: '0.8rem' }}>
                           Rate: {(coop.welfareFundRate * 100).toFixed(1)}%
                         </div>
                       </td>
                       <td className="text-end">
                         <div className="fw-semibold text-warning">₹{coop.statutoryReserveBalance.toLocaleString('en-IN')}</div>
-                        <div className="text-success" style={{ fontSize: '0.7rem' }}>
+                        <div className="text-success" style={{ fontSize: '0.8rem' }}>
                           {coop.statutoryReserveRatioSatisfied ? '≥15% Satisfied' : 'Below 15%'}
                         </div>
                       </td>
@@ -699,7 +699,7 @@ export const RegulatorDashboard: React.FC<RegulatorDashboardProps> = ({ onOpenAu
               <span className="fw-semibold small text-dark">
                 Nationwide Central Audit Ledger — Tripartite Invariant Inspector
               </span>
-              <div className="text-muted" style={{ fontSize: '0.72rem' }}>
+              <div className="text-muted" style={{ fontSize: '0.8rem' }}>
                 Mathematical Proof: Worker Payout (88%) + Welfare Fund (8%) + Platform Share (4%) ≡ Gross Booking Amount (Zero Rounding Leakage)
               </div>
             </div>
@@ -739,22 +739,22 @@ export const RegulatorDashboard: React.FC<RegulatorDashboardProps> = ({ onOpenAu
                   filteredLedger.map((entry) => (
                     <tr key={entry.id}>
                       <td>
-                        <span className="font-monospace fw-semibold text-primary" style={{ fontSize: '0.75rem' }}>
+                        <span className="font-monospace fw-semibold text-primary" style={{ fontSize: '0.8rem' }}>
                           {entry.bookingId.slice(0, 8)}...
                         </span>
-                        <div className="text-muted" style={{ fontSize: '0.7rem' }}>
+                        <div className="text-muted" style={{ fontSize: '0.8rem' }}>
                           {entry.settledAt ? new Date(entry.settledAt).toLocaleDateString('en-IN') : 'Pending'}
                         </div>
                       </td>
                       <td>
                         <div className="fw-medium text-dark">{entry.cooperativeName}</div>
-                        <div className="text-muted" style={{ fontSize: '0.72rem' }}>
+                        <div className="text-muted" style={{ fontSize: '0.8rem' }}>
                           {entry.district}, {entry.state}
                         </div>
                       </td>
                       <td>
                         <div className="fw-medium text-dark">{entry.consumerName}</div>
-                        <div className="text-secondary" style={{ fontSize: '0.72rem' }}>
+                        <div className="text-secondary" style={{ fontSize: '0.8rem' }}>
                           → {entry.providerName}
                         </div>
                       </td>
@@ -774,7 +774,7 @@ export const RegulatorDashboard: React.FC<RegulatorDashboardProps> = ({ onOpenAu
                         {entry.statutoryInvariantSatisfied ? (
                           <span
                             className="badge bg-success text-white px-2 py-1 font-monospace"
-                            style={{ fontSize: '0.68rem' }}
+                            style={{ fontSize: '0.8rem' }}
                             title="Worker (88%) + Welfare (8%) + Platform (4%) = Gross exactly"
                           >
                             <CheckCircleIcon size={10} className="me-1" />

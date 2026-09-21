@@ -279,7 +279,7 @@ export const AppContent: React.FC = () => {
 
               {currentUser && (
                 <div className="d-flex align-items-center gap-2">
-                  <span className="badge bg-primary text-uppercase" style={{ fontSize: '0.68rem' }}>
+                  <span className="badge bg-primary text-uppercase" style={{ fontSize: '0.8rem' }}>
                     {currentUser.role}
                   </span>
                   <span className="small text-muted">{currentUser.name}</span>

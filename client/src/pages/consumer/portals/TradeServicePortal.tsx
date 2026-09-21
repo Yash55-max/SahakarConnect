@@ -124,10 +124,10 @@ export const TradeServicePortal: React.FC<TradeServicePortalProps> = ({
         </div>
 
         <div className="d-flex align-items-center gap-2">
-          <span className="badge bg-success" style={{ fontSize: '0.68rem' }}>
+          <span className="badge bg-success" style={{ fontSize: '0.82rem' }}>
             {portal.activeTradesmen} {lang === 'hi' ? 'सत्यापित तकनीशियन सक्रिय' : 'Tradesmen Available'}
           </span>
-          <span className="badge bg-light text-dark border" style={{ fontSize: '0.68rem' }}>
+          <span className="badge bg-light text-dark border" style={{ fontSize: '0.82rem' }}>
             {portal.inspectionWarrantyDays}-Day Warranty
           </span>
         </div>
@@ -138,7 +138,7 @@ export const TradeServicePortal: React.FC<TradeServicePortalProps> = ({
       ) : (
         <>
           {/* 2. Dedicated Portal Hero Header */}
-          <div className="card shadow-sm border mb-4 bg-white overflow-hidden" style={{ borderLeft: `6px solid ${portal.accentColor}` }}>
+          <div className="card shadow-xs border mb-4 bg-white overflow-hidden">
         <div className="card-body p-4 p-md-5">
           <div className="row align-items-center g-4">
             <div className="col-12 col-lg-8">
@@ -150,10 +150,10 @@ export const TradeServicePortal: React.FC<TradeServicePortalProps> = ({
                   <IconComponent size={24} />
                 </div>
                 <div>
-                  <span className="badge bg-light text-dark border px-2 py-1 me-2" style={{ fontSize: '0.7rem' }}>
+                  <span className="badge bg-light text-dark border px-2 py-1 me-2" style={{ fontSize: '0.82rem' }}>
                     {portal.societyName}
                   </span>
-                  <span className="badge bg-success text-white" style={{ fontSize: '0.7rem' }}>
+                  <span className="badge bg-success text-white" style={{ fontSize: '0.82rem' }}>
                     Verified Cooperative
                   </span>
                 </div>
@@ -192,17 +192,17 @@ export const TradeServicePortal: React.FC<TradeServicePortalProps> = ({
                       <span>{portal.averageRating}</span>
                       <StarIcon size={16} color="#eab308" />
                     </div>
-                    <div className="small text-muted" style={{ fontSize: '0.72rem' }}>Avg Rating</div>
+                    <div className="small text-muted" style={{ fontSize: '0.82rem' }}>Avg Rating</div>
                   </div>
                   <div className="border-end" />
                   <div>
                     <div className="h4 fw-bold text-success mb-0">{portal.completedJobsCount}+</div>
-                    <div className="small text-muted" style={{ fontSize: '0.72rem' }}>Jobs Completed</div>
+                    <div className="small text-muted" style={{ fontSize: '0.82rem' }}>Jobs Completed</div>
                   </div>
                   <div className="border-end" />
                   <div>
                     <div className="h4 fw-bold text-dark mb-0">{portal.inspectionWarrantyDays}d</div>
-                    <div className="small text-muted" style={{ fontSize: '0.72rem' }}>Workmanship Warranty</div>
+                    <div className="small text-muted" style={{ fontSize: '0.82rem' }}>Workmanship Warranty</div>
                   </div>
                 </div>
               </div>
@@ -251,10 +251,10 @@ export const TradeServicePortal: React.FC<TradeServicePortalProps> = ({
               <div key={pkg.id} className="col-12 col-md-6 col-xl-4">
                 <div className="persona-card p-4 d-flex flex-column h-100">
                   <div className="d-flex justify-content-between align-items-center mb-2">
-                    <span className="badge bg-light text-primary border" style={{ fontSize: '0.72rem' }}>
+                    <span className="badge bg-light text-primary border" style={{ fontSize: '0.8rem' }}>
                       Skill Level {pkg.nsqfLevel} Certified
                     </span>
-                    <span className="small text-muted d-inline-flex align-items-center gap-1" style={{ fontSize: '0.78rem' }}>
+                    <span className="small text-muted d-inline-flex align-items-center gap-1" style={{ fontSize: '0.82rem' }}>
                       <ClockIcon size={13} color="currentColor" />
                       <span>{pkg.turnaroundTime}</span>
                     </span>
@@ -268,22 +268,22 @@ export const TradeServicePortal: React.FC<TradeServicePortalProps> = ({
                   </p>
 
                   {/* Pricing Breakdown */}
-                  <div className="p-2 mb-3 bg-light border rounded">
+                  <div className="py-2 mb-3 border-top border-bottom">
                     <div className="d-flex justify-content-between align-items-baseline mb-1">
                       <span className="small fw-bold text-dark">Labour Rate:</span>
                       <div>
                         <span className="h5 fw-bold text-primary mb-0">₹{pkg.baseRate}</span>
-                        <span className="text-muted small ms-1" style={{ fontSize: '0.72rem' }}>+18% GST</span>
+                        <span className="text-muted small ms-1" style={{ fontSize: '0.82rem' }}>+18% GST</span>
                       </div>
                     </div>
-                    <div className="d-flex justify-content-between small text-muted" style={{ fontSize: '0.74rem' }}>
+                    <div className="d-flex justify-content-between small text-muted" style={{ fontSize: '0.82rem' }}>
                       <span>Labour only · Spares at actuals</span>
                       <span title="88% to technician, 8% to welfare fund">Fair Split: ₹{workerPay.toFixed(0)} tech / ₹{welfareShare.toFixed(0)} fund</span>
                     </div>
                   </div>
 
                   {/* Included Scope */}
-                  <div className="small fw-bold text-uppercase text-secondary mb-2" style={{ fontSize: '0.68rem' }}>
+                  <div className="small fw-bold text-uppercase text-secondary mb-2" style={{ fontSize: '0.82rem' }}>
                     Service Scope & Included Work
                   </div>
                   <ul className="feature-list mb-4">

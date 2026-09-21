@@ -122,14 +122,14 @@ export const Header: React.FC<HeaderProps> = ({
       </a>
 
       {/* ================= 1. COMPACT UTILITY TOPBAR ================= */}
-      <div className="topbar py-1" style={{ fontSize: '0.78rem' }}>
+      <div className="topbar py-1" style={{ fontSize: '0.82rem' }}>
         <div className="container d-flex justify-content-between align-items-center flex-wrap gap-2">
           {/* Location Selector */}
           <div className="d-flex align-items-center gap-2 position-relative" ref={cityRef}>
             <button
               type="button"
               className="btn btn-sm btn-link p-0 text-decoration-none d-flex align-items-center gap-1"
-              style={{ color: 'inherit', fontSize: '0.78rem' }}
+              style={{ color: 'inherit', fontSize: '0.82rem' }}
               onClick={() => setCityMenuOpen(!cityMenuOpen)}
               aria-expanded={cityMenuOpen}
               title="Select your city"
@@ -164,7 +164,7 @@ export const Header: React.FC<HeaderProps> = ({
             )}
 
             <span className="text-muted d-none d-md-inline">|</span>
-            <span className="text-muted d-none d-md-inline" style={{ fontSize: '0.75rem' }}>
+            <span className="text-muted d-none d-md-inline" style={{ fontSize: '0.8rem' }}>
               {currentLang === 'hi' ? 'सत्यापित स्थानीय सहकारी नेटवर्क' : 'Verified Local Cooperative Network'}
             </span>
           </div>
@@ -245,7 +245,7 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <div
                 className="d-flex align-items-center justify-content-center rounded-3 bg-primary text-white p-2"
-                style={{ width: '42px', height: '42px', boxShadow: '0 2px 6px rgba(74,43,194,0.2)' }}
+                style={{ width: '42px', height: '42px' }}
               >
                 <CoopLogoIcon size={26} color="#ffffff" />
               </div>
@@ -253,7 +253,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <div className="h5 fw-bold text-dark mb-0 lh-1" style={{ letterSpacing: '-0.02em' }}>
                   Sahakar<span className="text-primary">Connect</span>
                 </div>
-                <div className="text-muted small" style={{ fontSize: '0.72rem', marginTop: '2px' }}>
+                <div className="text-muted small" style={{ fontSize: '0.8rem', marginTop: '2px' }}>
                   {currentLang === 'hi' ? 'सामुदायिक गृह सेवाएं' : 'Community Home Services'}
                 </div>
               </div>
@@ -308,7 +308,7 @@ export const Header: React.FC<HeaderProps> = ({
                     className="position-absolute end-0 bg-white text-dark border rounded shadow py-1 mt-1"
                     style={{ minWidth: '160px', zIndex: 1100 }}
                   >
-                    <div className="px-3 py-1 text-muted fw-bold" style={{ fontSize: '0.7rem', borderBottom: '1px solid #e2e8f0' }}>
+                    <div className="px-3 py-1 text-muted fw-bold" style={{ fontSize: '0.8rem', borderBottom: '1px solid #e2e8f0' }}>
                       Select Language / भाषा
                     </div>
                     {SUPPORTED_LANGUAGES.map((l) => (
@@ -318,11 +318,11 @@ export const Header: React.FC<HeaderProps> = ({
                         className={`dropdown-item btn btn-sm w-100 text-start px-3 py-2 d-flex justify-content-between align-items-center ${
                           selectedLangCode === l.code ? 'bg-light text-primary fw-bold' : 'text-dark'
                         }`}
-                        style={{ fontSize: '0.8rem' }}
+                        style={{ fontSize: '0.82rem' }}
                         onClick={() => handleLanguageSelect(l.code)}
                       >
                         <span>{l.label}</span>
-                        <span className="text-muted small" style={{ fontSize: '0.7rem' }}>{l.native}</span>
+                        <span className="text-muted small" style={{ fontSize: '0.8rem' }}>{l.native}</span>
                       </button>
                     ))}
                   </div>
@@ -368,7 +368,7 @@ export const Header: React.FC<HeaderProps> = ({
                     <button
                       type="button"
                       className="btn btn-sm btn-outline-danger rounded-pill px-2 py-1"
-                      style={{ fontSize: '0.75rem' }}
+                      style={{ fontSize: '0.8rem' }}
                       onClick={onLogout}
                       title={currentLang === 'hi' ? 'लॉगआउट' : 'Sign Out'}
                     >
@@ -393,7 +393,7 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* ================= CATEGORY QUICK SHORTCUTS STRIP ================= */}
           <div className="d-flex align-items-center gap-2 mt-2 pt-2 border-top overflow-auto text-nowrap" style={{ scrollbarWidth: 'none' }}>
-            <span className="small text-muted me-1 d-none d-sm-inline" style={{ fontSize: '0.75rem' }}>
+            <span className="small text-muted me-1 d-none d-sm-inline" style={{ fontSize: '0.8rem' }}>
               {currentLang === 'hi' ? 'श्रेणियां:' : 'Categories:'}
             </span>
 
@@ -402,7 +402,7 @@ export const Header: React.FC<HeaderProps> = ({
               className={`btn btn-sm py-1 px-3 rounded-pill d-inline-flex align-items-center gap-1 ${
                 activeNav === 'home' ? 'btn-primary text-white' : 'btn-light text-dark'
               }`}
-              style={{ fontSize: '0.78rem' }}
+              style={{ fontSize: '0.82rem' }}
               onClick={() => onSelectNav('home')}
             >
               <span>{currentLang === 'hi' ? 'सभी सेवाएं' : 'All Services'}</span>
@@ -413,7 +413,7 @@ export const Header: React.FC<HeaderProps> = ({
               className={`btn btn-sm py-1 px-3 rounded-pill d-inline-flex align-items-center gap-1 ${
                 activeNav === 'portal:plumbing' ? 'btn-primary text-white' : 'btn-light text-dark'
               }`}
-              style={{ fontSize: '0.78rem' }}
+              style={{ fontSize: '0.82rem' }}
               onClick={() => onSelectNav('portal:plumbing')}
             >
               <PlumbingIcon size={13} />
@@ -425,7 +425,7 @@ export const Header: React.FC<HeaderProps> = ({
               className={`btn btn-sm py-1 px-3 rounded-pill d-inline-flex align-items-center gap-1 ${
                 activeNav === 'portal:electrical' ? 'btn-primary text-white' : 'btn-light text-dark'
               }`}
-              style={{ fontSize: '0.78rem' }}
+              style={{ fontSize: '0.82rem' }}
               onClick={() => onSelectNav('portal:electrical')}
             >
               <ElectricalIcon size={13} />
@@ -437,7 +437,7 @@ export const Header: React.FC<HeaderProps> = ({
               className={`btn btn-sm py-1 px-3 rounded-pill d-inline-flex align-items-center gap-1 ${
                 activeNav === 'portal:carpentry' ? 'btn-primary text-white' : 'btn-light text-dark'
               }`}
-              style={{ fontSize: '0.78rem' }}
+              style={{ fontSize: '0.82rem' }}
               onClick={() => onSelectNav('portal:carpentry')}
             >
               <CarpentryIcon size={13} />
@@ -449,7 +449,7 @@ export const Header: React.FC<HeaderProps> = ({
               className={`btn btn-sm py-1 px-3 rounded-pill d-inline-flex align-items-center gap-1 ${
                 activeNav === 'portal:appliances' ? 'btn-primary text-white' : 'btn-light text-dark'
               }`}
-              style={{ fontSize: '0.78rem' }}
+              style={{ fontSize: '0.82rem' }}
               onClick={() => onSelectNav('portal:appliances')}
             >
               <ApplianceIcon size={13} />
@@ -457,10 +457,10 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
 
             <div className="ms-auto d-flex align-items-center gap-2">
-              <span className="badge bg-success-subtle text-success border border-success-subtle" style={{ fontSize: '0.7rem' }}>
+              <span className="badge bg-success-subtle text-success border border-success-subtle" style={{ fontSize: '0.82rem' }}>
                 ✓ {currentLang === 'hi' ? 'सत्यापित कारीगर' : 'Verified Tradesmen'}
               </span>
-              <span className="badge bg-light text-secondary border" style={{ fontSize: '0.7rem' }}>
+              <span className="badge bg-light text-secondary border" style={{ fontSize: '0.82rem' }}>
                 {currentLang === 'hi' ? '30-दिन वारंटी' : '30-Day Warranty'}
               </span>
             </div>

@@ -175,7 +175,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               <h3 className="h6 fw-bold mb-0 text-dark">
                 {lang === 'hi' ? 'सहकार कनेक्ट पोर्टल' : 'SahakarConnect Portal'}
               </h3>
-              <span className="text-secondary" style={{ fontSize: '0.72rem' }}>
+              <span className="text-secondary" style={{ fontSize: '0.8rem' }}>
                 {lang === 'hi' ? 'सामुदायिक सेवा मंच' : 'Community Services Network'}
               </span>
             </div>
@@ -285,7 +285,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 {loading ? 'Authenticating...' : lang === 'hi' ? 'प्रवेश करें' : 'Sign In to Workspace'}
               </button>
 
-              <div className="p-2 bg-light rounded border text-muted small text-center" style={{ fontSize: '0.72rem' }}>
+              <div className="p-2 bg-light rounded border text-muted small text-center" style={{ fontSize: '0.8rem' }}>
                 {lang === 'hi'
                   ? 'सुरक्षित राष्ट्रीय सहकारिता मंच • बहु-राज्य सहकारी सोसायटी अधिनियम 2023 के अंतर्गत पंजीकृत'
                   : 'Secured National Cooperative Gateway • MSCS Act 2023 Statutory Compliance'}

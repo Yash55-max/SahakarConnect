@@ -130,7 +130,7 @@ export const LiveBookingTracker: React.FC<BookingTrackerProps> = ({
                     <div className={`small fw-bold ${isCurrent ? 'text-primary' : 'text-dark'}`}>
                       {step.label}
                     </div>
-                    <div className="text-muted" style={{ fontSize: '0.72rem' }}>
+                    <div className="text-muted" style={{ fontSize: '0.8rem' }}>
                       {step.desc}
                     </div>
                   </div>

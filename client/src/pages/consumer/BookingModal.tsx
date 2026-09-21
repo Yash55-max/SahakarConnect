@@ -157,13 +157,13 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                     <span>Platform Operations &amp; Support (4%):</span>
                     <span className="fw-semibold text-dark">₹{platformFee.toFixed(2)}</span>
                   </div>
-                  <div className="d-flex justify-content-between text-secondary pt-1 border-top" style={{ fontSize: '0.74rem' }}>
+                  <div className="d-flex justify-content-between text-secondary pt-1 border-top" style={{ fontSize: '0.8rem' }}>
                     <span>Applicable Taxes (+18% GST):</span>
                     <span className="fw-semibold text-dark">₹{(grossAmount * 0.18).toFixed(2)}</span>
                   </div>
                 </div>
 
-                <div className="mt-2 text-secondary" style={{ fontSize: '0.72rem', lineHeight: 1.4 }}>
+                <div className="mt-2 text-secondary" style={{ fontSize: '0.8rem', lineHeight: 1.45 }}>
                   🛡️ <strong>Customer Protection:</strong> Payment is released only after the technician completes the service and you share your 4-digit PIN. Labour charges only; replacement spares charged at actuals with receipt.
                 </div>
               </div>
