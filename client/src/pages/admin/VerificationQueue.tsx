@@ -102,7 +102,7 @@ export const VerificationQueue: React.FC = () => {
                 <tr key={p.id}>
                   <td>
                     <div className="fw-semibold text-dark">{p.user?.name}</div>
-                    <div className="text-muted" style={{ fontSize: '0.72rem' }}>
+                    <div className="text-muted" style={{ fontSize: '0.8rem' }}>
                       {p.user?.phone} &bull; {p.user?.email}
                     </div>
                   </td>

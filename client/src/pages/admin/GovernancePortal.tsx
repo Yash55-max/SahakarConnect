@@ -129,7 +129,7 @@ export const GovernancePortal: React.FC = () => {
                     />
                   </div>
 
-                  <div className="d-flex justify-content-between mt-1 text-muted" style={{ fontSize: '0.72rem' }}>
+                  <div className="d-flex justify-content-between mt-1 text-muted" style={{ fontSize: '0.8rem' }}>
                     <span>
                       {poll.votesCast} of {poll.totalEligibleVoters} voting members participated
                     </span>
@@ -143,12 +143,12 @@ export const GovernancePortal: React.FC = () => {
                 <div className="p-2 bg-light rounded border d-flex justify-content-around text-center small">
                   <div>
                     <span className="text-success fw-bold">{poll.votesYes} Votes</span>
-                    <div className="text-muted" style={{ fontSize: '0.72rem' }}>In Favor (Yes)</div>
+                    <div className="text-muted" style={{ fontSize: '0.8rem' }}>In Favor (Yes)</div>
                   </div>
                   <div className="border-end" />
                   <div>
                     <span className="text-danger fw-bold">{poll.votesNo} Votes</span>
-                    <div className="text-muted" style={{ fontSize: '0.72rem' }}>Against (No)</div>
+                    <div className="text-muted" style={{ fontSize: '0.8rem' }}>Against (No)</div>
                   </div>
                 </div>
               </div>

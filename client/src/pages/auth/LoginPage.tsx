@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  EmblemIcon,
+  CoopLogoIcon,
   ConsumerIcon,
   ProviderIcon,
   AdminIcon,
@@ -10,7 +10,6 @@ import {
   ShieldCheckIcon,
   CheckCircleIcon,
   ChevronRightIcon,
-  IndianFlagIcon,
   ScaleIcon,
   EyeIcon,
   EyeOffIcon,
@@ -120,7 +119,7 @@ const PERSONAS: PersonaConfig[] = [
     highlightsHi: ['बहु-जिला विश्लेषण व निगरानी', 'सांविधिक आरक्षित निधि ऑडिट', 'एमएससीएस अधिनियम 2023 अनुपालन'],
     icon: RegulatorIcon,
     defaultEmail: 'regulator@cooperation.gov.in',
-    defaultLabel: 'Dr. Amitav Roy, IAS (Registrar)',
+    defaultLabel: 'Dr. Amitav Roy (Cooperative Auditor)',
   },
 ];
 
@@ -316,30 +315,23 @@ export const LoginPage: React.FC<LoginPageProps> = ({
         </div>
 
         <div className="d-flex align-items-center gap-2">
-          <span className="badge bg-light text-dark border d-inline-flex align-items-center gap-1">
-            <IndianFlagIcon width={16} height={11} />
-            <span>Government of India</span>
+          <span className="badge bg-primary-subtle text-primary border border-primary-subtle d-inline-flex align-items-center gap-1">
+            <ShieldCheckIcon size={13} color="var(--ux4g-primary, #4a2bc2)" />
+            <span>Cooperative Access Gateway</span>
           </span>
           <span className="badge bg-success-subtle text-success border border-success-subtle d-inline-flex align-items-center gap-1">
-            <ShieldCheckIcon size={13} color="#16a34a" />
-            <span>MSCS Act 2023 Regulated</span>
+            <CheckCircleIcon size={13} color="#16a34a" />
+            <span>DPDP Act 2023 Compliant</span>
           </span>
         </div>
       </div>
 
       {/* Institutional Security Header */}
-      <div className="card shadow-sm border mb-4 bg-white overflow-hidden">
-        <div
-          style={{
-            height: '5px',
-            width: '100%',
-            background: 'linear-gradient(90deg, #ff9933 0%, #ff9933 33.3%, #ffffff 33.3%, #ffffff 66.6%, #138808 66.6%, #138808 100%)',
-          }}
-        />
+      <div className="card shadow-sm border mb-4 bg-white overflow-hidden" style={{ borderRadius: '12px' }}>
         <div className="card-body p-3 p-md-4">
           <div className="d-flex align-items-center gap-3">
             <div
-              className="p-2 p-md-3 rounded-circle border d-flex align-items-center justify-content-center flex-shrink-0"
+              className="p-2 p-md-3 rounded-3 border d-flex align-items-center justify-content-center flex-shrink-0"
               style={{
                 backgroundColor: 'var(--ux4g-bg-primary, #f2efff)',
                 color: 'var(--ux4g-primary-600, #4a2bc2)',
@@ -347,19 +339,16 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                 height: '56px',
               }}
             >
-              <EmblemIcon size={32} />
+              <CoopLogoIcon size={32} />
             </div>
             <div>
-              <div className="text-uppercase small fw-bold text-secondary tracking-wider" style={{ letterSpacing: '0.05em' }}>
-                {lang === 'hi' ? 'सहकारिता मंत्रालय | भारत सरकार' : 'MINISTRY OF COOPERATION · GOVERNMENT OF INDIA'}
-              </div>
               <h1 className="h4 fw-bold text-dark mb-1">
-                {lang === 'hi' ? 'सहकार कनेक्ट आधिकारिक प्रवेश द्वार' : 'SahakarConnect Official Authentication Gateway'}
+                {lang === 'hi' ? 'सहकार कनेक्ट अधिकृत प्रवेश द्वार' : 'Role-Based Authentication Gateway'}
               </h1>
               <p className="small text-muted mb-0">
                 {lang === 'hi'
-                  ? 'बहु-राज्य सहकारी सोसायटी अधिनियम, 2023 के अंतर्गत सुरक्षित भूमिका-आधारित प्रमाणीकरण एवं एकल साइन-ऑन प्रणाली।'
-                  : 'Role-Based Single Sign-On and Access Control Gateway under the Multi-State Co-operative Societies Act, 2023.'}
+                  ? 'नागरिकों, कुशल कारीगरों, सहकारी प्रशासकों एवं विनियामक लेखा परीक्षकों के लिए सुरक्षित भूमिका-आधारित प्रवेश प्रणाली।'
+                  : 'Secure role-based access for Citizens, Skilled Tradespeople, Cooperative Administrators, and Auditors.'}
               </p>
             </div>
           </div>
@@ -437,16 +426,16 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                     type="button"
                     className="btn btn-sm btn-white w-100 border text-start p-2 shadow-xs d-flex flex-column"
                     style={{
-                      borderLeft: `4px solid ${p.themeColor}`,
+                      borderColor: selectedRole === p.key ? p.borderColor : '#e2e8f0',
                       backgroundColor: selectedRole === p.key ? p.bgLight : '#ffffff',
                     }}
                     onClick={() => handleFastFill(p)}
                   >
                     <span className="fw-bold small text-dark">{p.titleEn}</span>
-                    <span className="text-secondary font-monospace" style={{ fontSize: '0.72rem' }}>
+                    <span className="text-secondary font-monospace" style={{ fontSize: '0.82rem' }}>
                       {p.defaultEmail}
                     </span>
-                    <span className="badge mt-1 align-self-start" style={{ backgroundColor: p.badgeBg, color: p.textColor, fontSize: '0.65rem' }}>
+                    <span className="badge mt-1 align-self-start" style={{ backgroundColor: p.badgeBg, color: p.textColor, fontSize: '0.82rem' }}>
                       {p.roleTag}
                     </span>
                   </button>
@@ -475,19 +464,18 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                       handleSelectRole(persona.key);
                     }
                   }}
-                  className="card h-100 shadow-sm border transition-all"
+                  className="card h-100 shadow-xs border transition-all"
                   style={{
                     cursor: 'pointer',
-                    borderColor: isSelected ? persona.themeColor : '#e2e8f0',
+                    borderColor: isSelected ? persona.borderColor : '#e2e8f0',
                     borderWidth: isSelected ? '2px' : '1px',
                     backgroundColor: isSelected ? persona.bgLight : '#ffffff',
-                    boxShadow: isSelected ? `0 6px 16px ${persona.themeColor}25` : undefined,
                   }}
                 >
                   <div className="card-body p-3 d-flex flex-column">
                     <div className="d-flex justify-content-between align-items-start mb-2">
-                      <div
-                        className="p-2 rounded-circle d-flex align-items-center justify-content-center"
+                      <span
+                        className="p-2 rounded-circle d-inline-flex align-items-center justify-content-center"
                         style={{
                           backgroundColor: isSelected ? '#ffffff' : persona.bgLight,
                           color: persona.themeColor,
@@ -497,13 +485,13 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                         }}
                       >
                         <Icon size={20} />
-                      </div>
+                      </span>
                       <span
                         className="badge"
                         style={{
                           backgroundColor: persona.badgeBg,
                           color: persona.textColor,
-                          fontSize: '0.68rem',
+                          fontSize: '0.82rem',
                           fontWeight: 600,
                         }}
                       >
@@ -514,7 +502,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                     <h3 className="h6 fw-bold text-dark mb-1">
                       {lang === 'hi' ? persona.titleHi : persona.titleEn}
                     </h3>
-                    <p className="text-secondary small mb-3 flex-grow-1" style={{ fontSize: '0.78rem', lineHeight: 1.35 }}>
+                    <p className="text-secondary small mb-3 flex-grow-1" style={{ fontSize: '0.82rem', lineHeight: 1.4 }}>
                       {lang === 'hi' ? persona.subtitleHi : persona.subtitleEn}
                     </p>
 
@@ -522,8 +510,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                     <div className="border-top pt-2 mt-auto">
                       <div className="d-flex flex-column gap-1">
                         {(lang === 'hi' ? persona.highlightsHi : persona.highlightsEn).map((hl, i) => (
-                          <div key={i} className="small d-flex align-items-center gap-1" style={{ fontSize: '0.7rem', color: persona.textColor }}>
-                            <span style={{ fontSize: '0.8rem' }}>&bull;</span>
+                          <div key={i} className="small d-flex align-items-center gap-1" style={{ fontSize: '0.82rem', color: persona.textColor }}>
+                            <span style={{ fontSize: '0.85rem' }}>&bull;</span>
                             <span className="text-truncate">{hl}</span>
                           </div>
                         ))}
@@ -531,7 +519,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                     </div>
 
                     <div className="mt-3 pt-2 border-top d-flex justify-content-between align-items-center">
-                      <span className="small fw-semibold" style={{ color: persona.themeColor, fontSize: '0.75rem' }}>
+                      <span className="small fw-semibold" style={{ color: persona.themeColor, fontSize: '0.8rem' }}>
                         {isSelected
                           ? lang === 'hi' ? 'सक्रिय भूमिका ✓' : 'Selected Persona ✓'
                           : lang === 'hi' ? 'यह भूमिका चुनें' : 'Select Persona'}
@@ -582,13 +570,13 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                   style={{
                     backgroundColor: activePersona.badgeBg,
                     color: activePersona.textColor,
-                    fontSize: '0.7rem',
+                    fontSize: '0.8rem',
                   }}
                 >
                   {activePersona.systemRole}
                 </span>
               </div>
-              <div className="text-muted small" style={{ fontSize: '0.75rem' }}>
+              <div className="text-muted small" style={{ fontSize: '0.82rem' }}>
                 {activePersona.defaultLabel} · MSCS Act 2023 Tenancy Verification
               </div>
             </div>
@@ -770,7 +758,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                 )}
               </button>
 
-              <div className="mt-3 p-2 bg-light border rounded text-center small text-muted" style={{ fontSize: '0.74rem' }}>
+              <div className="mt-3 p-2 bg-light border rounded text-center small text-muted" style={{ fontSize: '0.8rem' }}>
                 {selectedRole === 'regulator' && (
                   <span>
                     Oversight Terminal: Authorized under Section 120 of MSCS Act 2023. Unauthorized access is punishable by law.
@@ -858,7 +846,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                     <option value="Carpentry & Woodwork">Woodcraft &amp; Modular Carpentry (BIS IS 2202)</option>
                     <option value="Home Appliance Repair">Home Appliance &amp; HVAC Servicing (BEE / MoEFCC)</option>
                   </select>
-                  <div className="text-muted small mt-1" style={{ fontSize: '0.72rem' }}>
+                  <div className="text-muted small mt-1" style={{ fontSize: '0.8rem' }}>
                     NSQF skill certification will be audited by the Cooperative Society Admin after registration.
                   </div>
                 </div>

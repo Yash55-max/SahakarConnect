@@ -260,9 +260,9 @@ export const RegulatorDashboard: React.FC<RegulatorDashboardProps> = ({ onOpenAu
         >
           <RegulatorIcon size={32} color="var(--ux4g-primary-600, #4a2bc2)" />
         </div>
-        <h3 className="h5 fw-bold text-dark mb-2">Statutory Regulator Credentials Required</h3>
+        <h3 className="h5 fw-bold text-dark mb-2">Regulatory Auditor Credentials Required</h3>
         <p className="text-secondary small max-w-md mx-auto mb-4" style={{ maxWidth: '540px' }}>
-          Access to the Central Regulatory Oversight Dashboard is restricted to authorized officers of the Ministry of Cooperation and State Cooperative Registrars under Section 120 of the Multi-State Co-operative Societies Act, 2023.
+          Access to the Regulatory Oversight Dashboard is restricted to authorized regulatory officers and cooperative audit supervisors under the Multi-State Co-operative Societies Act, 2002 (as amended in 2023).
         </p>
         <div>
           {onOpenAuth && (
@@ -271,7 +271,7 @@ export const RegulatorDashboard: React.FC<RegulatorDashboardProps> = ({ onOpenAu
               className="btn btn-primary btn-sm px-4 py-2 fw-semibold"
               onClick={onOpenAuth}
             >
-              Sign In with Institutional Credentials
+              Sign In with Auditor Credentials
             </button>
           )}
         </div>
@@ -296,7 +296,7 @@ export const RegulatorDashboard: React.FC<RegulatorDashboardProps> = ({ onOpenAu
 
   return (
     <div className="regulator-dashboard">
-      {/* 1. Official Ministry Authority Header Banner */}
+      {/* 1. Regulatory Authority Header Banner */}
       <div className="card shadow-sm border mb-4 bg-white">
         <div className="card-body p-3 p-md-4">
           <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-3">
@@ -316,15 +316,15 @@ export const RegulatorDashboard: React.FC<RegulatorDashboardProps> = ({ onOpenAu
               <div>
                 <div className="d-flex align-items-center gap-2 flex-wrap">
                   <h1 className="h5 fw-bold text-dark mb-0">
-                    Central Registrar of Cooperative Societies (CRCS)
+                    Cooperative Regulatory Oversight Terminal
                   </h1>
                   <span className="badge bg-success text-white small px-2 py-1">
                     <ShieldCheckIcon size={12} className="me-1" />
-                    MSCS Act 2023 Compliant
+                    MSCS Act Compliant
                   </span>
                 </div>
                 <p className="text-secondary small mb-0 mt-1">
-                  Ministry of Cooperation, Government of India · Nationwide Statutory Ledger &amp; Welfare Oversight
+                  Multi-State Co-operative Societies Framework · Nationwide Ledger &amp; Welfare Oversight
                 </p>
               </div>
             </div>
@@ -332,7 +332,7 @@ export const RegulatorDashboard: React.FC<RegulatorDashboardProps> = ({ onOpenAu
             <div className="d-flex align-items-center gap-2 flex-wrap">
               <span className="badge bg-light text-dark border p-2 small">
                 <UsersIcon size={13} className="me-1 text-primary" />
-                Registrar: <strong>Dr. Amitav Roy, IAS</strong>
+                Auditor: <strong>Dr. Amitav Roy</strong>
               </span>
               <button
                 type="button"
@@ -568,13 +568,13 @@ export const RegulatorDashboard: React.FC<RegulatorDashboardProps> = ({ onOpenAu
                     <tr key={coop.id}>
                       <td>
                         <div className="fw-bold text-dark">{coop.name}</div>
-                        <div className="font-monospace text-muted" style={{ fontSize: '0.72rem' }}>
+                        <div className="font-monospace text-muted" style={{ fontSize: '0.8rem' }}>
                           {coop.registrationNo}
                         </div>
                       </td>
                       <td>
                         <div className="fw-medium text-dark">{coop.state}</div>
-                        <div className="text-muted" style={{ fontSize: '0.75rem' }}>
+                        <div className="text-muted" style={{ fontSize: '0.8rem' }}>
                           {coop.district}
                         </div>
                       </td>
@@ -582,25 +582,25 @@ export const RegulatorDashboard: React.FC<RegulatorDashboardProps> = ({ onOpenAu
                         <span className="badge bg-primary text-white">
                           {coop.verifiedTradesmenCount} / {coop.totalProvidersCount}
                         </span>
-                        <div className="text-muted" style={{ fontSize: '0.7rem' }}>
+                        <div className="text-muted" style={{ fontSize: '0.8rem' }}>
                           Aadhaar Verified
                         </div>
                       </td>
                       <td className="text-end">
                         <div className="fw-bold text-dark">₹{coop.grossVolume.toLocaleString('en-IN')}</div>
-                        <div className="text-success" style={{ fontSize: '0.72rem' }}>
+                        <div className="text-success" style={{ fontSize: '0.8rem' }}>
                           ₹{coop.workerPayoutTotal.toLocaleString('en-IN')} to Workers
                         </div>
                       </td>
                       <td className="text-end">
                         <div className="fw-semibold text-info">₹{coop.welfareBalance.toLocaleString('en-IN')}</div>
-                        <div className="text-muted" style={{ fontSize: '0.7rem' }}>
+                        <div className="text-muted" style={{ fontSize: '0.8rem' }}>
                           Rate: {(coop.welfareFundRate * 100).toFixed(1)}%
                         </div>
                       </td>
                       <td className="text-end">
                         <div className="fw-semibold text-warning">₹{coop.statutoryReserveBalance.toLocaleString('en-IN')}</div>
-                        <div className="text-success" style={{ fontSize: '0.7rem' }}>
+                        <div className="text-success" style={{ fontSize: '0.8rem' }}>
                           {coop.statutoryReserveRatioSatisfied ? '≥15% Satisfied' : 'Below 15%'}
                         </div>
                       </td>
@@ -699,7 +699,7 @@ export const RegulatorDashboard: React.FC<RegulatorDashboardProps> = ({ onOpenAu
               <span className="fw-semibold small text-dark">
                 Nationwide Central Audit Ledger — Tripartite Invariant Inspector
               </span>
-              <div className="text-muted" style={{ fontSize: '0.72rem' }}>
+              <div className="text-muted" style={{ fontSize: '0.8rem' }}>
                 Mathematical Proof: Worker Payout (88%) + Welfare Fund (8%) + Platform Share (4%) ≡ Gross Booking Amount (Zero Rounding Leakage)
               </div>
             </div>
@@ -739,22 +739,22 @@ export const RegulatorDashboard: React.FC<RegulatorDashboardProps> = ({ onOpenAu
                   filteredLedger.map((entry) => (
                     <tr key={entry.id}>
                       <td>
-                        <span className="font-monospace fw-semibold text-primary" style={{ fontSize: '0.75rem' }}>
+                        <span className="font-monospace fw-semibold text-primary" style={{ fontSize: '0.8rem' }}>
                           {entry.bookingId.slice(0, 8)}...
                         </span>
-                        <div className="text-muted" style={{ fontSize: '0.7rem' }}>
+                        <div className="text-muted" style={{ fontSize: '0.8rem' }}>
                           {entry.settledAt ? new Date(entry.settledAt).toLocaleDateString('en-IN') : 'Pending'}
                         </div>
                       </td>
                       <td>
                         <div className="fw-medium text-dark">{entry.cooperativeName}</div>
-                        <div className="text-muted" style={{ fontSize: '0.72rem' }}>
+                        <div className="text-muted" style={{ fontSize: '0.8rem' }}>
                           {entry.district}, {entry.state}
                         </div>
                       </td>
                       <td>
                         <div className="fw-medium text-dark">{entry.consumerName}</div>
-                        <div className="text-secondary" style={{ fontSize: '0.72rem' }}>
+                        <div className="text-secondary" style={{ fontSize: '0.8rem' }}>
                           → {entry.providerName}
                         </div>
                       </td>
@@ -774,7 +774,7 @@ export const RegulatorDashboard: React.FC<RegulatorDashboardProps> = ({ onOpenAu
                         {entry.statutoryInvariantSatisfied ? (
                           <span
                             className="badge bg-success text-white px-2 py-1 font-monospace"
-                            style={{ fontSize: '0.68rem' }}
+                            style={{ fontSize: '0.8rem' }}
                             title="Worker (88%) + Welfare (8%) + Platform (4%) = Gross exactly"
                           >
                             <CheckCircleIcon size={10} className="me-1" />

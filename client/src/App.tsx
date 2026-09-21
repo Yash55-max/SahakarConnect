@@ -19,17 +19,7 @@ const AdminHub = lazy(() => import('./pages/admin/AdminHub'));
 const RegulatorDashboard = lazy(() => import('./pages/regulator/RegulatorDashboard'));
 const LoginPage = lazy(() => import('./pages/auth/LoginPage'));
 const LegalModal = lazy(() => import('./components/common/LegalModal'));
-import {
-  ConsumerIcon,
-  ProviderIcon,
-  AdminIcon,
-  RegulatorIcon,
-  HomeIcon,
-  PlumbingIcon,
-  ElectricalIcon,
-  CarpentryIcon,
-  ApplianceIcon,
-} from './components/common/Icons';
+import { HomeIcon } from './components/common/Icons';
 
 interface HealthStatus {
   status: string;
@@ -267,128 +257,34 @@ export const AppContent: React.FC = () => {
           </Suspense>
         ) : (
           <div className="container-fluid px-2 px-sm-3 px-md-4">
-            {/* Breadcrumb & Quick Switcher Strip when inside a portal */}
-            <div className="card shadow-sm border mb-3 mb-md-4 bg-white">
-              <div className="card-body py-2 px-2 px-md-3">
-                <div className="d-flex justify-content-between align-items-center flex-wrap gap-2">
-                  <div className="d-flex align-items-center gap-2 flex-wrap">
+            {/* Clean Breadcrumb Navigation */}
+            <div className="d-flex justify-content-between align-items-center mb-3 py-1">
+              <nav aria-label="breadcrumb">
+                <ol className="breadcrumb mb-0 small">
+                  <li className="breadcrumb-item">
                     <button
                       type="button"
-                      className="btn btn-sm btn-link p-0 text-decoration-none text-secondary d-flex align-items-center gap-1"
+                      className="btn btn-sm btn-link p-0 text-decoration-none text-secondary d-inline-flex align-items-center gap-1"
                       onClick={() => setActiveNav('home')}
                     >
-                      <HomeIcon size={14} />
+                      <HomeIcon size={13} />
                       <span>{lang === 'hi' ? 'मुख्य पृष्ठ' : 'Home'}</span>
                     </button>
-                    <span className="text-muted">/</span>
-                    <span className="fw-bold text-dark small">{getPortalTitle(activeNav)}</span>
-                    <span className="badge bg-primary text-uppercase ms-1" style={{ fontSize: '0.68rem' }}>
-                      {activeNav === 'portal:plumbing'
-                        ? 'PLUMBING'
-                        : activeNav === 'portal:electrical'
-                        ? 'ELECTRICAL'
-                        : activeNav === 'portal:carpentry'
-                        ? 'CARPENTRY'
-                        : activeNav === 'portal:appliances'
-                        ? 'APPLIANCES'
-                        : currentUser?.role || activeNav}
-                    </span>
+                  </li>
+                  <li className="breadcrumb-item active fw-semibold text-dark" aria-current="page">
+                    {getPortalTitle(activeNav)}
+                  </li>
+                </ol>
+              </nav>
 
-                    {/* Quick Trade Selector in Breadcrumb Strip */}
-                    {isConsumerView && (
-                      <div className="btn-group btn-group-sm ms-md-2 overflow-auto" role="group" aria-label="Trade portals quick switcher">
-                        <button
-                          type="button"
-                          className={`btn py-0 px-2 ${activeNav === 'portal:plumbing' || activeNav === 'consumer' ? 'btn-primary' : 'btn-outline-secondary'}`}
-                          onClick={() => handleSelectNav('portal:plumbing')}
-                          title="Plumbing Portal"
-                        >
-                          <PlumbingIcon size={12} className="me-1" />
-                          Plumbing
-                        </button>
-                        <button
-                          type="button"
-                          className={`btn py-0 px-2 ${activeNav === 'portal:electrical' ? 'btn-primary' : 'btn-outline-secondary'}`}
-                          onClick={() => handleSelectNav('portal:electrical')}
-                          title="Electrical Portal"
-                        >
-                          <ElectricalIcon size={12} className="me-1" />
-                          Electrical
-                        </button>
-                        <button
-                          type="button"
-                          className={`btn py-0 px-2 ${activeNav === 'portal:carpentry' ? 'btn-primary' : 'btn-outline-secondary'}`}
-                          onClick={() => handleSelectNav('portal:carpentry')}
-                          title="Carpentry Portal"
-                        >
-                          <CarpentryIcon size={12} className="me-1" />
-                          Carpentry
-                        </button>
-                        <button
-                          type="button"
-                          className={`btn py-0 px-2 ${activeNav === 'portal:appliances' ? 'btn-primary' : 'btn-outline-secondary'}`}
-                          onClick={() => handleSelectNav('portal:appliances')}
-                          title="Appliance Portal"
-                        >
-                          <ApplianceIcon size={12} className="me-1" />
-                          Appliances
-                        </button>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="d-flex align-items-center gap-2 flex-wrap ms-auto">
-                    <span className="small text-muted d-none d-lg-inline">Switch Portal:</span>
-                    <div className="btn-group btn-group-sm" role="group" aria-label="Portal switcher">
-                      <button
-                        type="button"
-                        className={`btn ${isConsumerView ? 'btn-primary' : 'btn-outline-secondary'}`}
-                        onClick={() => handleSelectNav('consumer')}
-                        title="Citizen Consumer"
-                      >
-                        <ConsumerIcon size={13} className="me-1" />
-                        <span className="d-none d-sm-inline">Citizen</span>
-                      </button>
-                      <button
-                        type="button"
-                        className={`btn ${activeNav === 'provider' ? 'btn-success' : 'btn-outline-secondary'}`}
-                        onClick={() => handleSelectNav('provider')}
-                        title="Tradesman Provider"
-                      >
-                        <ProviderIcon size={13} className="me-1" />
-                        <span className="d-none d-sm-inline">Tradesman</span>
-                      </button>
-                      <button
-                        type="button"
-                        className={`btn ${activeNav === 'coop_admin' ? 'btn-dark' : 'btn-outline-secondary'}`}
-                        onClick={() => handleSelectNav('coop_admin')}
-                        title="Society Admin"
-                      >
-                        <AdminIcon size={13} className="me-1" />
-                        <span className="d-none d-sm-inline">Admin</span>
-                      </button>
-                      <button
-                        type="button"
-                        className={`btn ${activeNav === 'regulator' ? 'btn-secondary' : 'btn-outline-secondary'}`}
-                        onClick={() => handleSelectNav('regulator')}
-                        title="Regulator"
-                      >
-                        <RegulatorIcon size={13} className="me-1" />
-                        <span className="d-none d-sm-inline">Regulator</span>
-                      </button>
-                    </div>
-
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-outline-danger"
-                      onClick={() => setActiveNav('home')}
-                      title="Exit to Landing Page"
-                    >
-                      Exit
-                    </button>
-                  </div>
+              {currentUser && (
+                <div className="d-flex align-items-center gap-2">
+                  <span className="badge bg-primary text-uppercase" style={{ fontSize: '0.8rem' }}>
+                    {currentUser.role}
+                  </span>
+                  <span className="small text-muted">{currentUser.name}</span>
                 </div>
-              </div>
+              )}
             </div>
 
             <Suspense
@@ -441,8 +337,12 @@ export const AppContent: React.FC = () => {
         )}
       </main>
 
-      {/* Official Government of India Accessible Footer */}
-      <Footer currentLang={lang} onOpenLegal={(docId) => setActiveLegalDoc(docId)} />
+      {/* Cooperative Community Footer */}
+      <Footer
+        currentLang={lang}
+        onOpenLegal={(docId) => setActiveLegalDoc(docId)}
+        onSelectNav={handleSelectNav}
+      />
 
       {/* Statutory & Legal Policy Modal */}
       {activeLegalDoc && (

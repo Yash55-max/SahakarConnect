@@ -173,7 +173,7 @@ export const ProviderDashboard: React.FC<ProviderDashboardProps> = ({ onOpenAuth
                 <div className="small fw-bold text-dark">
                   Duty Status: {isAvailable ? 'ACTIVE' : 'OFFLINE'}
                 </div>
-                <div className="text-muted" style={{ fontSize: '0.72rem' }}>
+                <div className="text-muted" style={{ fontSize: '0.8rem' }}>
                   {isAvailable ? 'Receiving Spatial Dispatch Alerts' : 'Duty Paused'}
                 </div>
               </div>
@@ -199,7 +199,7 @@ export const ProviderDashboard: React.FC<ProviderDashboardProps> = ({ onOpenAuth
         <div className="alert alert-primary border-primary p-3 mb-4 rounded shadow-sm d-flex justify-content-between align-items-center flex-wrap gap-3">
           <div>
             <div className="d-flex align-items-center gap-2 mb-1">
-              <span className="badge bg-danger text-white pulse">DISPATCH REQUEST</span>
+              <span className="badge bg-danger text-white">DISPATCH REQUEST</span>
               <strong className="text-dark">New Job Available in Your Local Sector!</strong>
             </div>
             <div className="small text-muted">

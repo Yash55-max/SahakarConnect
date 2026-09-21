@@ -124,10 +124,10 @@ export const TradeServicePortal: React.FC<TradeServicePortalProps> = ({
         </div>
 
         <div className="d-flex align-items-center gap-2">
-          <span className="badge bg-success" style={{ fontSize: '0.68rem' }}>
+          <span className="badge bg-success" style={{ fontSize: '0.82rem' }}>
             {portal.activeTradesmen} {lang === 'hi' ? 'सत्यापित तकनीशियन सक्रिय' : 'Tradesmen Available'}
           </span>
-          <span className="badge bg-light text-dark border" style={{ fontSize: '0.68rem' }}>
+          <span className="badge bg-light text-dark border" style={{ fontSize: '0.82rem' }}>
             {portal.inspectionWarrantyDays}-Day Warranty
           </span>
         </div>
@@ -138,7 +138,7 @@ export const TradeServicePortal: React.FC<TradeServicePortalProps> = ({
       ) : (
         <>
           {/* 2. Dedicated Portal Hero Header */}
-          <div className="card shadow-sm border mb-4 bg-white overflow-hidden" style={{ borderLeft: `6px solid ${portal.accentColor}` }}>
+          <div className="card shadow-xs border mb-4 bg-white overflow-hidden">
         <div className="card-body p-4 p-md-5">
           <div className="row align-items-center g-4">
             <div className="col-12 col-lg-8">
@@ -150,11 +150,11 @@ export const TradeServicePortal: React.FC<TradeServicePortalProps> = ({
                   <IconComponent size={24} />
                 </div>
                 <div>
-                  <span className="badge bg-light text-dark border px-2 py-1 me-2" style={{ fontSize: '0.7rem' }}>
+                  <span className="badge bg-light text-dark border px-2 py-1 me-2" style={{ fontSize: '0.82rem' }}>
                     {portal.societyName}
                   </span>
-                  <span className="badge bg-secondary text-white" style={{ fontSize: '0.7rem' }}>
-                    MSCS Act 2023 Regulated
+                  <span className="badge bg-success text-white" style={{ fontSize: '0.82rem' }}>
+                    Verified Cooperative
                   </span>
                 </div>
               </div>
@@ -163,46 +163,46 @@ export const TradeServicePortal: React.FC<TradeServicePortalProps> = ({
                 {lang === 'hi' ? portal.hindiName : portal.name}
               </h1>
               <p className="text-muted mb-3" style={{ fontSize: '0.9rem' }}>
-                Statutory service portal operating under{' '}
-                <strong>{portal.statutoryCode}</strong>. Technicians are member-owners of the cooperative society, guaranteeing high workmanship standards with zero intermediary commissions.
+                Verified cooperative service portal adhering to{' '}
+                <strong>{portal.statutoryCode}</strong>. Technicians are skilled member-owners of the cooperative society, delivering high workmanship standards with transparent pricing.
               </p>
 
               <div className="d-flex align-items-center gap-3 flex-wrap">
                 <div className="d-inline-flex align-items-center gap-1 small text-dark fw-semibold">
                   <MapPinIcon size={15} color="var(--ux4g-primary)" />
-                  <span>Hyperlocal Verified Dispatch</span>
+                  <span>Prompt Neighborhood Dispatch</span>
                 </div>
                 <div className="d-inline-flex align-items-center gap-1 small text-dark fw-semibold">
                   <ShieldCheckIcon size={15} color="var(--ux4g-green)" />
-                  <span>Statutory 4-Digit Escrow Protection</span>
+                  <span>Pay After Service with 4-Digit PIN</span>
                 </div>
                 <div className="d-inline-flex align-items-center gap-1 small text-dark fw-semibold">
                   <ScaleIcon size={15} color="var(--ux4g-primary)" />
-                  <span>88% Direct Remittance Floor</span>
+                  <span>88% Direct Technician Pay</span>
                 </div>
               </div>
             </div>
 
             <div className="col-12 col-lg-4 text-lg-end">
               <div className="p-3 bg-light border rounded">
-                <div className="small text-muted mb-1">Cooperative Performance Metrics</div>
+                <div className="small text-muted mb-1">Cooperative Performance</div>
                 <div className="d-flex justify-content-around text-center mt-2">
                   <div>
                     <div className="h4 fw-bold text-primary mb-0 d-inline-flex align-items-center justify-content-center gap-1">
                       <span>{portal.averageRating}</span>
                       <StarIcon size={16} color="#eab308" />
                     </div>
-                    <div className="small text-muted" style={{ fontSize: '0.72rem' }}>Avg Rating</div>
+                    <div className="small text-muted" style={{ fontSize: '0.82rem' }}>Avg Rating</div>
                   </div>
                   <div className="border-end" />
                   <div>
                     <div className="h4 fw-bold text-success mb-0">{portal.completedJobsCount}+</div>
-                    <div className="small text-muted" style={{ fontSize: '0.72rem' }}>Jobs Completed</div>
+                    <div className="small text-muted" style={{ fontSize: '0.82rem' }}>Jobs Completed</div>
                   </div>
                   <div className="border-end" />
                   <div>
                     <div className="h4 fw-bold text-dark mb-0">{portal.inspectionWarrantyDays}d</div>
-                    <div className="small text-muted" style={{ fontSize: '0.72rem' }}>Free Warranty</div>
+                    <div className="small text-muted" style={{ fontSize: '0.82rem' }}>Workmanship Warranty</div>
                   </div>
                 </div>
               </div>
@@ -229,10 +229,12 @@ export const TradeServicePortal: React.FC<TradeServicePortalProps> = ({
         <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
           <div>
             <h2 className="h5 fw-bold text-dark mb-1">
-              {lang === 'hi' ? 'मानकीकृत सेवा पैकेज एवं सांविधिक दरें' : 'Standardized Service Packages & Statutory Rates'}
+              {lang === 'hi' ? 'मानकीकृत सेवा पैकेज एवं पारदर्शी दरें' : 'Standardized Service Packages & Upfront Rates'}
             </h2>
             <p className="text-muted small mb-0">
-              Transparent statutory pricing. Every rupee is deterministically split into 88% worker, 8% welfare, 4% platform.
+              {lang === 'hi'
+                ? 'स्पष्ट श्रम शुल्क। सामग्री वास्तविक बिल पर। 88% सीधे कामगार को, 8% कल्याण निधि में।'
+                : 'Transparent labour charges. Required replacement spares charged at actuals with receipt. +18% GST.'}
             </p>
           </div>
           <span className="badge bg-light text-dark border px-3 py-2">
@@ -244,16 +246,15 @@ export const TradeServicePortal: React.FC<TradeServicePortalProps> = ({
           {portal.packages.map((pkg) => {
             const workerPay = Math.round(pkg.baseRate * 0.88 * 100) / 100;
             const welfareShare = Math.round(pkg.baseRate * 0.08 * 100) / 100;
-            const platformShare = Math.round((pkg.baseRate - workerPay - welfareShare) * 100) / 100;
 
             return (
               <div key={pkg.id} className="col-12 col-md-6 col-xl-4">
                 <div className="persona-card p-4 d-flex flex-column h-100">
                   <div className="d-flex justify-content-between align-items-center mb-2">
-                    <span className="badge bg-light text-primary border" style={{ fontSize: '0.72rem' }}>
-                      NSQF Level {pkg.nsqfLevel} Certified
+                    <span className="badge bg-light text-primary border" style={{ fontSize: '0.8rem' }}>
+                      Skill Level {pkg.nsqfLevel} Certified
                     </span>
-                    <span className="small text-muted d-inline-flex align-items-center gap-1" style={{ fontSize: '0.78rem' }}>
+                    <span className="small text-muted d-inline-flex align-items-center gap-1" style={{ fontSize: '0.82rem' }}>
                       <ClockIcon size={13} color="currentColor" />
                       <span>{pkg.turnaroundTime}</span>
                     </span>
@@ -266,22 +267,24 @@ export const TradeServicePortal: React.FC<TradeServicePortalProps> = ({
                     {pkg.description}
                   </p>
 
-                  {/* Tripartite Breakdown Preview */}
-                  <div className="p-2 mb-3 bg-light border rounded">
+                  {/* Pricing Breakdown */}
+                  <div className="py-2 mb-3 border-top border-bottom">
                     <div className="d-flex justify-content-between align-items-baseline mb-1">
-                      <span className="small fw-bold text-dark">Statutory Rate:</span>
-                      <span className="h5 fw-bold text-primary mb-0">₹{pkg.baseRate}</span>
+                      <span className="small fw-bold text-dark">Labour Rate:</span>
+                      <div>
+                        <span className="h5 fw-bold text-primary mb-0">₹{pkg.baseRate}</span>
+                        <span className="text-muted small ms-1" style={{ fontSize: '0.82rem' }}>+18% GST</span>
+                      </div>
                     </div>
-                    <div className="d-flex justify-content-between small text-muted" style={{ fontSize: '0.75rem' }}>
-                      <span title="88% direct to technician">Worker: ₹{workerPay.toFixed(0)}</span>
-                      <span title="8% to society welfare fund">Welfare: ₹{welfareShare.toFixed(0)}</span>
-                      <span title="4% non-profit reserve">Platform: ₹{platformShare.toFixed(0)}</span>
+                    <div className="d-flex justify-content-between small text-muted" style={{ fontSize: '0.82rem' }}>
+                      <span>Labour only · Spares at actuals</span>
+                      <span title="88% to technician, 8% to welfare fund">Fair Split: ₹{workerPay.toFixed(0)} tech / ₹{welfareShare.toFixed(0)} fund</span>
                     </div>
                   </div>
 
                   {/* Included Scope */}
-                  <div className="small fw-bold text-uppercase text-secondary mb-2" style={{ fontSize: '0.68rem' }}>
-                    Service Scope & Protocols
+                  <div className="small fw-bold text-uppercase text-secondary mb-2" style={{ fontSize: '0.82rem' }}>
+                    Service Scope & Included Work
                   </div>
                   <ul className="feature-list mb-4">
                     {pkg.includes.map((inc, i) => (
@@ -313,16 +316,16 @@ export const TradeServicePortal: React.FC<TradeServicePortalProps> = ({
         </div>
       </div>
 
-      {/* 5. Trade Safety & Engineering Protocols */}
+      {/* 5. Trade Safety & Quality Standards */}
       <div className="card border shadow-sm p-4 mb-4 bg-white">
         <div className="d-flex align-items-center gap-2 mb-3">
           <ShieldCheckIcon size={20} className="text-success" />
           <h3 className="h6 fw-bold mb-0 text-dark">
-            {lang === 'hi' ? 'वैधानिक सुरक्षा व तकनीकी मानक' : 'Statutory Safety & Quality Assurance Protocols'}
+            {lang === 'hi' ? 'सुरक्षा व गुणवत्ता मानक' : 'Workmanship & Safety Standards'}
           </h3>
         </div>
         <p className="small text-muted mb-3">
-          All service packages booked under this portal strictly mandate the following engineering procedures as defined by the Primary Service Cooperative Society bylaws:
+          All service packages booked under this cooperative follow standard safety and quality assurance procedures:
         </p>
         <div className="row g-2">
           {portal.safetyChecklist.map((item, idx) => (

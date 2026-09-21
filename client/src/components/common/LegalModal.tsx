@@ -145,23 +145,24 @@ export const LegalModal: React.FC<LegalModalProps> = ({ docId, onClose, lang }) 
             <div className="modal-panel is-active">
               <h3>{lang === 'hi' ? 'कॉपीराइट व अस्वीकरण' : 'Copyright & disclaimer'}</h3>
               <p>
-                Content on this platform is owned by the Ministry of Cooperation, Government of India, unless
-                otherwise stated, and may be reproduced for non-commercial use with attribution.
+                Content on this platform is owned by SahakarConnect Technologies Platform and participating
+                Primary Service Cooperative Societies, unless otherwise stated, and may be referenced with attribution.
               </p>
             </div>
           )}
 
           {activeTab === 'mscs-act' && (
             <div className="modal-panel is-active">
-              <h3>{lang === 'hi' ? 'एमएससीएस अधिनियम 2023 प्रावधान' : 'MSCS Act 2023 provisions'}</h3>
+              <h3>{lang === 'hi' ? 'सहकारी अधिनियम व संगठनात्मक ढांचा' : 'Cooperative Framework'}</h3>
               <p>
-                SahakarConnect operates under the Multi-State Co-operative Societies (MSCS) Act, 2023, which
-                governs the registration, byelaws, and statutory obligations of Primary Service Cooperative
-                Societies (PSCS) formed on this platform.
+                SahakarConnect operates in harmony with the provisions of the Multi-State Co-operative Societies Act,
+                2002 (as amended in 2023), which governs the registration, byelaws, and democratic administration of
+                participating service cooperatives.
               </p>
               <p>
-                Section 63 mandates the 88/8/4 tripartite payment split described in the transparency
-                calculator, and prohibits any PSCS from retaining a platform margin above the statutory 4% cap.
+                The 88/8/4 payment structure is established under the platform&apos;s cooperative fair-share charter,
+                guaranteeing that 88% is directly disbursed to skilled tradespeople, 8% is credited to member welfare funds,
+                and platform operations are capped at 4%.
               </p>
             </div>
           )}
@@ -170,20 +171,19 @@ export const LegalModal: React.FC<LegalModalProps> = ({ docId, onClose, lang }) 
             <div className="modal-panel is-active">
               <h3>{lang === 'hi' ? 'कल्याण निधि नियम' : 'Welfare fund rules'}</h3>
               <p>
-                The 8% statutory welfare contribution accumulates in each tradesman&apos;s individual welfare
-                account, administered by the PSCS. Funds cover healthcare, accident insurance, pension
-                contributions, and emergency aid, disbursed under society byelaws approved by member vote.
+                The 8% cooperative welfare contribution accumulates in each tradesman&apos;s individual welfare
+                account, administered by the cooperative society. Funds cover healthcare, accident insurance,
+                pension contributions, and emergency aid, disbursed under society byelaws approved by member vote.
               </p>
             </div>
           )}
 
           {activeTab === 'statutory-reserves' && (
             <div className="modal-panel is-active">
-              <h3>{lang === 'hi' ? 'सांविधिक आरक्षित दिशानिर्देश' : 'Statutory reserve guidelines'}</h3>
+              <h3>{lang === 'hi' ? 'आरक्षित निधि दिशानिर्देश' : 'Reserve guidelines'}</h3>
               <p>
-                Each PSCS is required to maintain a minimum statutory reserve ratio, audited quarterly by the
-                State Cooperative Registrar and the Ministry of Cooperation, to guarantee solvency of the welfare
-                fund and continuity of member payouts.
+                Each cooperative society maintains a reserve ratio, audited periodically in accordance with
+                cooperative regulations, to guarantee the solvency of the welfare fund and timely member payouts.
               </p>
             </div>
           )}
@@ -192,9 +192,9 @@ export const LegalModal: React.FC<LegalModalProps> = ({ docId, onClose, lang }) 
             <div className="modal-panel is-active">
               <h3>{lang === 'hi' ? 'नागरिक अधिकार पत्र व शिकायत निवारण' : 'Citizen charter & grievance redressal'}</h3>
               <p>
-                Citizens and tradesmen may raise a grievance through the in-app support channel. Societies are
-                required to acknowledge a grievance within 48 hours and resolve it within 15 working days, per
-                the Ministry of Cooperation&apos;s citizen charter commitments.
+                Citizens and tradesmen may raise a grievance through our dedicated support desk. In accordance with
+                the Consumer Protection (E-Commerce) Rules, 2020, all grievances are acknowledged within 48 hours
+                and resolved within 15 working days by our designated Grievance Officer (grievance@sahakarconnect.in).
               </p>
             </div>
           )}

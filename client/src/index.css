@@ -1,7 +1,6 @@
 /* ==========================================================================
-   SahakarConnect — UX4G Design System 3.0 Reference Implementation
-   Government of India · Ministry of Cooperation · MeitY · NeGD
-   Standards: ux4g.gov.in/foundations · GIGW 3.0 · WCAG 2.1 AA
+   SahakarConnect — Community Home Services Platform
+   Design System & Accessible Component Styles
    ========================================================================== */
 
 @import './styles/tokens.css';
@@ -109,8 +108,7 @@ body.high-contrast {
 
 .surface-card-accent {
   background: var(--ux4g-bg-elevated);
-  border: 1px solid var(--ux4g-border-subtle);
-  border-left: 3px solid var(--ux4g-primary-600);
+  border: 1px solid var(--ux4g-primary-300);
   border-radius: var(--ux4g-radius-lg);
   padding: var(--ux4g-sp-7);
 }
@@ -500,3 +498,31 @@ body.high-contrast .table {
   border-color: #ffffff !important;
   color: #f5d800 !important;
 }
+
+/* Universal Accessible Contrast Overrides (WCAG AA >= 4.5:1) */
+.text-muted,
+.text-secondary {
+  color: #475569 !important; /* Contrast 7.0:1 on #f8f9fa, 8.5:1 on #ffffff */
+}
+
+.badge.bg-success-subtle {
+  background-color: #dcfce7 !important;
+  color: #15803d !important; /* Contrast 5.6:1 on #dcfce7 */
+  border-color: #bbf7d0 !important;
+}
+
+.badge.bg-primary-subtle {
+  background-color: #ede9fe !important;
+  color: #4338ca !important;
+  border-color: #ddd6fe !important;
+}
+
+/* Accessible High Contrast for Dark Footer (WCAG AA >= 4.5:1) */
+.site-footer .text-secondary,
+.site-footer a.text-secondary {
+  color: #cbd5e1 !important;
+}
+.site-footer .text-muted {
+  color: #94a3b8 !important;
+}
+

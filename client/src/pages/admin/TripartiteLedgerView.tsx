@@ -74,7 +74,7 @@ export const TripartiteLedgerView: React.FC = () => {
           <div className="p-3 bg-white border rounded shadow-sm">
             <div className="small text-muted mb-1">Gross Booking Volume (GMV)</div>
             <div className="h4 fw-bold text-dark mb-0">₹{metrics.totalGrossGMV.toFixed(2)}</div>
-            <div className="text-muted" style={{ fontSize: '0.72rem' }}>Total Processed Bookings</div>
+            <div className="text-muted" style={{ fontSize: '0.8rem' }}>Total Processed Bookings</div>
           </div>
         </div>
 
@@ -82,7 +82,7 @@ export const TripartiteLedgerView: React.FC = () => {
           <div className="p-3 bg-white border rounded shadow-sm">
             <div className="small text-muted mb-1">Cumulative Worker Payouts</div>
             <div className="h4 fw-bold text-success mb-0">₹{metrics.totalWorkerPayouts.toFixed(2)}</div>
-            <div className="text-muted" style={{ fontSize: '0.72rem' }}>Direct Disbursed Payouts</div>
+            <div className="text-muted" style={{ fontSize: '0.8rem' }}>Direct Disbursed Payouts</div>
           </div>
         </div>
 
@@ -90,7 +90,7 @@ export const TripartiteLedgerView: React.FC = () => {
           <div className="p-3 bg-white border rounded shadow-sm">
             <div className="small text-muted mb-1">Society Welfare Fund Balance</div>
             <div className="h4 fw-bold text-primary mb-0">₹{metrics.welfareFundBalance.toFixed(2)}</div>
-            <div className="text-muted" style={{ fontSize: '0.72rem' }}>Deductible Health &amp; Pension</div>
+            <div className="text-muted" style={{ fontSize: '0.8rem' }}>Deductible Health &amp; Pension</div>
           </div>
         </div>
 
@@ -98,7 +98,7 @@ export const TripartiteLedgerView: React.FC = () => {
           <div className="p-3 bg-white border rounded shadow-sm">
             <div className="small text-muted mb-1">Statutory Reserve Fund</div>
             <div className="h4 fw-bold text-dark mb-0">₹{metrics.statutoryReserveBalance.toFixed(2)}</div>
-            <div className="text-success" style={{ fontSize: '0.72rem' }}>25% Compliant (MSCS Act 2023)</div>
+            <div className="text-success" style={{ fontSize: '0.8rem' }}>25% Compliant (MSCS Act 2023)</div>
           </div>
         </div>
       </div>

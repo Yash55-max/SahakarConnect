@@ -54,11 +54,11 @@
   color: var(--ux4g-primary-600);
 }
 .header-text-block .ministry-line { font-size: var(--ux4g-fs-12); font-weight: var(--ux4g-fw-semibold); color: var(--ux4g-text-secondary); letter-spacing: .01em; }
-.header-text-block .council-line { font-size: 11px; color: var(--ux4g-text-tertiary); margin-top: 1px; }
+.header-text-block .council-line { font-size: 12px; color: var(--ux4g-text-tertiary); margin-top: 1px; }
 .header-text-block .brand-row { display: flex; align-items: baseline; gap: var(--ux4g-sp-4); margin-top: var(--ux4g-sp-1); flex-wrap: wrap; }
 .brand-name { font-family: var(--ux4g-ff-display); font-size: var(--ux4g-fs-24); font-weight: var(--ux4g-fw-bold); color: var(--ux4g-primary-600); }
 .brand-tag {
-  font-size: 11px; font-weight: var(--ux4g-fw-medium); color: var(--ux4g-text-secondary);
+  font-size: 12px; font-weight: var(--ux4g-fw-medium); color: var(--ux4g-text-secondary);
   background: var(--ux4g-bg-soft); border-radius: var(--ux4g-radius-full);
   padding: 2px var(--ux4g-sp-5);
 }
@@ -157,7 +157,7 @@
 /* ---------- Badges / tags ---------- */
 .badge {
   display: inline-flex; align-items: center; gap: var(--ux4g-sp-2);
-  font-size: 11px; font-weight: var(--ux4g-fw-semibold); padding: 2px var(--ux4g-sp-4);
+  font-size: 12px; font-weight: var(--ux4g-fw-semibold); padding: 2px var(--ux4g-sp-4);
   border-radius: var(--ux4g-radius-sm); line-height: 1.4;
 }
 .badge-neutral { background: var(--ux4g-bg-soft); color: var(--ux4g-text-secondary); border: 1px solid var(--ux4g-border); }
@@ -175,12 +175,11 @@
   display: inline-flex; align-items: center; gap: var(--ux4g-sp-3);
   font-size: var(--ux4g-fs-12); font-weight: var(--ux4g-fw-semibold); color: var(--ux4g-text-brand);
 }
-.eyebrow::before { content: ""; width: 16px; height: 2px; background: var(--ux4g-primary-600); display: inline-block; }
 
 /* ---------- Hero ---------- */
 .hero {
   background: var(--ux4g-bg-elevated); border: 1px solid var(--ux4g-border-subtle);
-  border-radius: var(--ux4g-radius-xl); border-left: 4px solid var(--ux4g-primary-600);
+  border-radius: var(--ux4g-radius-xl);
   padding: var(--ux4g-sp-9) var(--ux4g-sp-11);
 }
 @media (max-width: 640px) { .hero { padding: var(--ux4g-sp-8); } }
@@ -243,7 +242,7 @@
 
 .callout {
   display: flex; gap: var(--ux4g-sp-5); padding: var(--ux4g-sp-6); border-radius: var(--ux4g-radius-md);
-  border-left: 3px solid var(--ux4g-primary-600); background: var(--ux4g-bg-primary); margin: var(--ux4g-sp-7) 0;
+  border: 1px solid var(--ux4g-primary-200); background: var(--ux4g-bg-primary); margin: var(--ux4g-sp-7) 0;
 }
 .callout p { font-size: var(--ux4g-fs-14); color: var(--ux4g-text-secondary); }
 .callout strong { color: var(--ux4g-text-primary); }
@@ -269,7 +268,7 @@
 .portal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--ux4g-sp-7); }
 @media (max-width: 768px) { .portal-grid { grid-template-columns: 1fr; } }
 .portal-card {
-  border: 1px solid var(--ux4g-border-subtle); border-left: 3px solid var(--ux4g-primary-600);
+  border: 1px solid var(--ux4g-border-subtle);
   border-radius: var(--ux4g-radius-lg); padding: var(--ux4g-sp-7);
 }
 .portal-head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--ux4g-sp-5); margin-bottom: var(--ux4g-sp-5); }
@@ -282,7 +281,7 @@
 .portal-desc { font-size: var(--ux4g-fs-14); color: var(--ux4g-text-secondary); margin-bottom: var(--ux4g-sp-6); }
 .portal-meta-row { display: flex; gap: var(--ux4g-sp-7); padding: var(--ux4g-sp-5) 0; border-top: 1px solid var(--ux4g-border-subtle); border-bottom: 1px solid var(--ux4g-border-subtle); margin-bottom: var(--ux4g-sp-6); }
 .portal-meta { flex: 1; }
-.portal-meta .k { font-size: 11px; color: var(--ux4g-text-tertiary); }
+.portal-meta .k { font-size: var(--ux4g-fs-12); color: var(--ux4g-text-tertiary); }
 .portal-meta .v { font-size: var(--ux4g-fs-14); font-weight: var(--ux4g-fw-semibold); margin-top: 2px; }
 .portal-scope { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ux4g-sp-3) var(--ux4g-sp-5); margin-bottom: var(--ux4g-sp-7); }
 .portal-scope li { display: flex; gap: var(--ux4g-sp-3); font-size: var(--ux4g-fs-12); color: var(--ux4g-text-secondary); align-items: flex-start; }
@@ -375,7 +374,6 @@
   border-radius: var(--ux4g-radius-xl);
   overflow: hidden;
   box-shadow: var(--ux4g-shadow-sm);
-  border-left: 4px solid #FF9933; /* Indian saffron accent */
 }
 
 .dignitary-card {
@@ -571,15 +569,9 @@ body.high-contrast .skeleton {
 }
 
 .lazy-image-container img {
-  transition: opacity 0.3s ease-in-out;
-}
-
-.lazy-image-container img.is-loading {
-  opacity: 0;
-}
-
-.lazy-image-container img.is-loaded {
-  opacity: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .lazy-image-placeholder {
@@ -611,7 +603,7 @@ body.high-contrast .skeleton {
   }
   .topbar-left {
     justify-content: space-between;
-    font-size: 11px;
+    font-size: 12px;
     flex-wrap: wrap;
     gap: var(--ux4g-sp-2);
   }
@@ -805,7 +797,7 @@ body.high-contrast .skeleton {
   }
   .theme-switch button {
     padding: var(--ux4g-sp-2) var(--ux4g-sp-3);
-    font-size: 11px;
+    font-size: 12px;
   }
   .lang-select {
     padding: var(--ux4g-sp-2) var(--ux4g-sp-3);
@@ -907,7 +899,7 @@ body.high-contrast .skeleton {
 }
 
 .myaadhaar-emblem-text .gov-line {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   color: #64748b;
   letter-spacing: 0.04em;
@@ -920,7 +912,7 @@ body.high-contrast .skeleton {
   margin: 1px 0;
 }
 .myaadhaar-emblem-text .brand-sub {
-  font-size: 11px;
+  font-size: 12px;
   color: #64748b;
   font-weight: 500;
 }
@@ -1355,7 +1347,7 @@ body.high-contrast .skeleton {
   border-radius: 6px;
   padding: 5px 12px;
   text-decoration: none;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.2;
   transition: opacity 0.2s;
 }
@@ -1790,7 +1782,7 @@ body.high-contrast .skeleton {
 }
 
 .myaadhaar-persona-badge {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--ux4g-primary-600);
   text-transform: uppercase;
@@ -1916,7 +1908,7 @@ body.high-contrast .skeleton {
 }
 
 .myaadhaar-service-society {
-  font-size: 11px;
+  font-size: 12px;
   color: #64748b;
   font-weight: 600;
   margin-bottom: 8px;
@@ -1950,7 +1942,7 @@ body.high-contrast .skeleton {
   color: #f1f5f9;
 }
 .myaadhaar-service-price span {
-  font-size: 11px;
+  font-size: 12px;
   color: #64748b;
   font-weight: normal;
 }

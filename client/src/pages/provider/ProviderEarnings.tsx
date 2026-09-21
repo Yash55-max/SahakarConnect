@@ -52,7 +52,7 @@ export const ProviderEarnings: React.FC = () => {
           <div className="p-3 bg-white border rounded shadow-sm">
             <div className="small text-muted mb-1">Total Completed Jobs</div>
             <div className="h4 fw-bold text-dark mb-0">{summary.totalCompletedJobs}</div>
-            <div className="text-muted" style={{ fontSize: '0.72rem' }}>Settled via PIN</div>
+            <div className="text-muted" style={{ fontSize: '0.8rem' }}>Settled via PIN</div>
           </div>
         </div>
 
@@ -60,7 +60,7 @@ export const ProviderEarnings: React.FC = () => {
           <div className="p-3 bg-white border rounded shadow-sm">
             <div className="small text-muted mb-1">Net Take-Home Payout (88%)</div>
             <div className="h4 fw-bold text-success mb-0">₹{summary.netTakeHomePayout.toFixed(2)}</div>
-            <div className="text-muted" style={{ fontSize: '0.72rem' }}>Instant Direct Wallet Credit</div>
+            <div className="text-muted" style={{ fontSize: '0.8rem' }}>Instant Direct Wallet Credit</div>
           </div>
         </div>
 
@@ -70,7 +70,7 @@ export const ProviderEarnings: React.FC = () => {
             <div className="h4 fw-bold text-primary mb-0">
               ₹{summary.accumulatedWelfareContribution.toFixed(2)}
             </div>
-            <div className="text-muted" style={{ fontSize: '0.72rem' }}>Health &amp; Accident Coverage</div>
+            <div className="text-muted" style={{ fontSize: '0.8rem' }}>Health &amp; Accident Coverage</div>
           </div>
         </div>
 
@@ -80,7 +80,7 @@ export const ProviderEarnings: React.FC = () => {
             <div className="h4 fw-bold text-dark mb-0">
               ₹{summary.patronageDividendEligibleBalance.toFixed(2)}
             </div>
-            <div className="text-muted" style={{ fontSize: '0.72rem' }}>Annual AGM Distribution</div>
+            <div className="text-muted" style={{ fontSize: '0.8rem' }}>Annual AGM Distribution</div>
           </div>
         </div>
       </div>

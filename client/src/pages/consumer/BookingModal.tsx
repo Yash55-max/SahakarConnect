@@ -140,27 +140,31 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               {/* Transparent Split Ledger Preview */}
               <div className="p-3 bg-light border rounded mb-2">
                 <div className="d-flex justify-content-between align-items-center mb-2">
-                  <span className="small fw-bold text-dark">Statutory Rate Schedule:</span>
+                  <span className="small fw-bold text-dark">Service Rate Schedule (Labour):</span>
                   <span className="h6 mb-0 fw-bold text-primary">₹{grossAmount.toFixed(2)}</span>
                 </div>
 
                 <div className="border-top pt-2 small text-muted">
                   <div className="d-flex justify-content-between mb-1">
-                    <span>Estimated Worker Payout (88%):</span>
+                    <span>Direct Technician Payout (88%):</span>
                     <span className="fw-semibold text-dark">₹{workerPayout.toFixed(2)}</span>
                   </div>
                   <div className="d-flex justify-content-between mb-1">
-                    <span>Statutory Welfare Fund (8%):</span>
+                    <span>Cooperative Welfare &amp; Healthcare (8%):</span>
                     <span className="fw-semibold text-dark">₹{welfareContribution.toFixed(2)}</span>
                   </div>
-                  <div className="d-flex justify-content-between">
-                    <span>Platform Operations &amp; Audit (4%):</span>
+                  <div className="d-flex justify-content-between mb-1">
+                    <span>Platform Operations &amp; Support (4%):</span>
                     <span className="fw-semibold text-dark">₹{platformFee.toFixed(2)}</span>
+                  </div>
+                  <div className="d-flex justify-content-between text-secondary pt-1 border-top" style={{ fontSize: '0.8rem' }}>
+                    <span>Applicable Taxes (+18% GST):</span>
+                    <span className="fw-semibold text-dark">₹{(grossAmount * 0.18).toFixed(2)}</span>
                   </div>
                 </div>
 
-                <div className="mt-2 text-secondary" style={{ fontSize: '0.72rem' }}>
-                  Statutory Guarantee: Escrow is held safely until you provide your 4-digit PIN upon service satisfaction.
+                <div className="mt-2 text-secondary" style={{ fontSize: '0.8rem', lineHeight: 1.45 }}>
+                  🛡️ <strong>Customer Protection:</strong> Payment is released only after the technician completes the service and you share your 4-digit PIN. Labour charges only; replacement spares charged at actuals with receipt.
                 </div>
               </div>
             </div>
