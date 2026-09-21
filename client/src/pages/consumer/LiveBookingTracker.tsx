@@ -164,9 +164,9 @@ export const LiveBookingTracker: React.FC<BookingTrackerProps> = ({
               </div>
 
               <div className="alert alert-warning text-start small mb-0 border">
-                <strong>GIGW Statutory Escrow Protection:</strong>
+                <strong>Customer Payment Protection:</strong>
                 <p className="mb-0 mt-1" style={{ fontSize: '0.82rem' }}>
-                  Share this 4-digit PIN with your cooperative provider <strong>ONLY</strong> after the work has been completed satisfactorily. Providing this PIN triggers the instant tripartite escrow release to the technician's wallet.
+                  Share this 4-digit PIN with your technician <strong>ONLY</strong> after the work has been completed to your satisfaction. Providing this PIN authorizes the payment release to the technician.
                 </p>
               </div>
             </div>

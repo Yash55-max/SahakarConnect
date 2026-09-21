@@ -25,6 +25,35 @@ export const EmblemIcon: React.FC<IconProps> = ({ className = '', size = 28, col
   </svg>
 );
 
+export const CoopLogoIcon: React.FC<IconProps> = ({ className = '', size = 28, color = 'currentColor' }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 32 32"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    aria-hidden="true"
+  >
+    <rect width="32" height="32" rx="8" fill={color} fillOpacity="0.12" />
+    <path
+      d="M16 6L7 13.5V25C7 25.5523 7.44772 26 8 26H24C24.5523 26 25 25.5523 25 25V13.5L16 6Z"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M12 26V18C12 17.4477 12.4477 17 13 17H19C19.5523 17 20 17.4477 20 18V26"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <circle cx="16" cy="12" r="2" fill={color} />
+  </svg>
+);
+
 export const ConsumerIcon: React.FC<IconProps> = ({ className = '', size = 24, color = 'currentColor' }) => (
   <svg
     width={size}

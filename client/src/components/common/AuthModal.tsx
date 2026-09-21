@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  EmblemIcon,
+  CoopLogoIcon,
   ConsumerIcon,
   ProviderIcon,
   LockIcon,
@@ -169,14 +169,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 color: 'var(--ux4g-primary-600, #4a2bc2)',
               }}
             >
-              <EmblemIcon size={20} />
+              <CoopLogoIcon size={20} />
             </div>
             <div>
               <h3 className="h6 fw-bold mb-0 text-dark">
-                {lang === 'hi' ? 'सहकार कनेक्ट राष्ट्रीय पोर्टल' : 'SahakarConnect National Portal'}
+                {lang === 'hi' ? 'सहकार कनेक्ट पोर्टल' : 'SahakarConnect Portal'}
               </h3>
               <span className="text-secondary" style={{ fontSize: '0.72rem' }}>
-                Ministry of Cooperation · Multi-State Co-operative Societies Act, 2023
+                {lang === 'hi' ? 'सामुदायिक सेवा मंच' : 'Community Services Network'}
               </span>
             </div>
           </div>

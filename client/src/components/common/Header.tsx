@@ -1,23 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
-  EmblemIcon,
-  HomeIcon,
-  ConsumerIcon,
-  ProviderIcon,
-  AdminIcon,
-  RegulatorIcon,
+  CoopLogoIcon,
   SearchIcon,
   TranslateIcon,
-  HelpCircleIcon,
-  RefreshCwIcon,
   ChevronDownIcon,
-  ChevronRightIcon,
-  IndianFlagIcon,
-  QrCodeIcon,
-  ShieldCheckIcon,
-  ScaleIcon,
   LockIcon,
-  CalculatorIcon,
+  MapPinIcon,
+  PlumbingIcon,
+  ElectricalIcon,
+  CarpentryIcon,
+  ApplianceIcon,
 } from './Icons';
 import AuthModal from './AuthModal';
 
@@ -36,13 +28,23 @@ interface HeaderProps {
   onFontChoiceChange?: (choice: 'sm' | 'md' | 'lg') => void;
 }
 
+const SUPPORTED_LANGUAGES = [
+  { code: 'en', label: 'English', native: 'English' },
+  { code: 'hi', label: 'हिन्दी', native: 'Hindi' },
+  { code: 'mr', label: 'मराठी', native: 'Marathi' },
+  { code: 'ta', label: 'தமிழ்', native: 'Tamil' },
+  { code: 'te', label: 'తెలుగు', native: 'Telugu' },
+  { code: 'kn', label: 'ಕನ್ನಡ', native: 'Kannada' },
+];
+
+const CITIES = ['Delhi NCR', 'Mumbai', 'Bengaluru', 'Pune', 'Hyderabad', 'Chennai'];
+
 export const Header: React.FC<HeaderProps> = ({
   currentLang,
   onLanguageChange,
   activeNav,
   onSelectNav,
   currentUser,
-  onSwitchPersona,
   onLogout,
   onLoginSuccess,
   theme,
@@ -50,21 +52,24 @@ export const Header: React.FC<HeaderProps> = ({
   fontChoice = 'md',
   onFontChoiceChange,
 }) => {
-  const [megaMenuOpen, setMegaMenuOpen] = useState<boolean>(false);
-  const [guidesDropdownOpen, setGuidesDropdownOpen] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
-  const megaMenuRef = useRef<HTMLDivElement>(null);
-  const guidesRef = useRef<HTMLDivElement>(null);
+  const [langMenuOpen, setLangMenuOpen] = useState<boolean>(false);
+  const [cityMenuOpen, setCityMenuOpen] = useState<boolean>(false);
+  const [selectedCity, setSelectedCity] = useState<string>('Delhi NCR');
+  const [selectedLangCode, setSelectedLangCode] = useState<string>(currentLang);
+
+  const langRef = useRef<HTMLDivElement>(null);
+  const cityRef = useRef<HTMLDivElement>(null);
 
   // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (megaMenuRef.current && !megaMenuRef.current.contains(event.target as Node)) {
-        setMegaMenuOpen(false);
+      if (langRef.current && !langRef.current.contains(event.target as Node)) {
+        setLangMenuOpen(false);
       }
-      if (guidesRef.current && !guidesRef.current.contains(event.target as Node)) {
-        setGuidesDropdownOpen(false);
+      if (cityRef.current && !cityRef.current.contains(event.target as Node)) {
+        setCityMenuOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -73,33 +78,42 @@ export const Header: React.FC<HeaderProps> = ({
     };
   }, []);
 
+  useEffect(() => {
+    setSelectedLangCode(currentLang);
+  }, [currentLang]);
+
   const normalizedTheme = theme === 'high-contrast' ? 'contrast' : theme;
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
     const q = searchQuery.toLowerCase();
-    if (q.includes('plumb') || q.includes('pipe') || q.includes('leak')) {
+    if (q.includes('plumb') || q.includes('pipe') || q.includes('leak') || q.includes('drain')) {
       onSelectNav('portal:plumbing');
-    } else if (q.includes('elect') || q.includes('wire') || q.includes('fuse')) {
+    } else if (q.includes('elect') || q.includes('wire') || q.includes('fuse') || q.includes('mcb') || q.includes('light')) {
       onSelectNav('portal:electrical');
-    } else if (q.includes('carp') || q.includes('wood') || q.includes('door')) {
+    } else if (q.includes('carp') || q.includes('wood') || q.includes('door') || q.includes('lock')) {
       onSelectNav('portal:carpentry');
-    } else if (q.includes('appl') || q.includes('ac') || q.includes('fridge')) {
+    } else if (q.includes('appl') || q.includes('ac') || q.includes('fridge') || q.includes('ro') || q.includes('wash')) {
       onSelectNav('portal:appliances');
-    } else if (q.includes('provid') || q.includes('worker') || q.includes('artisan')) {
+    } else if (q.includes('partner') || q.includes('join') || q.includes('worker') || q.includes('technician')) {
       onSelectNav('provider');
-    } else if (q.includes('society') || q.includes('pacs') || q.includes('admin')) {
-      onSelectNav('coop_admin');
-    } else if (q.includes('regulat') || q.includes('ministry') || q.includes('audit')) {
-      onSelectNav('regulator');
     } else {
       onSelectNav('consumer');
     }
-    setMegaMenuOpen(false);
   };
 
-  const isConsumerActive = activeNav === 'consumer' || activeNav.startsWith('portal:');
+  const handleLanguageSelect = (code: string) => {
+    setSelectedLangCode(code);
+    if (code === 'hi') {
+      onLanguageChange('hi');
+    } else {
+      onLanguageChange('en');
+    }
+    setLangMenuOpen(false);
+  };
+
+  const currentLangObj = SUPPORTED_LANGUAGES.find((l) => l.code === selectedLangCode) || SUPPORTED_LANGUAGES[0];
 
   return (
     <>
@@ -107,18 +121,56 @@ export const Header: React.FC<HeaderProps> = ({
         Skip to main content
       </a>
 
-      {/* ================= UTILITY TOPBAR (GIGW 3.0 & ACCESSIBILITY) ================= */}
-      <div className="topbar">
-        <div className="container topbar-row">
-          <div className="topbar-left">
-            <span className="topbar-badge">GIGW 3.0 / WCAG 2.1 AA</span>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-              <IndianFlagIcon width={18} height={12} />
-              <span>Government of India | भारत सरकार</span>
+      {/* ================= 1. COMPACT UTILITY TOPBAR ================= */}
+      <div className="topbar py-1" style={{ fontSize: '0.78rem' }}>
+        <div className="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+          {/* Location Selector */}
+          <div className="d-flex align-items-center gap-2 position-relative" ref={cityRef}>
+            <button
+              type="button"
+              className="btn btn-sm btn-link p-0 text-decoration-none d-flex align-items-center gap-1"
+              style={{ color: 'inherit', fontSize: '0.78rem' }}
+              onClick={() => setCityMenuOpen(!cityMenuOpen)}
+              aria-expanded={cityMenuOpen}
+              title="Select your city"
+            >
+              <MapPinIcon size={14} color="var(--ux4g-primary, #4a2bc2)" />
+              <span className="fw-semibold">{selectedCity}</span>
+              <ChevronDownIcon size={11} />
+            </button>
+
+            {cityMenuOpen && (
+              <div
+                className="position-absolute bg-white text-dark border rounded shadow-sm py-1"
+                style={{ top: '100%', left: 0, zIndex: 1100, minWidth: '150px' }}
+              >
+                {CITIES.map((c) => (
+                  <button
+                    key={c}
+                    type="button"
+                    className={`dropdown-item btn btn-sm w-100 text-start px-3 py-1 ${
+                      selectedCity === c ? 'fw-bold text-primary bg-light' : 'text-dark'
+                    }`}
+                    style={{ fontSize: '0.8rem' }}
+                    onClick={() => {
+                      setSelectedCity(c);
+                      setCityMenuOpen(false);
+                    }}
+                  >
+                    {c}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            <span className="text-muted d-none d-md-inline">|</span>
+            <span className="text-muted d-none d-md-inline" style={{ fontSize: '0.75rem' }}>
+              {currentLang === 'hi' ? 'सत्यापित स्थानीय सहकारी नेटवर्क' : 'Verified Local Cooperative Network'}
             </span>
           </div>
 
-          <div className="topbar-right">
+          {/* Accessibility Controls & Help */}
+          <div className="d-flex align-items-center gap-3">
             {/* Font scaling switcher */}
             <div className="font-switch" role="group" aria-label="Text size">
               <button
@@ -178,220 +230,122 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
       </div>
 
-      {/* ================= HEADER BRANDING ROW (UIDAI myAadhaar Style) ================= */}
-      <header className="site-header">
-        <div className="container">
-          <div className="myaadhaar-branding-row">
-            {/* Left: National Emblem Lockup */}
+      {/* ================= 2. MAIN CUSTOMER HEADER ================= */}
+      <header className="site-header bg-white border-bottom shadow-xs sticky-top" style={{ zIndex: 1040 }}>
+        <div className="container py-2 py-md-3">
+          <div className="d-flex align-items-center justify-content-between gap-3 flex-wrap">
+            {/* Brand Logo & Tagline */}
             <div
-              className="myaadhaar-emblem-lockup"
+              className="d-flex align-items-center gap-2 cursor-pointer text-decoration-none"
               onClick={() => onSelectNav('home')}
               role="button"
               tabIndex={0}
               onKeyDown={(e) => e.key === 'Enter' && onSelectNav('home')}
+              style={{ cursor: 'pointer' }}
             >
-              <div className="myaadhaar-emblem-badge" aria-label="National Emblem of India">
-                <EmblemIcon size={26} color="currentColor" />
+              <div
+                className="d-flex align-items-center justify-content-center rounded-3 bg-primary text-white p-2"
+                style={{ width: '42px', height: '42px', boxShadow: '0 2px 6px rgba(74,43,194,0.2)' }}
+              >
+                <CoopLogoIcon size={26} color="#ffffff" />
               </div>
-              <div className="myaadhaar-emblem-text">
-                <div className="gov-line">
-                  {currentLang === 'hi' ? 'भारत सरकार' : 'GOVERNMENT OF INDIA'}
+              <div>
+                <div className="h5 fw-bold text-dark mb-0 lh-1" style={{ letterSpacing: '-0.02em' }}>
+                  Sahakar<span className="text-primary">Connect</span>
                 </div>
-                <div className="ministry-line">
-                  {currentLang === 'hi'
-                    ? 'सहकारिता मंत्रालय | सहकार से समृद्धि'
-                    : 'MINISTRY OF COOPERATION'}
-                </div>
-                <div className="brand-sub">
-                  {currentLang === 'hi'
-                    ? 'सहकार कनेक्ट — प्राथमिक सेवा सहकारी समिति डिजिटल मंच'
-                    : 'SahakarConnect — Primary Service Cooperative Portal'}
+                <div className="text-muted small" style={{ fontSize: '0.72rem', marginTop: '2px' }}>
+                  {currentLang === 'hi' ? 'सामुदायिक गृह सेवाएं' : 'Community Home Services'}
                 </div>
               </div>
             </div>
 
-            {/* Middle & Right: Search Bar + Language Selector */}
-            <div className="myaadhaar-header-tools">
-              <form onSubmit={handleSearchSubmit} className="myaadhaar-header-search" role="search">
+            {/* Central Customer Search Bar */}
+            <form onSubmit={handleSearchSubmit} className="flex-grow-1 mx-lg-4" style={{ maxWidth: '460px' }} role="search">
+              <div className="position-relative">
                 <input
                   type="text"
+                  className="form-control rounded-pill pe-5 ps-3"
+                  style={{ height: '42px', fontSize: '0.88rem', borderColor: '#cbd5e1' }}
                   placeholder={
                     currentLang === 'hi'
-                      ? 'सेवाएं, समितियां, या कौशल खोजें...'
-                      : 'Search Services, Hubs, or Schemes...'
+                      ? 'प्लंबर, इलेक्ट्रीशियन, बढ़ई या एसी मरम्मत खोजें...'
+                      : 'Search for plumber, electrician, carpenter, AC repair...'
                   }
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  aria-label="Search services"
+                  aria-label="Search home services"
                 />
-                <button type="submit" className="search-btn" aria-label="Submit search">
-                  <SearchIcon size={14} color="#ffffff" />
+                <button
+                  type="submit"
+                  className="btn btn-primary rounded-circle position-absolute end-0 top-50 translate-middle-y me-1 d-flex align-items-center justify-content-center"
+                  style={{ width: '34px', height: '34px', padding: 0 }}
+                  aria-label="Submit search"
+                >
+                  <SearchIcon size={15} color="#ffffff" />
                 </button>
-              </form>
+              </div>
+            </form>
 
-              {/* Language Selector Pill */}
-              <button
-                type="button"
-                className="myaadhaar-lang-btn"
-                onClick={() => onLanguageChange(currentLang === 'en' ? 'hi' : 'en')}
-                aria-label="Toggle language between English and Hindi"
-                title="Change language"
-              >
-                <TranslateIcon size={16} />
-                <span>{currentLang === 'en' ? 'हिन्दी' : 'English'}</span>
-                <ChevronDownIcon size={12} />
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* ================= SECONDARY NAVIGATION (myAadhaar Style) ================= */}
-      <nav className="myaadhaar-navbar" aria-label="Main Navigation" ref={megaMenuRef}>
-        <div className="container">
-          <div className="myaadhaar-nav-row">
-            <div className="myaadhaar-nav-links">
-              {/* Home */}
-              <button
-                type="button"
-                className={`myaadhaar-nav-btn ${activeNav === 'home' ? 'active' : ''}`}
-                onClick={() => {
-                  onSelectNav('home');
-                  setMegaMenuOpen(false);
-                }}
-              >
-                <HomeIcon size={16} />
-                <span>{currentLang === 'hi' ? 'मुखपृष्ठ' : 'Home'}</span>
-              </button>
-
-              {/* Services ∨ (Toggles 5-Column Mega Menu) */}
-              <button
-                type="button"
-                className={`myaadhaar-nav-btn ${megaMenuOpen || isConsumerActive ? 'active' : ''}`}
-                onClick={() => setMegaMenuOpen(!megaMenuOpen)}
-                aria-expanded={megaMenuOpen}
-                aria-haspopup="true"
-              >
-                <ConsumerIcon size={16} />
-                <span>{currentLang === 'hi' ? 'सेवाएं' : 'Services'}</span>
-                <ChevronDownIcon size={12} />
-              </button>
-
-              {/* Cooperative Hubs */}
-              <button
-                type="button"
-                className={`myaadhaar-nav-btn ${activeNav === 'coop_admin' ? 'active' : ''}`}
-                onClick={() => {
-                  onSelectNav('coop_admin');
-                  setMegaMenuOpen(false);
-                }}
-              >
-                <AdminIcon size={16} />
-                <span>{currentLang === 'hi' ? 'सहकारी केंद्र' : 'Cooperative Hubs'}</span>
-              </button>
-
-              {/* Tradesman Workplace */}
-              <button
-                type="button"
-                className={`myaadhaar-nav-btn ${activeNav === 'provider' ? 'active' : ''}`}
-                onClick={() => {
-                  onSelectNav('provider');
-                  setMegaMenuOpen(false);
-                }}
-              >
-                <ProviderIcon size={16} />
-                <span>{currentLang === 'hi' ? 'श्रमयोगी कार्यक्षेत्र' : 'Tradesman Workplace'}</span>
-              </button>
-
-              {/* Statutory Guides ∨ */}
-              <div style={{ position: 'relative' }} ref={guidesRef}>
+            {/* Right Tools: Language + Partner Link + Login Pill */}
+            <div className="d-flex align-items-center gap-2 gap-md-3">
+              {/* Multi-Language Dropdown */}
+              <div className="position-relative" ref={langRef}>
                 <button
                   type="button"
-                  className="myaadhaar-nav-btn"
-                  onClick={() => setGuidesDropdownOpen(!guidesDropdownOpen)}
-                  aria-expanded={guidesDropdownOpen}
+                  className="btn btn-sm btn-outline-secondary rounded-pill d-flex align-items-center gap-1 px-3 py-1"
+                  style={{ fontSize: '0.8rem' }}
+                  onClick={() => setLangMenuOpen(!langMenuOpen)}
+                  aria-expanded={langMenuOpen}
+                  aria-label="Select language"
                 >
-                  <ScaleIcon size={16} />
-                  <span>{currentLang === 'hi' ? 'मार्गदर्शिकाएं' : 'Guides'}</span>
-                  <ChevronDownIcon size={12} />
+                  <TranslateIcon size={14} />
+                  <span>{currentLangObj.label}</span>
+                  <ChevronDownIcon size={11} />
                 </button>
 
-                {guidesDropdownOpen && (
+                {langMenuOpen && (
                   <div
-                    className="nav-dropdown-menu"
-                    style={{ position: 'absolute', top: '100%', left: 0, minWidth: '240px' }}
+                    className="position-absolute end-0 bg-white text-dark border rounded shadow py-1 mt-1"
+                    style={{ minWidth: '160px', zIndex: 1100 }}
                   >
-                    <a
-                      href="#calculator"
-                      className="nav-dropdown-item"
-                      onClick={() => {
-                        onSelectNav('home');
-                        setGuidesDropdownOpen(false);
-                      }}
-                    >
-                      <CalculatorIcon size={16} />
-                      <span>{currentLang === 'hi' ? 'सांविधिक एस्क्रो गणक' : 'Tripartite Escrow Guide'}</span>
-                    </a>
-                    <button
-                      type="button"
-                      className="nav-dropdown-item"
-                      onClick={() => {
-                        onSelectNav('regulator');
-                        setGuidesDropdownOpen(false);
-                      }}
-                    >
-                      <RegulatorIcon size={16} />
-                      <span>{currentLang === 'hi' ? 'MSCS अधिनियम 2023 दिशानिर्देश' : 'MSCS Act 2023 Compliance'}</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="nav-dropdown-item"
-                      onClick={() => {
-                        onSelectNav('consumer');
-                        setGuidesDropdownOpen(false);
-                      }}
-                    >
-                      <ShieldCheckIcon size={16} />
-                      <span>{currentLang === 'hi' ? 'नागरिक अधिकार व सुरक्षा' : 'Consumer Protection Charter'}</span>
-                    </button>
+                    <div className="px-3 py-1 text-muted fw-bold" style={{ fontSize: '0.7rem', borderBottom: '1px solid #e2e8f0' }}>
+                      Select Language / भाषा
+                    </div>
+                    {SUPPORTED_LANGUAGES.map((l) => (
+                      <button
+                        key={l.code}
+                        type="button"
+                        className={`dropdown-item btn btn-sm w-100 text-start px-3 py-2 d-flex justify-content-between align-items-center ${
+                          selectedLangCode === l.code ? 'bg-light text-primary fw-bold' : 'text-dark'
+                        }`}
+                        style={{ fontSize: '0.8rem' }}
+                        onClick={() => handleLanguageSelect(l.code)}
+                      >
+                        <span>{l.label}</span>
+                        <span className="text-muted small" style={{ fontSize: '0.7rem' }}>{l.native}</span>
+                      </button>
+                    ))}
                   </div>
                 )}
               </div>
 
-              {/* Switch Portal ↻ */}
+              {/* Partner CTA */}
               <button
                 type="button"
-                className="myaadhaar-nav-btn"
-                onClick={() => onSwitchPersona?.() || onSelectNav('home')}
-                title="Switch between Citizen, Tradesman, Admin, and Regulator roles"
+                className="btn btn-sm btn-link text-decoration-none text-dark fw-semibold d-none d-lg-inline-block px-2"
+                style={{ fontSize: '0.84rem' }}
+                onClick={() => onSelectNav('provider')}
               >
-                <RefreshCwIcon size={15} />
-                <span>{currentLang === 'hi' ? 'पोर्टल बदलें ↻' : 'Switch Portal ↻'}</span>
+                {currentLang === 'hi' ? 'कारीगर बनें' : 'Become a Partner'}
               </button>
 
-              {/* Help Icon */}
-              <button
-                type="button"
-                className="myaadhaar-nav-btn"
-                onClick={() => {
-                  onSelectNav('home');
-                  const el = document.getElementById('services');
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                }}
-                title="Help & FAQs"
-                aria-label="Help"
-              >
-                <HelpCircleIcon size={16} />
-              </button>
-            </div>
-
-            {/* Right Action: [ Portal Sign In / Active Session ] */}
-            <div className="d-flex align-items-center gap-2">
+              {/* User Session / Sign In Button */}
               {currentUser ? (
-                <>
+                <div className="d-flex align-items-center gap-2">
                   <button
                     type="button"
-                    className="myaadhaar-login-pill"
+                    className="btn btn-sm btn-primary rounded-pill d-flex align-items-center gap-1 px-3 py-1"
+                    style={{ fontSize: '0.82rem' }}
                     onClick={() =>
                       onSelectNav(
                         currentUser.role === 'PROVIDER'
@@ -405,7 +359,7 @@ export const Header: React.FC<HeaderProps> = ({
                     }
                     title={`Logged in as ${currentUser.name} (${currentUser.role})`}
                   >
-                    <LockIcon size={14} color="#fff" />
+                    <LockIcon size={12} color="#fff" />
                     <span className="text-truncate" style={{ maxWidth: '110px' }}>
                       {currentUser.name.split(' ')[0]}
                     </span>
@@ -413,342 +367,106 @@ export const Header: React.FC<HeaderProps> = ({
                   {onLogout && (
                     <button
                       type="button"
-                      className="btn btn-sm text-white"
-                      style={{
-                        fontSize: '11px',
-                        padding: '4px 8px',
-                        border: '1px solid rgba(255,255,255,0.3)',
-                        borderRadius: '6px',
-                        background: 'rgba(255,255,255,0.1)',
-                      }}
+                      className="btn btn-sm btn-outline-danger rounded-pill px-2 py-1"
+                      style={{ fontSize: '0.75rem' }}
                       onClick={onLogout}
                       title={currentLang === 'hi' ? 'लॉगआउट' : 'Sign Out'}
                     >
                       {currentLang === 'hi' ? 'लॉगआउट' : 'Sign Out'}
                     </button>
                   )}
-                </>
+                </div>
               ) : (
                 <button
                   type="button"
-                  className="myaadhaar-login-pill"
+                  className="btn btn-sm btn-primary rounded-pill d-flex align-items-center gap-1 px-3 py-1"
+                  style={{ fontSize: '0.84rem', fontWeight: 600 }}
                   onClick={() => onSelectNav('login')}
-                  aria-label="Sign in to SahakarConnect"
+                  aria-label="Sign in"
                 >
                   <LockIcon size={13} color="#fff" />
-                  <span>{currentLang === 'hi' ? 'पोर्टल प्रवेश' : 'Portal Sign In'}</span>
-                  <ChevronRightIcon size={14} color="#fff" />
+                  <span>{currentLang === 'hi' ? 'साइन इन' : 'Sign In'}</span>
                 </button>
               )}
             </div>
           </div>
-        </div>
 
-        {/* ================= 5-COLUMN MEGA MENU (Faithful myAadhaar Layout) ================= */}
-        {megaMenuOpen && (
-          <div className="myaadhaar-mega-menu" role="region" aria-label="All Services Directory">
-            <div className="container">
-              <div className="myaadhaar-mega-cols">
-                {/* Column 1: Citizen Services */}
-                <div className="myaadhaar-mega-col">
-                  <h4>{currentLang === 'hi' ? 'नागरिक सेवाएं' : 'Direct Services'}</h4>
-                  <ul>
-                    <li>
-                      <button type="button" onClick={() => { onSelectNav('portal:plumbing'); setMegaMenuOpen(false); }}>
-                        {currentLang === 'hi' ? 'नलसाजी एवं स्वच्छता सेवा' : 'Plumbing & Sanitary Works'}
-                      </button>
-                    </li>
-                    <li>
-                      <button type="button" onClick={() => { onSelectNav('portal:electrical'); setMegaMenuOpen(false); }}>
-                        {currentLang === 'hi' ? 'विद्युत एवं वायरमैन सेवा' : 'Electrical & Wiremen Works'}
-                      </button>
-                    </li>
-                    <li>
-                      <button type="button" onClick={() => { onSelectNav('portal:carpentry'); setMegaMenuOpen(false); }}>
-                        {currentLang === 'hi' ? 'काष्ठशिल्प एवं बढ़ईगीरी' : 'Woodcraft & Carpentry'}
-                      </button>
-                    </li>
-                    <li>
-                      <button type="button" onClick={() => { onSelectNav('portal:appliances'); setMegaMenuOpen(false); }}>
-                        {currentLang === 'hi' ? 'उपकरण मरम्मत सेवा' : 'Appliance Repair Works'}
-                      </button>
-                    </li>
-                    <li>
-                      <button type="button" onClick={() => { onSelectNav('consumer'); setMegaMenuOpen(false); }}>
-                        {currentLang === 'hi' ? 'पारदर्शी एस्क्रो भुगतान' : 'Escrow Payment & PIN'}
-                      </button>
-                    </li>
-                  </ul>
-                  <button
-                    type="button"
-                    className="view-all-link"
-                    onClick={() => { onSelectNav('consumer'); setMegaMenuOpen(false); }}
-                  >
-                    {currentLang === 'hi' ? 'समस्त 20+ सेवाएं देखें →' : 'View All Services →'}
-                  </button>
-                </div>
-
-                {/* Column 2: Tradesman Workplace */}
-                <div className="myaadhaar-mega-col">
-                  <h4>{currentLang === 'hi' ? 'श्रमयोगी कार्यक्षेत्र' : 'Tradesman Services'}</h4>
-                  <ul>
-                    <li>
-                      <button type="button" onClick={() => { onSelectNav('provider'); setMegaMenuOpen(false); }}>
-                        {currentLang === 'hi' ? 'श्रमयोगी सदस्यता पंजीकरण' : 'Artisan / Provider e-KYC'}
-                      </button>
-                    </li>
-                    <li>
-                      <button type="button" onClick={() => { onSelectNav('provider'); setMegaMenuOpen(false); }}>
-                        {currentLang === 'hi' ? 'कौशल प्रमाणन (BIS/CEA)' : 'Skill Certification (BIS)'}
-                      </button>
-                    </li>
-                    <li>
-                      <button type="button" onClick={() => { onSelectNav('provider'); setMegaMenuOpen(false); }}>
-                        {currentLang === 'hi' ? '88% प्रत्यक्ष दैनिक भुगतान' : '88% Daily Direct Payout'}
-                      </button>
-                    </li>
-                    <li>
-                      <button type="button" onClick={() => { onSelectNav('provider'); setMegaMenuOpen(false); }}>
-                        {currentLang === 'hi' ? 'टूल किट एवं सुरक्षा सहायता' : 'Tool Grants & Insurance'}
-                      </button>
-                    </li>
-                    <li>
-                      <button type="button" onClick={() => { onSelectNav('provider'); setMegaMenuOpen(false); }}>
-                        {currentLang === 'hi' ? 'सहकारी मताधिकार व लाभांश' : 'Democratic Voting Shares'}
-                      </button>
-                    </li>
-                  </ul>
-                  <button
-                    type="button"
-                    className="view-all-link"
-                    onClick={() => { onSelectNav('provider'); setMegaMenuOpen(false); }}
-                  >
-                    {currentLang === 'hi' ? 'श्रमयोगी पोर्टल खोलें →' : 'Open Workplace →'}
-                  </button>
-                </div>
-
-                {/* Column 3: Cooperative Societies */}
-                <div className="myaadhaar-mega-col">
-                  <h4>{currentLang === 'hi' ? 'सहकारी समितियां' : 'Cooperative Societies'}</h4>
-                  <ul>
-                    <li>
-                      <button type="button" onClick={() => { onSelectNav('coop_admin'); setMegaMenuOpen(false); }}>
-                        {currentLang === 'hi' ? 'प्राथमिक सेवा समिति संबद्धता' : 'Primary Society Affiliation'}
-                      </button>
-                    </li>
-                    <li>
-                      <button type="button" onClick={() => { onSelectNav('coop_admin'); setMegaMenuOpen(false); }}>
-                        {currentLang === 'hi' ? 'उप-नियम अनुपालन फाइलिंग' : 'Digital Bylaw Filings'}
-                      </button>
-                    </li>
-                    <li>
-                      <button type="button" onClick={() => { onSelectNav('coop_admin'); setMegaMenuOpen(false); }}>
-                        {currentLang === 'hi' ? 'पैक्स (PACS) आधुनिकीकरण' : 'PACS Digitization'}
-                      </button>
-                    </li>
-                    <li>
-                      <button type="button" onClick={() => { onSelectNav('coop_admin'); setMegaMenuOpen(false); }}>
-                        {currentLang === 'hi' ? 'सदस्य कल्याण निधि प्रबंधन' : 'Welfare Fund (8%) Audit'}
-                      </button>
-                    </li>
-                    <li>
-                      <button type="button" onClick={() => { onSelectNav('coop_admin'); setMegaMenuOpen(false); }}>
-                        {currentLang === 'hi' ? 'सांविधिक बही-खाता निरीक्षण' : 'Double-Entry Ledger Hub'}
-                      </button>
-                    </li>
-                  </ul>
-                  <button
-                    type="button"
-                    className="view-all-link"
-                    onClick={() => { onSelectNav('coop_admin'); setMegaMenuOpen(false); }}
-                  >
-                    {currentLang === 'hi' ? 'समिति केंद्र खोलें →' : 'Open Society Hub →'}
-                  </button>
-                </div>
-
-                {/* Column 4: Compliance & Regulator */}
-                <div className="myaadhaar-mega-col">
-                  <h4>{currentLang === 'hi' ? 'सांविधिक विनियामक' : 'Statutory & Audit'}</h4>
-                  <ul>
-                    <li>
-                      <button type="button" onClick={() => { onSelectNav('regulator'); setMegaMenuOpen(false); }}>
-                        {currentLang === 'hi' ? 'सहकारिता मंत्रालय डैशबोर्ड' : 'Ministry Compliance Hub'}
-                      </button>
-                    </li>
-                    <li>
-                      <button type="button" onClick={() => { onSelectNav('regulator'); setMegaMenuOpen(false); }}>
-                        {currentLang === 'hi' ? 'वास्तविक समय आरक्षित अनुपात' : 'Reserve Ratio (15%) Check'}
-                      </button>
-                    </li>
-                    <li>
-                      <button type="button" onClick={() => { onSelectNav('regulator'); setMegaMenuOpen(false); }}>
-                        {currentLang === 'hi' ? 'शून्य-कमीशन ऑडिट लेजर' : 'Zero-Leakage Ledger Audit'}
-                      </button>
-                    </li>
-                    <li>
-                      <button type="button" onClick={() => { onSelectNav('regulator'); setMegaMenuOpen(false); }}>
-                        {currentLang === 'hi' ? 'विवाद निवारण व मध्यस्थता' : 'Dispute Arbitration Desk'}
-                      </button>
-                    </li>
-                    <li>
-                      <button type="button" onClick={() => { onSelectNav('regulator'); setMegaMenuOpen(false); }}>
-                        {currentLang === 'hi' ? 'एंटी-सर्ज मूल्य अनुपालन' : 'Anti-Surge Price Auditor'}
-                      </button>
-                    </li>
-                  </ul>
-                  <button
-                    type="button"
-                    className="view-all-link"
-                    onClick={() => { onSelectNav('regulator'); setMegaMenuOpen(false); }}
-                  >
-                    {currentLang === 'hi' ? 'विनियामक टर्मिनल →' : 'Regulator Terminal →'}
-                  </button>
-                </div>
-
-                {/* Column 5: Check Status & Verification */}
-                <div className="myaadhaar-mega-col">
-                  <h4>{currentLang === 'hi' ? 'स्थिति जांचें' : 'Check Status'}</h4>
-                  <ul>
-                    <li>
-                      <button type="button" onClick={() => { onSelectNav('consumer'); setMegaMenuOpen(false); }}>
-                        {currentLang === 'hi' ? 'सेवा बुकिंग स्थिति' : 'Check Service Status'}
-                      </button>
-                    </li>
-                    <li>
-                      <button type="button" onClick={() => { onSelectNav('provider'); setMegaMenuOpen(false); }}>
-                        {currentLang === 'hi' ? 'श्रमयोगी साख सत्यापन' : 'Verify Worker Credential'}
-                      </button>
-                    </li>
-                    <li>
-                      <button type="button" onClick={() => { onSelectNav('coop_admin'); setMegaMenuOpen(false); }}>
-                        {currentLang === 'hi' ? 'समिति पंजीकरण स्थिति' : 'Check Society Reg Status'}
-                      </button>
-                    </li>
-                    <li>
-                      <button type="button" onClick={() => { onSelectNav('regulator'); setMegaMenuOpen(false); }}>
-                        {currentLang === 'hi' ? 'सांविधिक जीएसटी चालान' : 'Statutory Invoice & Tax'}
-                      </button>
-                    </li>
-                    <li>
-                      <button type="button" onClick={() => { onSelectNav('consumer'); setMegaMenuOpen(false); }}>
-                        {currentLang === 'hi' ? 'निष्पक्ष-व्यापार शिकायत' : 'File Consumer Grievance'}
-                      </button>
-                    </li>
-                  </ul>
-                  <button
-                    type="button"
-                    className="view-all-link"
-                    onClick={() => { onSelectNav('consumer'); setMegaMenuOpen(false); }}
-                  >
-                    {currentLang === 'hi' ? 'सहायता केंद्र →' : 'Citizen Grievance Desk →'}
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom Banner Strip: App Download */}
-            <div className="myaadhaar-mega-download-strip">
-              <div className="container">
-                <div className="myaadhaar-download-container">
-                  <div className="myaadhaar-download-mockup-wrap">
-                    {/* CSS Smartphone Mockup */}
-                    <div className="myaadhaar-phone-mockup" aria-hidden="true">
-                      <div className="myaadhaar-phone-screen">
-                        <div style={{ width: '8px', height: '2px', background: '#ffffff', borderRadius: '1px', marginBottom: '4px' }} />
-                        <EmblemIcon size={16} color="#ffffff" />
-                        <div style={{ fontSize: '7px', fontWeight: 'bold', marginTop: '2px' }}>Sahakar</div>
-                      </div>
-                    </div>
-
-                    <div className="myaadhaar-download-text">
-                      <div className="title">
-                        {currentLang === 'hi'
-                          ? 'सहकार कनेक्ट ऐप सदैव अपने पास रखें'
-                          : 'Keep SahakarConnect always handy'}
-                      </div>
-                      <div className="sub">
-                        {currentLang === 'hi'
-                          ? 'सहकार कनेक्ट मोबाइल ऐप डाउनलोड करने के लिए क्यूआर कोड स्कैन करें या स्टोर से इंस्टॉल करें'
-                          : 'Scan the QR code or install directly from official application stores'}
-                      </div>
-                      <div className="myaadhaar-store-badges">
-                        <span className="myaadhaar-store-btn">
-                          <span>GET IT ON</span>
-                          <strong>Google Play</strong>
-                        </span>
-                        <span className="myaadhaar-store-btn">
-                          <span>Download on</span>
-                          <strong>App Store</strong>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* QR Code */}
-                  <div className="myaadhaar-qr-box">
-                    <QrCodeIcon size={44} color="#1e293b" />
-                    <div style={{ fontSize: '11px', lineHeight: 1.3 }}>
-                      <div style={{ fontWeight: 700, color: '#1e293b' }}>Official App</div>
-                      <div style={{ color: '#64748b' }}>Android &amp; iOS</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </nav>
-
-      {/* ================= PUBLIC / ACTIVE SESSION STRIP ================= */}
-      <div className="container">
-        <div
-          className="env-strip"
-          style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ux4g-sp-4)' }}>
-            <span style={{ fontWeight: 600 }}>National Cooperative Public Infrastructure</span>
-            <span className="badge badge-live">Live System</span>
-            <span style={{ fontSize: '11px', color: 'var(--ux4g-text-tertiary)' }}>
-              Multi-State Co-operative Societies (MSCS) Act, 2023 Parity
+          {/* ================= CATEGORY QUICK SHORTCUTS STRIP ================= */}
+          <div className="d-flex align-items-center gap-2 mt-2 pt-2 border-top overflow-auto text-nowrap" style={{ scrollbarWidth: 'none' }}>
+            <span className="small text-muted me-1 d-none d-sm-inline" style={{ fontSize: '0.75rem' }}>
+              {currentLang === 'hi' ? 'श्रेणियां:' : 'Categories:'}
             </span>
-          </div>
 
-          {currentUser ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ux4g-sp-3)' }}>
-              <span className="badge badge-primary text-uppercase">
-                {currentUser.role || 'CITIZEN'}
+            <button
+              type="button"
+              className={`btn btn-sm py-1 px-3 rounded-pill d-inline-flex align-items-center gap-1 ${
+                activeNav === 'home' ? 'btn-primary text-white' : 'btn-light text-dark'
+              }`}
+              style={{ fontSize: '0.78rem' }}
+              onClick={() => onSelectNav('home')}
+            >
+              <span>{currentLang === 'hi' ? 'सभी सेवाएं' : 'All Services'}</span>
+            </button>
+
+            <button
+              type="button"
+              className={`btn btn-sm py-1 px-3 rounded-pill d-inline-flex align-items-center gap-1 ${
+                activeNav === 'portal:plumbing' ? 'btn-primary text-white' : 'btn-light text-dark'
+              }`}
+              style={{ fontSize: '0.78rem' }}
+              onClick={() => onSelectNav('portal:plumbing')}
+            >
+              <PlumbingIcon size={13} />
+              <span>{currentLang === 'hi' ? 'नलसाजी' : 'Plumbing'}</span>
+            </button>
+
+            <button
+              type="button"
+              className={`btn btn-sm py-1 px-3 rounded-pill d-inline-flex align-items-center gap-1 ${
+                activeNav === 'portal:electrical' ? 'btn-primary text-white' : 'btn-light text-dark'
+              }`}
+              style={{ fontSize: '0.78rem' }}
+              onClick={() => onSelectNav('portal:electrical')}
+            >
+              <ElectricalIcon size={13} />
+              <span>{currentLang === 'hi' ? 'विद्युत' : 'Electrical'}</span>
+            </button>
+
+            <button
+              type="button"
+              className={`btn btn-sm py-1 px-3 rounded-pill d-inline-flex align-items-center gap-1 ${
+                activeNav === 'portal:carpentry' ? 'btn-primary text-white' : 'btn-light text-dark'
+              }`}
+              style={{ fontSize: '0.78rem' }}
+              onClick={() => onSelectNav('portal:carpentry')}
+            >
+              <CarpentryIcon size={13} />
+              <span>{currentLang === 'hi' ? 'बढ़ईगीरी' : 'Carpentry'}</span>
+            </button>
+
+            <button
+              type="button"
+              className={`btn btn-sm py-1 px-3 rounded-pill d-inline-flex align-items-center gap-1 ${
+                activeNav === 'portal:appliances' ? 'btn-primary text-white' : 'btn-light text-dark'
+              }`}
+              style={{ fontSize: '0.78rem' }}
+              onClick={() => onSelectNav('portal:appliances')}
+            >
+              <ApplianceIcon size={13} />
+              <span>{currentLang === 'hi' ? 'उपकरण मरम्मत' : 'Appliance Repair'}</span>
+            </button>
+
+            <div className="ms-auto d-flex align-items-center gap-2">
+              <span className="badge bg-success-subtle text-success border border-success-subtle" style={{ fontSize: '0.7rem' }}>
+                ✓ {currentLang === 'hi' ? 'सत्यापित कारीगर' : 'Verified Tradesmen'}
               </span>
-              <span style={{ fontSize: 'var(--ux4g-fs-12)', color: 'var(--ux4g-text-secondary)', fontWeight: 600 }}>
-                {currentUser.name}
+              <span className="badge bg-light text-secondary border" style={{ fontSize: '0.7rem' }}>
+                {currentLang === 'hi' ? '30-दिन वारंटी' : '30-Day Warranty'}
               </span>
-              {onLogout && (
-                <button
-                  type="button"
-                  onClick={onLogout}
-                  className="btn btn-outline-danger btn-sm"
-                  style={{ padding: '1px var(--ux4g-sp-3)', fontSize: '11px' }}
-                >
-                  {currentLang === 'hi' ? 'लॉग आउट' : 'Sign Out'}
-                </button>
-              )}
             </div>
-          ) : (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ux4g-sp-3)' }}>
-              <span style={{ fontSize: 'var(--ux4g-fs-12)', color: 'var(--ux4g-text-secondary)' }}>
-                {currentLang === 'hi' ? 'नागरिक एवं श्रमयोगी डिजिटल सेवा' : 'Citizen & Skilled Tradesmen Public Gateway'}
-              </span>
-              <button
-                type="button"
-                onClick={() => onSelectNav('login')}
-                className="btn btn-primary btn-sm"
-                style={{ padding: '2px var(--ux4g-sp-4)', fontSize: '11px', fontWeight: 600 }}
-              >
-                {currentLang === 'hi' ? 'प्रवेश / पंजीकरण' : 'Sign In / Register'}
-              </button>
-            </div>
-          )}
+          </div>
         </div>
-      </div>
+      </header>
 
       {/* Authentic Citizen & Member Auth Modal */}
       <AuthModal
