@@ -137,7 +137,7 @@ export const Footer: React.FC<FooterProps> = ({ currentLang = 'en', onOpenLegal,
                   else window.location.href = '#login';
                 }}
               >
-                <span>🔒 Partner &amp; Admin Sign In →</span>
+                <span>🔒 Partner &amp; Admin Sign In</span>
               </a>
             </div>
           </div>

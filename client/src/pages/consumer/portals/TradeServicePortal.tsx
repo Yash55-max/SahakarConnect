@@ -99,8 +99,8 @@ export const TradeServicePortal: React.FC<TradeServicePortalProps> = ({
       {/* 1. Quick Trade Switcher Strip */}
       <div className="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4 bg-white border p-2 rounded shadow-sm">
         <div className="d-flex align-items-center gap-2">
-          <span className="small fw-bold text-muted text-uppercase me-2 d-none d-md-inline" style={{ fontSize: '0.72rem' }}>
-            {lang === 'hi' ? 'विशिष्ट सेवा पोर्टल चुनें:' : 'Select Trade Portal:'}
+          <span className="small fw-semibold text-muted me-2 d-none d-md-inline" style={{ fontSize: '0.82rem' }}>
+            {lang === 'hi' ? 'विशिष्ट सेवा पोर्टल चुनें:' : 'Select trade portal:'}
           </span>
           <div className="btn-group btn-group-sm" role="group" aria-label="Trade portals">
             {portalNavList.map((pNav) => {
@@ -277,14 +277,14 @@ export const TradeServicePortal: React.FC<TradeServicePortalProps> = ({
                       </div>
                     </div>
                     <div className="d-flex justify-content-between small text-muted" style={{ fontSize: '0.82rem' }}>
-                      <span>Labour only · Spares at actuals</span>
+                      <span>Labour only; spare parts charged at actual cost</span>
                       <span title="88% to technician, 8% to welfare fund">Fair Split: ₹{workerPay.toFixed(0)} tech / ₹{welfareShare.toFixed(0)} fund</span>
                     </div>
                   </div>
 
                   {/* Included Scope */}
-                  <div className="small fw-bold text-uppercase text-secondary mb-2" style={{ fontSize: '0.82rem' }}>
-                    Service Scope & Included Work
+                  <div className="small fw-semibold text-secondary mb-2" style={{ fontSize: '0.82rem' }}>
+                    Service scope and included work
                   </div>
                   <ul className="feature-list mb-4">
                     {pkg.includes.map((inc, i) => (

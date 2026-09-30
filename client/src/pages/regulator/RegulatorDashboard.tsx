@@ -324,7 +324,7 @@ export const RegulatorDashboard: React.FC<RegulatorDashboardProps> = ({ onOpenAu
                   </span>
                 </div>
                 <p className="text-secondary small mb-0 mt-1">
-                  Multi-State Co-operative Societies Framework · Nationwide Ledger &amp; Welfare Oversight
+                  Multi-State Co-operative Societies Framework, Nationwide Ledger and Welfare Oversight
                 </p>
               </div>
             </div>
@@ -697,7 +697,7 @@ export const RegulatorDashboard: React.FC<RegulatorDashboardProps> = ({ onOpenAu
           <div className="card-header bg-light py-2 px-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
             <div>
               <span className="fw-semibold small text-dark">
-                Nationwide Central Audit Ledger — Tripartite Invariant Inspector
+                Nationwide Central Audit Ledger: Tripartite Invariant Inspector
               </span>
               <div className="text-muted" style={{ fontSize: '0.8rem' }}>
                 Mathematical Proof: Worker Payout (88%) + Welfare Fund (8%) + Platform Share (4%) ≡ Gross Booking Amount (Zero Rounding Leakage)

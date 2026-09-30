@@ -235,7 +235,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       desc: lang === 'hi'
         ? 'नलसाजी, विद्युत, बढ़ईगीरी और उपकरण मरम्मत के लिए त्वरित स्थानीय बुकिंग।'
         : 'Book trusted plumbers, electricians, carpenters, and appliance experts with OTP-verified completion.',
-      cta: lang === 'hi' ? 'सेवाएं बुक करें →' : 'Book Services →',
+      cta: lang === 'hi' ? 'सेवाएं बुक करें' : 'Book Services',
       image: '/images/citizen-family.jpg',
     },
     {
@@ -245,7 +245,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       desc: lang === 'hi'
         ? 'बिना किसी अनुचित कटौती के 88% प्रत्यक्ष पारिश्रमिक और सहकारी कल्याण लाभ प्राप्त करें।'
         : 'Earn 88% direct payout with prompt daily settlements, accident cover, and cooperative ownership.',
-      cta: lang === 'hi' ? 'पार्टनर साइन इन →' : 'Partner Sign In →',
+      cta: lang === 'hi' ? 'पार्टनर साइन इन' : 'Partner Sign In',
       image: '/images/artisan-worker.jpg',
     },
     {
@@ -255,7 +255,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       desc: lang === 'hi'
         ? 'कारीगरों का सत्यापन, क्षेत्र आवंटन, कल्याण निधि एवं बही-खाता प्रबंधन।'
         : 'Manage technician queues, review regional dispatch schedules, and oversee member welfare accounts.',
-      cta: lang === 'hi' ? 'समिति लॉगिन →' : 'Admin Hub →',
+      cta: lang === 'hi' ? 'समिति लॉगिन' : 'Admin Hub',
       image: '/images/coop-leaders.jpg',
     },
   ];
@@ -270,15 +270,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           <div className="row align-items-center g-4">
             <div className="col-12 col-lg-7">
               <h1 className="display-6 fw-bold text-dark mb-3" style={{ letterSpacing: '-0.02em', lineHeight: 1.2 }}>
-                {lang === 'hi' ? (
-                  <>
-                    आपके मुहल्ले के <span className="text-primary">सत्यापित कारीगर</span>, उचित मूल्य पर।
-                  </>
-                ) : (
-                  <>
-                    Book <span className="text-primary">Verified Technicians</span> You Can Trust.
-                  </>
-                )}
+                {lang === 'hi'
+                  ? 'आपके मुहल्ले के सत्यापित कारीगर, उचित मूल्य पर।'
+                  : 'Book Verified Technicians You Can Trust.'}
               </h1>
 
               <p className="lead text-secondary mb-4" style={{ maxWidth: '65ch', fontSize: '1.05rem', lineHeight: 1.6 }}>
@@ -400,7 +394,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               className="btn btn-sm btn-outline-primary rounded-pill px-3"
               onClick={() => onSelectPortal('consumer')}
             >
-              {lang === 'hi' ? 'सभी 20+ सेवाएं देखें →' : 'View All 20+ Services →'}
+              {lang === 'hi' ? 'सभी 20+ सेवाएं देखें' : 'View All 20+ Services'}
             </button>
           </div>
 
@@ -445,7 +439,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                     <div className="mt-auto pt-2 border-top d-flex justify-content-between align-items-center">
                       <div>
                         <div className="h5 fw-bold text-primary mb-0">{service.price}</div>
-                        <div className="text-muted" style={{ fontSize: '0.82rem' }}>Labour only · Spares extra</div>
+                        <div className="text-muted" style={{ fontSize: '0.82rem' }}>Labour rate; replacement spares at actual cost</div>
                       </div>
 
                       <button
@@ -557,10 +551,15 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 </div>
               </div>
 
-              <div className="small text-muted" style={{ fontSize: '0.8rem' }}>
-                ✓ {lang === 'hi' ? 'दैनिक प्रत्यक्ष बैंक निपटान' : 'Daily direct settlement to technician'}
-                {' · '}
-                ✓ {lang === 'hi' ? 'दुर्घटना व स्वास्थ्य बीमा' : 'Cooperative healthcare fund'}
+              <div className="d-flex align-items-center gap-3 flex-wrap small text-muted" style={{ fontSize: '0.82rem' }}>
+                <span className="d-inline-flex align-items-center gap-1">
+                  <CheckIcon size={13} color="#16a34a" />
+                  <span>{lang === 'hi' ? 'दैनिक प्रत्यक्ष बैंक निपटान' : 'Daily direct settlement to technician'}</span>
+                </span>
+                <span className="d-inline-flex align-items-center gap-1">
+                  <CheckIcon size={13} color="#16a34a" />
+                  <span>{lang === 'hi' ? 'दुर्घटना व स्वास्थ्य सुरक्षा' : 'Cooperative healthcare fund'}</span>
+                </span>
               </div>
             </div>
 
@@ -569,8 +568,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               <div className="border rounded-3 p-4 bg-white shadow-xs">
                 <div className="d-flex justify-content-between align-items-center pb-3 border-bottom">
                   <div>
-                    <div className="small fw-bold text-success text-uppercase" style={{ letterSpacing: '0.04em' }}>
-                      88% Direct Payout
+                    <div className="small fw-semibold text-success mb-1">
+                      88% Direct worker payout
                     </div>
                     <div className="fw-semibold text-dark">
                       {lang === 'hi' ? 'कारीगर को प्रत्यक्ष पारिश्रमिक' : 'Direct Worker Payout'}
@@ -584,8 +583,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
                 <div className="d-flex justify-content-between align-items-center py-3 border-bottom">
                   <div>
-                    <div className="small fw-bold text-primary text-uppercase" style={{ letterSpacing: '0.04em' }}>
-                      8% Cooperative Fund
+                    <div className="small fw-semibold text-primary mb-1">
+                      8% Cooperative reserve
                     </div>
                     <div className="fw-semibold text-dark">
                       {lang === 'hi' ? 'कल्याण, स्वास्थ्य व बीमा कोष' : 'Welfare & Emergency Cover'}
@@ -599,8 +598,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
                 <div className="d-flex justify-content-between align-items-center pt-3">
                   <div>
-                    <div className="small fw-bold text-secondary text-uppercase" style={{ letterSpacing: '0.04em' }}>
-                      4% Platform Operations
+                    <div className="small fw-semibold text-secondary mb-1">
+                      4% Platform operations
                     </div>
                     <div className="fw-semibold text-dark">
                       {lang === 'hi' ? 'प्लेटफॉर्म रखरखाव व सहायता' : 'Platform Hosting & Support'}

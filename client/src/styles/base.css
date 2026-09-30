@@ -1,5 +1,5 @@
 /* ==========================================================================
-   BASE — reset, typography, focus states
+   Base: reset, typography, focus states
    ========================================================================== */
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -35,7 +35,7 @@ p { margin: 0; }
 button { font-family: inherit; }
 ul { margin: 0; padding: 0; list-style: none; }
 
-/* Visible keyboard focus everywhere — WCAG 2.1 AA */
+/* Visible keyboard focus everywhere (WCAG 2.1 AA) */
 :focus-visible {
   outline: 2px solid var(--ux4g-primary-600);
   outline-offset: 2px;

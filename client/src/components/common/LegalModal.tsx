@@ -118,7 +118,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ docId, onClose, lang }) 
 
           {activeTab === 'privacy' && (
             <div className="modal-panel is-active">
-              <h3>{lang === 'hi' ? 'गोपनीयता नीति — DPDP अधिनियम 2023' : 'Privacy policy — DPDP Act 2023'}</h3>
+              <h3>{lang === 'hi' ? 'गोपनीयता नीति (DPDP अधिनियम 2023)' : 'Privacy policy (DPDP Act 2023)'}</h3>
               <p>
                 Personal data (Aadhaar e-KYC, contact details, service history) is processed strictly for
                 service fulfilment, statutory audit, and welfare fund administration, consistent with the
